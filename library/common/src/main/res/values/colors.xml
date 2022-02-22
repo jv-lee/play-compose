@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  系统颜色  -->
+    <color name="colorThemePrimary">#9B9B9B</color>
+    <color name="colorThemePrimaryDark">#414141</color>
+    <color name="colorThemeAccent">#191919</color>
+
+    <!--  主题强调色  -->
+    <color name="colorThemeFocus">#4100AB</color>
+    <color name="colorThemeFocusLight">#EADEFF</color>
+
+    <!--  主题颜色  -->
+    <color name="colorThemeWindow">#FFFFFF</color>
+    <color name="colorThemeBackground">#F9F5FF</color>
+    <color name="colorThemeBackgroundTransparent">#1AF9F5FF</color>
+    <color name="colorThemeItem">#FFFFFF</color>
+    <color name="colorThemeSearch">#F0F0F0</color>
+    <color name="colorThemePlaceholder">#F9F9F9</color>
+    <color name="colorThemeShadow">#ebebeb</color>
+    <color name="colorThemeLock">#e6e6e6</color>
+    <color name="colorThemeLockDark">#ffffff</color>
+    <color name="colorThemeLabel">#ebebeb</color>
+</resources>

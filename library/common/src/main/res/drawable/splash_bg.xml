@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/colorThemeWindow" />
+
+    <item android:bottom="86dp">
+        <bitmap
+            android:antialias="true"
+            android:gravity="center"
+            android:src="@mipmap/ic_splash_logo" />
+    </item>
+
+    <item android:bottom="86dp">
+        <bitmap
+            android:antialias="true"
+            android:gravity="bottom"
+            android:src="@mipmap/ic_splash_info" />
+    </item>
+</layer-list>
