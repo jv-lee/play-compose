@@ -3,15 +3,11 @@ package com.lee.playcompose
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.runtime.*
 import androidx.core.view.WindowCompat
 import com.lee.playcompose.common.ui.theme.PlayComposeTheme
+import com.lee.playcompose.ui.page.MainPage
+import com.lee.playcompose.ui.page.SplashPage
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,27 +15,14 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             PlayComposeTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    Greeting("Android")
-                }
+                AppContent()
             }
         }
     }
-}
 
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    PlayComposeTheme {
-        Greeting("Android")
+    @Composable
+    fun AppContent() {
+        var isSplash by remember { mutableStateOf(true) }
+        if (isSplash) SplashPage { isSplash = false } else MainPage()
     }
 }
