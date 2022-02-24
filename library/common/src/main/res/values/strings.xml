@@ -1,2 +1,3 @@
 <resources>
+    <string name="back_alert_message">再次点击可退出</string>
 </resources>
