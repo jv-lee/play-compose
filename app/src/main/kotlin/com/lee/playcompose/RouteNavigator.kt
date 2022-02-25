@@ -2,9 +2,11 @@ package com.lee.playcompose
 
 import android.app.Activity
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import com.google.accompanist.insets.LocalWindowInsets
+import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.lee.playcompose.common.extensions.RouteBackHandler
 import com.lee.playcompose.common.extensions.SimpleAnimatedNavHost
@@ -23,10 +25,15 @@ import com.lee.playcompose.ui.page.SplashPage
 @Composable
 fun Activity.RouteNavigator() {
     val navController = rememberAnimatedNavController()
+    val navigationInsets =
+        rememberInsetsPaddingValues(insets = LocalWindowInsets.current.navigationBars)
+
+    // double click close app.
     RouteBackHandler({ finish() }, navController, PageRoute.Main.route)
+
     SplashScreen {
         SimpleAnimatedNavHost(
-            modifier = Modifier.navigationBarsPadding(),
+            modifier = Modifier.padding(bottom = navigationInsets.calculateBottomPadding()),
             navController = navController,
             startDestination = PageRoute.Main.route,
         ) {

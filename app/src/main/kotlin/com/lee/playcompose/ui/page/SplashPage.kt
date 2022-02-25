@@ -9,6 +9,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.insets.LocalWindowInsets
+import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.google.accompanist.insets.statusBarsPadding
 import com.lee.playcompose.R
 import kotlinx.coroutines.delay
@@ -20,12 +22,13 @@ import kotlinx.coroutines.delay
  */
 @Composable
 fun SplashPage(onNextPage: () -> Unit) {
+    val navigationInsets =
+        rememberInsetsPaddingValues(insets = LocalWindowInsets.current.navigationBars)
+
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(bottom = 140.dp)
-            .statusBarsPadding()
-            .navigationBarsPadding()
+            .padding(bottom = 140.dp + navigationInsets.calculateBottomPadding())
             .wrapContentSize(align = Alignment.TopCenter)
     ) {
         LaunchedEffect(Unit) {

@@ -42,15 +42,14 @@ fun MainPage(rootNavController: NavHostController) {
                 })
             }
         }
-    },
-        content = {
-            when (selectIndex.value) {
-                0 -> HomePage(navController = rootNavController)
-                1 -> SquarePage(navController = rootNavController)
-                2 -> SystemPage(navController = rootNavController)
-                3 -> MePage(navController = rootNavController)
-            }
-        })
+    }, content = {
+        when (selectIndex.value) {
+            0 -> HomePage(navController = rootNavController)
+            1 -> SquarePage(navController = rootNavController)
+            2 -> SystemPage(navController = rootNavController)
+            3 -> MePage(navController = rootNavController)
+        }
+    })
 }
 
 @Composable
