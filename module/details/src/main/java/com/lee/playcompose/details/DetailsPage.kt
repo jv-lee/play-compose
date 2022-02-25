@@ -1,7 +1,6 @@
-package com.lee.playcompose.home
+package com.lee.playcompose.details
 
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.wrapContentSize
@@ -9,6 +8,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 
 /**
@@ -17,15 +17,14 @@ import androidx.navigation.NavController
  * @description
  */
 @Composable
-fun HomePage(navController: NavController) {
+fun DetailsPage(navController: NavController) {
+
     Box(
-        modifier = Modifier
+        Modifier
+            .background(Color.Cyan)
             .fillMaxSize()
-            .wrapContentSize(align = Alignment.Center)
+            .wrapContentSize(Alignment.Center)
     ) {
-        Text(text = "Home Page", Modifier.clickable {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-//            navController.navigate(PageRoute.Details.route)
-        })
+        Text(text = "Details Page")
     }
 }

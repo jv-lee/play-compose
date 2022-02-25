@@ -2,6 +2,7 @@ package com.lee.playcompose.ui.page
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
@@ -10,17 +11,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.lee.playcompose.R
+import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.home.HomePage
 import com.lee.playcompose.me.MePage
 import com.lee.playcompose.square.SquarePage
 import com.lee.playcompose.system.SystemPage
-import com.lee.playcompose.common.R as CR
 
 /**
  * @author jv.lee
@@ -32,8 +31,8 @@ import com.lee.playcompose.common.R as CR
 fun MainPage(rootNavController: NavHostController) {
     val selectIndex = remember { mutableStateOf(0) }
 
-    Scaffold(Modifier.fillMaxSize(), backgroundColor = Color.Cyan, bottomBar = {
-        BottomNavigation(backgroundColor = Color.White, elevation = 3.dp) {
+    Scaffold(Modifier.fillMaxSize(), backgroundColor = AppTheme.colors.window, bottomBar = {
+        BottomNavigation(backgroundColor = AppTheme.colors.item, elevation = 3.dp) {
             tabItems.forEachIndexed { index, item ->
                 val isSelect = selectIndex.value == index
                 BottomNavigationItem(selected = isSelect, icon = {
@@ -43,21 +42,21 @@ fun MainPage(rootNavController: NavHostController) {
                 })
             }
         }
-    }, content = {
-        when (selectIndex.value) {
-            0 -> HomePage(navController = rootNavController)
-            1 -> SquarePage(navController = rootNavController)
-            2 -> SystemPage(navController = rootNavController)
-            3 -> MePage(navController = rootNavController)
-        }
-    })
+    },
+        content = {
+            when (selectIndex.value) {
+                0 -> HomePage(navController = rootNavController)
+                1 -> SquarePage(navController = rootNavController)
+                2 -> SystemPage(navController = rootNavController)
+                3 -> MePage(navController = rootNavController)
+            }
+        })
 }
 
 @Composable
 private fun NavigationIcon(isSelected: Boolean, item: MainTab) {
     val icon = if (isSelected) item.selectIcon else item.icon
-    val color = if (isSelected) colorResource(id = CR.color.colorThemeFocus)
-    else colorResource(id = CR.color.colorThemePrimary)
+    val color = if (isSelected) AppTheme.colors.focus else AppTheme.colors.primary
     Icon(painterResource(id = icon), null, tint = color)
 }
 
