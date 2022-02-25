@@ -4,10 +4,14 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.TweenSpec
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Typography
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 import com.google.accompanist.insets.ProvideWindowInsets
-import com.lee.playcompose.common.extensions.toast
 
 
 private val DarkColorPalette = AppColors(
@@ -81,9 +85,10 @@ object AppTheme {
 }
 
 @Composable
-fun PlayComposeTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
-
-    toast("isDark-$darkTheme")
+fun PlayComposeTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    content: @Composable () -> Unit
+) {
     val colors = if (darkTheme) DarkColorPalette else LightColorPalette
 
     val primary = animateColorAsState(colors.primary, TweenSpec(600))
@@ -112,10 +117,19 @@ fun PlayComposeTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Compo
         placeholder = placeholder.value,
     )
 
+    val typography = Typography(
+        body1 = TextStyle(
+            color = accent.value,
+            fontFamily = FontFamily.Default,
+            fontWeight = FontWeight.Normal,
+            fontSize = 16.sp
+        )
+    )
+
     CompositionLocalProvider(LocalAppColors provides appColors) {
         ProvideWindowInsets {
             MaterialTheme(
-                typography = Typography,
+                typography = typography,
                 shapes = Shapes,
                 content = content
             )
