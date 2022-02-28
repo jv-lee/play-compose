@@ -26,7 +26,6 @@ class HomeViewModel : ViewModel() {
                         add("item - $index")
                     }
                 }
-
                 LoadResult.Page(
                     data = data,
                     prevKey = if (nextPage == 1) null else nextPage - 1,

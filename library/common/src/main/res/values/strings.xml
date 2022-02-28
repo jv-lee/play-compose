@@ -1,3 +1,11 @@
 <resources>
     <string name="back_alert_message">再次点击可退出</string>
+
+    <string name="item_load_error">加载失败点击重试</string>
+    <string name="item_load_end">没有更多了</string>
+    <string name="item_load_more">正在加载…</string>
+    <string name="page_load_empty">没有数据 .</string>
+    <string name="page_load_error">加载失败点击重试…</string>
+    <string name="page_load_restart">重试</string>
+
 </resources>

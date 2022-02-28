@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
@@ -94,31 +95,51 @@ fun <T : Any> RefreshList(
 }
 
 @Composable
-fun PageError(retry: () -> Unit = { }) {
-    Box(modifier = Modifier.fillMaxSize()) {
-        Column(modifier = Modifier
-            .align(Alignment.Center)
-            .clickable {
-                retry()
-            }) {
+private fun PageError(retry: () -> Unit = { }) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .wrapContentSize(align = Alignment.Center)
+    ) {
+        Column(modifier = Modifier.clickable { retry() }) {
             Image(
                 painter = painterResource(id = R.drawable.vector_failed),
                 contentDescription = null,
+                modifier = Modifier
+                    .size(160.dp)
+                    .align(Alignment.CenterHorizontally)
             )
-            Text(text = "请求失败点击重试", color = AppTheme.colors.accent)
+            Text(
+                text = stringResource(id = R.string.page_load_error),
+                color = AppTheme.colors.accent,
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+            )
         }
     }
 }
 
 @Composable
 private fun PageEmpty() {
-    Box(modifier = Modifier.fillMaxSize()) {
-        Column(modifier = Modifier.align(Alignment.Center)) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .wrapContentSize(align = Alignment.Center)
+    ) {
+        Column {
             Image(
                 painter = painterResource(id = R.drawable.vector_empty),
                 contentDescription = null,
+                modifier = Modifier
+                    .size(160.dp)
+                    .align(Alignment.CenterHorizontally)
             )
-            Text(text = "没有数据", color = AppTheme.colors.accent)
+            Text(
+                text = stringResource(id = R.string.page_load_empty),
+                color = AppTheme.colors.accent,
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+            )
         }
     }
 }
@@ -142,9 +163,12 @@ private fun ItemError(retry: () -> Unit) {
             .height(ListStateItemHeight)
             .wrapContentSize(Alignment.Center)
     ) {
-        Text(text = "加载失败点击重试", color = AppTheme.colors.accent, modifier = Modifier.clickable {
-            retry()
-        })
+        Text(
+            text = stringResource(id = R.string.item_load_error),
+            color = AppTheme.colors.accent,
+            modifier = Modifier.clickable {
+                retry()
+            })
     }
 }
 
@@ -156,7 +180,7 @@ private fun ItemNoMore() {
             .height(ListStateItemHeight)
             .wrapContentSize(Alignment.Center)
     ) {
-        Text(text = "没有更多了", color = AppTheme.colors.accent)
+        Text(text = stringResource(id = R.string.item_load_end), color = AppTheme.colors.accent)
     }
 }
 
@@ -174,6 +198,6 @@ private fun ItemLoading() {
             strokeWidth = 2.dp
         )
         Spacer(modifier = Modifier.size(4.dp))
-        Text(text = "正在加载...", color = AppTheme.colors.accent)
+        Text(text = stringResource(id = R.string.item_load_more), color = AppTheme.colors.accent)
     }
 }
