@@ -52,6 +52,12 @@ object Dependencies {
         "com.google.accompanist:accompanist-insets-ui:${Version.accompanist}"
     const val composeSystemUiController =
         "com.google.accompanist:accompanist-systemuicontroller:${Version.accompanist}"
+    const val composeSwiperRefresh =
+        "com.google.accompanist:accompanist-swiperefresh:${Version.accompanist}"
+
+    // paging 分页
+    const val pagingRuntime = "androidx.paging:paging-runtime:${Version.paging}"
+    const val pagingCompose = "androidx.paging:paging-compose:${Version.pagingCompose}"
 
     //room数据库
     const val room = "androidx.room:room-ktx:${Version.room}"

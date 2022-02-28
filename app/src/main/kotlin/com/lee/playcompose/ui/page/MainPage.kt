@@ -1,23 +1,27 @@
 package com.lee.playcompose.ui.page
 
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.Scaffold
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
+import com.google.accompanist.insets.LocalWindowInsets
+import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.lee.playcompose.R
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.home.HomePage
 import com.lee.playcompose.me.MePage
+import com.lee.playcompose.router.PageRoute
 import com.lee.playcompose.square.SquarePage
 import com.lee.playcompose.system.SystemPage
 
@@ -28,10 +32,12 @@ import com.lee.playcompose.system.SystemPage
  */
 @ExperimentalAnimationApi
 @Composable
-fun MainPage(rootNavController: NavHostController) {
+fun MainPage(navController: NavHostController) {
     val selectIndex = remember { mutableStateOf(0) }
+    val navigationInsets =
+        rememberInsetsPaddingValues(insets = LocalWindowInsets.current.navigationBars)
 
-    Scaffold(Modifier.fillMaxSize(), backgroundColor = AppTheme.colors.window, bottomBar = {
+    Scaffold(backgroundColor = AppTheme.colors.window, bottomBar = {
         BottomNavigation(backgroundColor = AppTheme.colors.item, elevation = 3.dp) {
             tabItems.forEachIndexed { index, item ->
                 val isSelect = selectIndex.value == index
@@ -43,11 +49,17 @@ fun MainPage(rootNavController: NavHostController) {
             }
         }
     }, content = {
-        when (selectIndex.value) {
-            0 -> HomePage(navController = rootNavController)
-            1 -> SquarePage(navController = rootNavController)
-            2 -> SystemPage(navController = rootNavController)
-            3 -> MePage(navController = rootNavController)
+        Box(
+            modifier = Modifier.padding(
+                bottom = navigationInsets.calculateBottomPadding()
+            )
+        ) {
+            when (selectIndex.value) {
+                0 -> HomePage(navController)
+                1 -> SquarePage(navController)
+                2 -> SystemPage(navController)
+                3 -> MePage(navController)
+            }
         }
     })
 }

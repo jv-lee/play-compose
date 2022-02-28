@@ -18,12 +18,11 @@ import androidx.navigation.NavController
  */
 @Composable
 fun DetailsPage(navController: NavController) {
-
     Box(
         Modifier
             .background(Color.Cyan)
             .fillMaxSize()
-            .wrapContentSize(Alignment.Center)
+            .wrapContentSize(Alignment.BottomCenter)
     ) {
         Text(text = "Details Page")
     }

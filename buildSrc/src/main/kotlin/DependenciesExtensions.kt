@@ -88,6 +88,10 @@ fun DependencyHandlerScope.commonDependencies() {
     api(Dependencies.composeInsets)
     api(Dependencies.composeInsetsUi)
     api(Dependencies.composeSystemUiController)
+    api(Dependencies.composeSwiperRefresh)
+
+    api(Dependencies.pagingRuntime)
+    api(Dependencies.pagingCompose)
 
     api(Dependencies.room)
     api(Dependencies.roomRuntime)

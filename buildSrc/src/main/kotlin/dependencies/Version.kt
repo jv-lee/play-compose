@@ -24,6 +24,8 @@ object Version {
     const val autoService = "1.0"
     const val compose = "1.2.0-alpha03"
     const val accompanist = "0.24.2-alpha"
+    const val paging = "3.1.0"
+    const val pagingCompose = "1.0.0-alpha14"
 
     //Test
     const val junit = "4.13.2"
