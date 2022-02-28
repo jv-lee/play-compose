@@ -21,21 +21,17 @@ class HomeViewModel : ViewModel() {
             return try {
                 delay(1000)
                 val nextPage = params.key ?: 1
-                if (nextPage < 5) {
-                    val data = mutableListOf<String>().apply {
-                        for (index in 0..params.loadSize) {
-                            add("item - $index")
-                        }
+                val data = mutableListOf<String>().apply {
+                    for (index in 0..params.loadSize) {
+                        add("item - $index")
                     }
-
-                    LoadResult.Page(
-                        data = data,
-                        prevKey = if (nextPage == 1) null else nextPage - 1,
-                        nextKey = if (nextPage < 100) nextPage + 1 else null
-                    )
-                } else {
-                    LoadResult.Error(RuntimeException("not data."))
                 }
+
+                LoadResult.Page(
+                    data = data,
+                    prevKey = if (nextPage == 1) null else nextPage - 1,
+                    nextKey = if (nextPage < 5) nextPage + 1 else null
+                )
             } catch (e: Exception) {
                 LoadResult.Error(e)
             }

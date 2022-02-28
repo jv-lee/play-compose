@@ -1,10 +1,8 @@
 package com.lee.playcompose.home
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -12,11 +10,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
-import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.lee.playcompose.common.ui.widget.RefreshList
 
 /**
  * @author jv.lee
@@ -29,27 +26,18 @@ fun HomePage(navController: NavController) {
     val data = viewModel.projects.collectAsLazyPagingItems()
     val refreshState = rememberSwipeRefreshState(isRefreshing = false)
 
-    SwipeRefresh(state = refreshState, onRefresh = { data.refresh() }) {
-        LazyColumn(Modifier.fillMaxSize()) {
-            itemsIndexed(data) { _, item ->
-                ItemView(item = item)
-            }
-            when (data.loadState.append) {
-                // 加载中
-                is LoadState.Loading -> {
-                    item { StateItem(state = "loading") }
-                }
-                // 加载错误
-                is LoadState.Error -> {
-                    item { StateItem(state = "error") }
-                }
-                // 加载完成
-                is LoadState.NotLoading -> {
-                    item { StateItem(state = "notLoading") }
-                }
-            }
+    RefreshList(lazyPagingItems = data) {
+        itemsIndexed(data) { _, item ->
+            ItemView(item = item)
         }
     }
+//    SwipeRefresh(state = refreshState, onRefresh = { data.refresh() }) {
+//        LazyColumn(Modifier.fillMaxSize()) {
+//            itemsIndexed(data) { _, item ->
+//                ItemView(item = item)
+//            }
+//        }
+//    }
 }
 
 @Composable
@@ -61,17 +49,5 @@ fun ItemView(item: String?) {
         Alignment.Center
     ) {
         Text(text = item ?: "")
-    }
-}
-
-@Composable
-fun StateItem(state: String) {
-    Box(
-        Modifier
-            .fillMaxWidth()
-            .height(60.dp),
-        Alignment.Center
-    ) {
-        Text(text = state)
     }
 }
