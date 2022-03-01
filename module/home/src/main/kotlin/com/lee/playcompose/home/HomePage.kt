@@ -13,6 +13,7 @@ import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.ui.widget.RefreshList
 
 /**
@@ -23,7 +24,7 @@ import com.lee.playcompose.common.ui.widget.RefreshList
 @Composable
 fun HomePage(navController: NavController) {
     val viewModel = viewModel<HomeViewModel>()
-    val data = viewModel.projects.collectAsLazyPagingItems()
+    val data = viewModel.pager.collectAsLazyPagingItems()
     val refreshState = rememberSwipeRefreshState(isRefreshing = false)
 
     RefreshList(lazyPagingItems = data) {
@@ -31,23 +32,16 @@ fun HomePage(navController: NavController) {
             ItemView(item = item)
         }
     }
-//    SwipeRefresh(state = refreshState, onRefresh = { data.refresh() }) {
-//        LazyColumn(Modifier.fillMaxSize()) {
-//            itemsIndexed(data) { _, item ->
-//                ItemView(item = item)
-//            }
-//        }
-//    }
 }
 
 @Composable
-fun ItemView(item: String?) {
+fun ItemView(item: Content?) {
     Box(
         Modifier
             .fillMaxWidth()
             .height(60.dp),
         Alignment.Center
     ) {
-        Text(text = item ?: "")
+        Text(text = item?.title ?: "")
     }
 }

@@ -8,9 +8,9 @@ import androidx.compose.ui.Modifier
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
-import com.lee.playcompose.common.extensions.RouteBackHandler
-import com.lee.playcompose.common.extensions.SimpleAnimatedNavHost
 import com.lee.playcompose.common.extensions.sideComposable
+import com.lee.playcompose.common.ui.widget.RouteBackHandler
+import com.lee.playcompose.common.ui.widget.SimpleAnimatedNavHost
 import com.lee.playcompose.details.DetailsPage
 import com.lee.playcompose.router.PageRoute
 import com.lee.playcompose.ui.page.MainPage
