@@ -1,4 +1,4 @@
-package com.lee.playcompose.home
+package com.lee.playcompose.home.ui.page
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,6 +14,8 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.ui.widget.RefreshList
+import com.lee.playcompose.home.viewmodel.HomeViewAction
+import com.lee.playcompose.home.viewmodel.HomeViewModel
 
 /**
  * @author jv.lee

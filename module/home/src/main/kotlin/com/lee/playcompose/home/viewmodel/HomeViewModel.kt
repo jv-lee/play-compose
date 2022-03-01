@@ -1,4 +1,4 @@
-package com.lee.playcompose.home
+package com.lee.playcompose.home.viewmodel
 
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.getValue

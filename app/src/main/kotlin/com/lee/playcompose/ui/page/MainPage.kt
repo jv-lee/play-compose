@@ -17,7 +17,7 @@ import androidx.navigation.NavHostController
 import com.lee.playcompose.R
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.theme.BottomNavBarHeight
-import com.lee.playcompose.home.HomePage
+import com.lee.playcompose.home.ui.page.HomePage
 import com.lee.playcompose.me.MePage
 import com.lee.playcompose.square.SquarePage
 import com.lee.playcompose.system.SystemPage
