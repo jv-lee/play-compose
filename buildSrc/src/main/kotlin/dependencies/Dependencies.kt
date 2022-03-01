@@ -59,6 +59,14 @@ object Dependencies {
     const val pagingRuntime = "androidx.paging:paging-runtime:${Version.paging}"
     const val pagingCompose = "androidx.paging:paging-compose:${Version.pagingCompose}"
 
+    // hilt
+    const val hiltAndroid = "com.google.dagger:hilt-android:${Version.hilt}"
+
+    // hilt compose
+    const val hiltNavigationCompose = "androidx.hilt:hilt-navigation-compose:${Version.hiltX}"
+    const val hiltLifecycleViewModel =
+        "androidx.hilt:hilt-lifecycle-viewmodel:${Version.hiltX}"
+
     //room数据库
     const val room = "androidx.room:room-ktx:${Version.room}"
     const val roomRuntime = "androidx.room:room-runtime:${Version.room}"

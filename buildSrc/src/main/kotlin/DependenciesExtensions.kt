@@ -25,6 +25,8 @@ fun DependencyHandlerScope.commonProcessors() {
     kapt(ProcessorsDependencies.room)
     kapt(ProcessorsDependencies.glide)
     kapt(ProcessorsDependencies.autoService)
+    kapt(ProcessorsDependencies.hilt)
+    kapt(ProcessorsDependencies.hiltComposeCompiler)
 }
 
 //各业务组建基础依赖
@@ -92,6 +94,10 @@ fun DependencyHandlerScope.commonDependencies() {
 
     api(Dependencies.pagingRuntime)
     api(Dependencies.pagingCompose)
+
+    api(Dependencies.hiltAndroid)
+    api(Dependencies.hiltNavigationCompose)
+    api(Dependencies.hiltLifecycleViewModel)
 
     api(Dependencies.room)
     api(Dependencies.roomRuntime)

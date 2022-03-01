@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
  * @date 2022/2/28
  * @description
  */
-class HomeViewModel : ViewModel() {
+class HomeViewModel: ViewModel() {
 
     private val api = createApi<ApiService>()
 

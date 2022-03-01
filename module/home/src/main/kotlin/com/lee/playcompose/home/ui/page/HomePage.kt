@@ -23,8 +23,7 @@ import com.lee.playcompose.home.viewmodel.HomeViewModel
  * @description
  */
 @Composable
-fun HomePage(navController: NavController) {
-    val viewModel = viewModel<HomeViewModel>()
+fun HomePage(navController: NavController, viewModel: HomeViewModel = viewModel()) {
     val viewState = viewModel.viewStates
 
     val homeContent = viewState.pagingData.collectAsLazyPagingItems()

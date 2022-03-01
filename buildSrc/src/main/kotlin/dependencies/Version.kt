@@ -26,6 +26,8 @@ object Version {
     const val accompanist = "0.24.2-alpha"
     const val paging = "3.1.0"
     const val pagingCompose = "1.0.0-alpha14"
+    const val hilt = "2.38.1"
+    const val hiltX = "1.0.0-alpha03"
 
     //Test
     const val junit = "4.13.2"
