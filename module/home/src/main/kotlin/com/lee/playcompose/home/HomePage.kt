@@ -12,7 +12,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.ui.widget.RefreshList
 
@@ -24,18 +23,35 @@ import com.lee.playcompose.common.ui.widget.RefreshList
 @Composable
 fun HomePage(navController: NavController) {
     val viewModel = viewModel<HomeViewModel>()
-    val data = viewModel.pager.collectAsLazyPagingItems()
-    val refreshState = rememberSwipeRefreshState(isRefreshing = false)
+    val viewState = viewModel.viewStates
 
-    RefreshList(lazyPagingItems = data) {
-        itemsIndexed(data) { _, item ->
+    val homeContent = viewState.pagingData.collectAsLazyPagingItems()
+    val homeBanner = viewState.banners
+    val homeCategory = viewState.category
+    val isRefreshing = viewState.isRefreshing
+
+    RefreshList(lazyPagingItems = homeContent, isRefreshing = isRefreshing, onRefresh = {
+        viewModel.dispatch(HomeViewAction.RequestData)
+    }) {
+        // build home banner item
+        if (homeBanner.isNotEmpty()) {
+
+        }
+
+        // build home category item
+        if (homeCategory.isNotEmpty()) {
+
+        }
+
+        // build home content item
+        itemsIndexed(homeContent) { _, item ->
             ItemView(item = item)
         }
     }
 }
 
 @Composable
-fun ItemView(item: Content?) {
+private fun ItemView(item: Content?) {
     Box(
         Modifier
             .fillMaxWidth()

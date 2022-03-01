@@ -1,4 +1,4 @@
-package com.lee.playcompose.home
+package com.lee.playcompose.home.model.api
 
 import com.lee.playcompose.common.entity.Banner
 import com.lee.playcompose.common.entity.Content

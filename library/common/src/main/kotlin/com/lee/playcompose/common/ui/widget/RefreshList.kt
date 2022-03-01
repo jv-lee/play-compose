@@ -31,6 +31,7 @@ import com.lee.playcompose.common.ui.theme.ListStateItemHeight
 @Composable
 fun <T : Any> RefreshList(
     lazyPagingItems: LazyPagingItems<T>,
+    isRefreshing: Boolean = false,
     onRefresh: (() -> Unit) = {},
     listState: LazyListState = rememberLazyListState(),
     itemContent: LazyListScope.() -> Unit
@@ -65,6 +66,9 @@ fun <T : Any> RefreshList(
         onRefresh()
         lazyPagingItems.refresh()
     }) {
+        swipeRefreshState.isRefreshing =
+            ((lazyPagingItems.loadState.refresh is LoadState.Loading) || isRefreshing)
+
         // build list
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
