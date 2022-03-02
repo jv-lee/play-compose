@@ -18,6 +18,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
+import coil.annotation.ExperimentalCoilApi
 import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.base.extensions.px2dp
 import com.lee.playcompose.common.entity.Content
@@ -26,6 +27,7 @@ import com.lee.playcompose.common.extensions.getCategory
 import com.lee.playcompose.common.extensions.getDateFormat
 import com.lee.playcompose.common.extensions.getTitle
 import com.lee.playcompose.common.ui.theme.*
+import com.lee.playcompose.common.ui.widget.Banner
 import com.lee.playcompose.common.ui.widget.RefreshList
 import com.lee.playcompose.home.model.entity.HomeCategory
 import com.lee.playcompose.home.viewmodel.HomeViewAction
@@ -36,6 +38,7 @@ import com.lee.playcompose.home.viewmodel.HomeViewModel
  * @date 2022/2/24
  * @description
  */
+@ExperimentalCoilApi
 @Composable
 fun HomePage(navController: NavController, viewModel: HomeViewModel = viewModel()) {
     val viewState = viewModel.viewStates
@@ -50,7 +53,14 @@ fun HomePage(navController: NavController, viewModel: HomeViewModel = viewModel(
     }) {
         // build home banner item
         if (bannerList.isNotEmpty()) {
-
+            item {
+                Banner(
+                    list = bannerList, modifier = Modifier
+                        .fillMaxWidth()
+                        .height(180.dp)
+                        .padding(bottom = OffsetMedium)
+                )
+            }
         }
 
         // build home category item

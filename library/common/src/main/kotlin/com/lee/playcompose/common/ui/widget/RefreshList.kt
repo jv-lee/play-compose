@@ -32,6 +32,7 @@ import com.lee.playcompose.common.ui.theme.ListStateItemHeight
 fun <T : Any> RefreshList(
     lazyPagingItems: LazyPagingItems<T>,
     isRefreshing: Boolean = false,
+    swipeEnable: Boolean = true,
     onRefresh: (() -> Unit) = {},
     listState: LazyListState = rememberLazyListState(),
     itemContent: LazyListScope.() -> Unit
@@ -62,7 +63,7 @@ fun <T : Any> RefreshList(
         return
     }
 
-    SwipeRefresh(state = swipeRefreshState, onRefresh = {
+    SwipeRefresh(state = swipeRefreshState, swipeEnabled = swipeEnable, onRefresh = {
         onRefresh()
         lazyPagingItems.refresh()
     }) {

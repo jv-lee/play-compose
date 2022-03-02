@@ -23,7 +23,6 @@ fun DependencyHandlerScope.baseService() {
 fun DependencyHandlerScope.commonProcessors() {
     kapt(ProcessorsDependencies.annotation)
     kapt(ProcessorsDependencies.room)
-    kapt(ProcessorsDependencies.glide)
     kapt(ProcessorsDependencies.autoService)
     kapt(ProcessorsDependencies.hilt)
     kapt(ProcessorsDependencies.hiltComposeCompiler)
@@ -69,11 +68,6 @@ fun DependencyHandlerScope.commonDependencies() {
     api(Dependencies.multidex)
 
     api(Dependencies.appcompat)
-    api(Dependencies.material)
-    api(Dependencies.recyclerview)
-    api(Dependencies.constraint)
-    api(Dependencies.viewpager2)
-    api(Dependencies.swipeRefreshLayout)
 
     api(Dependencies.navigationFragment)
     api(Dependencies.navigationUi)
@@ -86,11 +80,15 @@ fun DependencyHandlerScope.commonDependencies() {
     api(Dependencies.composePreview)
     api(Dependencies.composeLivedata)
 
+    api(Dependencies.composeCoin)
     api(Dependencies.composeNavigationAnimation)
     api(Dependencies.composeInsets)
     api(Dependencies.composeInsetsUi)
     api(Dependencies.composeSystemUiController)
     api(Dependencies.composeSwiperRefresh)
+    api(Dependencies.composePager)
+    api(Dependencies.composePagerIndicators)
+    api(Dependencies.composeFlowlayout)
 
     api(Dependencies.pagingRuntime)
     api(Dependencies.pagingCompose)
@@ -101,10 +99,6 @@ fun DependencyHandlerScope.commonDependencies() {
 
     api(Dependencies.room)
     api(Dependencies.roomRuntime)
-
-    api(Dependencies.glide)
-    api(Dependencies.glideOkhttp3)
-    api(Dependencies.glideAnnotations)
 
     api(Dependencies.retrofit)
     api(Dependencies.retrofitConverterGson) { exclude("com.google.code.gson") }
@@ -117,7 +111,6 @@ fun DependencyHandlerScope.commonDependencies() {
 
     api(Dependencies.autoService)
 
-    api(Dependencies.imageTools)
     api(Dependencies.agentWeb)
 } 
 

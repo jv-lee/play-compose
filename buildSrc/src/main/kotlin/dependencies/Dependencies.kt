@@ -45,6 +45,7 @@ object Dependencies {
     const val composeLivedata = "androidx.compose.runtime:runtime-livedata:${Version.compose}"
 
     // compose accompanist
+    const val composeCoin = "com.google.accompanist:accompanist-coil:0.15.0"
     const val composeNavigationAnimation =
         "com.google.accompanist:accompanist-navigation-animation:${Version.accompanist}"
     const val composeInsets = "com.google.accompanist:accompanist-insets:${Version.accompanist}"
@@ -54,6 +55,11 @@ object Dependencies {
         "com.google.accompanist:accompanist-systemuicontroller:${Version.accompanist}"
     const val composeSwiperRefresh =
         "com.google.accompanist:accompanist-swiperefresh:${Version.accompanist}"
+    const val composePager = "com.google.accompanist:accompanist-pager:${Version.accompanist}"
+    const val composePagerIndicators =
+        "com.google.accompanist:accompanist-pager-indicators:${Version.accompanist}"
+    const val composeFlowlayout =
+        "com.google.accompanist:accompanist-flowlayout:${Version.accompanist}"
 
     // paging 分页
     const val pagingRuntime = "androidx.paging:paging-runtime:${Version.paging}"
