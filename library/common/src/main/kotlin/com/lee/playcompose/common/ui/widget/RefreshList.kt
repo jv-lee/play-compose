@@ -34,6 +34,7 @@ fun <T : Any> RefreshList(
     isRefreshing: Boolean = false,
     swipeEnable: Boolean = true,
     onRefresh: (() -> Unit) = {},
+    indicatorPadding: PaddingValues = PaddingValues(0.dp),
     listState: LazyListState = rememberLazyListState(),
     itemContent: LazyListScope.() -> Unit
 ) {
@@ -63,10 +64,14 @@ fun <T : Any> RefreshList(
         return
     }
 
-    SwipeRefresh(state = swipeRefreshState, swipeEnabled = swipeEnable, onRefresh = {
-        onRefresh()
-        lazyPagingItems.refresh()
-    }) {
+    SwipeRefresh(
+        state = swipeRefreshState,
+        swipeEnabled = swipeEnable,
+        indicatorPadding = indicatorPadding,
+        onRefresh = {
+            onRefresh()
+            lazyPagingItems.refresh()
+        }) {
         swipeRefreshState.isRefreshing =
             ((lazyPagingItems.loadState.refresh is LoadState.Loading) || isRefreshing)
 

@@ -48,9 +48,11 @@ fun HomePage(navController: NavController, viewModel: HomeViewModel = viewModel(
     val categoryList = viewState.category
     val isRefreshing = viewState.isRefreshing
 
-    RefreshList(lazyPagingItems = contentList, isRefreshing = isRefreshing, onRefresh = {
-        viewModel.dispatch(HomeViewAction.RequestData)
-    }) {
+    RefreshList(
+        lazyPagingItems = contentList,
+        isRefreshing = isRefreshing,
+//        indicatorPadding = PaddingValues(top = 56.dp),
+        onRefresh = { viewModel.dispatch(HomeViewAction.RequestData) }) {
         // build home banner item
         if (bannerList.isNotEmpty()) {
             item {
