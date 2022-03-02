@@ -58,7 +58,6 @@ fun HomePage(navController: NavController, viewModel: HomeViewModel = viewModel(
                     list = bannerList, modifier = Modifier
                         .fillMaxWidth()
                         .height(180.dp)
-                        .padding(bottom = OffsetMedium)
                 )
             }
         }

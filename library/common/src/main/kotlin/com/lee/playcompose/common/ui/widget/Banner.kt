@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Card
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,6 +21,7 @@ import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
 import com.lee.playcompose.common.entity.Banner
 import com.lee.playcompose.common.ui.theme.OffsetMedium
+import com.lee.playcompose.common.ui.theme.OffsetSmall
 import kotlinx.coroutines.delay
 
 /**
@@ -62,6 +64,7 @@ fun Banner(
         HorizontalPager(
             count = looperCountFactor * 3,
             state = pagerState,
+            contentPadding = PaddingValues(horizontal = 32.dp),
             modifier = Modifier
                 .clickable { }
                 .fillMaxSize()
@@ -94,12 +97,16 @@ fun Banner(
                     }
                 }) { page ->
             val index = getRealIndex(page, list.size)
-            Image(
-                painter = rememberImagePainter(data = list[index].imagePath),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize()
-            )
+            Box(modifier = Modifier.padding(OffsetSmall)) {
+                Card(modifier = Modifier.fillMaxWidth()) {
+                    Image(
+                        painter = rememberImagePainter(data = list[index].imagePath),
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
+            }
         }
 
         // indicator
@@ -112,7 +119,7 @@ fun Banner(
 }
 
 @Composable
-fun BannerIndicator(modifier: Modifier = Modifier, data: List<Banner>, state: PagerState) {
+private fun BannerIndicator(modifier: Modifier = Modifier, data: List<Banner>, state: PagerState) {
     Box(modifier) {
         Row {
             val page = getRealIndex(state.currentPage, data.size)

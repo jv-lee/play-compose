@@ -78,6 +78,7 @@ fun DependencyHandlerScope.commonDependencies() {
     api(Dependencies.composeUi)
     api(Dependencies.composeMaterial)
     api(Dependencies.composePreview)
+    api(Dependencies.composeUtil)
     api(Dependencies.composeLivedata)
 
     api(Dependencies.composeCoin)
