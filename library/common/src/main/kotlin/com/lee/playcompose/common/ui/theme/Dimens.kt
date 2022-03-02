@@ -3,15 +3,19 @@ package com.lee.playcompose.common.ui.theme
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+// 全局通用组件数值
 val ToolBarHeight = 48.dp
 val TabBarHeight = 48.dp
 val SearchBarHeight = 42.dp
 val BottomNavBarHeight = 56.dp
 val ListStateItemHeight = 60.dp
 
+// 全局通用radius值
+val OffsetRadiusLarge = 32.dp
+val OffsetRadiusMedium = 16.dp
+val OffsetRadiusSmall = 8.dp
 
 // 全局通用样式 （统一全局margin padding radius值）
-val OffsetRadius = 16.dp
 val OffsetLarge = 16.dp
 val OffsetMedium = 8.dp
 val OffsetSmall = 4.dp
