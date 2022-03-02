@@ -8,20 +8,22 @@ val TabBarHeight = 48.dp
 val SearchBarHeight = 42.dp
 val BottomNavBarHeight = 56.dp
 val ListStateItemHeight = 60.dp
-val ListTitleHeight = 30.dp
-
-val PrimaryButtonHeight = 36.dp
-val MediumButtonHeight = 28.dp
-val SmallButtonHeight = 28.dp
 
 
-val H1 = 48.sp  //超大号标题
-val H2 = 36.sp  //大号标题
-val H3 = 24.sp  //主标题
-val H4 = 20.sp  //普通标题
-val H5 = 16.sp  //内容文本
-val H6 = 14.sp  //普通文字尺寸
-val H7 = 12.sp  //提示语尺寸
+// 全局通用样式 （统一全局margin padding radius值）
+val OffsetRadius = 16.dp
+val OffsetLarge = 16.dp
+val OffsetMedium = 8.dp
+val OffsetSmall = 4.dp
+
+// 全局通用字体size值
+val FontSizeLargeXX = 20.sp
+val FontSizeLargeX = 18.sp
+val FontSizeLarge = 16.sp
+val FontSizeMedium = 14.sp
+val FontSizeSmall = 12.sp
+val FontSizeSmallX = 10.sp
+
 
 val ToolBarTitleSize = 18.sp
 

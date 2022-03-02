@@ -32,7 +32,7 @@ import com.lee.playcompose.system.SystemPage
 fun MainPage(navController: NavHostController) {
     val selectIndex = remember { mutableStateOf(0) }
 
-    Scaffold(backgroundColor = AppTheme.colors.window, bottomBar = {
+    Scaffold(backgroundColor = AppTheme.colors.background, bottomBar = {
         BottomNavigation(backgroundColor = AppTheme.colors.item, elevation = 3.dp) {
             tabItems.forEachIndexed { index, item ->
                 val isSelect = selectIndex.value == index
