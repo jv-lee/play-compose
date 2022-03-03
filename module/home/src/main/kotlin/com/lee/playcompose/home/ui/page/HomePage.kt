@@ -65,10 +65,9 @@ fun HomePage(navController: NavController, viewModel: HomeViewModel = viewModel(
         AppBarContainer {
             AppGradientTextBar(
                 title = stringResource(id = R.string.home_header_text),
-                navigationPainter = painterResource(id = CR.drawable.vector_search)
-            ) {
-                toast("search click")
-            }
+                navigationPainter = painterResource(id = CR.drawable.vector_search),
+                onNavigationClick = { toast("search click") }
+            )
         }
     }
 }
