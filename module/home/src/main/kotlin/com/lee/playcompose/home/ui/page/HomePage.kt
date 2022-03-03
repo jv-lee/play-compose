@@ -12,10 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -28,8 +25,12 @@ import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.base.extensions.px2dp
 import com.lee.playcompose.common.entity.Banner
 import com.lee.playcompose.common.entity.Content
-import com.lee.playcompose.common.extensions.*
-import com.lee.playcompose.common.ui.theme.*
+import com.lee.playcompose.common.extensions.toast
+import com.lee.playcompose.common.ui.composable.ContentItem
+import com.lee.playcompose.common.ui.theme.AppTheme
+import com.lee.playcompose.common.ui.theme.OffsetLarge
+import com.lee.playcompose.common.ui.theme.OffsetMedium
+import com.lee.playcompose.common.ui.theme.ToolBarHeight
 import com.lee.playcompose.common.ui.widget.AppBarContainer
 import com.lee.playcompose.common.ui.widget.AppGradientTextBar
 import com.lee.playcompose.common.ui.widget.BannerView
@@ -130,7 +131,7 @@ private fun HomeContentList(
         // build home content item
         itemsIndexed(contentList) { _, item ->
             item ?: return@itemsIndexed
-            HomeContentItem(item, onContentItemClick)
+            ContentItem(item, onContentItemClick)
         }
     }
 }
@@ -178,78 +179,6 @@ private fun HomeCategoryChildItem(
                     )
                     Spacer(modifier = Modifier.height(OffsetMedium))
                     Text(text = category.name, color = AppTheme.colors.accent)
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun HomeContentItem(
-    item: Content,
-    onItemClick: (Content) -> Unit
-) {
-    Box(modifier = Modifier.padding(OffsetMedium)) {
-        Card(backgroundColor = AppTheme.colors.item) {
-            Box(modifier = Modifier
-                .fillMaxSize()
-                .clickable {
-                    onItemClick(item)
-                }) {
-                ConstraintLayout(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(OffsetLarge)
-                ) {
-                    val (author, title, category, time) = createRefs()
-
-                    Text(
-                        text = item.getAuthor(),
-                        color = AppTheme.colors.accent,
-                        fontSize = FontSizeMedium,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier
-                            .constrainAs(author) {
-                                start.linkTo(parent.start)
-                                top.linkTo(parent.top)
-                            }
-                    )
-
-                    Text(
-                        text = item.getTitle(),
-                        color = AppTheme.colors.primary,
-                        fontSize = FontSizeSmall,
-                        overflow = TextOverflow.Ellipsis,
-                        maxLines = 2,
-                        modifier = Modifier
-                            .padding(top = OffsetMedium)
-                            .constrainAs(title) {
-                                start.linkTo(parent.start)
-                                top.linkTo(author.bottom)
-                            }
-                    )
-
-                    Text(
-                        text = item.getCategory(),
-                        color = AppTheme.colors.focus,
-                        fontSize = FontSizeSmallX,
-                        modifier = Modifier
-                            .padding(top = OffsetMedium)
-                            .constrainAs(category) {
-                                start.linkTo(parent.start)
-                                top.linkTo(title.bottom)
-                            })
-
-                    Text(
-                        text = item.getDateFormat(),
-                        color = AppTheme.colors.primaryDark,
-                        fontSize = FontSizeSmallX,
-                        modifier = Modifier
-                            .constrainAs(time) {
-                                end.linkTo(parent.end)
-                                top.linkTo(category.top)
-                                bottom.linkTo(category.bottom)
-                            })
                 }
             }
         }
