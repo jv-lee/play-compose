@@ -19,7 +19,6 @@ import coil.compose.rememberImagePainter
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
-import com.lee.playcompose.common.entity.Banner
 import com.lee.playcompose.common.ui.theme.OffsetMedium
 import com.lee.playcompose.common.ui.theme.OffsetSmall
 import kotlinx.coroutines.delay
@@ -29,18 +28,26 @@ import kotlinx.coroutines.delay
  * @date 2022/3/2
  * @description
  */
+abstract class BannerHolder<T : Any>(private val data: List<T>) {
+    fun getCount() = data.size
+    fun getData() = data
+    open fun itemClick(item: T) {}
+    abstract fun getPath(item: T): String
+}
+
 @ExperimentalCoilApi
 @Composable
-fun Banner(
-    list: List<Banner>,
+fun <T : Any> Banner(
+    holder: BannerHolder<T>,
     modifier: Modifier = Modifier,
     timeMillis: Long = 3000,
-    indicatorAlignment: Alignment = Alignment.BottomCenter
+    indicatorAlignment: Alignment = Alignment.BottomCenter,
+    clipCardEnable: Boolean = true
 ) {
     //无限翻页最大倍数 count * filed
     val looperCountFactor = 500
     val pagerState =
-        rememberPagerState(initialPage = getStartSelectItem(list.size, looperCountFactor))
+        rememberPagerState(initialPage = getStartSelectItem(holder.getCount(), looperCountFactor))
 
     var executeChangePage by remember { mutableStateOf(false) }
     var currentPageIndex = 0
@@ -51,7 +58,7 @@ fun Banner(
             delay(timeMillis = timeMillis)
             var itemIndex = pagerState.currentPage
             if (itemIndex == looperCountFactor * 3 - 1) {
-                val startIndex = getStartSelectItem(list.size, looperCountFactor)
+                val startIndex = getStartSelectItem(holder.getCount(), looperCountFactor)
                 pagerState.animateScrollToPage(startIndex)
             } else {
                 ++itemIndex
@@ -64,7 +71,7 @@ fun Banner(
         HorizontalPager(
             count = looperCountFactor * 3,
             state = pagerState,
-            contentPadding = PaddingValues(horizontal = 32.dp),
+            contentPadding = PaddingValues(horizontal = if (clipCardEnable) 32.dp else 0.dp),
             modifier = Modifier
                 .clickable { }
                 .fillMaxSize()
@@ -96,22 +103,25 @@ fun Banner(
                         }
                     }
                 }) { page ->
-            val index = getRealIndex(page, list.size)
-            Box(modifier = Modifier.padding(OffsetSmall)) {
-                Card(modifier = Modifier.fillMaxWidth()) {
-                    Image(
-                        painter = rememberImagePainter(data = list[index].imagePath),
-                        contentDescription = null,
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier.fillMaxSize()
-                    )
-                }
+            val index = getRealIndex(page, holder.getCount())
+            val item = holder.getData()[index]
+            val path = holder.getPath(item)
+
+            BannerItemContainer(clipCardEnable = clipCardEnable, onClick = {
+                holder.itemClick(item)
+            }) {
+                Image(
+                    painter = rememberImagePainter(data = path),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.fillMaxSize()
+                )
             }
         }
 
         // indicator
         BannerIndicator(
-            data = list, state = pagerState, modifier = Modifier
+            data = holder.getData(), state = pagerState, modifier = Modifier
                 .align(indicatorAlignment)
                 .padding(OffsetMedium)
         )
@@ -119,7 +129,32 @@ fun Banner(
 }
 
 @Composable
-private fun BannerIndicator(modifier: Modifier = Modifier, data: List<Banner>, state: PagerState) {
+private fun BannerItemContainer(
+    clipCardEnable: Boolean,
+    onClick: () -> Unit,
+    content: @Composable () -> Unit
+) {
+    val boxPadding = if (clipCardEnable) OffsetSmall else 0.dp
+
+    Box(modifier = Modifier
+        .padding(boxPadding)
+        .clickable {
+            onClick()
+        }) {
+        if (clipCardEnable) {
+            Card(modifier = Modifier.fillMaxWidth()) { content() }
+        } else {
+            content()
+        }
+    }
+}
+
+@Composable
+private fun <T : Any> BannerIndicator(
+    modifier: Modifier = Modifier,
+    data: List<T>,
+    state: PagerState
+) {
     Box(modifier) {
         Row {
             val page = getRealIndex(state.currentPage, data.size)
