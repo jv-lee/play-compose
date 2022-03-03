@@ -44,7 +44,7 @@ import com.lee.playcompose.common.R as CR
 /**
  * @author jv.lee
  * @date 2022/2/24
- * @description
+ * @description 首页 homeTab页
  */
 @ExperimentalCoilApi
 @Composable
@@ -150,7 +150,10 @@ private fun HomeCategoryItem(
 }
 
 @Composable
-private fun HomeCategoryChildItem(category: HomeCategory, onItemClick: (HomeCategory) -> Unit) {
+private fun HomeCategoryChildItem(
+    category: HomeCategory,
+    onItemClick: (HomeCategory) -> Unit
+) {
     val screenWidth = app.resources.displayMetrics.widthPixels
     val viewWidth = app.px2dp(screenWidth / 2)
     Box(
@@ -182,7 +185,10 @@ private fun HomeCategoryChildItem(category: HomeCategory, onItemClick: (HomeCate
 }
 
 @Composable
-private fun HomeContentItem(item: Content, onItemClick: (Content) -> Unit) {
+private fun HomeContentItem(
+    item: Content,
+    onItemClick: (Content) -> Unit
+) {
     Box(modifier = Modifier.padding(OffsetMedium)) {
         Card(backgroundColor = AppTheme.colors.item) {
             Box(modifier = Modifier
