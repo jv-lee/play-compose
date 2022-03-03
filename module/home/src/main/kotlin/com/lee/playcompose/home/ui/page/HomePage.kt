@@ -1,11 +1,9 @@
 package com.lee.playcompose.home.ui.page
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -34,6 +32,7 @@ import com.lee.playcompose.common.extensions.getDateFormat
 import com.lee.playcompose.common.extensions.getTitle
 import com.lee.playcompose.common.ui.theme.*
 import com.lee.playcompose.common.ui.widget.AppBarContainer
+import com.lee.playcompose.common.ui.widget.AppGradientTextBar
 import com.lee.playcompose.common.ui.widget.Banner
 import com.lee.playcompose.common.ui.widget.RefreshList
 import com.lee.playcompose.home.R
@@ -55,36 +54,10 @@ fun HomePage(navController: NavController, viewModel: HomeViewModel = viewModel(
 
     Box {
         HomeContentList(viewState = viewState) { viewModel.dispatch(HomeViewAction.RequestData) }
-        AppBarContainer { HomeHeader() }
-    }
-}
-
-@Composable
-private fun HomeHeader() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(ToolBarHeight)
-            .padding(start = OffsetLarge, end = OffsetLarge)
-    ) {
-        Text(
-            text = stringResource(id = R.string.home_header_text),
-            fontWeight = FontWeight.Bold,
-            fontSize = FontSizeLargeXX,
-            color = AppTheme.colors.accent,
-            modifier = Modifier
-                .align(Alignment.CenterStart)
-        )
-        Box(
-            modifier = Modifier
-                .size(36.dp)
-                .align(Alignment.CenterEnd)
-                .background(shape = CircleShape, color = AppTheme.colors.focus)
-        ) {
-            Image(
-                painter = painterResource(id = CR.drawable.vector_search),
-                contentDescription = null,
-                modifier = Modifier.align(Alignment.Center)
+        AppBarContainer {
+            AppGradientTextBar(
+                stringResource(id = R.string.home_header_text),
+                painterResource(id = CR.drawable.vector_search)
             )
         }
     }
