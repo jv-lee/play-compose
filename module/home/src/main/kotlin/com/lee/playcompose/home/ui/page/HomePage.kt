@@ -1,15 +1,19 @@
 package com.lee.playcompose.home.ui.page
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -19,19 +23,26 @@ import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
 import coil.annotation.ExperimentalCoilApi
+import com.google.accompanist.insets.LocalWindowInsets
+import com.google.accompanist.insets.rememberInsetsPaddingValues
+import com.google.accompanist.insets.statusBarsPadding
 import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.base.extensions.px2dp
+import com.lee.playcompose.common.R as CR
+import com.lee.playcompose.home.R
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.extensions.getAuthor
 import com.lee.playcompose.common.extensions.getCategory
 import com.lee.playcompose.common.extensions.getDateFormat
 import com.lee.playcompose.common.extensions.getTitle
 import com.lee.playcompose.common.ui.theme.*
+import com.lee.playcompose.common.ui.widget.AppBarContainer
 import com.lee.playcompose.common.ui.widget.Banner
 import com.lee.playcompose.common.ui.widget.RefreshList
 import com.lee.playcompose.home.model.entity.HomeCategory
 import com.lee.playcompose.home.viewmodel.HomeViewAction
 import com.lee.playcompose.home.viewmodel.HomeViewModel
+import com.lee.playcompose.home.viewmodel.HomeViewState
 
 /**
  * @author jv.lee
@@ -43,6 +54,50 @@ import com.lee.playcompose.home.viewmodel.HomeViewModel
 fun HomePage(navController: NavController, viewModel: HomeViewModel = viewModel()) {
     val viewState = viewModel.viewStates
 
+    Box {
+        HomeContentList(viewState = viewState) {
+            viewModel.dispatch(HomeViewAction.RequestData)
+        }
+        AppBarContainer(modifier = Modifier.background(Color.Transparent)) {
+            HomeHeader()
+        }
+    }
+}
+
+@Composable
+private fun HomeHeader() {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(ToolBarHeight)
+            .padding(start = OffsetLarge, end = OffsetLarge)
+    ) {
+        Text(
+            text = stringResource(id = R.string.home_header_text),
+            fontWeight = FontWeight.Bold,
+            fontSize = FontSizeLargeXX,
+            color = AppTheme.colors.accent,
+            modifier = Modifier
+                .align(Alignment.CenterStart)
+        )
+        Box(
+            modifier = Modifier
+                .size(36.dp)
+                .align(Alignment.CenterEnd)
+                .background(shape = CircleShape, color = AppTheme.colors.focus)
+        ) {
+            Image(
+                painter = painterResource(id = CR.drawable.vector_search),
+                contentDescription = null,
+                modifier = Modifier.align(Alignment.Center)
+            )
+        }
+    }
+}
+
+@ExperimentalCoilApi
+@Composable
+private fun HomeContentList(viewState: HomeViewState, refresh: () -> Unit) {
     val contentList = viewState.pagingData.collectAsLazyPagingItems()
     val bannerList = viewState.banners
     val categoryList = viewState.category
@@ -51,8 +106,22 @@ fun HomePage(navController: NavController, viewModel: HomeViewModel = viewModel(
     RefreshList(
         lazyPagingItems = contentList,
         isRefreshing = isRefreshing,
-//        indicatorPadding = PaddingValues(top = 56.dp),
-        onRefresh = { viewModel.dispatch(HomeViewAction.RequestData) }) {
+        indicatorPadding = rememberInsetsPaddingValues(
+            insets = LocalWindowInsets.current.statusBars,
+            applyTop = true,
+            additionalTop = ToolBarHeight
+        ),
+        onRefresh = { refresh() }) {
+
+        // header spacer
+        item {
+            Spacer(
+                modifier = Modifier
+                    .statusBarsPadding()
+                    .height(ToolBarHeight)
+            )
+        }
+
         // build home banner item
         if (bannerList.isNotEmpty()) {
             item {
