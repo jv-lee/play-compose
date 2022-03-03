@@ -11,7 +11,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -28,8 +27,6 @@ import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.google.accompanist.insets.statusBarsPadding
 import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.base.extensions.px2dp
-import com.lee.playcompose.common.R as CR
-import com.lee.playcompose.home.R
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.extensions.getAuthor
 import com.lee.playcompose.common.extensions.getCategory
@@ -39,10 +36,12 @@ import com.lee.playcompose.common.ui.theme.*
 import com.lee.playcompose.common.ui.widget.AppBarContainer
 import com.lee.playcompose.common.ui.widget.Banner
 import com.lee.playcompose.common.ui.widget.RefreshList
+import com.lee.playcompose.home.R
 import com.lee.playcompose.home.model.entity.HomeCategory
 import com.lee.playcompose.home.viewmodel.HomeViewAction
 import com.lee.playcompose.home.viewmodel.HomeViewModel
 import com.lee.playcompose.home.viewmodel.HomeViewState
+import com.lee.playcompose.common.R as CR
 
 /**
  * @author jv.lee
@@ -55,12 +54,8 @@ fun HomePage(navController: NavController, viewModel: HomeViewModel = viewModel(
     val viewState = viewModel.viewStates
 
     Box {
-        HomeContentList(viewState = viewState) {
-            viewModel.dispatch(HomeViewAction.RequestData)
-        }
-        AppBarContainer(modifier = Modifier.background(Color.Transparent)) {
-            HomeHeader()
-        }
+        HomeContentList(viewState = viewState) { viewModel.dispatch(HomeViewAction.RequestData) }
+        AppBarContainer { HomeHeader() }
     }
 }
 

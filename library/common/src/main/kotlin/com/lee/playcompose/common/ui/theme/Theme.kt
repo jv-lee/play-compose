@@ -22,6 +22,7 @@ private val DarkColorPalette = AppColors(
     onFocus = Color(0xFFEADEFF),
     window = Color(0xFF010101),
     background = Color(0xFF010101),
+    backgroundTransparent = Color(0x1F010101),
     divider = Color(0x1A010101),
     item = Color(0xFF1B1B1B),
     shadow = Color(0xFF111111),
@@ -36,6 +37,7 @@ private val LightColorPalette = AppColors(
     onFocus = Color(0xFFEADEFF),
     window = Color(0xFFFFFFFF),
     background = Color(0xFFF9F5FF),
+    backgroundTransparent = Color(0x1FF9F5FF),
     divider = Color(0x1AF9F5FF),
     item = Color(0xFFFFFFFF),
     shadow = Color(0xFFEBEBEB),
@@ -51,6 +53,7 @@ class AppColors(
     onFocus: Color,
     window: Color,
     background: Color,
+    backgroundTransparent: Color,
     divider: Color,
     item: Color,
     shadow: Color,
@@ -63,6 +66,7 @@ class AppColors(
     var onFocus: Color by mutableStateOf(onFocus)
     var window: Color by mutableStateOf(window)
     var background: Color by mutableStateOf(background)
+    var backgroundTransparent: Color by mutableStateOf(backgroundTransparent)
     var divider: Color by mutableStateOf(divider)
     var item: Color by mutableStateOf(item)
     var shadow: Color by mutableStateOf(shadow)
@@ -98,6 +102,7 @@ fun PlayComposeTheme(
     val onFocus = animateColorAsState(colors.onFocus, TweenSpec(600))
     val window = animateColorAsState(colors.window, TweenSpec(600))
     val background = animateColorAsState(colors.background, TweenSpec(600))
+    val backgroundTransparent = animateColorAsState(colors.backgroundTransparent, TweenSpec(600))
     val divider = animateColorAsState(colors.divider, TweenSpec(600))
     val item = animateColorAsState(colors.item, TweenSpec(600))
     val shadow = animateColorAsState(colors.shadow, TweenSpec(600))
@@ -111,6 +116,7 @@ fun PlayComposeTheme(
         onFocus = onFocus.value,
         window = window.value,
         background = background.value,
+        backgroundTransparent = backgroundTransparent.value,
         divider = divider.value,
         item = item.value,
         shadow = shadow.value,
