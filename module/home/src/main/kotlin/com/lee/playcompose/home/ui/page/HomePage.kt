@@ -3,6 +3,7 @@ package com.lee.playcompose.home.ui.page
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
@@ -86,11 +87,13 @@ private fun HomeContentList(
     val bannerList = viewState.banners
     val categoryList = viewState.category
     val isRefreshing = viewState.isRefreshing
+    val listState = if (contentList.itemCount > 0) viewState.listState else LazyListState()
 
     RefreshList(
         lazyPagingItems = contentList,
         isRefreshing = isRefreshing,
         onRefresh = { onRefresh() },
+        listState = listState,
         indicatorPadding = rememberInsetsPaddingValues(
             insets = LocalWindowInsets.current.statusBars,
             applyTop = true,

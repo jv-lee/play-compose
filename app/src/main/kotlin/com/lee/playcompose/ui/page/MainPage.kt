@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import coil.annotation.ExperimentalCoilApi
 import com.lee.playcompose.R
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.theme.BottomNavBarHeight
@@ -27,6 +28,7 @@ import com.lee.playcompose.system.SystemPage
  * @date 2022/2/18
  * @description
  */
+@ExperimentalCoilApi
 @ExperimentalAnimationApi
 @Composable
 fun MainPage(navController: NavHostController) {

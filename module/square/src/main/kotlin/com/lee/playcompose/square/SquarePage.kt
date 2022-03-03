@@ -3,6 +3,7 @@ package com.lee.playcompose.square
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -57,9 +58,11 @@ fun SquareContentList(
     onContentItemClick: (Content) -> Unit
 ) {
     val contentList = viewState.pagingData.collectAsLazyPagingItems()
+    val listState = if (contentList.itemCount > 0) viewState.listState else LazyListState()
 
     RefreshList(
         lazyPagingItems = contentList,
+        listState = listState,
         indicatorPadding = rememberInsetsPaddingValues(
             insets = LocalWindowInsets.current.statusBars,
             applyTop = true,
