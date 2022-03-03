@@ -28,17 +28,12 @@ import kotlinx.coroutines.delay
  * @date 2022/3/2
  * @description
  */
-abstract class BannerHolder<T : Any>(private val data: List<T>) {
-    fun getCount() = data.size
-    fun getData() = data
-    open fun itemClick(item: T) {}
-    abstract fun getPath(item: T): String
-}
-
 @ExperimentalCoilApi
 @Composable
-fun <T : Any> Banner(
-    holder: BannerHolder<T>,
+fun <T : Any> BannerView(
+    data: List<T>,
+    findPath: (T) -> String,
+    itemClick: (T) -> Unit,
     modifier: Modifier = Modifier,
     timeMillis: Long = 3000,
     indicatorAlignment: Alignment = Alignment.BottomCenter,
@@ -47,7 +42,7 @@ fun <T : Any> Banner(
     //无限翻页最大倍数 count * filed
     val looperCountFactor = 500
     val pagerState =
-        rememberPagerState(initialPage = getStartSelectItem(holder.getCount(), looperCountFactor))
+        rememberPagerState(initialPage = getStartSelectItem(data.size, looperCountFactor))
 
     var executeChangePage by remember { mutableStateOf(false) }
     var currentPageIndex = 0
@@ -58,7 +53,7 @@ fun <T : Any> Banner(
             delay(timeMillis = timeMillis)
             var itemIndex = pagerState.currentPage
             if (itemIndex == looperCountFactor * 3 - 1) {
-                val startIndex = getStartSelectItem(holder.getCount(), looperCountFactor)
+                val startIndex = getStartSelectItem(data.size, looperCountFactor)
                 pagerState.animateScrollToPage(startIndex)
             } else {
                 ++itemIndex
@@ -103,25 +98,27 @@ fun <T : Any> Banner(
                         }
                     }
                 }) { page ->
-            val index = getRealIndex(page, holder.getCount())
-            val item = holder.getData()[index]
-            val path = holder.getPath(item)
+            val index = getRealIndex(page, data.size)
+            val item = data[index]
+            val path = findPath(item)
 
-            BannerItemContainer(clipCardEnable = clipCardEnable, onClick = {
-                holder.itemClick(item)
-            }) {
+            BannerItemContainer(clipCardEnable = clipCardEnable) {
                 Image(
                     painter = rememberImagePainter(data = path),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .clickable {
+                            itemClick(item)
+                        }
                 )
             }
         }
 
         // indicator
         BannerIndicator(
-            data = holder.getData(), state = pagerState, modifier = Modifier
+            data = data, state = pagerState, modifier = Modifier
                 .align(indicatorAlignment)
                 .padding(OffsetMedium)
         )
@@ -131,16 +128,11 @@ fun <T : Any> Banner(
 @Composable
 private fun BannerItemContainer(
     clipCardEnable: Boolean,
-    onClick: () -> Unit,
     content: @Composable () -> Unit
 ) {
     val boxPadding = if (clipCardEnable) OffsetSmall else 0.dp
 
-    Box(modifier = Modifier
-        .padding(boxPadding)
-        .clickable {
-            onClick()
-        }) {
+    Box(modifier = Modifier.padding(boxPadding)) {
         if (clipCardEnable) {
             Card(modifier = Modifier.fillMaxWidth()) { content() }
         } else {

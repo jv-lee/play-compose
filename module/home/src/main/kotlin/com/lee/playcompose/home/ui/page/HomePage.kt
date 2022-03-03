@@ -25,11 +25,13 @@ import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.google.accompanist.insets.statusBarsPadding
 import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.base.extensions.px2dp
-import com.lee.playcompose.common.entity.Banner
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.extensions.*
 import com.lee.playcompose.common.ui.theme.*
-import com.lee.playcompose.common.ui.widget.*
+import com.lee.playcompose.common.ui.widget.AppBarContainer
+import com.lee.playcompose.common.ui.widget.AppGradientTextBar
+import com.lee.playcompose.common.ui.widget.BannerView
+import com.lee.playcompose.common.ui.widget.RefreshList
 import com.lee.playcompose.home.R
 import com.lee.playcompose.home.model.entity.HomeCategory
 import com.lee.playcompose.home.viewmodel.HomeViewAction
@@ -88,19 +90,17 @@ private fun HomeContentList(viewState: HomeViewState, refresh: () -> Unit) {
         // build home banner item
         if (bannerList.isNotEmpty()) {
             item {
-                Banner(
+                BannerView(
+                    data = bannerList,
+                    findPath = { item ->
+                        item.imagePath
+                    },
+                    itemClick = { item ->
+                        toast(item.title)
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(180.dp),
-                    holder = object : BannerHolder<Banner>(bannerList) {
-                        override fun getPath(item: Banner): String {
-                            return item.imagePath
-                        }
-
-                        override fun itemClick(item: Banner) {
-                            toast(item.title)
-                        }
-                    }
+                        .height(180.dp)
                 )
             }
         }
