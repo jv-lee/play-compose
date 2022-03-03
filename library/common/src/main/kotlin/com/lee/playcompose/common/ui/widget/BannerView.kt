@@ -32,8 +32,8 @@ import kotlinx.coroutines.delay
 @Composable
 fun <T : Any> BannerView(
     data: List<T>,
-    findPath: (T) -> String,
-    itemClick: (T) -> Unit,
+    findPath: ((T) -> String),
+    onItemClick: ((T) -> Unit),
     modifier: Modifier = Modifier,
     timeMillis: Long = 3000,
     indicatorAlignment: Alignment = Alignment.BottomCenter,
@@ -110,7 +110,7 @@ fun <T : Any> BannerView(
                     modifier = Modifier
                         .fillMaxSize()
                         .clickable {
-                            itemClick(item)
+                            onItemClick(item)
                         }
                 )
             }

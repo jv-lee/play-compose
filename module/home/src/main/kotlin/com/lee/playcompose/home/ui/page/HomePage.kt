@@ -1,6 +1,7 @@
 package com.lee.playcompose.home.ui.page
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -25,6 +26,7 @@ import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.google.accompanist.insets.statusBarsPadding
 import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.base.extensions.px2dp
+import com.lee.playcompose.common.entity.Banner
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.extensions.*
 import com.lee.playcompose.common.ui.theme.*
@@ -50,19 +52,36 @@ fun HomePage(navController: NavController, viewModel: HomeViewModel = viewModel(
     val viewState = viewModel.viewStates
 
     Box {
-        HomeContentList(viewState = viewState) { viewModel.dispatch(HomeViewAction.RequestData) }
+        // content
+        HomeContentList(
+            viewState = viewState,
+            onRefresh = { viewModel.dispatch(HomeViewAction.RequestData) },
+            onBannerItemClick = { toast(it.title) },
+            onCategoryItemClick = { toast(it.name) },
+            onContentItemClick = { toast(it.title) }
+        )
+
+        // header
         AppBarContainer {
             AppGradientTextBar(
-                stringResource(id = R.string.home_header_text),
-                painterResource(id = CR.drawable.vector_search)
-            )
+                title = stringResource(id = R.string.home_header_text),
+                navigationPainter = painterResource(id = CR.drawable.vector_search)
+            ) {
+                toast("search click")
+            }
         }
     }
 }
 
 @ExperimentalCoilApi
 @Composable
-private fun HomeContentList(viewState: HomeViewState, refresh: () -> Unit) {
+private fun HomeContentList(
+    viewState: HomeViewState,
+    onRefresh: () -> Unit,
+    onBannerItemClick: (Banner) -> Unit,
+    onCategoryItemClick: (HomeCategory) -> Unit,
+    onContentItemClick: (Content) -> Unit,
+) {
     val contentList = viewState.pagingData.collectAsLazyPagingItems()
     val bannerList = viewState.banners
     val categoryList = viewState.category
@@ -71,12 +90,13 @@ private fun HomeContentList(viewState: HomeViewState, refresh: () -> Unit) {
     RefreshList(
         lazyPagingItems = contentList,
         isRefreshing = isRefreshing,
+        onRefresh = { onRefresh() },
         indicatorPadding = rememberInsetsPaddingValues(
             insets = LocalWindowInsets.current.statusBars,
             applyTop = true,
             additionalTop = ToolBarHeight
-        ),
-        onRefresh = { refresh() }) {
+        )
+    ) {
 
         // header spacer
         item {
@@ -92,12 +112,8 @@ private fun HomeContentList(viewState: HomeViewState, refresh: () -> Unit) {
             item {
                 BannerView(
                     data = bannerList,
-                    findPath = { item ->
-                        item.imagePath
-                    },
-                    itemClick = { item ->
-                        toast(item.title)
-                    },
+                    onItemClick = onBannerItemClick,
+                    findPath = { item -> item.imagePath },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(180.dp)
@@ -108,29 +124,34 @@ private fun HomeContentList(viewState: HomeViewState, refresh: () -> Unit) {
         // build home category item
         if (categoryList.isNotEmpty()) {
             item {
-                HomeCategoryItem(categoryList)
+                HomeCategoryItem(categoryList, onCategoryItemClick)
             }
         }
 
         // build home content item
         itemsIndexed(contentList) { _, item ->
             item ?: return@itemsIndexed
-            HomeContentItem(item)
+            HomeContentItem(item, onContentItemClick)
         }
     }
 }
 
 @Composable
-private fun HomeCategoryItem(categoryList: List<HomeCategory>) {
+private fun HomeCategoryItem(
+    categoryList: List<HomeCategory>,
+    onItemClick: (HomeCategory) -> Unit
+) {
     LazyRow(modifier = Modifier.fillMaxWidth()) {
         items(categoryList) { item ->
-            HomeCategoryChildItem(category = item)
+            HomeCategoryChildItem(category = item) {
+                onItemClick(it)
+            }
         }
     }
 }
 
 @Composable
-private fun HomeCategoryChildItem(category: HomeCategory) {
+private fun HomeCategoryChildItem(category: HomeCategory, onItemClick: (HomeCategory) -> Unit) {
     val screenWidth = app.resources.displayMetrics.widthPixels
     val viewWidth = app.px2dp(screenWidth / 2)
     Box(
@@ -139,82 +160,92 @@ private fun HomeCategoryChildItem(category: HomeCategory) {
             .padding(OffsetMedium)
     ) {
         Card(backgroundColor = AppTheme.colors.item) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(OffsetLarge)
-                    .wrapContentSize(align = Alignment.Center)
-            ) {
-                Image(
-                    painter = painterResource(id = category.iconResId),
-                    contentDescription = null,
-                    modifier = Modifier.size(50.dp)
-                )
-                Spacer(modifier = Modifier.height(OffsetMedium))
-                Text(text = category.name, color = AppTheme.colors.accent)
+            Box(modifier = Modifier
+                .fillMaxSize()
+                .clickable { onItemClick(category) }) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(OffsetLarge)
+                        .wrapContentSize(align = Alignment.Center)
+                ) {
+                    Image(
+                        painter = painterResource(id = category.iconResId),
+                        contentDescription = null,
+                        modifier = Modifier.size(50.dp)
+                    )
+                    Spacer(modifier = Modifier.height(OffsetMedium))
+                    Text(text = category.name, color = AppTheme.colors.accent)
+                }
             }
         }
     }
 }
 
 @Composable
-private fun HomeContentItem(item: Content) {
+private fun HomeContentItem(item: Content, onItemClick: (Content) -> Unit) {
     Box(modifier = Modifier.padding(OffsetMedium)) {
         Card(backgroundColor = AppTheme.colors.item) {
-            ConstraintLayout(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(OffsetLarge)
-            ) {
-                val (author, title, category, time) = createRefs()
-
-                Text(
-                    text = item.getAuthor(),
-                    color = AppTheme.colors.accent,
-                    fontSize = FontSizeMedium,
-                    fontWeight = FontWeight.Bold,
+            Box(modifier = Modifier
+                .fillMaxSize()
+                .clickable {
+                    onItemClick(item)
+                }) {
+                ConstraintLayout(
                     modifier = Modifier
-                        .constrainAs(author) {
-                            start.linkTo(parent.start)
-                            top.linkTo(parent.top)
-                        }
-                )
+                        .fillMaxWidth()
+                        .padding(OffsetLarge)
+                ) {
+                    val (author, title, category, time) = createRefs()
 
-                Text(
-                    text = item.getTitle(),
-                    color = AppTheme.colors.primary,
-                    fontSize = FontSizeSmall,
-                    overflow = TextOverflow.Ellipsis,
-                    maxLines = 2,
-                    modifier = Modifier
-                        .padding(top = OffsetMedium)
-                        .constrainAs(title) {
-                            start.linkTo(parent.start)
-                            top.linkTo(author.bottom)
-                        }
-                )
+                    Text(
+                        text = item.getAuthor(),
+                        color = AppTheme.colors.accent,
+                        fontSize = FontSizeMedium,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier
+                            .constrainAs(author) {
+                                start.linkTo(parent.start)
+                                top.linkTo(parent.top)
+                            }
+                    )
 
-                Text(
-                    text = item.getCategory(),
-                    color = AppTheme.colors.focus,
-                    fontSize = FontSizeSmallX,
-                    modifier = Modifier
-                        .padding(top = OffsetMedium)
-                        .constrainAs(category) {
-                            start.linkTo(parent.start)
-                            top.linkTo(title.bottom)
-                        })
+                    Text(
+                        text = item.getTitle(),
+                        color = AppTheme.colors.primary,
+                        fontSize = FontSizeSmall,
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 2,
+                        modifier = Modifier
+                            .padding(top = OffsetMedium)
+                            .constrainAs(title) {
+                                start.linkTo(parent.start)
+                                top.linkTo(author.bottom)
+                            }
+                    )
 
-                Text(
-                    text = item.getDateFormat(),
-                    color = AppTheme.colors.primaryDark,
-                    fontSize = FontSizeSmallX,
-                    modifier = Modifier
-                        .constrainAs(time) {
-                            end.linkTo(parent.end)
-                            top.linkTo(category.top)
-                            bottom.linkTo(category.bottom)
-                        })
+                    Text(
+                        text = item.getCategory(),
+                        color = AppTheme.colors.focus,
+                        fontSize = FontSizeSmallX,
+                        modifier = Modifier
+                            .padding(top = OffsetMedium)
+                            .constrainAs(category) {
+                                start.linkTo(parent.start)
+                                top.linkTo(title.bottom)
+                            })
+
+                    Text(
+                        text = item.getDateFormat(),
+                        color = AppTheme.colors.primaryDark,
+                        fontSize = FontSizeSmallX,
+                        modifier = Modifier
+                            .constrainAs(time) {
+                                end.linkTo(parent.end)
+                                top.linkTo(category.top)
+                                bottom.linkTo(category.bottom)
+                            })
+                }
             }
         }
     }

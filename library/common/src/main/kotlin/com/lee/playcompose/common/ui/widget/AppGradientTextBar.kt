@@ -2,6 +2,7 @@ package com.lee.playcompose.common.ui.widget
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Text
@@ -22,7 +23,7 @@ import com.lee.playcompose.common.ui.theme.ToolBarHeight
  * @description
  */
 @Composable
-fun AppGradientTextBar(title: String, navigationPainter: Painter) {
+fun AppGradientTextBar(title: String, navigationPainter: Painter, onNavigationClick: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -46,7 +47,9 @@ fun AppGradientTextBar(title: String, navigationPainter: Painter) {
             Image(
                 painter = navigationPainter,
                 contentDescription = null,
-                modifier = Modifier.align(Alignment.Center)
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .clickable { onNavigationClick() }
             )
         }
     }
