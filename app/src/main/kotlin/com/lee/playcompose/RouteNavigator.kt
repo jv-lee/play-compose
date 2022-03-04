@@ -21,6 +21,7 @@ import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.lee.playcompose.common.ui.theme.AppTheme
+import com.lee.playcompose.common.ui.widget.RouteBackHandler
 import com.lee.playcompose.details.DetailsPage
 import com.lee.playcompose.home.ui.page.HomePage
 import com.lee.playcompose.me.MePage
@@ -40,12 +41,12 @@ fun Activity.RouteNavigator() {
     val navigationInsets =
         rememberInsetsPaddingValues(insets = LocalWindowInsets.current.navigationBars)
 
-    // double click close app.
-//    RouteBackHandler({ finish() }, navController, PageRoute.Main.route)
-
     val navController = rememberAnimatedNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
+
+    // double click close app.
+    RouteBackHandler({ finish() }, navController, mainRoutes)
 
     Scaffold(
         modifier = Modifier.padding(bottom = navigationInsets.calculateBottomPadding()),
@@ -102,6 +103,9 @@ private fun CheckNavigation(route: String? = null, content: @Composable () -> Un
         }
     }
 }
+
+private val mainRoutes =
+    listOf(PageRoute.Home.route, PageRoute.Square.route, PageRoute.System.route, PageRoute.Me.route)
 
 private val tabItems = listOf(MainTab.Home, MainTab.Square, MainTab.System, MainTab.Me)
 

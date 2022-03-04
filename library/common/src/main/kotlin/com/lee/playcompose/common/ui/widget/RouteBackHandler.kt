@@ -13,12 +13,12 @@ import com.lee.playcompose.common.extensions.toast
  * @description
  */
 @Composable
-fun RouteBackHandler(backCallback: () -> Unit, navController: NavController, mainRoute: String) {
+fun RouteBackHandler(backCallback: () -> Unit, navController: NavController, mainRoutes: List<String>) {
     var firstTime: Long = 0
     val message = stringResource(id = R.string.back_alert_message)
     BackHandler(enabled = true) {
         val currentRoute = navController.currentBackStackEntry?.destination?.route
-        if (currentRoute == mainRoute) {
+        if (mainRoutes.contains(currentRoute)) {
             val secondTime = System.currentTimeMillis()
             //如果两次按键时间间隔大于2秒，则不退出
             if (secondTime - firstTime > 2000) {
