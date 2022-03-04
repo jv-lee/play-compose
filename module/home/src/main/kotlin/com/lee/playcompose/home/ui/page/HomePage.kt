@@ -41,6 +41,7 @@ import com.lee.playcompose.home.model.entity.HomeCategory
 import com.lee.playcompose.home.viewmodel.HomeViewAction
 import com.lee.playcompose.home.viewmodel.HomeViewModel
 import com.lee.playcompose.home.viewmodel.HomeViewState
+import com.lee.playcompose.router.PageRoute
 import com.lee.playcompose.common.R as CR
 
 /**
@@ -60,7 +61,7 @@ fun HomePage(navController: NavController, viewModel: HomeViewModel = viewModel(
             onRefresh = { viewModel.dispatch(HomeViewAction.RequestData) },
             onBannerItemClick = { toast(it.title) },
             onCategoryItemClick = { toast(it.name) },
-            onContentItemClick = { toast(it.title) }
+            onContentItemClick = { navController.navigate(PageRoute.Details.route) }
         )
 
         // header

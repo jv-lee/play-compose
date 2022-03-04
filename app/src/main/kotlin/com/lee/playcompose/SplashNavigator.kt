@@ -1,9 +1,8 @@
-package com.lee.playcompose.ui.page
+package com.lee.playcompose
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -11,17 +10,25 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
-import com.google.accompanist.insets.statusBarsPadding
-import com.lee.playcompose.R
 import kotlinx.coroutines.delay
 
 /**
  * @author jv.lee
- * @date 2022/2/24
+ * @date 2022/3/4
  * @description
  */
 @Composable
-fun SplashPage(onNextPage: () -> Unit) {
+fun SplashNavigator(content: @Composable () -> Unit) {
+    var isSplash by remember { mutableStateOf(true) }
+    if (isSplash) {
+        SplashPage { isSplash = false }
+    } else {
+        content()
+    }
+}
+
+@Composable
+private fun SplashPage(onNextPage: () -> Unit) {
     val navigationInsets =
         rememberInsetsPaddingValues(insets = LocalWindowInsets.current.navigationBars)
 

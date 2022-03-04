@@ -21,7 +21,7 @@ fun SystemPage(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .wrapContentSize(align = Alignment.Center)
+            .wrapContentSize(align = Alignment.BottomCenter)
     ) {
         Text(text = "System Page", Modifier.clickable {
             navController.navigate(PageRoute.Details.route)

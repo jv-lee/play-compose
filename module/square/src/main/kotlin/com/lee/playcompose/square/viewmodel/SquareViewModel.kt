@@ -1,5 +1,6 @@
 package com.lee.playcompose.square.viewmodel
 
+import android.util.Log
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -23,11 +24,16 @@ class SquareViewModel : ViewModel() {
     private val api = createApi<ApiService>()
 
     private val pager by lazy {
-        pager { api.getSquareDataSync(it) }.cachedIn(viewModelScope)
+        pager {
+            api.getSquareDataSync(it) }.cachedIn(viewModelScope)
     }
 
     var viewStates by mutableStateOf(SquareViewState(pagingData = pager))
         private set
+
+    init {
+        Log.i("jv.lee","create Square")
+    }
 }
 
 data class SquareViewState(

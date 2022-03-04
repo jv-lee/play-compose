@@ -12,7 +12,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             PlayComposeTheme {
-                RouteNavigator()
+                SplashNavigator {
+                    RouteNavigator()
+                }
             }
         }
     }
