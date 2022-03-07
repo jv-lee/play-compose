@@ -1,8 +1,6 @@
 package com.lee.playcompose.me
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -15,9 +13,10 @@ import androidx.navigation.NavController
  * @description
  */
 @Composable
-fun MePage(navController: NavController) {
+fun MePage(navController: NavController, paddingValues: PaddingValues) {
     Box(
         modifier = Modifier
+            .padding(bottom = paddingValues.calculateBottomPadding())
             .fillMaxSize()
             .wrapContentSize(align = Alignment.Center)
     ) {

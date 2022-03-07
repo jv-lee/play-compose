@@ -1,13 +1,20 @@
 package com.lee.playcompose
 
 import android.app.Activity
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.FastOutLinearInEasing
+import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -52,7 +59,7 @@ fun Activity.RouteNavigator() {
         modifier = Modifier.padding(bottom = navigationInsets.calculateBottomPadding()),
         backgroundColor = AppTheme.colors.background,
         bottomBar = {
-            CheckNavigation(currentDestination?.route) {
+            CheckNavigation(currentDestination?.route) { hasClick ->
                 BottomNavigation(backgroundColor = AppTheme.colors.item, elevation = 3.dp) {
                     tabItems.forEachIndexed { _, item ->
                         val isSelect =
@@ -61,6 +68,7 @@ fun Activity.RouteNavigator() {
                         BottomNavigationItem(selected = isSelect, icon = {
                             NavigationIcon(isSelected = isSelect, item = item)
                         }, onClick = {
+                            if (!hasClick) return@BottomNavigationItem
                             navController.navigate(item.name) {
                                 popUpTo(navController.graph.findStartDestination().id) {
                                     saveState = true
@@ -73,16 +81,20 @@ fun Activity.RouteNavigator() {
                 }
             }
         },
-        content = {
-            NavHost(
-                modifier = Modifier.padding(bottom = it.calculateBottomPadding()),
-                navController = navController,
-                startDestination = MainTab.Home.name
-            ) {
-                composable(PageRoute.Home.route) { HomePage(navController = navController) }
-                composable(PageRoute.Square.route) { SquarePage(navController = navController) }
-                composable(PageRoute.System.route) { SystemPage(navController = navController) }
-                composable(PageRoute.Me.route) { MePage(navController = navController) }
+        content = { paddingValues ->
+            NavHost(navController = navController, startDestination = MainTab.Home.name) {
+                composable(PageRoute.Home.route) {
+                    HomePage(navController = navController, paddingValues)
+                }
+                composable(PageRoute.Square.route) {
+                    SquarePage(navController = navController, paddingValues)
+                }
+                composable(PageRoute.System.route) {
+                    SystemPage(navController = navController, paddingValues)
+                }
+                composable(PageRoute.Me.route) {
+                    MePage(navController = navController, paddingValues)
+                }
                 composable(PageRoute.Details.route) { DetailsPage(navController = navController) }
             }
         })
@@ -96,11 +108,24 @@ private fun NavigationIcon(isSelected: Boolean, item: MainTab) {
 }
 
 @Composable
-private fun CheckNavigation(route: String? = null, content: @Composable () -> Unit = {}) {
-    when (route) {
+private fun CheckNavigation(route: String? = null, content: @Composable (Boolean) -> Unit = {}) {
+    val visible = when (route) {
         PageRoute.Home.route, PageRoute.Square.route, PageRoute.System.route, PageRoute.Me.route -> {
-            content()
+            true
         }
+        else -> false
+    }
+    AnimatedVisibility(
+        visible = visible, enter = slideInVertically(
+            initialOffsetY = { fullHeight -> fullHeight },
+            animationSpec = tween(durationMillis = 150, easing = LinearOutSlowInEasing)
+        ),
+        exit = slideOutVertically(
+            targetOffsetY = { fullHeight -> fullHeight },
+            animationSpec = tween(durationMillis = 100, easing = FastOutLinearInEasing)
+        )
+    ) {
+        content(visible)
     }
 }
 

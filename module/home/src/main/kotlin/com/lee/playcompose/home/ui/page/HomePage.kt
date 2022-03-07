@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -51,10 +52,14 @@ import com.lee.playcompose.common.R as CR
  */
 @ExperimentalCoilApi
 @Composable
-fun HomePage(navController: NavController, viewModel: HomeViewModel = viewModel()) {
+fun HomePage(
+    navController: NavController,
+    paddingValues: PaddingValues,
+    viewModel: HomeViewModel = viewModel()
+) {
     val viewState = viewModel.viewStates
 
-    Box {
+    Box(modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding())) {
         // content
         HomeContentList(
             viewState = viewState,

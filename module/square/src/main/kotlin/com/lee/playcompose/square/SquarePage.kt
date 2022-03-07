@@ -1,8 +1,6 @@
 package com.lee.playcompose.square
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -31,8 +29,12 @@ import com.lee.playcompose.square.viewmodel.SquareViewState
  * @description
  */
 @Composable
-fun SquarePage(navController: NavController, viewModel: SquareViewModel = viewModel()) {
-    Box {
+fun SquarePage(
+    navController: NavController,
+    paddingValues: PaddingValues,
+    viewModel: SquareViewModel = viewModel()
+) {
+    Box(modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding())) {
         // content
         SquareContentList(
             viewModel.viewStates,
