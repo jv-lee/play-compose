@@ -20,15 +20,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import coil.annotation.ExperimentalCoilApi
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
+import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import com.lee.playcompose.common.extensions.sideComposable
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.widget.RouteBackHandler
+import com.lee.playcompose.common.ui.widget.SimpleAnimatedNavHost
 import com.lee.playcompose.details.DetailsPage
 import com.lee.playcompose.home.ui.page.HomePage
 import com.lee.playcompose.me.MePage
@@ -82,7 +83,10 @@ fun Activity.RouteNavigator() {
             }
         },
         content = { paddingValues ->
-            NavHost(navController = navController, startDestination = MainTab.Home.name) {
+            SimpleAnimatedNavHost(
+                navController = navController,
+                startDestination = MainTab.Home.name
+            ) {
                 composable(PageRoute.Home.route) {
                     HomePage(navController = navController, paddingValues)
                 }
@@ -95,7 +99,7 @@ fun Activity.RouteNavigator() {
                 composable(PageRoute.Me.route) {
                     MePage(navController = navController, paddingValues)
                 }
-                composable(PageRoute.Details.route) { DetailsPage(navController = navController) }
+                sideComposable(PageRoute.Details.route) { DetailsPage(navController = navController) }
             }
         })
 }
