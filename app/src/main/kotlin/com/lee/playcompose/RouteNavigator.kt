@@ -18,6 +18,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -40,7 +41,7 @@ import com.lee.playcompose.system.SystemPage
 /**
  * @author jv.lee
  * @date 2022/2/24
- * @description
+ * @description app路由管理\页面路由注册
  */
 @OptIn(ExperimentalCoilApi::class)
 @ExperimentalAnimationApi
@@ -69,14 +70,7 @@ fun Activity.RouteNavigator() {
                         BottomNavigationItem(selected = isSelect, icon = {
                             NavigationIcon(isSelected = isSelect, item = item)
                         }, onClick = {
-                            if (!hasClick) return@BottomNavigationItem
-                            navController.navigate(item.name) {
-                                popUpTo(navController.graph.findStartDestination().id) {
-                                    saveState = true
-                                }
-                                launchSingleTop = true
-                                restoreState = true
-                            }
+                            bottomItemNavigation(hasClick, item.name, navController)
                         })
                     }
                 }
@@ -130,6 +124,18 @@ private fun CheckNavigation(route: String? = null, content: @Composable (Boolean
         )
     ) {
         content(visible)
+    }
+}
+
+private fun bottomItemNavigation(hasClick: Boolean, route: String, navController: NavController) {
+    if (hasClick) {
+        navController.navigate(route) {
+            popUpTo(navController.graph.findStartDestination().id) {
+                saveState = true
+            }
+            launchSingleTop = true
+            restoreState = true
+        }
     }
 }
 
