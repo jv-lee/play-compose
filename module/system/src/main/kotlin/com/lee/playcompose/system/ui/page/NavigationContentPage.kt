@@ -7,7 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,6 +27,7 @@ import com.lee.playcompose.system.ui.theme.NavigationTabHeight
 import com.lee.playcompose.system.ui.theme.SystemTabRadius
 import com.lee.playcompose.system.viewmodel.NavigationContentViewModel
 import com.lee.playcompose.system.viewmodel.NavigationContentViewState
+import kotlinx.coroutines.launch
 
 /**
  * @author jv.lee
@@ -51,15 +52,31 @@ private fun NavigationContent(
     val contentList = viewState.pagingData.collectAsLazyPagingItems()
     val listState = if (contentList.itemCount > 0) viewState.listState else LazyListState()
     val tabState = if (contentList.itemCount > 0) viewState.tabState else LazyListState()
+    val currentIndex = remember { mutableStateOf(0) }
+    val upsetIndex = remember { mutableStateOf(true) }
+    val coroutine = rememberCoroutineScope()
+
+    // 监听滚动状态联动
+    LaunchedEffect(listState.firstVisibleItemIndex) {
+        if (upsetIndex.value) {
+            val index = listState.firstVisibleItemIndex
+            tabState.scrollToItem(index)
+            currentIndex.value = index
+        } else {
+            upsetIndex.value = true
+        }
+    }
 
     Row(Modifier.fillMaxSize()) {
         LazyColumn(modifier = Modifier.weight(0.32f), tabState, content = {
             item { HeaderSpacer() }
 
-            itemsIndexed(contentList) { _, item ->
+            itemsIndexed(contentList) { index, item ->
                 item ?: return@itemsIndexed
-                NavigationTabItem(item = item, tabClick = {
-                    toast(it.name)
+                NavigationTabItem(currentIndex.value == index, item = item, tabClick = {
+                    currentIndex.value = index
+                    upsetIndex.value = false
+                    coroutine.launch { listState.scrollToItem(index) }
                 })
             }
         })
@@ -76,11 +93,14 @@ private fun NavigationContent(
 }
 
 @Composable
-private fun NavigationTabItem(item: NavigationItem, tabClick: (NavigationItem) -> Unit) {
-    val isSelect = false
-    val textColor = if (isSelect) AppTheme.colors.onFocus else AppTheme.colors.primary
+private fun NavigationTabItem(
+    isSelected: Boolean,
+    item: NavigationItem,
+    tabClick: (NavigationItem) -> Unit
+) {
+    val textColor = if (isSelected) AppTheme.colors.onFocus else AppTheme.colors.primary
     val modifier = Modifier.background(
-        color = if (isSelect) AppTheme.colors.focus else Color.Transparent,
+        color = if (isSelected) AppTheme.colors.focus else Color.Transparent,
         shape = RoundedCornerShape(SystemTabRadius)
     )
     Box(
