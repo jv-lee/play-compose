@@ -61,6 +61,8 @@ object Dependencies {
         "com.google.accompanist:accompanist-pager-indicators:${Version.accompanist}"
     const val composeFlowlayout =
         "com.google.accompanist:accompanist-flowlayout:${Version.accompanist}"
+    const val composeWebView =
+        "com.google.accompanist:accompanist-webview:${Version.accompanist}"
 
     // paging 分页
     const val pagingRuntime = "androidx.paging:paging-runtime:${Version.paging}"

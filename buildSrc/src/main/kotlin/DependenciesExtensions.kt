@@ -90,6 +90,7 @@ fun DependencyHandlerScope.commonDependencies() {
     api(Dependencies.composePager)
     api(Dependencies.composePagerIndicators)
     api(Dependencies.composeFlowlayout)
+    api(Dependencies.composeWebView)
 
     api(Dependencies.pagingRuntime)
     api(Dependencies.pagingCompose)
