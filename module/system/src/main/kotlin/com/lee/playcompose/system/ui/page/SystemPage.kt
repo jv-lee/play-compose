@@ -29,7 +29,7 @@ fun SystemPage(navController: NavController, paddingValues: PaddingValues) {
     val pagerState = rememberPagerState()
     Box(modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding())) {
         // pageContent
-        HorizontalPager(count = 2, state = pagerState, userScrollEnabled = false) { page ->
+        HorizontalPager(count = 2, state = pagerState) { page ->
             when (page) {
                 0 -> SystemContentPage(navController)
                 1 -> NavigationContentPage(navController)

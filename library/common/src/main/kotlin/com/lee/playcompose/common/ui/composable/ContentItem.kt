@@ -29,6 +29,63 @@ fun ContentItem(
     item: Content,
     onItemClick: (Content) -> Unit
 ) {
+    CardItemContainer(onClick = { onItemClick(item) }) {
+        ConstraintLayout(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(OffsetLarge)
+        ) {
+            val (author, title, category, time) = createRefs()
+
+            Text(
+                text = item.getAuthor(),
+                color = AppTheme.colors.accent,
+                fontSize = FontSizeMedium,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier
+                    .constrainAs(author) {
+                        start.linkTo(parent.start)
+                        top.linkTo(parent.top)
+                    }
+            )
+
+            Text(
+                text = item.getTitle(),
+                color = AppTheme.colors.primary,
+                fontSize = FontSizeSmall,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 2,
+                modifier = Modifier
+                    .padding(top = OffsetMedium)
+                    .constrainAs(title) {
+                        start.linkTo(parent.start)
+                        top.linkTo(author.bottom)
+                    }
+            )
+
+            Text(
+                text = item.getCategory(),
+                color = AppTheme.colors.focus,
+                fontSize = FontSizeSmallX,
+                modifier = Modifier
+                    .padding(top = OffsetMedium)
+                    .constrainAs(category) {
+                        start.linkTo(parent.start)
+                        top.linkTo(title.bottom)
+                    })
+
+            Text(
+                text = item.getDateFormat(),
+                color = AppTheme.colors.primaryDark,
+                fontSize = FontSizeSmallX,
+                modifier = Modifier
+                    .constrainAs(time) {
+                        end.linkTo(parent.end)
+                        top.linkTo(category.top)
+                        bottom.linkTo(category.bottom)
+                    })
+        }
+    }
     Box(modifier = Modifier.padding(OffsetMedium)) {
         Card(backgroundColor = AppTheme.colors.item) {
             Box(modifier = Modifier
@@ -36,61 +93,6 @@ fun ContentItem(
                 .clickable {
                     onItemClick(item)
                 }) {
-                ConstraintLayout(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(OffsetLarge)
-                ) {
-                    val (author, title, category, time) = createRefs()
-
-                    Text(
-                        text = item.getAuthor(),
-                        color = AppTheme.colors.accent,
-                        fontSize = FontSizeMedium,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier
-                            .constrainAs(author) {
-                                start.linkTo(parent.start)
-                                top.linkTo(parent.top)
-                            }
-                    )
-
-                    Text(
-                        text = item.getTitle(),
-                        color = AppTheme.colors.primary,
-                        fontSize = FontSizeSmall,
-                        overflow = TextOverflow.Ellipsis,
-                        maxLines = 2,
-                        modifier = Modifier
-                            .padding(top = OffsetMedium)
-                            .constrainAs(title) {
-                                start.linkTo(parent.start)
-                                top.linkTo(author.bottom)
-                            }
-                    )
-
-                    Text(
-                        text = item.getCategory(),
-                        color = AppTheme.colors.focus,
-                        fontSize = FontSizeSmallX,
-                        modifier = Modifier
-                            .padding(top = OffsetMedium)
-                            .constrainAs(category) {
-                                start.linkTo(parent.start)
-                                top.linkTo(title.bottom)
-                            })
-
-                    Text(
-                        text = item.getDateFormat(),
-                        color = AppTheme.colors.primaryDark,
-                        fontSize = FontSizeSmallX,
-                        modifier = Modifier
-                            .constrainAs(time) {
-                                end.linkTo(parent.end)
-                                top.linkTo(category.top)
-                                bottom.linkTo(category.bottom)
-                            })
-                }
             }
         }
     }
