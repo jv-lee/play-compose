@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tab_system">体系</string>
+    <string name="tab_navigation">导航</string>
+</resources>

@@ -37,8 +37,8 @@ import com.lee.playcompose.router.PageRoute
 import com.lee.playcompose.router.parseArguments
 import com.lee.playcompose.router.parseRoute
 import com.lee.playcompose.router.sideComposable
-import com.lee.playcompose.square.SquarePage
-import com.lee.playcompose.system.SystemPage
+import com.lee.playcompose.square.ui.page.SquarePage
+import com.lee.playcompose.system.ui.page.SystemPage
 
 /**
  * @author jv.lee

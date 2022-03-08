@@ -5,10 +5,10 @@ import androidx.compose.ui.unit.sp
 
 // 全局通用组件数值
 val ToolBarHeight = 48.dp
-val TabBarHeight = 48.dp
-val SearchBarHeight = 42.dp
-val BottomNavBarHeight = 56.dp
 val ListStateItemHeight = 60.dp
+val SystemTabHeight = 24.dp
+val SystemTabWidth = 100.dp
+val SystemTabRadius = 12.dp
 
 // 全局通用radius值
 val OffsetRadiusLarge = 32.dp

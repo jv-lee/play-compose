@@ -1,4 +1,4 @@
-package com.lee.playcompose.square
+package com.lee.playcompose.square.ui.page
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -22,6 +22,7 @@ import com.lee.playcompose.common.ui.theme.ToolBarHeight
 import com.lee.playcompose.common.ui.widget.AppBarContainer
 import com.lee.playcompose.common.ui.widget.AppGradientTextBar
 import com.lee.playcompose.common.ui.widget.RefreshList
+import com.lee.playcompose.square.R
 import com.lee.playcompose.square.viewmodel.SquareViewModel
 import com.lee.playcompose.square.viewmodel.SquareViewState
 
@@ -57,7 +58,7 @@ fun SquarePage(
 }
 
 @Composable
-fun SquareContentList(
+private fun SquareContentList(
     viewState: SquareViewState,
     onContentItemClick: (Content) -> Unit
 ) {
