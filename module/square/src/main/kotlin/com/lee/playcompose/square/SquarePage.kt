@@ -1,6 +1,8 @@
 package com.lee.playcompose.square
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -12,10 +14,10 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
-import com.google.accompanist.insets.statusBarsPadding
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.ui.composable.ContentItem
+import com.lee.playcompose.common.ui.composable.HeaderSpacer
 import com.lee.playcompose.common.ui.theme.ToolBarHeight
 import com.lee.playcompose.common.ui.widget.AppBarContainer
 import com.lee.playcompose.common.ui.widget.AppGradientTextBar
@@ -72,13 +74,7 @@ fun SquareContentList(
         )
     ) {
         // header spacer
-        item {
-            Spacer(
-                modifier = Modifier
-                    .statusBarsPadding()
-                    .height(ToolBarHeight)
-            )
-        }
+        item { HeaderSpacer() }
 
         // build home content item
         itemsIndexed(contentList) { _, item ->

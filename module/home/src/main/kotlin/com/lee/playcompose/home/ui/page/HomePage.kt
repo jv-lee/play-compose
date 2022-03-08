@@ -21,7 +21,6 @@ import androidx.paging.compose.itemsIndexed
 import coil.annotation.ExperimentalCoilApi
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
-import com.google.accompanist.insets.statusBarsPadding
 import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.base.extensions.px2dp
 import com.lee.playcompose.common.entity.Banner
@@ -29,6 +28,7 @@ import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.entity.DetailsData
 import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.ui.composable.ContentItem
+import com.lee.playcompose.common.ui.composable.HeaderSpacer
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.theme.OffsetMedium
@@ -68,7 +68,10 @@ fun HomePage(
             onBannerItemClick = { toast(it.title) },
             onCategoryItemClick = { toast(it.name) },
             onContentItemClick = {
-                navController.navigationArgs(PageRoute.Details.route, DetailsData(it.title, it.link))
+                navController.navigationArgs(
+                    PageRoute.Details.route,
+                    DetailsData(it.title, it.link)
+                )
             }
         )
 
@@ -111,13 +114,7 @@ private fun HomeContentList(
     ) {
 
         // header spacer
-        item {
-            Spacer(
-                modifier = Modifier
-                    .statusBarsPadding()
-                    .height(ToolBarHeight)
-            )
-        }
+        item { HeaderSpacer() }
 
         // build home banner item
         if (bannerList.isNotEmpty()) {
