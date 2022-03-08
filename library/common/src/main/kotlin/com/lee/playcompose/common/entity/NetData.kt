@@ -171,7 +171,3 @@ data class TodoData(
         const val PRIORITY_HEIGHT = 1
     }
 }
-
-@Parcelize
-@Keep
-data class DetailsData(val title: String, val link: String) : Parcelable

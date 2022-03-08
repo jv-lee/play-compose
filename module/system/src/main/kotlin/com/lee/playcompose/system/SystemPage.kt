@@ -21,7 +21,6 @@ fun SystemPage(navController: NavController, paddingValues: PaddingValues) {
         modifier = Modifier
             .padding(bottom = paddingValues.calculateBottomPadding())
             .fillMaxSize()
-            .wrapContentSize(align = Alignment.BottomCenter)
     ) {
         Text(text = "System Page", Modifier.clickable {
             navController.navigate(PageRoute.Details.route)

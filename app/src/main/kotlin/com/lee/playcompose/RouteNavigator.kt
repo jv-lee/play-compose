@@ -27,15 +27,16 @@ import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
-import com.lee.playcompose.base.net.HttpManager
-import com.lee.playcompose.common.entity.DetailsData
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.widget.RouteBackHandler
 import com.lee.playcompose.common.ui.widget.SimpleAnimatedNavHost
 import com.lee.playcompose.details.DetailsPage
 import com.lee.playcompose.home.ui.page.HomePage
 import com.lee.playcompose.me.MePage
-import com.lee.playcompose.router.*
+import com.lee.playcompose.router.PageRoute
+import com.lee.playcompose.router.parseArguments
+import com.lee.playcompose.router.parseRoute
+import com.lee.playcompose.router.sideComposable
 import com.lee.playcompose.square.SquarePage
 import com.lee.playcompose.system.SystemPage
 
@@ -95,13 +96,10 @@ fun Activity.RouteNavigator() {
                     MePage(navController = navController, paddingValues)
                 }
                 sideComposable(
-                    PageRoute.Details.parseRoute(),
+                    route = PageRoute.Details.parseRoute(),
                     arguments = PageRoute.Details.parseArguments()
                 ) { entry ->
-                    val gson = HttpManager.getGson()
-                    val detailsDataJson = entry.arguments?.getString(ParamsKey.detailsDataKey)
-                    val detailsData = gson.fromJson(detailsDataJson, DetailsData::class.java)
-                    DetailsPage(navController = navController, detailsData)
+                    DetailsPage(navController = navController, entry.arguments)
                 }
             }
         })
