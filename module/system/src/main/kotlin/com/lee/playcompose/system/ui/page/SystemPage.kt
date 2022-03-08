@@ -14,9 +14,15 @@ import androidx.navigation.NavController
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
-import com.lee.playcompose.common.ui.theme.*
+import com.lee.playcompose.common.ui.theme.AppTheme
+import com.lee.playcompose.common.ui.theme.FontSizeMedium
+import com.lee.playcompose.common.ui.theme.OffsetLarge
+import com.lee.playcompose.common.ui.theme.ToolBarHeight
 import com.lee.playcompose.common.ui.widget.AppBarContainer
 import com.lee.playcompose.system.R
+import com.lee.playcompose.system.ui.theme.SystemTabHeight
+import com.lee.playcompose.system.ui.theme.SystemTabRadius
+import com.lee.playcompose.system.ui.theme.SystemTabWidth
 import kotlinx.coroutines.launch
 
 /**

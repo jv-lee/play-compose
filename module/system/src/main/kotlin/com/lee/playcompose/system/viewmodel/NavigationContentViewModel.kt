@@ -30,5 +30,6 @@ class NavigationContentViewModel : ViewModel() {
 
 data class NavigationContentViewState(
     val pagingData: Flow<PagingData<NavigationItem>>,
-    val listState: LazyListState = LazyListState()
+    val listState: LazyListState = LazyListState(),
+    val tabState: LazyListState = LazyListState()
 )
