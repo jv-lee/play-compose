@@ -34,7 +34,9 @@ fun MePage(navController: NavController, paddingValues: PaddingValues) {
             .fillMaxSize()
     ) {
         MeHeader(notLoginClick = {})
-        MeLineItemList()
+        MeLineItemList(onItemClick = { route ->
+            toast(route)
+        })
     }
 }
 
@@ -90,23 +92,23 @@ private fun MeHeader(isLogin: Boolean = false, notLoginClick: () -> Unit) {
 }
 
 @Composable
-private fun MeLineItemList() {
+private fun MeLineItemList(onItemClick: (String) -> Unit) {
     Column {
         meItems.forEach {
-            MeLineItem(it)
+            MeLineItem(it, onItemClick = onItemClick)
         }
     }
 }
 
 @Composable
-private fun MeLineItem(meItem: MeItem) {
+private fun MeLineItem(meItem: MeItem, onItemClick: (String) -> Unit) {
     Spacer(modifier = Modifier.height(1.dp))
     ProfileItem(
         leftDrawable = meItem.icon,
         leftText = meItem.name,
         rightDrawable = meItem.arrow,
     ) {
-        toast(meItem.route)
+        onItemClick(meItem.route)
     }
 }
 
@@ -114,14 +116,14 @@ private val meItems =
     listOf(MeItem.Coin, MeItem.Collect, MeItem.Share, MeItem.TODO, MeItem.Settings)
 
 private sealed class MeItem(
-    val name: String,
     val route: String,
+    val name: Int,
     val icon: Int,
     val arrow: Int = CR.drawable.vector_arrow
 ) {
-    object Coin : MeItem("我的积分", "route", R.drawable.vector_coin)
-    object Collect : MeItem("我的收藏", "route", R.drawable.vector_collect)
-    object Share : MeItem("我的分享", "route", R.drawable.vector_share)
-    object TODO : MeItem("TODO", "route", R.drawable.vector_todo)
-    object Settings : MeItem("系统设置", "route", R.drawable.vector_settings)
+    object Coin : MeItem("我的积分", R.string.me_item_coin, R.drawable.vector_coin)
+    object Collect : MeItem("我的收藏", R.string.me_item_collect, R.drawable.vector_collect)
+    object Share : MeItem("我的分享", R.string.me_item_share, R.drawable.vector_share)
+    object TODO : MeItem("TODO", R.string.me_item_todo, R.drawable.vector_todo)
+    object Settings : MeItem("系统设置", R.string.me_item_settings, R.drawable.vector_settings)
 }

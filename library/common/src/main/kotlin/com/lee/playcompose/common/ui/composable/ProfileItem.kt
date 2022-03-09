@@ -1,6 +1,7 @@
 package com.lee.playcompose.common.ui.composable
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -11,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.theme.FontSizeMedium
@@ -25,8 +27,8 @@ import com.lee.playcompose.common.ui.theme.FontSizeSmall
 fun ProfileItem(
     @DrawableRes leftDrawable: Int? = null,
     @DrawableRes rightDrawable: Int? = null,
-    leftText: String? = null,
-    rightText: String? = null,
+    @StringRes leftText: Int? = null,
+    @StringRes rightText: Int? = null,
     rightSwitchEnable: Boolean = false,
     onClick: () -> Unit
 ) {
@@ -49,7 +51,7 @@ fun ProfileItem(
 
                 leftText?.let {
                     Text(
-                        text = it,
+                        text = stringResource(id = it),
                         color = AppTheme.colors.accent,
                         fontSize = FontSizeMedium,
                         modifier = Modifier.align(alignment = Alignment.CenterVertically)
@@ -64,7 +66,7 @@ fun ProfileItem(
                 }
                 rightText?.let {
                     Text(
-                        text = it,
+                        text = stringResource(id = it),
                         color = AppTheme.colors.primary,
                         fontSize = FontSizeSmall,
                         modifier = Modifier.align(alignment = Alignment.CenterVertically)
