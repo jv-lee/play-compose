@@ -1,11 +1,11 @@
 package com.lee.playcompose.system.ui.page
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -99,25 +100,29 @@ private fun NavigationTabItem(
     tabClick: (NavigationItem) -> Unit
 ) {
     val textColor = if (isSelected) AppTheme.colors.onFocus else AppTheme.colors.primary
-    val modifier = Modifier.background(
-        color = if (isSelected) AppTheme.colors.focus else Color.Transparent,
-        shape = RoundedCornerShape(SystemTabRadius)
-    )
+    val tabColor = if (isSelected) AppTheme.colors.focus else Color.Transparent
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(NavigationTabHeight)
             .wrapContentSize(align = Alignment.Center)
     ) {
-        Box(modifier = modifier.clickable { tabClick(item) }) {
-            Text(
-                text = item.name,
-                fontSize = FontSizeMedium,
-                color = textColor,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.padding(OffsetMedium),
-            )
+        Card(
+            elevation = 0.dp,
+            backgroundColor = tabColor,
+            shape = RoundedCornerShape(SystemTabRadius)
+        ) {
+            Box(modifier = Modifier.clickable { tabClick(item) }) {
+                Text(
+                    text = item.name,
+                    fontSize = FontSizeMedium,
+                    color = textColor,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier
+                        .padding(OffsetMedium),
+                )
+            }
         }
     }
 }
@@ -148,21 +153,20 @@ private fun NavigationContentItem(item: NavigationItem, itemClick: (Content) -> 
 private fun NavigationContentFlowList(item: NavigationItem, itemClick: (Content) -> Unit) {
     FlowRow {
         item.articles.forEach {
-            Box(
-                modifier = Modifier
-                    .padding(OffsetSmall)
-                    .background(
-                        AppTheme.colors.item,
-                        shape = RoundedCornerShape(OffsetRadiusSmall)
-                    )
-                    .clickable { itemClick(it) }
+            Card(
+                elevation = 0.dp,
+                backgroundColor = AppTheme.colors.item,
+                shape = RoundedCornerShape(OffsetRadiusSmall),
+                modifier = Modifier.padding(OffsetSmall)
             ) {
-                Text(
-                    text = it.title,
-                    color = AppTheme.colors.primary,
-                    fontSize = FontSizeSmall,
-                    modifier = Modifier.padding(OffsetMedium)
-                )
+                Box(modifier = Modifier.clickable { itemClick(it) }) {
+                    Text(
+                        text = it.title,
+                        color = AppTheme.colors.primary,
+                        fontSize = FontSizeSmall,
+                        modifier = Modifier.padding(OffsetMedium)
+                    )
+                }
             }
         }
     }
