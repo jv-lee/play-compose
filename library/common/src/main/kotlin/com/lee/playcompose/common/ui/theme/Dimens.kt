@@ -25,6 +25,9 @@ val FontSizeMedium = 14.sp
 val FontSizeSmall = 12.sp
 val FontSizeSmallX = 10.sp
 
+// 通用圆角线宽度
+val BorderWidth = 2.dp
+
 
 val ToolBarTitleSize = 18.sp
 

@@ -19,14 +19,19 @@ import com.lee.playcompose.common.ui.theme.AppTheme
 @Composable
 fun AppBarContainer(
     modifier: Modifier = Modifier,
+    headerBrush: Boolean = true,
     content: @Composable ColumnScope.() -> Unit
 ) {
-    val appHeaderBrush = createAppHeaderGradient(
-        AppTheme.colors.background,
-        AppTheme.colors.backgroundTransparent
-    )
+    var mModifier = modifier
+    if (headerBrush) {
+        val appHeaderBrush = createAppHeaderGradient(
+            AppTheme.colors.background,
+            AppTheme.colors.backgroundTransparent
+        )
+        mModifier = modifier.background(brush = appHeaderBrush)
+    }
 
-    Column(modifier.background(brush = appHeaderBrush)) {
+    Column(mModifier) {
         Spacer(
             modifier = Modifier
                 .fillMaxWidth()
