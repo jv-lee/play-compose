@@ -1,4 +1,4 @@
-package com.lee.playcompose
+package com.lee.playcompose.navigator
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -10,6 +10,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
+import com.lee.playcompose.R
 import kotlinx.coroutines.delay
 
 /**

@@ -5,6 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
 import com.lee.playcompose.common.ui.theme.PlayComposeTheme
+import com.lee.playcompose.navigator.RouteNavigator
+import com.lee.playcompose.navigator.SplashNavigator
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

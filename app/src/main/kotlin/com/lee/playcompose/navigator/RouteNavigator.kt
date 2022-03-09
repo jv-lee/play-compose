@@ -1,4 +1,4 @@
-package com.lee.playcompose
+package com.lee.playcompose.navigator
 
 import android.app.Activity
 import androidx.compose.animation.AnimatedVisibility
@@ -27,6 +27,7 @@ import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import com.lee.playcompose.R
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.widget.RouteBackHandler
 import com.lee.playcompose.common.ui.widget.SimpleAnimatedNavHost
