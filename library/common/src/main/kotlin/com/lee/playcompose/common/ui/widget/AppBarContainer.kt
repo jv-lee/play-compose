@@ -14,7 +14,7 @@ import com.lee.playcompose.common.ui.theme.AppTheme
 /**
  * @author jv.lee
  * @date 2022/2/21
- * @description
+ * @description 公共appbar容器组件
  */
 @Composable
 fun AppBarContainer(

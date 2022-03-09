@@ -15,9 +15,10 @@ import kotlinx.coroutines.flow.Flow
 /**
  * @author jv.lee
  * @date 2022/3/8
- * @description
+ * @description 导航内容 viewModel
  */
 class NavigationContentViewModel : ViewModel() {
+
     private val api = createApi<ApiService>()
 
     private val pager by lazy {

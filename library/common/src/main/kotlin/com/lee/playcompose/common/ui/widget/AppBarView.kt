@@ -24,7 +24,7 @@ import com.google.accompanist.insets.statusBarsHeight
 /**
  * @author jv.lee
  * @date 2022/2/21
- * @description
+ * @description 公共appbarView
  */
 @Composable
 fun AppBarView(

@@ -8,7 +8,7 @@ import com.lee.playcompose.base.core.ApplicationExtensions.app
 /**
  * @author jv.lee
  * @date 2022/2/24
- * @description
+ * @description 公共ui能力扩展函数
  */
 
 fun toast(message: String?) {

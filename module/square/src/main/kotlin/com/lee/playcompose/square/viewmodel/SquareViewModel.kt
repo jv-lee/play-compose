@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.Flow
 /**
  * @author jv.lee
  * @date 2022/3/3
- * @description
+ * @description 广场页 viewModel
  */
 class SquareViewModel : ViewModel() {
     private val api = createApi<ApiService>()

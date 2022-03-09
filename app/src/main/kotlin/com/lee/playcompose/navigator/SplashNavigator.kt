@@ -16,7 +16,7 @@ import kotlinx.coroutines.delay
 /**
  * @author jv.lee
  * @date 2022/3/4
- * @description
+ * @description 闪屏页路由组件 闪屏切换主路由ui
  */
 @Composable
 fun SplashNavigator(content: @Composable () -> Unit) {

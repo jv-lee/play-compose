@@ -29,7 +29,7 @@ import com.lee.playcompose.system.viewmodel.SystemContentViewState
 /**
  * @author jv.lee
  * @date 2022/3/8
- * @description
+ * @description 体系页第一个tab 体系内容
  */
 @Composable
 fun SystemContentPage(

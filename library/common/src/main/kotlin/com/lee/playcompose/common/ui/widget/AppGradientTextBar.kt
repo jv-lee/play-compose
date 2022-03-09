@@ -20,7 +20,7 @@ import com.lee.playcompose.common.ui.theme.ToolBarHeight
 /**
  * @author jv.lee
  * @date 2022/3/3
- * @description
+ * @description 公共appBar顶部渐变色导航title组件
  */
 @Composable
 fun AppGradientTextBar(title: String, navigationPainter: Painter, onNavigationClick: () -> Unit) {

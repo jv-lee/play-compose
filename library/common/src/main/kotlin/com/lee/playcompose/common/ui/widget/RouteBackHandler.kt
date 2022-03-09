@@ -10,7 +10,7 @@ import com.lee.playcompose.common.extensions.toast
 /**
  * @author jv.lee
  * @date 2022/3/1
- * @description
+ * @description 拦截back事件 双击回退处理
  */
 @Composable
 fun RouteBackHandler(backCallback: () -> Unit, navController: NavController, mainRoutes: List<String>) {

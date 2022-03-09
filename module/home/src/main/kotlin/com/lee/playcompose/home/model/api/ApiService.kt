@@ -10,7 +10,7 @@ import retrofit2.http.Path
 /**
  * @author jv.lee
  * @date 2021/11/2
- * @description
+ * @description 首页模块api
  */
 interface ApiService {
     @GET("banner/json")

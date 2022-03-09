@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 /**
  * @author jv.lee
  * @date 2022/2/28
- * @description
+ * @description 公共viewModel 功能扩展函数
  */
 fun <T : Any> ViewModel.pager(
     config: PagingConfig = PagingConfig(20),

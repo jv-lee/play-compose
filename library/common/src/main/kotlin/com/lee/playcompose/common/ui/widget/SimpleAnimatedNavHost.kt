@@ -14,7 +14,7 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 /**
  * @author jv.lee
  * @date 2022/3/1
- * @description
+ * @description 公共动画NavHost
  */
 @Composable
 @ExperimentalAnimationApi

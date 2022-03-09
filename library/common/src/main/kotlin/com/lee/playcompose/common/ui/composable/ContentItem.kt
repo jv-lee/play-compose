@@ -22,7 +22,7 @@ import com.lee.playcompose.common.ui.theme.*
 /**
  * @author jv.lee
  * @date 2022/3/3
- * @description
+ * @description 各模块通用内容item组件
  */
 @Composable
 fun ContentItem(

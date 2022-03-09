@@ -26,7 +26,7 @@ import com.lee.playcompose.common.ui.theme.ListStateItemHeight
 /**
  * @author jv.lee
  * @date 2022/2/28
- * @description
+ * @description 刷新列表组件
  */
 @Composable
 fun <T : Any> RefreshList(

@@ -7,7 +7,7 @@ import com.lee.playcompose.common.entity.Content
 /**
  * @author jv.lee
  * @date 2022/3/2
- * @description
+ * @description 公共数据转换扩展函数
  */
 
 fun Content.getTitle(): String =

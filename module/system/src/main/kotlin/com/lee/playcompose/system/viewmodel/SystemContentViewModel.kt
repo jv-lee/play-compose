@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.Flow
 /**
  * @author jv.lee
  * @date 2022/3/8
- * @description
+ * @description 体系内容 viewModel
  */
 class SystemContentViewModel : ViewModel() {
 

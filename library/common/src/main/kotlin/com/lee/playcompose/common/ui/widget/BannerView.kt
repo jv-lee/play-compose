@@ -26,7 +26,7 @@ import kotlinx.coroutines.delay
 /**
  * @author jv.lee
  * @date 2022/3/2
- * @description
+ * @description banner组件
  */
 @ExperimentalCoilApi
 @Composable

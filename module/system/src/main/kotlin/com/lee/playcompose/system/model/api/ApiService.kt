@@ -8,7 +8,7 @@ import retrofit2.http.Query
 /**
  * @author jv.lee
  * @date 2021/11/8
- * @description
+ * @description 体系模块api
  */
 interface ApiService {
 
