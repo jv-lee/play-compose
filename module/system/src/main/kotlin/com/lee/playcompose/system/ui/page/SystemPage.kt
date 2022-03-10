@@ -18,7 +18,7 @@ import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.theme.FontSizeMedium
 import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.theme.ToolBarHeight
-import com.lee.playcompose.common.ui.widget.AppBarContainer
+import com.lee.playcompose.common.ui.widget.AppHeaderContainer
 import com.lee.playcompose.system.R
 import com.lee.playcompose.system.ui.theme.SystemTabHeight
 import com.lee.playcompose.system.ui.theme.SystemTabRadius
@@ -43,7 +43,7 @@ fun SystemPage(navController: NavController, paddingValues: PaddingValues) {
         }
 
         // header
-        AppBarContainer {
+        AppHeaderContainer {
             TabContainer(pagerState = pagerState)
         }
     }

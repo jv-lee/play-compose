@@ -18,7 +18,7 @@ import androidx.navigation.NavController
 import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.ui.composable.ProfileItem
 import com.lee.playcompose.common.ui.theme.*
-import com.lee.playcompose.common.ui.widget.AppBarContainer
+import com.lee.playcompose.common.ui.widget.AppHeaderContainer
 import com.lee.playcompose.common.R as CR
 
 /**
@@ -42,7 +42,7 @@ fun MePage(navController: NavController, paddingValues: PaddingValues) {
 
 @Composable
 private fun MeHeader(isLogin: Boolean = false, notLoginClick: () -> Unit) {
-    AppBarContainer(
+    AppHeaderContainer(
         headerBrush = false,
         modifier = Modifier
             .background(AppTheme.colors.item)

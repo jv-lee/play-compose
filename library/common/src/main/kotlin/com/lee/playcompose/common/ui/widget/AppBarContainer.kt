@@ -17,7 +17,7 @@ import com.lee.playcompose.common.ui.theme.AppTheme
  * @description 公共appbar容器组件
  */
 @Composable
-fun AppBarContainer(
+fun AppHeaderContainer(
     modifier: Modifier = Modifier,
     headerBrush: Boolean = true,
     content: @Composable ColumnScope.() -> Unit

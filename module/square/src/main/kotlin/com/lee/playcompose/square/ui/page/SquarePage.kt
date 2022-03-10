@@ -19,7 +19,7 @@ import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.ui.composable.ContentItem
 import com.lee.playcompose.common.ui.composable.HeaderSpacer
 import com.lee.playcompose.common.ui.theme.ToolBarHeight
-import com.lee.playcompose.common.ui.widget.AppBarContainer
+import com.lee.playcompose.common.ui.widget.AppHeaderContainer
 import com.lee.playcompose.common.ui.widget.AppGradientTextBar
 import com.lee.playcompose.common.ui.widget.RefreshList
 import com.lee.playcompose.square.R
@@ -47,7 +47,7 @@ fun SquarePage(
         )
 
         // header
-        AppBarContainer {
+        AppHeaderContainer {
             AppGradientTextBar(
                 title = stringResource(id = R.string.square_title),
                 navigationPainter = painterResource(id = R.drawable.vector_add),

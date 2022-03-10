@@ -33,7 +33,7 @@ import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.theme.OffsetMedium
 import com.lee.playcompose.common.ui.theme.ToolBarHeight
-import com.lee.playcompose.common.ui.widget.AppBarContainer
+import com.lee.playcompose.common.ui.widget.AppHeaderContainer
 import com.lee.playcompose.common.ui.widget.AppGradientTextBar
 import com.lee.playcompose.common.ui.widget.BannerView
 import com.lee.playcompose.common.ui.widget.RefreshList
@@ -76,7 +76,7 @@ fun HomePage(
         )
 
         // header
-        AppBarContainer {
+        AppHeaderContainer {
             AppGradientTextBar(
                 title = stringResource(id = R.string.home_header_text),
                 navigationPainter = painterResource(id = CR.drawable.vector_search),

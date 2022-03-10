@@ -14,6 +14,7 @@ import com.lee.playcompose.base.net.HttpManager
 import com.lee.playcompose.common.entity.DetailsData
 import com.lee.playcompose.common.extensions.bindLifecycle
 import com.lee.playcompose.common.extensions.setWebBackEvent
+import com.lee.playcompose.common.ui.widget.AppBarViewContainer
 import com.lee.playcompose.router.ParamsKey
 
 /**
@@ -23,10 +24,17 @@ import com.lee.playcompose.router.ParamsKey
  */
 @Composable
 fun Activity.DetailsPage(navController: NavController, bundle: Bundle? = null) {
-    val lifecycle = LocalLifecycleOwner.current.lifecycle
     val detailsJson = bundle?.getString(ParamsKey.detailsDataKey)
     val details = HttpManager.getGson().fromJson(detailsJson, DetailsData::class.java)
 
+    AppBarViewContainer(title = details.title, navigationClick = { navController.popBackStack() }) {
+        WebView(details = details)
+    }
+}
+
+@Composable
+private fun Activity.WebView(details: DetailsData) {
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
     AndroidView(factory = { context: Context ->
         FrameLayout(context).apply {
             layoutParams = ViewGroup.LayoutParams(

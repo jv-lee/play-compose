@@ -1,10 +1,7 @@
 package com.lee.playcompose.common.ui.widget
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -20,6 +17,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.statusBarsHeight
+import com.lee.playcompose.common.ui.composable.HeaderSpacer
+import com.lee.playcompose.common.ui.theme.AppTheme
 
 /**
  * @author jv.lee
@@ -34,7 +33,7 @@ fun AppBarView(
     navigationClick: () -> Unit = {},
     actionIcon: ImageVector = Icons.Filled.MoreVert,
     actionClick: () -> Unit = {},
-    backgroundColor: Color = Color.Black,
+    backgroundColor: Color = AppTheme.colors.item,
     contentColor: Color = contentColorFor(backgroundColor),
     elevation: Dp = AppBarDefaults.TopAppBarElevation,
     navigationEnable: Boolean = true,
@@ -78,6 +77,46 @@ fun AppBarView(
             backgroundColor,
             contentColor,
             0.dp
+        )
+    }
+}
+
+@Composable
+fun AppBarViewContainer(
+    modifier: Modifier = Modifier,
+    title: String = "",
+    navigationIcon: ImageVector = Icons.Filled.ArrowBack,
+    navigationClick: () -> Unit = {},
+    actionIcon: ImageVector = Icons.Filled.MoreVert,
+    actionClick: () -> Unit = {},
+    backgroundColor: Color = AppTheme.colors.item,
+    contentColor: Color = contentColorFor(backgroundColor),
+    elevation: Dp = AppBarDefaults.TopAppBarElevation,
+    navigationEnable: Boolean = true,
+    actionEnable: Boolean = false,
+    containerBackground: Color = AppTheme.colors.background,
+    content: @Composable () -> Unit
+) {
+    Box(
+        Modifier
+            .background(containerBackground)
+            .fillMaxWidth()) {
+        Column {
+            HeaderSpacer()
+            content()
+        }
+        AppBarView(
+            modifier,
+            title,
+            navigationIcon,
+            navigationClick,
+            actionIcon,
+            actionClick,
+            backgroundColor,
+            contentColor,
+            elevation,
+            navigationEnable,
+            actionEnable
         )
     }
 }
