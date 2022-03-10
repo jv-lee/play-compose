@@ -100,7 +100,7 @@ fun AppBarViewContainer(
     Box(
         Modifier
             .background(containerBackground)
-            .fillMaxWidth()) {
+            .fillMaxSize()) {
         Column {
             HeaderSpacer()
             content()
