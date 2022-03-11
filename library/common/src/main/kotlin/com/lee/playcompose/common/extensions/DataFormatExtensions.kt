@@ -2,7 +2,9 @@ package com.lee.playcompose.common.extensions
 
 import androidx.core.text.HtmlCompat
 import com.lee.playcompose.base.utils.TimeUtil
+import com.lee.playcompose.common.entity.Banner
 import com.lee.playcompose.common.entity.Content
+import com.lee.playcompose.common.entity.DetailsData
 
 /**
  * @author jv.lee
@@ -25,3 +27,9 @@ fun Content.getCategory(): String {
         else -> ""
     }
 }
+
+fun Content.transformDetails(): DetailsData =
+    DetailsData(id = id.toString(), title = title, link = link)
+
+fun Banner.transformDetails(): DetailsData =
+    DetailsData(id = id.toString(), title = title, link = url, isCollect = collect)

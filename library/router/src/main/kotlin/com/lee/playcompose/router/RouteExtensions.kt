@@ -54,7 +54,7 @@ fun NavGraphBuilder.sideComposable(
     )
 }
 
-fun NavController.navigationArgs(route: String, vararg args: Any) {
+fun NavController.navigateArgs(route: String, vararg args: Any) {
     val argumentsBuilder = StringBuilder()
     args.iterator()
         .forEach { arg ->

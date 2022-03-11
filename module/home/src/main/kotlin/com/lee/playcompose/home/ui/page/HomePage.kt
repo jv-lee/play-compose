@@ -25,16 +25,16 @@ import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.base.extensions.px2dp
 import com.lee.playcompose.common.entity.Banner
 import com.lee.playcompose.common.entity.Content
-import com.lee.playcompose.common.entity.DetailsData
 import com.lee.playcompose.common.extensions.toast
+import com.lee.playcompose.common.extensions.transformDetails
 import com.lee.playcompose.common.ui.composable.ContentItem
 import com.lee.playcompose.common.ui.composable.HeaderSpacer
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.theme.OffsetMedium
 import com.lee.playcompose.common.ui.theme.ToolBarHeight
-import com.lee.playcompose.common.ui.widget.AppHeaderContainer
 import com.lee.playcompose.common.ui.widget.AppGradientTextBar
+import com.lee.playcompose.common.ui.widget.AppHeaderContainer
 import com.lee.playcompose.common.ui.widget.BannerView
 import com.lee.playcompose.common.ui.widget.RefreshList
 import com.lee.playcompose.home.R
@@ -43,7 +43,7 @@ import com.lee.playcompose.home.viewmodel.HomeViewAction
 import com.lee.playcompose.home.viewmodel.HomeViewModel
 import com.lee.playcompose.home.viewmodel.HomeViewState
 import com.lee.playcompose.router.PageRoute
-import com.lee.playcompose.router.navigationArgs
+import com.lee.playcompose.router.navigateArgs
 import com.lee.playcompose.common.R as CR
 
 /**
@@ -65,13 +65,14 @@ fun HomePage(
         HomeContentList(
             viewState = viewState,
             onRefresh = { viewModel.dispatch(HomeViewAction.RequestData) },
-            onBannerItemClick = { toast(it.title) },
-            onCategoryItemClick = { toast(it.name) },
+            onBannerItemClick = {
+                navController.navigateArgs(PageRoute.Details.route, it.transformDetails())
+            },
+            onCategoryItemClick = {
+                navController.navigate(it.route)
+            },
             onContentItemClick = {
-                navController.navigationArgs(
-                    PageRoute.Details.route,
-                    DetailsData(it.title, it.link)
-                )
+                navController.navigateArgs(PageRoute.Details.route, it.transformDetails())
             }
         )
 
@@ -187,7 +188,10 @@ private fun HomeCategoryChildItem(
                         modifier = Modifier.size(50.dp)
                     )
                     Spacer(modifier = Modifier.height(OffsetMedium))
-                    Text(text = category.name, color = AppTheme.colors.accent)
+                    Text(
+                        text = stringResource(id = category.nameResId),
+                        color = AppTheme.colors.accent
+                    )
                 }
             }
         }

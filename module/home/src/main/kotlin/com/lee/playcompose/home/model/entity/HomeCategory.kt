@@ -1,6 +1,9 @@
 package com.lee.playcompose.home.model.entity
 
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import com.lee.playcompose.home.R
+import com.lee.playcompose.router.PageRoute
 
 
 /**
@@ -8,7 +11,11 @@ import com.lee.playcompose.home.R
  * @date 2021/11/4
  * @description 首页分类本地数据帮助类
  */
-data class HomeCategory(val iconResId: Int, val name: String, val link: String) {
+data class HomeCategory(
+    @DrawableRes val iconResId: Int,
+    @StringRes val nameResId: Int,
+    val route: String
+) {
     companion object {
         /**
          * 提供本地首页分类数据
@@ -16,13 +23,13 @@ data class HomeCategory(val iconResId: Int, val name: String, val link: String) 
         fun getHomeCategory() = arrayListOf(
             HomeCategory(
                 R.drawable.vector_icon_official,
-                "公众号",
-                "play://official"
+                R.string.home_category_official,
+                PageRoute.Official.route
             ),
             HomeCategory(
                 R.drawable.vector_icon_project,
-                "项目",
-                "play://project"
+                R.string.home_category_project,
+                PageRoute.Project.route
             )
         )
     }

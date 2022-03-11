@@ -11,4 +11,9 @@ import kotlinx.parcelize.Parcelize
  */
 @Parcelize
 @Keep
-data class DetailsData(val title: String, val link: String) : Parcelable
+data class DetailsData(
+    val id: String = "0",
+    val title: String,
+    val link: String,
+    val isCollect: Boolean = false
+) : Parcelable

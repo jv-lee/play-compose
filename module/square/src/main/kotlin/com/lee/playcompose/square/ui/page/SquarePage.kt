@@ -16,12 +16,15 @@ import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.extensions.toast
+import com.lee.playcompose.common.extensions.transformDetails
 import com.lee.playcompose.common.ui.composable.ContentItem
 import com.lee.playcompose.common.ui.composable.HeaderSpacer
 import com.lee.playcompose.common.ui.theme.ToolBarHeight
-import com.lee.playcompose.common.ui.widget.AppHeaderContainer
 import com.lee.playcompose.common.ui.widget.AppGradientTextBar
+import com.lee.playcompose.common.ui.widget.AppHeaderContainer
 import com.lee.playcompose.common.ui.widget.RefreshList
+import com.lee.playcompose.router.PageRoute
+import com.lee.playcompose.router.navigateArgs
 import com.lee.playcompose.square.R
 import com.lee.playcompose.square.viewmodel.SquareViewModel
 import com.lee.playcompose.square.viewmodel.SquareViewState
@@ -42,7 +45,10 @@ fun SquarePage(
         SquareContentList(
             viewModel.viewStates,
             onContentItemClick = {
-                toast(it.title)
+                navController.navigateArgs(
+                    PageRoute.Details.route,
+                    it.transformDetails()
+                )
             }
         )
 
