@@ -19,6 +19,8 @@ import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
 import com.google.accompanist.flowlayout.FlowRow
+import com.google.accompanist.insets.LocalWindowInsets
+import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.entity.NavigationItem
 import com.lee.playcompose.common.extensions.toast
@@ -50,6 +52,10 @@ private fun NavigationContent(
     viewState: NavigationContentViewState,
     itemClick: (Content) -> Unit
 ) {
+    val statusInsets =
+        rememberInsetsPaddingValues(insets = LocalWindowInsets.current.statusBars)
+    val scrollOffset = (-(statusInsets.calculateTopPadding().value + ToolBarHeight.value)).toInt()
+
     val contentList = viewState.pagingData.collectAsLazyPagingItems()
     val listState = if (contentList.itemCount > 0) viewState.listState else LazyListState()
     val tabState = if (contentList.itemCount > 0) viewState.tabState else LazyListState()
@@ -61,7 +67,7 @@ private fun NavigationContent(
     LaunchedEffect(listState.firstVisibleItemIndex) {
         if (upsetIndex.value) {
             val index = listState.firstVisibleItemIndex
-            tabState.scrollToItem(index)
+            tabState.scrollToItem(index, scrollOffset)
             currentIndex.value = index
         } else {
             upsetIndex.value = true
@@ -77,7 +83,7 @@ private fun NavigationContent(
                 NavigationTabItem(currentIndex.value == index, item = item, tabClick = {
                     currentIndex.value = index
                     upsetIndex.value = false
-                    coroutine.launch { listState.scrollToItem(index) }
+                    coroutine.launch { listState.scrollToItem(index, scrollOffset) }
                 })
             }
         })
