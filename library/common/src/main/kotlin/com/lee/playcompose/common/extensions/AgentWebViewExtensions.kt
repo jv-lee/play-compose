@@ -15,11 +15,21 @@ import com.just.agentweb.AgentWeb
  */
 fun AgentWeb.bindLifecycle(lifecycle: Lifecycle): AgentWeb {
     lifecycle.addObserver(object : LifecycleEventObserver {
+        var activeEvent: Lifecycle.Event? = null
         override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
             when (event) {
-                Lifecycle.Event.ON_PAUSE -> webLifeCycle.onPause()
-                Lifecycle.Event.ON_RESUME -> webLifeCycle.onResume()
+                Lifecycle.Event.ON_PAUSE -> {
+                    if (activeEvent == Lifecycle.Event.ON_PAUSE) return
+                    activeEvent = event
+                    webLifeCycle.onPause()
+                }
+                Lifecycle.Event.ON_RESUME -> {
+                    if(activeEvent == Lifecycle.Event.ON_RESUME) return
+                    activeEvent = event
+                    webLifeCycle.onResume()
+                }
                 Lifecycle.Event.ON_DESTROY -> {
+                    activeEvent = event
                     webLifeCycle.onDestroy()
                     lifecycle.removeObserver(this)
                 }

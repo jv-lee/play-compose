@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
@@ -19,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.statusBarsHeight
 import com.lee.playcompose.common.ui.composable.HeaderSpacer
 import com.lee.playcompose.common.ui.theme.AppTheme
+import com.lee.playcompose.common.ui.theme.FontSizeLarge
 
 /**
  * @author jv.lee
@@ -53,6 +55,8 @@ fun AppBarView(
                     modifier = Modifier
                         .fillMaxWidth(0.75f)
                         .wrapContentSize(Alignment.Center),
+                    fontSize = FontSizeLarge,
+                    fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
@@ -100,7 +104,8 @@ fun AppBarViewContainer(
     Box(
         Modifier
             .background(containerBackground)
-            .fillMaxSize()) {
+            .fillMaxSize()
+    ) {
         Column {
             HeaderSpacer()
             content()

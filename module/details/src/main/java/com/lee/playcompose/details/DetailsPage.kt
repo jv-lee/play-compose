@@ -16,6 +16,7 @@ import com.lee.playcompose.common.extensions.bindLifecycle
 import com.lee.playcompose.common.extensions.setWebBackEvent
 import com.lee.playcompose.common.ui.widget.AppBarViewContainer
 import com.lee.playcompose.router.ParamsKey
+import com.lee.playcompose.common.R as CR
 
 /**
  * @author jv.lee
@@ -41,17 +42,18 @@ private fun Activity.WebView(details: DetailsData) {
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
-        }
-    }, update = {
-        AgentWeb.with(this)
-            .setAgentWebParent(it, FrameLayout.LayoutParams(-1, -1))
-            .useDefaultIndicator()
-            .createAgentWeb()
-            .ready()
-            .go(details.link)
-            .bindLifecycle(lifecycle)
-            .apply {
-                webCreator.webView.setWebBackEvent()
+            post {
+                AgentWeb.with(this@WebView)
+                    .setAgentWebParent(this, FrameLayout.LayoutParams(-1, -1))
+                    .useDefaultIndicator(CR.color.colorThemeAccent)
+                    .createAgentWeb()
+                    .ready()
+                    .go(details.link)
+                    .bindLifecycle(lifecycle)
+                    .apply {
+                        webCreator.webView.setWebBackEvent()
+                    }
             }
+        }
     })
 }
