@@ -3,7 +3,6 @@ package com.lee.playcompose.common.entity
 import android.os.Parcelable
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
-import com.lee.playandroid.library.common.entity.CoinInfo
 import kotlinx.parcelize.Parcelize
 
 /**

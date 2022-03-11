@@ -1,7 +1,7 @@
 package com.lee.playcompose.common.interceptor
 
 import com.google.gson.JsonParser
-import com.lee.playandroid.library.common.entity.LoginEvent
+import com.lee.playcompose.common.entity.LoginEvent
 import com.lee.playcompose.base.livedatabus.LiveDataBus
 import com.lee.playcompose.base.tools.PreferencesTools
 import com.lee.playcompose.common.constants.ApiConstants

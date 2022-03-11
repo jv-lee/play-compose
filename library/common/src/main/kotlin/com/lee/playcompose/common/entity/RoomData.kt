@@ -1,4 +1,4 @@
-package com.lee.playandroid.library.common.entity
+package com.lee.playcompose.common.entity
 
 import androidx.annotation.Keep
 import androidx.room.ColumnInfo
