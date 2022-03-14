@@ -13,6 +13,7 @@ import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.extensions.createApi
 import com.lee.playcompose.common.extensions.pager
 import com.lee.playcompose.official.model.api.ApiService
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -25,7 +26,10 @@ class OfficialListViewModel(private val id: Long) : ViewModel() {
     private val api = createApi<ApiService>()
 
     private val pager by lazy {
-        pager { api.getOfficialDataAsync(id, it) }.cachedIn(viewModelScope)
+        pager { page ->
+            if (page == 0) delay(300)
+            api.getOfficialDataAsync(id, page)
+        }.cachedIn(viewModelScope)
     }
 
     var viewStates by mutableStateOf(OfficialListViewState(pager))
@@ -41,10 +45,5 @@ class OfficialListViewModel(private val id: Long) : ViewModel() {
 
 data class OfficialListViewState(
     val pagingData: Flow<PagingData<Content>>,
-    val isRefreshing: Boolean = false,
     val listState: LazyListState = LazyListState()
 )
-
-sealed class OfficialListViewAction {
-    object RequestListData : OfficialListViewAction()
-}
