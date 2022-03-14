@@ -35,7 +35,7 @@ import com.lee.playcompose.details.DetailsPage
 import com.lee.playcompose.home.ui.page.HomePage
 import com.lee.playcompose.me.MePage
 import com.lee.playcompose.official.ui.page.OfficialPage
-import com.lee.playcompose.project.ProjectPage
+import com.lee.playcompose.project.ui.page.ProjectPage
 import com.lee.playcompose.router.PageRoute
 import com.lee.playcompose.router.parseArguments
 import com.lee.playcompose.router.parseRoute
