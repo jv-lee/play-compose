@@ -23,7 +23,7 @@ object Version {
     const val protobuf = "3.10.0"
     const val autoService = "1.0"
     const val compose = "1.2.0-alpha03"
-    const val accompanist = "0.24.2-alpha"
+    const val accompanist = "0.24.1-alpha"
     const val paging = "3.1.0"
     const val pagingCompose = "1.0.0-alpha14"
     const val hilt = "2.38.1"

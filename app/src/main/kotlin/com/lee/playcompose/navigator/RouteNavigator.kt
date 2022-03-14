@@ -34,6 +34,8 @@ import com.lee.playcompose.common.ui.widget.SimpleAnimatedNavHost
 import com.lee.playcompose.details.DetailsPage
 import com.lee.playcompose.home.ui.page.HomePage
 import com.lee.playcompose.me.MePage
+import com.lee.playcompose.official.ui.page.OfficialPage
+import com.lee.playcompose.project.ProjectPage
 import com.lee.playcompose.router.PageRoute
 import com.lee.playcompose.router.parseArguments
 import com.lee.playcompose.router.parseRoute
@@ -95,6 +97,12 @@ fun Activity.RouteNavigator() {
                 }
                 composable(PageRoute.Me.route) {
                     MePage(navController = navController, paddingValues)
+                }
+                sideComposable(PageRoute.Official.route) {
+                    OfficialPage(navController = navController)
+                }
+                sideComposable(PageRoute.Project.route) {
+                    ProjectPage(navController = navController)
                 }
                 sideComposable(
                     route = PageRoute.Details.parseRoute(),
