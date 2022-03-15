@@ -2,7 +2,6 @@ package com.lee.playcompose.details
 
 import android.app.Activity
 import android.content.Context
-import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.compose.runtime.Composable
@@ -10,12 +9,10 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
 import com.just.agentweb.AgentWeb
-import com.lee.playcompose.base.net.HttpManager
 import com.lee.playcompose.common.entity.DetailsData
 import com.lee.playcompose.common.extensions.bindLifecycle
 import com.lee.playcompose.common.extensions.setWebBackEvent
 import com.lee.playcompose.common.ui.widget.AppBarViewContainer
-import com.lee.playcompose.router.ParamsKey
 import com.lee.playcompose.common.R as CR
 
 /**
@@ -24,10 +21,7 @@ import com.lee.playcompose.common.R as CR
  * @description 内容详情页面 （webView）
  */
 @Composable
-fun Activity.DetailsPage(navController: NavController, bundle: Bundle? = null) {
-    val detailsJson = bundle?.getString(ParamsKey.detailsDataKey)
-    val details = HttpManager.getGson().fromJson(detailsJson, DetailsData::class.java)
-
+fun Activity.DetailsPage(navController: NavController, details: DetailsData) {
     AppBarViewContainer(title = details.title, navigationClick = { navController.popBackStack() }) {
         WebView(details = details)
     }

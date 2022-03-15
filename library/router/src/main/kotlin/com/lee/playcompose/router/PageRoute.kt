@@ -4,6 +4,7 @@ import android.os.Parcelable
 
 object ParamsKey {
     const val detailsDataKey = "detailsData"
+    const val tabDataKey = "tabData"
 }
 
 sealed class PageRoute(val route: String, val paramsKey: Map<String, Any> = emptyMap()) {
@@ -13,6 +14,8 @@ sealed class PageRoute(val route: String, val paramsKey: Map<String, Any> = empt
     object Me : PageRoute("Me")
     object Official : PageRoute("Official")
     object Project : PageRoute("Project")
+
+    object SystemContentTab : PageRoute("SystemContentTab")
 
     object Details : PageRoute(
         "Details",

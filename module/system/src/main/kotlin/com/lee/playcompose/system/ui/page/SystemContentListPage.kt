@@ -1,4 +1,4 @@
-package com.lee.playcompose.project.ui.page
+package com.lee.playcompose.system.ui.page
 
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
@@ -8,24 +8,24 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
 import com.lee.playcompose.common.entity.Tab
 import com.lee.playcompose.common.extensions.transformDetails
-import com.lee.playcompose.common.ui.composable.ContentPictureItem
+import com.lee.playcompose.common.ui.composable.ContentItem
 import com.lee.playcompose.common.ui.widget.RefreshList
-import com.lee.playcompose.project.viewmodel.ProjectListViewModel
 import com.lee.playcompose.router.PageRoute
 import com.lee.playcompose.router.navigateArgs
+import com.lee.playcompose.system.viewmodel.SystemContentListViewModel
 
 /**
  * @author jv.lee
- * @date 2022/3/11
+ * @date 2022/3/14
  * @description
  */
 @Composable
-fun ProjectListPage(
+fun SystemContentListPage(
     navController: NavController,
     tab: Tab,
-    viewModel: ProjectListViewModel = viewModel(
+    viewModel: SystemContentListViewModel = viewModel(
         key = tab.id.toString(),
-        factory = ProjectListViewModel.CreateFactory(tab.id)
+        factory = SystemContentListViewModel.CreateFactory(tab.id)
     )
 ) {
     val viewState = viewModel.viewStates
@@ -39,7 +39,7 @@ fun ProjectListPage(
         // build home content item
         itemsIndexed(contentList) { _, item ->
             item ?: return@itemsIndexed
-            ContentPictureItem(item, onItemClick = {
+            ContentItem(item, onItemClick = {
                 navController.navigateArgs(PageRoute.Details.route, it.transformDetails())
             })
         }

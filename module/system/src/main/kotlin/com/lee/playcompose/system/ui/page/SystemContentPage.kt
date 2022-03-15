@@ -15,13 +15,16 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
+import com.lee.playcompose.base.tools.WeakDataHolder
 import com.lee.playcompose.common.entity.ParentTab
 import com.lee.playcompose.common.entity.Tab
-import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.ui.composable.CardItemContainer
 import com.lee.playcompose.common.ui.composable.HeaderSpacer
 import com.lee.playcompose.common.ui.theme.*
 import com.lee.playcompose.common.ui.widget.RefreshList
+import com.lee.playcompose.router.PageRoute
+import com.lee.playcompose.router.ParamsKey
+import com.lee.playcompose.router.navigateArgs
 import com.lee.playcompose.system.R
 import com.lee.playcompose.system.viewmodel.SystemContentViewModel
 import com.lee.playcompose.system.viewmodel.SystemContentViewState
@@ -37,7 +40,8 @@ fun SystemContentPage(
     viewModel: SystemContentViewModel = viewModel()
 ) {
     SystemContentList(viewState = viewModel.viewStates, onItemClick = {
-        toast(it.name)
+        WeakDataHolder.instance.saveData(ParamsKey.tabDataKey, it)
+        navController.navigateArgs(PageRoute.SystemContentTab.route)
     })
 }
 

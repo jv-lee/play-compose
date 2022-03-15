@@ -102,6 +102,7 @@ data class Tab(
     val visible: Int
 ) : Parcelable
 
+@Parcelize
 @Keep
 data class ParentTab(
     val id: Long,
@@ -112,7 +113,7 @@ data class ParentTab(
     val userControlSetTop: Boolean,
     val visible: Int,
     val children: List<Tab>
-)
+) :Parcelable
 
 @Keep
 data class NavigationItem(

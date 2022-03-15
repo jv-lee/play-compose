@@ -65,7 +65,7 @@ fun ProjectPage(navController: NavController, viewModel: ProjectViewModel = view
                         }
                     }
                     HorizontalPager(count = tabData.size, state = pagerState) { page ->
-                        ProjectListPage(navController = navController, item = tabData[page])
+                        ProjectListPage(navController = navController, tab = tabData[page])
                     }
                 }
             }

@@ -28,6 +28,11 @@ import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.lee.playcompose.R
+import com.lee.playcompose.base.net.HttpManager
+import com.lee.playcompose.base.tools.WeakDataHolder
+import com.lee.playcompose.common.entity.DetailsData
+import com.lee.playcompose.common.entity.ParentTab
+import com.lee.playcompose.common.entity.Tab
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.widget.RouteBackHandler
 import com.lee.playcompose.common.ui.widget.SimpleAnimatedNavHost
@@ -36,11 +41,9 @@ import com.lee.playcompose.home.ui.page.HomePage
 import com.lee.playcompose.me.MePage
 import com.lee.playcompose.official.ui.page.OfficialPage
 import com.lee.playcompose.project.ui.page.ProjectPage
-import com.lee.playcompose.router.PageRoute
-import com.lee.playcompose.router.parseArguments
-import com.lee.playcompose.router.parseRoute
-import com.lee.playcompose.router.sideComposable
+import com.lee.playcompose.router.*
 import com.lee.playcompose.square.ui.page.SquarePage
+import com.lee.playcompose.system.ui.page.SystemContentTabPage
 import com.lee.playcompose.system.ui.page.SystemPage
 
 /**
@@ -104,11 +107,18 @@ fun Activity.RouteNavigator() {
                 sideComposable(PageRoute.Project.route) {
                     ProjectPage(navController = navController)
                 }
+                sideComposable(PageRoute.SystemContentTab.route) {
+                    val parentTab = WeakDataHolder.instance.getData<ParentTab>(ParamsKey.tabDataKey)
+                    SystemContentTabPage(navController = navController,parentTab)
+                }
                 sideComposable(
                     route = PageRoute.Details.parseRoute(),
                     arguments = PageRoute.Details.parseArguments()
                 ) { entry ->
-                    DetailsPage(navController = navController, entry.arguments)
+                    val detailsJson = entry.arguments?.getString(ParamsKey.detailsDataKey)
+                    val details =
+                        HttpManager.getGson().fromJson(detailsJson, DetailsData::class.java)
+                    DetailsPage(navController = navController, details)
                 }
             }
         })

@@ -22,10 +22,10 @@ import com.lee.playcompose.router.navigateArgs
 @Composable
 fun OfficialListPage(
     navController: NavController,
-    item: Tab,
+    tab: Tab,
     viewModel: OfficialListViewModel = viewModel(
-        key = item.id.toString(),
-        factory = OfficialListViewModel.CreateFactory(item.id)
+        key = tab.id.toString(),
+        factory = OfficialListViewModel.CreateFactory(tab.id)
     )
 ) {
     val viewState = viewModel.viewStates

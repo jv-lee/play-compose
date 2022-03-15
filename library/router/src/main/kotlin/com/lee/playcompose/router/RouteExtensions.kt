@@ -83,6 +83,9 @@ fun PageRoute.parseArguments(): List<NamedNavArgument> {
 
 private fun checkType(type: Any): NavType<*> {
     return when (type) {
+        is List<*> -> {
+            NavType.StringType
+        }
         is Parcelable -> {
             NavType.StringType
         }

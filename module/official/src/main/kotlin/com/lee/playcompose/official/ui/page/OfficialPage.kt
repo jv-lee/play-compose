@@ -65,7 +65,7 @@ fun OfficialPage(navController: NavController, viewModel: OfficialViewModel = vi
                         }
                     }
                     HorizontalPager(count = tabData.size, state = pagerState) { page ->
-                        OfficialListPage(navController = navController, item = tabData[page])
+                        OfficialListPage(navController = navController, tab = tabData[page])
                     }
                 }
             }
