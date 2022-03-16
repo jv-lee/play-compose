@@ -17,7 +17,7 @@ import com.lee.playcompose.system.viewmodel.SystemContentListViewModel
 /**
  * @author jv.lee
  * @date 2022/3/14
- * @description
+ * @description 体系页第一个tab 体系内容子tabList页面
  */
 @Composable
 fun SystemContentListPage(
