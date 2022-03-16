@@ -1,4 +1,4 @@
-package com.lee.playcompose.navigator
+package com.lee.playcompose.route
 
 import android.app.Activity
 import androidx.compose.animation.AnimatedVisibility
@@ -25,31 +25,17 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import coil.annotation.ExperimentalCoilApi
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
-import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.lee.playcompose.R
-import com.lee.playcompose.base.net.HttpManager
-import com.lee.playcompose.base.tools.WeakDataHolder
-import com.lee.playcompose.common.entity.DetailsData
-import com.lee.playcompose.common.entity.ParentTab
-import com.lee.playcompose.common.entity.Tab
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.widget.RouteBackHandler
 import com.lee.playcompose.common.ui.widget.SimpleAnimatedNavHost
-import com.lee.playcompose.details.DetailsPage
-import com.lee.playcompose.home.ui.page.HomePage
-import com.lee.playcompose.me.MePage
-import com.lee.playcompose.official.ui.page.OfficialPage
-import com.lee.playcompose.project.ui.page.ProjectPage
-import com.lee.playcompose.router.*
-import com.lee.playcompose.square.ui.page.SquarePage
-import com.lee.playcompose.system.ui.page.SystemContentTabPage
-import com.lee.playcompose.system.ui.page.SystemPage
+import com.lee.playcompose.router.PageRoute
 
 /**
  * @author jv.lee
  * @date 2022/2/24
- * @description app路由管理\页面路由注册
+ * @description app路由管理
  */
 @OptIn(ExperimentalCoilApi::class)
 @ExperimentalAnimationApi
@@ -89,37 +75,7 @@ fun Activity.RouteNavigator() {
                 navController = navController,
                 startDestination = MainTab.Home.name
             ) {
-                composable(PageRoute.Home.route) {
-                    HomePage(navController = navController, paddingValues)
-                }
-                composable(PageRoute.Square.route) {
-                    SquarePage(navController = navController, paddingValues)
-                }
-                composable(PageRoute.System.route) {
-                    SystemPage(navController = navController, paddingValues)
-                }
-                composable(PageRoute.Me.route) {
-                    MePage(navController = navController, paddingValues)
-                }
-                sideComposable(PageRoute.Official.route) {
-                    OfficialPage(navController = navController)
-                }
-                sideComposable(PageRoute.Project.route) {
-                    ProjectPage(navController = navController)
-                }
-                sideComposable(PageRoute.SystemContentTab.route) {
-                    val parentTab = WeakDataHolder.instance.getData<ParentTab>(ParamsKey.tabDataKey)
-                    SystemContentTabPage(navController = navController,parentTab)
-                }
-                sideComposable(
-                    route = PageRoute.Details.parseRoute(),
-                    arguments = PageRoute.Details.parseArguments()
-                ) { entry ->
-                    val detailsJson = entry.arguments?.getString(ParamsKey.detailsDataKey)
-                    val details =
-                        HttpManager.getGson().fromJson(detailsJson, DetailsData::class.java)
-                    DetailsPage(navController = navController, details)
-                }
+                appRouteManifest(this, navController, paddingValues)
             }
         })
 }

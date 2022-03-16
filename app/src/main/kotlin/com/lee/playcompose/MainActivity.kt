@@ -5,8 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
 import com.lee.playcompose.common.ui.theme.PlayComposeTheme
-import com.lee.playcompose.navigator.RouteNavigator
-import com.lee.playcompose.navigator.SplashNavigator
+import com.lee.playcompose.route.RouteNavigator
 
 /**
  * @author jv.lee
@@ -19,7 +18,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             PlayComposeTheme {
-                SplashNavigator {
+                SplashLauncher {
                     RouteNavigator()
                 }
             }

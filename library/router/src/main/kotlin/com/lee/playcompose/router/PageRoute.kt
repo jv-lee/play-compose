@@ -14,6 +14,10 @@ sealed class PageRoute(val route: String, val paramsKey: Map<String, Any> = empt
     object Me : PageRoute("Me")
     object Official : PageRoute("Official")
     object Project : PageRoute("Project")
+    object Search : PageRoute("Search")
+    object SearchResult : PageRoute("SearchResult")
+    object CreateShare : PageRoute("CreateShare")
+    object MyShare : PageRoute("MyShare")
 
     object SystemContentTab : PageRoute("SystemContentTab")
 

@@ -1,4 +1,4 @@
-package com.lee.playcompose.navigator
+package com.lee.playcompose
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -10,7 +10,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
-import com.lee.playcompose.R
 import kotlinx.coroutines.delay
 
 /**
@@ -19,7 +18,7 @@ import kotlinx.coroutines.delay
  * @description 闪屏页路由组件 闪屏切换主路由ui
  */
 @Composable
-fun SplashNavigator(content: @Composable () -> Unit) {
+fun SplashLauncher(content: @Composable () -> Unit) {
     var isSplash by remember { mutableStateOf(true) }
     if (isSplash) {
         SplashPage { isSplash = false }
