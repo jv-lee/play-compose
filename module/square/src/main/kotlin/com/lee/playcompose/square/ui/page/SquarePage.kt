@@ -15,7 +15,6 @@ import androidx.paging.compose.itemsIndexed
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.lee.playcompose.common.entity.Content
-import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.extensions.transformDetails
 import com.lee.playcompose.common.ui.composable.ContentItem
 import com.lee.playcompose.common.ui.composable.HeaderSpacer
@@ -42,22 +41,18 @@ fun SquarePage(
 ) {
     Box(modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding())) {
         // content
-        SquareContentList(
-            viewModel.viewStates,
-            onContentItemClick = {
-                navController.navigateArgs(
-                    PageRoute.Details.route,
-                    it.transformDetails()
-                )
-            }
-        )
+        SquareContentList(viewModel.viewStates, onContentItemClick = {
+            navController.navigateArgs(PageRoute.Details.route, it.transformDetails())
+        })
 
         // header
         AppHeaderContainer {
             AppGradientTextBar(
                 title = stringResource(id = R.string.square_title),
                 navigationPainter = painterResource(id = R.drawable.vector_add),
-                onNavigationClick = { toast("add click") }
+                onNavigationClick = {
+                    navController.navigate(PageRoute.CreateShare.route)
+                }
             )
         }
     }

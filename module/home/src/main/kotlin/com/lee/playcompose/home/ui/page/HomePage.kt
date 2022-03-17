@@ -81,7 +81,9 @@ fun HomePage(
             AppGradientTextBar(
                 title = stringResource(id = R.string.home_header_text),
                 navigationPainter = painterResource(id = CR.drawable.vector_search),
-                onNavigationClick = { toast("search click") }
+                onNavigationClick = {
+                    navController.navigate(PageRoute.Search.route)
+                }
             )
         }
     }
