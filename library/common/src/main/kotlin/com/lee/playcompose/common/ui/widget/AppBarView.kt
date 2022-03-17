@@ -39,7 +39,8 @@ fun AppBarView(
     contentColor: Color = contentColorFor(backgroundColor),
     elevation: Dp = AppBarDefaults.TopAppBarElevation,
     navigationEnable: Boolean = true,
-    actionEnable: Boolean = false
+    actionEnable: Boolean = false,
+    content: @Composable BoxScope.() -> Unit = {}
 ) {
     Column(modifier = modifier.shadow(elevation)) {
         Spacer(
@@ -48,40 +49,43 @@ fun AppBarView(
                 .statusBarsHeight()
                 .background(backgroundColor)
         )
-        TopAppBar(
-            {
-                Text(
-                    text = title,
-                    modifier = Modifier
-                        .fillMaxWidth(0.75f)
-                        .wrapContentSize(Alignment.Center),
-                    fontSize = FontSizeLarge,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    color = contentColor
-                )
-            },
-            Modifier.fillMaxWidth(),
-            navigationIcon = {
-                if (navigationEnable) {
-                    IconButton(onClick = navigationClick) {
-                        Icon(navigationIcon, "", tint = contentColor)
+        Box {
+            TopAppBar(
+                {
+                    Text(
+                        text = title,
+                        modifier = Modifier
+                            .fillMaxWidth(0.75f)
+                            .wrapContentSize(Alignment.Center),
+                        fontSize = FontSizeLarge,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        color = contentColor
+                    )
+                },
+                Modifier.fillMaxWidth(),
+                navigationIcon = {
+                    if (navigationEnable) {
+                        IconButton(onClick = navigationClick) {
+                            Icon(navigationIcon, "", tint = contentColor)
+                        }
                     }
-                }
-            },
-            actions = {
-                if (actionEnable) {
-                    IconButton(onClick = actionClick) {
-                        Icon(actionIcon, "", tint = contentColor)
+                },
+                actions = {
+                    if (actionEnable) {
+                        IconButton(onClick = actionClick) {
+                            Icon(actionIcon, "", tint = contentColor)
+                        }
                     }
-                }
-            },
-            backgroundColor,
-            contentColor,
-            0.dp
-        )
+                },
+                backgroundColor,
+                contentColor,
+                0.dp
+            )
+            content()
+        }
     }
 }
 
@@ -99,6 +103,7 @@ fun AppBarViewContainer(
     navigationEnable: Boolean = true,
     actionEnable: Boolean = false,
     containerBackground: Color = AppTheme.colors.background,
+    appBarContent: @Composable BoxScope.() -> Unit = {},
     content: @Composable () -> Unit
 ) {
     Box(
