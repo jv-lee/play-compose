@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search_hint">发现更多内容</string>
+    <string name="search_hot_label">热门搜索</string>
+    <string name="search_history_label">搜索历史</string>
+    <string name="search_history_empty_text">快来搜索感兴趣的内容吧～</string>
+    <string name="search_clear">清空</string>
+</resources>

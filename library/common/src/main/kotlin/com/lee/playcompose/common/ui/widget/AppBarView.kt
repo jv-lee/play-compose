@@ -126,7 +126,8 @@ fun AppBarViewContainer(
             contentColor,
             elevation,
             navigationEnable,
-            actionEnable
+            actionEnable,
+            appBarContent
         )
     }
 }
