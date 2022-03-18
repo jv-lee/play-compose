@@ -7,10 +7,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Card
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -18,6 +15,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
@@ -28,7 +26,6 @@ import androidx.navigation.NavController
 import com.google.accompanist.flowlayout.FlowRow
 import com.lee.playcompose.base.extensions.onTap
 import com.lee.playcompose.common.entity.SearchHistory
-import com.lee.playcompose.common.extensions.randomColor
 import com.lee.playcompose.common.ui.theme.*
 import com.lee.playcompose.common.ui.widget.AppBarView
 import com.lee.playcompose.router.PageRoute
@@ -84,6 +81,8 @@ fun SearchPage(
                 keyboardController?.hide()
             }, onSearchClick = { searchKey ->
                 viewModel.dispatch(SearchViewAction.NavigationSearchKey(searchKey))
+            }, onDeleteHistoryClick = { searchKey ->
+                viewModel.dispatch(SearchViewAction.DeleteSearchHistory(searchKey))
             }, onClearClick = {
                 viewModel.dispatch(SearchViewAction.ClearSearchHistory)
             })
@@ -137,6 +136,7 @@ private fun SearchContent(
     viewState: SearchViewState,
     contentClick: () -> Unit,
     onSearchClick: (String) -> Unit,
+    onDeleteHistoryClick: (String) -> Unit,
     onClearClick: () -> Unit
 ) {
     Column(modifier = Modifier
@@ -146,7 +146,8 @@ private fun SearchContent(
         SearchHistoryContent(
             viewState = viewState,
             onSearchClick = onSearchClick,
-            onClearClick = onClearClick
+            onClearClick = onClearClick,
+            onDeleteHistoryClick = onDeleteHistoryClick
         )
         SearchHistoryEmptyLayout(viewState = viewState)
     }
@@ -174,6 +175,7 @@ private fun ColumnScope.SearchHotContent(
 private fun ColumnScope.SearchHistoryContent(
     viewState: SearchViewState,
     onSearchClick: (String) -> Unit,
+    onDeleteHistoryClick: (String) -> Unit,
     onClearClick: () -> Unit
 ) {
     Box(modifier = Modifier.fillMaxWidth()) {
@@ -197,7 +199,11 @@ private fun ColumnScope.SearchHistoryContent(
     }
     LazyColumn(modifier = Modifier.padding(start = OffsetLarge, end = OffsetLarge), content = {
         itemsIndexed(viewState.searchHistory) { _, item ->
-            SearchHistoryItem(item = item, onSearchClick = onSearchClick)
+            SearchHistoryItem(
+                item = item,
+                onSearchClick = onSearchClick,
+                onDeleteHistoryClick = onDeleteHistoryClick
+            )
         }
     })
 }
@@ -236,6 +242,28 @@ private fun SearchHotItem(item: SearchHot, onSearchClick: (String) -> Unit) {
 }
 
 @Composable
-private fun SearchHistoryItem(item: SearchHistory, onSearchClick: (String) -> Unit) {
-    Text(text = item.key, modifier = Modifier.clickable { onSearchClick(item.key) })
+private fun SearchHistoryItem(
+    item: SearchHistory,
+    onSearchClick: (String) -> Unit,
+    onDeleteHistoryClick: (String) -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = OffsetMedium, bottom = OffsetMedium)
+    ) {
+        Text(text = item.key,
+            fontSize = FontSizeSmall,
+            color = AppTheme.colors.primary,
+            modifier = Modifier
+                .weight(1f)
+                .clickable { onSearchClick(item.key) })
+        Icon(
+            painter = painterResource(id = R.drawable.vector_close),
+            contentDescription = null,
+            modifier = Modifier
+                .size(16.dp)
+                .onTap { onDeleteHistoryClick(item.key) }
+        )
+    }
 }
