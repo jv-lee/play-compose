@@ -11,6 +11,7 @@ import com.lee.playcompose.base.tools.StatusTools.setDarkStatusIcon
 import com.lee.playcompose.base.tools.StatusTools.setLightStatusIcon
 import com.lee.playcompose.base.tools.StatusTools.setNavigationBarColor
 import com.lee.playcompose.common.extensions.setCommonInterceptor
+import com.lee.playcompose.service.helper.ApplicationModuleService
 
 /**
  * @author jv.lee
@@ -37,9 +38,13 @@ class App : BaseApplication() {
     }
 
     override fun init() {
+        // 初始化深色模式工具
         DarkModeTools.get(this)
         // 初始化网络拦截器
         HttpManager.getInstance().setCommonInterceptor()
+        // 子模块统一初始化
+        ApplicationModuleService.init(this@App)
+
         // 注册Activity生命周期监听
         registerActivityLifecycleCallbacks(activityLifecycleCallbacks)
     }
