@@ -9,6 +9,7 @@ import com.lee.playcompose.common.entity.SearchHistory
 import com.lee.playcompose.search.model.db.SearchHistoryDatabase
 import com.lee.playcompose.search.model.entity.SearchHot
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -107,9 +108,10 @@ class SearchViewModel : ViewModel() {
      * 添加搜索记录
      * @param key 被搜索的key
      */
-    private fun addSearchHistory(key: String) {
+    private fun addSearchHistory(key: String, isDelay: Long = 500) {
         viewModelScope.launch {
             flow {
+                delay(isDelay)
                 emit(searchHistoryDao.insert(SearchHistory(key = key)))
             }.collect {
                 requestSearchHistoryData()

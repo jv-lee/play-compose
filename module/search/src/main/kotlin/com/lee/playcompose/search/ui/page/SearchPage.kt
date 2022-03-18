@@ -247,23 +247,26 @@ private fun SearchHistoryItem(
     onSearchClick: (String) -> Unit,
     onDeleteHistoryClick: (String) -> Unit
 ) {
-    Row(
+    Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = OffsetMedium, bottom = OffsetMedium)
+            .padding(OffsetMedium)
     ) {
-        Text(text = item.key,
+        Text(
+            text = item.key,
             fontSize = FontSizeSmall,
             color = AppTheme.colors.primary,
             modifier = Modifier
-                .weight(1f)
-                .clickable { onSearchClick(item.key) })
+                .align(alignment = Alignment.CenterStart)
+                .clickable { onSearchClick(item.key) }
+        )
         Icon(
             painter = painterResource(id = R.drawable.vector_close),
             contentDescription = null,
             modifier = Modifier
                 .size(16.dp)
-                .onTap { onDeleteHistoryClick(item.key) }
+                .align(alignment = Alignment.CenterEnd)
+                .clickable { onDeleteHistoryClick(item.key) }
         )
     }
 }
