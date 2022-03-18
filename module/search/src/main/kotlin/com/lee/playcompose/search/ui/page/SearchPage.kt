@@ -1,4 +1,4 @@
-package com.lee.playcompose.search
+package com.lee.playcompose.search.ui.page
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,6 +21,7 @@ import androidx.navigation.NavController
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.theme.FontSizeLarge
 import com.lee.playcompose.common.ui.widget.AppBarView
+import com.lee.playcompose.search.R
 
 /**
  * @author jv.lee

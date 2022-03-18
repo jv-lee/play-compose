@@ -1,4 +1,4 @@
-package com.lee.playcompose.search
+package com.lee.playcompose.search.ui.page
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController

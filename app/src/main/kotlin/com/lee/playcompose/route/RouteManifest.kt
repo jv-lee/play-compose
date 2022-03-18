@@ -16,8 +16,8 @@ import com.lee.playcompose.me.MePage
 import com.lee.playcompose.official.ui.page.OfficialPage
 import com.lee.playcompose.project.ui.page.ProjectPage
 import com.lee.playcompose.router.*
-import com.lee.playcompose.search.SearchPage
-import com.lee.playcompose.search.SearchResultPage
+import com.lee.playcompose.search.ui.page.SearchPage
+import com.lee.playcompose.search.ui.page.SearchResultPage
 import com.lee.playcompose.square.ui.page.CreateSharePage
 import com.lee.playcompose.square.ui.page.MySharePage
 import com.lee.playcompose.square.ui.page.SquarePage
