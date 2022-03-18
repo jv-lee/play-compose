@@ -1,12 +1,18 @@
 package com.lee.playcompose.search.model.entity
 
+import androidx.compose.ui.graphics.Color
+import com.lee.playcompose.common.extensions.randomColor
+
 /**
  * @author jv.lee
  * @date 2021/11/4
  * @description 搜索热词 提供本地数据源
  */
-data class SearchHot(val key: String){
-    companion object{
+data class SearchHot(
+    val key: String,
+    val color: Color = randomColor()
+) {
+    companion object {
         /**
          * 提供热门搜索词条
          */

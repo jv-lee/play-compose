@@ -27,10 +27,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.google.accompanist.flowlayout.FlowRow
 import com.lee.playcompose.base.extensions.onTap
+import com.lee.playcompose.common.entity.SearchHistory
+import com.lee.playcompose.common.extensions.randomColor
 import com.lee.playcompose.common.ui.theme.*
 import com.lee.playcompose.common.ui.widget.AppBarView
 import com.lee.playcompose.router.PageRoute
 import com.lee.playcompose.search.R
+import com.lee.playcompose.search.model.entity.SearchHot
 import com.lee.playcompose.search.viewmodel.SearchViewAction
 import com.lee.playcompose.search.viewmodel.SearchViewEvent
 import com.lee.playcompose.search.viewmodel.SearchViewModel
@@ -138,67 +141,101 @@ private fun SearchContent(
 ) {
     Column(modifier = Modifier
         .fillMaxSize()
-        .onTap {
-            contentClick()
-        }) {
+        .onTap { contentClick() }) {
+        SearchHotContent(viewState = viewState, onSearchClick)
+        SearchHistoryContent(
+            viewState = viewState,
+            onSearchClick = onSearchClick,
+            onClearClick = onClearClick
+        )
+        SearchHistoryEmptyLayout(viewState = viewState)
+    }
+}
+
+@Composable
+private fun ColumnScope.SearchHotContent(
+    viewState: SearchViewState,
+    onSearchClick: (String) -> Unit
+) {
+    Text(
+        text = stringResource(id = R.string.search_hot_label),
+        fontSize = FontSizeMedium,
+        color = AppTheme.colors.accent,
+        modifier = Modifier.padding(OffsetLarge)
+    )
+    FlowRow(modifier = Modifier.padding(start = OffsetLarge, end = OffsetLarge)) {
+        viewState.searchHot.forEach { hot ->
+            SearchHotItem(hot, onSearchClick)
+        }
+    }
+}
+
+@Composable
+private fun ColumnScope.SearchHistoryContent(
+    viewState: SearchViewState,
+    onSearchClick: (String) -> Unit,
+    onClearClick: () -> Unit
+) {
+    Box(modifier = Modifier.fillMaxWidth()) {
         Text(
-            text = stringResource(id = R.string.search_hot_label),
+            text = stringResource(id = R.string.search_history_label),
             fontSize = FontSizeMedium,
             color = AppTheme.colors.accent,
-            modifier = Modifier.padding(OffsetLarge)
+            modifier = Modifier
+                .padding(OffsetLarge)
+                .align(Alignment.CenterStart)
         )
-        FlowRow(modifier = Modifier.padding(start = OffsetLarge, end = OffsetLarge)) {
-            viewState.searchHot.forEach { hot ->
-                Card(
-                    elevation = 0.dp,
-                    backgroundColor = AppTheme.colors.item,
-                    shape = RoundedCornerShape(OffsetRadiusSmall),
-                    modifier = Modifier.padding(OffsetSmall)
-                ) {
-                    Box(modifier = Modifier.clickable { onSearchClick(hot.key) }) {
-                        Text(
-                            text = hot.key,
-                            color = AppTheme.colors.primary,
-                            fontSize = FontSizeSmall,
-                            modifier = Modifier.padding(OffsetMedium)
-                        )
-                    }
-                }
-            }
+        Text(
+            text = stringResource(id = R.string.search_clear),
+            fontSize = FontSizeMedium,
+            color = AppTheme.colors.primary,
+            modifier = Modifier
+                .padding(OffsetLarge)
+                .align(Alignment.CenterEnd)
+                .clickable { onClearClick() }
+        )
+    }
+    LazyColumn(modifier = Modifier.padding(start = OffsetLarge, end = OffsetLarge), content = {
+        itemsIndexed(viewState.searchHistory) { _, item ->
+            SearchHistoryItem(item = item, onSearchClick = onSearchClick)
         }
-        Box(modifier = Modifier.fillMaxWidth()) {
+    })
+}
+
+@Composable
+private fun ColumnScope.SearchHistoryEmptyLayout(viewState: SearchViewState) {
+    if (viewState.searchHistory.isEmpty()) {
+        Text(
+            text = stringResource(id = R.string.search_history_empty_text),
+            fontSize = FontSizeMedium,
+            color = AppTheme.colors.primary,
+            modifier = Modifier
+                .padding(top = 26.dp)
+                .align(Alignment.CenterHorizontally)
+        )
+    }
+}
+
+@Composable
+private fun SearchHotItem(item: SearchHot, onSearchClick: (String) -> Unit) {
+    Card(
+        elevation = 0.dp,
+        backgroundColor = Color(0xFFEBEBEB),
+        shape = RoundedCornerShape(OffsetRadiusMedium),
+        modifier = Modifier.padding(OffsetSmall)
+    ) {
+        Box(modifier = Modifier.clickable { onSearchClick(item.key) }) {
             Text(
-                text = stringResource(id = R.string.search_history_label),
-                fontSize = FontSizeMedium,
-                color = AppTheme.colors.accent,
-                modifier = Modifier
-                    .padding(OffsetLarge)
-                    .align(Alignment.CenterStart)
-            )
-            Text(
-                text = stringResource(id = R.string.search_clear),
-                fontSize = FontSizeMedium,
-                color = AppTheme.colors.primary,
-                modifier = Modifier
-                    .padding(OffsetLarge)
-                    .align(Alignment.CenterEnd)
-                    .clickable { onClearClick() }
-            )
-        }
-        LazyColumn(modifier = Modifier.padding(start = OffsetLarge, end = OffsetLarge), content = {
-            itemsIndexed(viewState.searchHistory) { _, item ->
-                Text(text = item.key, modifier = Modifier.clickable { onSearchClick(item.key) })
-            }
-        })
-        if (viewState.searchHistory.isEmpty()) {
-            Text(
-                text = stringResource(id = R.string.search_history_empty_text),
-                fontSize = FontSizeMedium,
-                color = AppTheme.colors.primary,
-                modifier = Modifier
-                    .padding(top = 26.dp)
-                    .align(Alignment.CenterHorizontally)
+                text = item.key,
+                color = item.color,
+                fontSize = FontSizeSmall,
+                modifier = Modifier.padding(OffsetMedium)
             )
         }
     }
+}
+
+@Composable
+private fun SearchHistoryItem(item: SearchHistory, onSearchClick: (String) -> Unit) {
+    Text(text = item.key, modifier = Modifier.clickable { onSearchClick(item.key) })
 }
