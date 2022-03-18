@@ -8,8 +8,10 @@ import androidx.lifecycle.viewModelScope
 import com.lee.playcompose.common.entity.SearchHistory
 import com.lee.playcompose.search.model.db.SearchHistoryDatabase
 import com.lee.playcompose.search.model.entity.SearchHot
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 /**
@@ -23,6 +25,8 @@ class SearchViewModel : ViewModel() {
 
     var viewStates by mutableStateOf(SearchViewState())
         private set
+    private val _viewEvents = Channel<SearchViewEvent>(Channel.BUFFERED)
+    val viewEvents = _viewEvents.receiveAsFlow()
 
     init {
         dispatch(SearchViewAction.RequestSearchHotData)
@@ -31,14 +35,17 @@ class SearchViewModel : ViewModel() {
 
     fun dispatch(action: SearchViewAction) {
         when (action) {
+            is SearchViewAction.ChangeSearchKey -> {
+                changeSearchKey(action.key)
+            }
             is SearchViewAction.RequestSearchHotData -> {
                 requestSearchHotData()
             }
             is SearchViewAction.RequestSearchHistoryData -> {
                 requestSearchHistoryData()
             }
-            is SearchViewAction.AddSearchHistory -> {
-                addSearchHistory(action.key)
+            is SearchViewAction.NavigationSearchKey -> {
+                navigationSearchKey(action.key)
             }
             is SearchViewAction.DeleteSearchHistory -> {
                 deleteSearchHistory(action.key)
@@ -47,6 +54,13 @@ class SearchViewModel : ViewModel() {
                 clearSearchHistory()
             }
         }
+    }
+
+    /**
+     * 搜索文本监听处理
+     */
+    private fun changeSearchKey(key: String) {
+        viewStates = viewStates.copy(searchKey = key)
     }
 
 
@@ -73,6 +87,19 @@ class SearchViewModel : ViewModel() {
             }.collect {
                 viewStates = viewStates.copy(searchHistory = it)
             }
+        }
+    }
+
+    /**
+     * 导航到搜索结果页
+     * @param key 搜索key
+     */
+    private fun navigationSearchKey(key: String) {
+        if (key.isEmpty()) return
+
+        viewModelScope.launch {
+            _viewEvents.send(SearchViewEvent.NavigationSearch(key))
+            addSearchHistory(key)
         }
     }
 
@@ -120,14 +147,20 @@ class SearchViewModel : ViewModel() {
 }
 
 data class SearchViewState(
+    val searchKey: String = "",
     val searchHot: List<SearchHot> = emptyList(),
     val searchHistory: List<SearchHistory> = emptyList()
 )
 
+sealed class SearchViewEvent {
+    data class NavigationSearch(val route: String) : SearchViewEvent()
+}
+
 sealed class SearchViewAction {
     object RequestSearchHotData : SearchViewAction()
     object RequestSearchHistoryData : SearchViewAction()
-    data class AddSearchHistory(val key: String) : SearchViewAction()
+    data class NavigationSearchKey(val key: String) : SearchViewAction()
     data class DeleteSearchHistory(val key: String) : SearchViewAction()
     object ClearSearchHistory : SearchViewAction()
+    data class ChangeSearchKey(val key: String) : SearchViewAction()
 }
