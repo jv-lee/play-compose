@@ -3,7 +3,9 @@ package com.lee.playcompose
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.core.view.WindowCompat
+import com.lee.playcompose.base.extensions.LocalActivity
 import com.lee.playcompose.common.ui.theme.PlayComposeTheme
 import com.lee.playcompose.route.RouteNavigator
 
@@ -17,9 +19,11 @@ class MainActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
         setContent {
-            PlayComposeTheme {
-                SplashLauncher {
-                    RouteNavigator()
+            CompositionLocalProvider(LocalActivity provides this) {
+                PlayComposeTheme {
+                    SplashLauncher {
+                        RouteNavigator()
+                    }
                 }
             }
         }
