@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lee.playcompose.common.constants.ApiConstants
+import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
 import com.lee.playcompose.square.model.api.ApiService
 import kotlinx.coroutines.channels.Channel
@@ -55,7 +55,6 @@ class CreateShareViewModel : ViewModel() {
 
     private fun requestShare() {
         viewModelScope.launch {
-
             flow {
                 delay(500)
                 // 校验输入格式
@@ -64,11 +63,7 @@ class CreateShareViewModel : ViewModel() {
                 }
 
                 val response = api.postShareDataSync(viewStates.shareTitle, viewStates.shareContent)
-                if (response.errorCode == ApiConstants.REQUEST_OK) {
-                    emit(response.data)
-                } else {
-                    throw RuntimeException(response.errorMsg)
-                }
+                emit(response.checkData())
             }.onStart {
                 viewStates = viewStates.copy(isLoading = true)
             }.catch { error ->

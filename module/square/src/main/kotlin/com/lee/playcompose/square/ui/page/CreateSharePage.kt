@@ -50,6 +50,7 @@ fun CreateSharePage(navController: NavController, viewModel: CreateShareViewMode
             when (event) {
                 is CreateShareViewEvent.CreateSuccess -> {
                     toast(shareSuccess)
+                    navController.popBackStack()
                 }
                 is CreateShareViewEvent.CreateFailed -> {
                     toast(event.message)
