@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="square_title">Recently shared</string>
+    <string name="square_my_share_title">我的分享</string>
+    <string name="square_create_share_title">创建分享</string>
+    <string name="share_success">分享成功</string>
+    <string name="share_delete_success">删除分享成功</string>
+    <string name="share_title_text">分享标题</string>
+    <string name="share_content_text">分享链接</string>
+    <string name="share_title_hint">100字以内</string>
+    <string name="share_content_hint">例如：https://www.wanandorid.com</string>
+    <string name="share_description">1. 只要是任何好文都可以分享哈，并不一定要是原创！投递的文章会进入广场 tab;\n2. CSDN，掘金，简书等官方博客站点会直接通过，不需要审核;\n3. 其他个人站点会进入审核阶段，不要投递任何无效链接，测试的请尽快删除，否则可能会对你的账号产生一定影响;\n4. 目前处于测试阶段，如果你发现500等错误，可以向我提交日志，让我们一起使网站变得更好。\n5. 由于本站只有我一个人开发与维护，会尽力保证24小时内审核，当然有可能哪天太累，会延期，请保持佛系…\n
+    </string>
 </resources>

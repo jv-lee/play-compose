@@ -26,6 +26,7 @@ class SearchViewModel : ViewModel() {
 
     var viewStates by mutableStateOf(SearchViewState())
         private set
+
     private val _viewEvents = Channel<SearchViewEvent>(Channel.BUFFERED)
     val viewEvents = _viewEvents.receiveAsFlow()
 

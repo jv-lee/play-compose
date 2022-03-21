@@ -27,6 +27,7 @@ import androidx.navigation.NavController
 import com.google.accompanist.flowlayout.FlowRow
 import com.lee.playcompose.base.extensions.onTap
 import com.lee.playcompose.common.entity.SearchHistory
+import com.lee.playcompose.common.ui.composable.AppTextField
 import com.lee.playcompose.common.ui.theme.*
 import com.lee.playcompose.common.ui.widget.AppBarView
 import com.lee.playcompose.router.PageRoute
@@ -100,30 +101,15 @@ private fun SearchAppBar(
     onValueChange: (String) -> Unit,
 ) {
     AppBarView(navigationClick = navigationClick) {
-        TextField(
+        AppTextField(
             value = viewState.searchKey,
             onValueChange = { onValueChange(it) },
-            textStyle = TextStyle.Default.copy(fontSize = FontSizeLarge),
-            singleLine = true,
             keyboardActions = KeyboardActions(onSearch = { onSearchClick(viewState.searchKey) }),
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Search
             ),
-            colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = Color.Transparent,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                cursorColor = AppTheme.colors.accent,
-                textColor = AppTheme.colors.accent,
-            ),
-            placeholder = {
-                Text(
-                    text = stringResource(id = R.string.search_hint),
-                    color = AppTheme.colors.primary,
-                    fontSize = FontSizeLarge
-                )
-            },
+            hintText = stringResource(id = R.string.search_hint),
             modifier = Modifier
                 .align(Alignment.Center)
                 .fillMaxWidth()
