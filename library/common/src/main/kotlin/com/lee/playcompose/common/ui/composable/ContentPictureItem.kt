@@ -16,6 +16,7 @@ import coil.compose.rememberImagePainter
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.extensions.getCategory
 import com.lee.playcompose.common.extensions.getDateFormat
+import com.lee.playcompose.common.extensions.getDescription
 import com.lee.playcompose.common.extensions.getTitle
 import com.lee.playcompose.common.ui.theme.*
 
@@ -149,7 +150,7 @@ fun ContentPictureItem(
             )
 
             Text(
-                text = item.desc,
+                text = item.getDescription(),
                 color = AppTheme.colors.primary,
                 fontSize = FontSizeSmall,
                 overflow = TextOverflow.Ellipsis,

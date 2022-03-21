@@ -15,6 +15,9 @@ import com.lee.playcompose.common.entity.DetailsData
 fun Content.getTitle(): String =
     HtmlCompat.fromHtml(title, HtmlCompat.FROM_HTML_MODE_LEGACY).toString()
 
+fun Content.getDescription(): String =
+    HtmlCompat.fromHtml(desc, HtmlCompat.FROM_HTML_MODE_LEGACY).toString()
+
 fun Content.getAuthor(): String = author.ifEmpty { shareUser }
 
 fun Content.getDateFormat(): String = TimeUtil.getChineseTimeMill(publishTime)
@@ -29,7 +32,7 @@ fun Content.getCategory(): String {
 }
 
 fun Content.transformDetails(): DetailsData =
-    DetailsData(id = id.toString(), title = title, link = link)
+    DetailsData(id = id.toString(), title = getTitle(), link = link)
 
 fun Banner.transformDetails(): DetailsData =
     DetailsData(id = id.toString(), title = title, link = url, isCollect = collect)

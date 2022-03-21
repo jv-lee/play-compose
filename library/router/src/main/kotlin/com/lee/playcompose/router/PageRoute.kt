@@ -5,6 +5,7 @@ import android.os.Parcelable
 object ParamsKey {
     const val detailsDataKey = "detailsData"
     const val tabDataKey = "tabData"
+    const val searchKey = "searchKey"
 }
 
 sealed class PageRoute(val route: String, val paramsKey: Map<String, Any> = emptyMap()) {
@@ -15,7 +16,11 @@ sealed class PageRoute(val route: String, val paramsKey: Map<String, Any> = empt
     object Official : PageRoute("Official")
     object Project : PageRoute("Project")
     object Search : PageRoute("Search")
-    object SearchResult : PageRoute("SearchResult")
+    object SearchResult : PageRoute(
+        "SearchResult",
+        paramsKey = mapOf(Pair(ParamsKey.searchKey, String::class.java))
+    )
+
     object CreateShare : PageRoute("CreateShare")
     object MyShare : PageRoute("MyShare")
 

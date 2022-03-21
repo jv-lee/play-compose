@@ -155,7 +155,7 @@ data class SearchViewState(
 )
 
 sealed class SearchViewEvent {
-    data class NavigationSearch(val route: String) : SearchViewEvent()
+    data class NavigationSearch(val key: String) : SearchViewEvent()
 }
 
 sealed class SearchViewAction {

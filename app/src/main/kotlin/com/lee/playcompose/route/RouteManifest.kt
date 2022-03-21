@@ -80,8 +80,12 @@ fun Activity.appRouteManifest(
         sideComposable(PageRoute.Search.route) {
             SearchPage(navController = navController)
         }
-        sideComposable(PageRoute.SearchResult.route) {
-            SearchResultPage(navController = navController)
+        sideComposable(
+            route = PageRoute.SearchResult.parseRoute(),
+            arguments = PageRoute.SearchResult.parseArguments()
+        ) { entry ->
+            val searchKey = entry.arguments?.getString(ParamsKey.searchKey)
+            SearchResultPage(navController = navController, searchKey = searchKey ?: "")
         }
 
         // module:details

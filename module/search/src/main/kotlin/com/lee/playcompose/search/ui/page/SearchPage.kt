@@ -1,5 +1,6 @@
 package com.lee.playcompose.search.ui.page
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -29,6 +30,7 @@ import com.lee.playcompose.common.entity.SearchHistory
 import com.lee.playcompose.common.ui.theme.*
 import com.lee.playcompose.common.ui.widget.AppBarView
 import com.lee.playcompose.router.PageRoute
+import com.lee.playcompose.router.navigateArgs
 import com.lee.playcompose.search.R
 import com.lee.playcompose.search.model.entity.SearchHot
 import com.lee.playcompose.search.viewmodel.SearchViewAction
@@ -58,13 +60,13 @@ fun SearchPage(
                 // 导航到搜索结果页
                 is SearchViewEvent.NavigationSearch -> {
                     keyboardController?.hide()
-                    navController.navigate(PageRoute.SearchResult.route)
+                    navController.navigateArgs(PageRoute.SearchResult.route, event.key)
                 }
             }
         }
     }
 
-    Column {
+    Column(modifier = Modifier.background(AppTheme.colors.background)) {
         SearchAppBar(
             viewState = viewState,
             navigationClick = {
