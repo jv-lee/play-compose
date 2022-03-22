@@ -14,8 +14,10 @@ import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -27,10 +29,15 @@ import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.lee.playcompose.R
+import com.lee.playcompose.base.bus.ChannelBus
+import com.lee.playcompose.common.entity.LoginEvent
+import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.widget.RouteBackHandler
 import com.lee.playcompose.common.ui.widget.SimpleAnimatedNavHost
 import com.lee.playcompose.router.PageRoute
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.receiveAsFlow
 
 /**
  * @author jv.lee
@@ -47,6 +54,13 @@ fun Activity.RouteNavigator() {
     val navController = rememberAnimatedNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
+
+    LaunchedEffect(Unit) {
+        LocalLifecycleOwner
+        ChannelBus.getChannel<LoginEvent>()?.receiveAsFlow()?.collect {
+            toast("loading event.")
+        }
+    }
 
     // double click close app.
     RouteBackHandler({ finish() }, navController, mainRoutes)

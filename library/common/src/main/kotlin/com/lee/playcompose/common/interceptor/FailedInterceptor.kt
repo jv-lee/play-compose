@@ -1,8 +1,9 @@
 package com.lee.playcompose.common.interceptor
 
 import com.google.gson.JsonParser
+import com.lee.playcompose.base.bus.ChannelBus
+import com.lee.playcompose.base.bus.ChannelBus.Companion.post
 import com.lee.playcompose.common.entity.LoginEvent
-import com.lee.playcompose.base.livedatabus.LiveDataBus
 import com.lee.playcompose.base.tools.PreferencesTools
 import com.lee.playcompose.common.constants.ApiConstants
 import okhttp3.Interceptor
@@ -43,8 +44,7 @@ class FailedInterceptor : Interceptor {
                     if (code == ApiConstants.REQUEST_TOKEN_ERROR) {
                         //单独处理登陆状态 ， 已登陆状态发起重新登陆事件
                         if (PreferencesTools.get(SP_KEY_IS_LOGIN)) {
-                            LiveDataBus.getInstance().getChannel(LoginEvent.key)
-                                .postValue(LoginEvent())
+                            ChannelBus.getChannel<LoginEvent>()?.post(LoginEvent())
                         }
                     }
                 }

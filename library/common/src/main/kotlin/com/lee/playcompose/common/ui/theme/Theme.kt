@@ -1,5 +1,6 @@
 package com.lee.playcompose.common.ui.theme
 
+import androidx.activity.ComponentActivity
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.TweenSpec
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -12,6 +13,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.google.accompanist.insets.ProvideWindowInsets
+import com.lee.playcompose.base.extensions.LocalActivity
 
 
 private val DarkColorPalette = AppColors(
@@ -89,7 +91,7 @@ object AppTheme {
 }
 
 @Composable
-fun PlayComposeTheme(
+fun ComponentActivity.PlayComposeTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
@@ -132,7 +134,10 @@ fun PlayComposeTheme(
         )
     )
 
-    CompositionLocalProvider(LocalAppColors provides appColors) {
+    CompositionLocalProvider(
+        LocalAppColors provides appColors,
+        LocalActivity provides this
+    ) {
         ProvideWindowInsets {
             MaterialTheme(
                 typography = typography,

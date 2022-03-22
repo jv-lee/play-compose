@@ -20,7 +20,9 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.lee.playcompose.base.bus.ChannelBus
 import com.lee.playcompose.base.extensions.onTap
+import com.lee.playcompose.common.entity.LoginEvent
 import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.ui.composable.AppTextField
 import com.lee.playcompose.common.ui.composable.LoadingDialog
@@ -54,6 +56,7 @@ fun CreateSharePage(navController: NavController, viewModel: CreateShareViewMode
                 }
                 is CreateShareViewEvent.CreateFailed -> {
                     toast(event.message)
+                    ChannelBus.getChannel<LoginEvent>()?.send(LoginEvent())
                 }
             }
         }
