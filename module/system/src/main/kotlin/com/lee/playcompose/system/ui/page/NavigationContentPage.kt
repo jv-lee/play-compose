@@ -21,8 +21,10 @@ import androidx.paging.compose.itemsIndexed
 import com.google.accompanist.flowlayout.FlowRow
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
+import com.lee.playcompose.base.bus.ChannelBus
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.entity.NavigationItem
+import com.lee.playcompose.common.entity.NavigationSelectEvent
 import com.lee.playcompose.common.extensions.transformDetails
 import com.lee.playcompose.common.ui.composable.HeaderSpacer
 import com.lee.playcompose.common.ui.theme.*
@@ -32,6 +34,8 @@ import com.lee.playcompose.system.ui.theme.NavigationTabHeight
 import com.lee.playcompose.system.ui.theme.SystemTabRadius
 import com.lee.playcompose.system.viewmodel.NavigationContentViewModel
 import com.lee.playcompose.system.viewmodel.NavigationContentViewState
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 /**
@@ -44,7 +48,17 @@ fun NavigationContentPage(
     navController: NavController,
     viewModel: NavigationContentViewModel = viewModel()
 ) {
-    NavigationContent(viewState = viewModel.viewStates, itemClick = {
+    val viewState = viewModel.viewStates
+
+    LaunchedEffect(Unit) {
+        ChannelBus.getChannel<NavigationSelectEvent>()?.receiveAsFlow()?.collect { event ->
+            if (event.route == PageRoute.System.route) {
+                viewState.listState.animateScrollToItem(0)
+            }
+        }
+    }
+
+    NavigationContent(viewState = viewState, itemClick = {
         navController.navigateArgs(PageRoute.Details.route, it.transformDetails())
     })
 }

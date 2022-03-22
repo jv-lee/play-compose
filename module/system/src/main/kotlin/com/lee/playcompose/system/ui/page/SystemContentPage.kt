@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -15,7 +16,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
+import com.lee.playcompose.base.bus.ChannelBus
 import com.lee.playcompose.base.tools.WeakDataHolder
+import com.lee.playcompose.common.entity.NavigationSelectEvent
 import com.lee.playcompose.common.entity.ParentTab
 import com.lee.playcompose.common.entity.Tab
 import com.lee.playcompose.common.ui.composable.CardItemContainer
@@ -28,6 +31,8 @@ import com.lee.playcompose.router.navigateArgs
 import com.lee.playcompose.system.R
 import com.lee.playcompose.system.viewmodel.SystemContentViewModel
 import com.lee.playcompose.system.viewmodel.SystemContentViewState
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.receiveAsFlow
 
 /**
  * @author jv.lee
@@ -39,7 +44,17 @@ fun SystemContentPage(
     navController: NavController,
     viewModel: SystemContentViewModel = viewModel()
 ) {
-    SystemContentList(viewState = viewModel.viewStates, onItemClick = {
+    val viewState = viewModel.viewStates
+
+    LaunchedEffect(Unit) {
+        ChannelBus.getChannel<NavigationSelectEvent>()?.receiveAsFlow()?.collect { event ->
+            if (event.route == PageRoute.System.route) {
+                viewState.listState.animateScrollToItem(0)
+            }
+        }
+    }
+
+    SystemContentList(viewState = viewState, onItemClick = {
         WeakDataHolder.instance.saveData(ParamsKey.tabDataKey, it)
         navController.navigateArgs(PageRoute.SystemContentTab.route)
     })

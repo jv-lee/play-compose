@@ -30,7 +30,9 @@ import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.lee.playcompose.R
 import com.lee.playcompose.base.bus.ChannelBus
+import com.lee.playcompose.base.bus.ChannelBus.Companion.post
 import com.lee.playcompose.common.entity.LoginEvent
+import com.lee.playcompose.common.entity.NavigationSelectEvent
 import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.widget.RouteBackHandler
@@ -50,14 +52,17 @@ import kotlinx.coroutines.flow.receiveAsFlow
 fun Activity.RouteNavigator() {
     val navigationInsets =
         rememberInsetsPaddingValues(insets = LocalWindowInsets.current.navigationBars)
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
 
     val navController = rememberAnimatedNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
     LaunchedEffect(Unit) {
-        LocalLifecycleOwner
-        ChannelBus.getChannel<LoginEvent>()?.receiveAsFlow()?.collect {
+        // 绑定导航选中事件
+        ChannelBus.bindChannel<NavigationSelectEvent>(lifecycle)
+        // 绑定登陆事件
+        ChannelBus.bindChannel<LoginEvent>(lifecycle)?.receiveAsFlow()?.collect {
             toast("loading event.")
         }
     }
@@ -79,6 +84,9 @@ fun Activity.RouteNavigator() {
                             NavigationIcon(isSelected = isSelect, item = item)
                         }, onClick = {
                             bottomItemNavigation(hasClick, item.name, navController)
+                            ChannelBus.getChannel<NavigationSelectEvent>()?.post(
+                                NavigationSelectEvent(item.name)
+                            )
                         })
                     }
                 }

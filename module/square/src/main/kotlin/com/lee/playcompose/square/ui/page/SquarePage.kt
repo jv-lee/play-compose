@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -14,7 +15,9 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
+import com.lee.playcompose.base.bus.ChannelBus
 import com.lee.playcompose.common.entity.Content
+import com.lee.playcompose.common.entity.NavigationSelectEvent
 import com.lee.playcompose.common.extensions.transformDetails
 import com.lee.playcompose.common.ui.composable.ContentItem
 import com.lee.playcompose.common.ui.composable.HeaderSpacer
@@ -27,6 +30,8 @@ import com.lee.playcompose.router.navigateArgs
 import com.lee.playcompose.square.R
 import com.lee.playcompose.square.viewmodel.SquareViewModel
 import com.lee.playcompose.square.viewmodel.SquareViewState
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.receiveAsFlow
 
 /**
  * @author jv.lee
@@ -39,9 +44,19 @@ fun SquarePage(
     paddingValues: PaddingValues,
     viewModel: SquareViewModel = viewModel()
 ) {
+    val viewState = viewModel.viewStates
+
+    LaunchedEffect(Unit) {
+        ChannelBus.getChannel<NavigationSelectEvent>()?.receiveAsFlow()?.collect { event ->
+            if (event.route == PageRoute.Square.route) {
+                viewState.listState.animateScrollToItem(0)
+            }
+        }
+    }
+
     Box(modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding())) {
         // content
-        SquareContentList(viewModel.viewStates, onContentItemClick = {
+        SquareContentList(viewState = viewState, onContentItemClick = {
             navController.navigateArgs(PageRoute.Details.route, it.transformDetails())
         })
 

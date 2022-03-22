@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -21,11 +22,12 @@ import androidx.paging.compose.itemsIndexed
 import coil.annotation.ExperimentalCoilApi
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
+import com.lee.playcompose.base.bus.ChannelBus
 import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.base.extensions.px2dp
 import com.lee.playcompose.common.entity.Banner
 import com.lee.playcompose.common.entity.Content
-import com.lee.playcompose.common.extensions.toast
+import com.lee.playcompose.common.entity.NavigationSelectEvent
 import com.lee.playcompose.common.extensions.transformDetails
 import com.lee.playcompose.common.ui.composable.ContentItem
 import com.lee.playcompose.common.ui.composable.HeaderSpacer
@@ -44,6 +46,8 @@ import com.lee.playcompose.home.viewmodel.HomeViewModel
 import com.lee.playcompose.home.viewmodel.HomeViewState
 import com.lee.playcompose.router.PageRoute
 import com.lee.playcompose.router.navigateArgs
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.receiveAsFlow
 import com.lee.playcompose.common.R as CR
 
 /**
@@ -59,6 +63,14 @@ fun HomePage(
     viewModel: HomeViewModel = viewModel()
 ) {
     val viewState = viewModel.viewStates
+
+    LaunchedEffect(Unit) {
+        ChannelBus.getChannel<NavigationSelectEvent>()?.receiveAsFlow()?.collect { event ->
+            if (event.route == PageRoute.Home.route) {
+                viewState.listState.animateScrollToItem(0)
+            }
+        }
+    }
 
     Box(modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding())) {
         // content
