@@ -55,7 +55,7 @@ fun SquarePage(
         }
     }
 
-    Box(modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding())) {
+    Box(modifier = Modifier.padding(paddingValues)) {
         // content
         SquareContentList(viewState = viewState, onContentItemClick = {
             navController.navigateArgs(PageRoute.Details.route, it.transformDetails())

@@ -24,6 +24,7 @@ fun AppTextField(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
+    leadingIcon: @Composable (() -> Unit)? = null,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions(),
     singleLine: Boolean = true,
@@ -36,6 +37,7 @@ fun AppTextField(
         singleLine = singleLine,
         keyboardActions = keyboardActions,
         keyboardOptions = keyboardOptions,
+        leadingIcon = leadingIcon,
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = Color.Transparent,
             focusedIndicatorColor = Color.Transparent,

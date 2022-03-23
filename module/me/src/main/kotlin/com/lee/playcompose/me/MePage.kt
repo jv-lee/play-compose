@@ -19,6 +19,7 @@ import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.ui.composable.ProfileItem
 import com.lee.playcompose.common.ui.theme.*
 import com.lee.playcompose.common.ui.widget.AppHeaderContainer
+import com.lee.playcompose.router.PageRoute
 import com.lee.playcompose.common.R as CR
 
 /**
@@ -30,10 +31,12 @@ import com.lee.playcompose.common.R as CR
 fun MePage(navController: NavController, paddingValues: PaddingValues) {
     Column(
         modifier = Modifier
-            .padding(bottom = paddingValues.calculateBottomPadding())
+            .padding(paddingValues)
             .fillMaxSize()
     ) {
-        MeHeader(notLoginClick = {})
+        MeHeader(notLoginClick = {
+            navController.navigate(PageRoute.Login.route)
+        })
         MeLineItemList(onItemClick = { route ->
             toast(route)
         })

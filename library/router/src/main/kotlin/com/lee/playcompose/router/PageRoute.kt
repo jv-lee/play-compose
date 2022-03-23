@@ -32,4 +32,7 @@ sealed class PageRoute(val route: String, val paramsKey: Map<String, Any> = empt
             Pair(ParamsKey.detailsDataKey, Parcelable::class.java)
         )
     )
+
+    object Login : PageRoute("Login")
+    object Register : PageRoute("Register")
 }

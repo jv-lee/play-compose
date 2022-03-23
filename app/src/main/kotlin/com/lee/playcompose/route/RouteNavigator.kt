@@ -50,10 +50,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 @ExperimentalAnimationApi
 @Composable
 fun Activity.RouteNavigator() {
-    val navigationInsets =
-        rememberInsetsPaddingValues(insets = LocalWindowInsets.current.navigationBars)
     val lifecycle = LocalLifecycleOwner.current.lifecycle
-
     val navController = rememberAnimatedNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
@@ -71,7 +68,7 @@ fun Activity.RouteNavigator() {
     RouteBackHandler({ finish() }, navController, mainRoutes)
 
     Scaffold(
-        modifier = Modifier.padding(bottom = navigationInsets.calculateBottomPadding()),
+        modifier = Modifier.padding(rememberInsetsPaddingValues(insets = LocalWindowInsets.current.navigationBars)),
         backgroundColor = AppTheme.colors.background,
         bottomBar = {
             CheckNavigation(currentDestination?.route) { hasClick ->

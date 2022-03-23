@@ -73,7 +73,7 @@ fun HomePage(
         }
     }
 
-    Box(modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding())) {
+    Box(modifier = Modifier.padding(paddingValues)) {
         // content
         HomeContentList(
             viewState = viewState,

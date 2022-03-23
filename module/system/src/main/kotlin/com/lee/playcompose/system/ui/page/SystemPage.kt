@@ -33,7 +33,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun SystemPage(navController: NavController, paddingValues: PaddingValues) {
     val pagerState = rememberPagerState()
-    Box(modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding())) {
+    Box(modifier = Modifier.padding(paddingValues)) {
         // pageContent
         HorizontalPager(count = 2, state = pagerState) { page ->
             when (page) {
