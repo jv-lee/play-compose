@@ -51,6 +51,7 @@ fun NavigationContentPage(
     val viewState = viewModel.viewStates
 
     LaunchedEffect(Unit) {
+        // 监听channel全局事件NavigationSelectEvent:导航点击列表移动回顶部
         ChannelBus.getChannel<NavigationSelectEvent>()?.receiveAsFlow()?.collect { event ->
             if (event.route == PageRoute.System.route) {
                 viewState.listState.animateScrollToItem(0)
