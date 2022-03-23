@@ -6,8 +6,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import coil.annotation.ExperimentalCoilApi
 import com.google.accompanist.navigation.animation.composable
-import com.lee.playcompose.account.LoginPage
-import com.lee.playcompose.account.RegisterPage
+import com.lee.playcompose.account.ui.page.LoginPage
+import com.lee.playcompose.account.ui.page.RegisterPage
 import com.lee.playcompose.base.net.HttpManager
 import com.lee.playcompose.base.tools.WeakDataHolder
 import com.lee.playcompose.common.entity.DetailsData

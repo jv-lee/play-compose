@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="account_login_title">Login</string>
+    <string name="account_register_title">Register</string>
+    <string name="account_login_button">LOGIN</string>
+    <string name="account_register_button">REGISTER</string>
+    <string name="account_username_text">username</string>
+    <string name="account_password_text">password</string>
+    <string name="account_re_password_text">repassword</string>
+    <string name="account_go_to_register_text">没有账号，去注册？</string>
+    <string name="account_go_to_login_text">已有账号，去登陆？</string>
+</resources>
