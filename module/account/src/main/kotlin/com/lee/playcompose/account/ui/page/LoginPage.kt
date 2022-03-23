@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -32,7 +33,9 @@ import com.lee.playcompose.account.viewmodel.LoginViewAction
 import com.lee.playcompose.account.viewmodel.LoginViewEvent
 import com.lee.playcompose.account.viewmodel.LoginViewModel
 import com.lee.playcompose.account.viewmodel.LoginViewState
+import com.lee.playcompose.base.bus.ChannelBus
 import com.lee.playcompose.base.extensions.onTap
+import com.lee.playcompose.common.entity.RegisterSuccessEvent
 import com.lee.playcompose.common.extensions.hasBottomExpend
 import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.ui.composable.AppTextField
@@ -42,6 +45,7 @@ import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.theme.OffsetRadiusMedium
 import com.lee.playcompose.router.PageRoute
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.receiveAsFlow
 
 /**
  * @author jv.lee
@@ -52,10 +56,15 @@ import kotlinx.coroutines.flow.collect
 @Composable
 fun LoginPage(navController: NavController, viewModel: LoginViewModel = viewModel()) {
     val imeInsets = rememberInsetsPaddingValues(insets = LocalWindowInsets.current.ime)
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
     val keyboardController = LocalSoftwareKeyboardController.current
     val viewState = viewModel.viewStates
 
     LaunchedEffect(Unit) {
+        // 监听注册成功状态
+        ChannelBus.bindChannel<RegisterSuccessEvent>(lifecycle)?.receiveAsFlow()?.collect {
+            navController.popBackStack()
+        }
         viewModel.viewEvents.collect { event ->
             when (event) {
                 is LoginViewEvent.LoginSuccess -> {

@@ -33,7 +33,9 @@ import com.lee.playcompose.account.viewmodel.RegisterViewAction
 import com.lee.playcompose.account.viewmodel.RegisterViewEvent
 import com.lee.playcompose.account.viewmodel.RegisterViewModel
 import com.lee.playcompose.account.viewmodel.RegisterViewState
+import com.lee.playcompose.base.bus.ChannelBus
 import com.lee.playcompose.base.extensions.onTap
+import com.lee.playcompose.common.entity.RegisterSuccessEvent
 import com.lee.playcompose.common.extensions.hasBottomExpend
 import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.ui.composable.AppTextField
@@ -62,6 +64,8 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = vi
                     // TODO AccountViewModel 更新登陆数据
                     keyboardController?.hide()
                     navController.popBackStack()
+                    // 通知login页面注册成功销毁页面
+                    ChannelBus.getChannel<RegisterSuccessEvent>()?.send(RegisterSuccessEvent())
                 }
                 is RegisterViewEvent.RegisterFailed -> {
                     toast(event.message)
