@@ -29,12 +29,11 @@ import com.lee.playcompose.account.R
 import com.lee.playcompose.account.ui.composable.AccountSpacer
 import com.lee.playcompose.account.ui.theme.ButtonLockColor
 import com.lee.playcompose.account.ui.theme.ButtonTextColor
-import com.lee.playcompose.account.viewmodel.RegisterViewAction
-import com.lee.playcompose.account.viewmodel.RegisterViewEvent
-import com.lee.playcompose.account.viewmodel.RegisterViewModel
-import com.lee.playcompose.account.viewmodel.RegisterViewState
+import com.lee.playcompose.account.viewmodel.*
 import com.lee.playcompose.base.bus.ChannelBus
+import com.lee.playcompose.base.extensions.activityViewModel
 import com.lee.playcompose.base.extensions.onTap
+import com.lee.playcompose.common.entity.AccountViewAction
 import com.lee.playcompose.common.entity.RegisterSuccessEvent
 import com.lee.playcompose.common.extensions.hasBottomExpend
 import com.lee.playcompose.common.extensions.toast
@@ -52,7 +51,11 @@ import kotlinx.coroutines.flow.collect
  */
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = viewModel()) {
+fun RegisterPage(
+    navController: NavController,
+    viewModel: RegisterViewModel = viewModel(),
+    accountViewModel: AccountViewModel = activityViewModel()
+) {
     val imeInsets = rememberInsetsPaddingValues(insets = LocalWindowInsets.current.ime)
     val keyboardController = LocalSoftwareKeyboardController.current
     val viewState = viewModel.viewStates
@@ -61,7 +64,9 @@ fun RegisterPage(navController: NavController, viewModel: RegisterViewModel = vi
         viewModel.viewEvents.collect { event ->
             when (event) {
                 is RegisterViewEvent.RegisterSuccess -> {
-                    // TODO AccountViewModel 更新登陆数据
+                    accountViewModel.dispatch(
+                        AccountViewAction.UpdateAccountStatus(event.accountData, true)
+                    )
                     keyboardController?.hide()
                     navController.popBackStack()
                     // 通知login页面注册成功销毁页面

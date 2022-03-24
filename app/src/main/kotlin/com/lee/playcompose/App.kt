@@ -3,6 +3,7 @@ package com.lee.playcompose
 import android.app.Activity
 import android.graphics.Color
 import android.os.Bundle
+import com.lee.playcompose.base.cache.CacheManager
 import com.lee.playcompose.base.core.BaseApplication
 import com.lee.playcompose.base.interadp.SimpleActivityLifecycleCallbacks
 import com.lee.playcompose.base.net.HttpManager
@@ -40,6 +41,8 @@ class App : BaseApplication() {
     override fun init() {
         // 初始化深色模式工具
         DarkModeTools.get(this)
+        // 缓存管理工具初始化
+        CacheManager.init(this, BuildConfig.VERSION_CODE)
         // 初始化网络拦截器
         HttpManager.getInstance().setCommonInterceptor()
         // 子模块统一初始化

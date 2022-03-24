@@ -36,3 +36,22 @@ data class UserInfo(
     val coinCount: Int,
     val collectIds: List<String>,
 )
+
+data class AccountViewState(
+    val accountData: AccountData? = null,
+    val isLogin: Boolean = false,
+    val isLoading: Boolean = false
+)
+
+sealed class AccountViewEvent {
+    object LogoutSuccess : AccountViewEvent()
+    data class LogoutFailed(val message: String? = "") : AccountViewEvent()
+}
+
+
+sealed class AccountViewAction {
+    object RequestAccountData : AccountViewAction()
+    object RequestLogout : AccountViewAction()
+    data class UpdateAccountStatus(val accountData: AccountData, val isLogin: Boolean) :
+        AccountViewAction()
+}

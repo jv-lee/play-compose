@@ -11,15 +11,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavController
+import com.lee.playandroid.library.service.hepler.ModuleService
+import com.lee.playcompose.base.extensions.LocalActivity
+import com.lee.playcompose.common.entity.AccountViewState
 import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.ui.composable.ProfileItem
 import com.lee.playcompose.common.ui.theme.*
 import com.lee.playcompose.common.ui.widget.AppHeaderContainer
 import com.lee.playcompose.router.PageRoute
+import com.lee.playcompose.service.AccountService
 import com.lee.playcompose.common.R as CR
 
 /**
@@ -29,12 +34,15 @@ import com.lee.playcompose.common.R as CR
  */
 @Composable
 fun MePage(navController: NavController, paddingValues: PaddingValues) {
+    val accountViewState =
+        ModuleService.find<AccountService>().getAccountViewStates(LocalActivity.current)
+
     Column(
         modifier = Modifier
             .padding(paddingValues)
             .fillMaxSize()
     ) {
-        MeHeader(notLoginClick = {
+        MeHeader(accountViewState = accountViewState, notLoginClick = {
             navController.navigate(PageRoute.Login.route)
         })
         MeLineItemList(onItemClick = { route ->
@@ -44,17 +52,20 @@ fun MePage(navController: NavController, paddingValues: PaddingValues) {
 }
 
 @Composable
-private fun MeHeader(isLogin: Boolean = false, notLoginClick: () -> Unit) {
+private fun MeHeader(accountViewState: AccountViewState, notLoginClick: () -> Unit) {
     AppHeaderContainer(
         headerBrush = false,
         modifier = Modifier
             .background(AppTheme.colors.item)
-            .clickable { if (!isLogin) notLoginClick() }
+            .clickable { if (!accountViewState.isLogin) notLoginClick() }
     ) {
         ConstraintLayout(modifier = Modifier.height(160.dp)) {
             val (header, username, level) = createRefs()
             Image(
-                painter = painterResource(id = R.drawable.vector_account),
+                painter = painterResource(
+                    id = if (accountViewState.isLogin)
+                        CR.mipmap.ic_launcher_round else R.drawable.vector_account
+                ),
                 contentDescription = null,
                 modifier = Modifier
                     .clip(CircleShape)
@@ -67,7 +78,9 @@ private fun MeHeader(isLogin: Boolean = false, notLoginClick: () -> Unit) {
                     }
             )
             Text(
-                text = "未登陆",
+                text = if (accountViewState.isLogin)
+                    accountViewState.accountData?.userInfo?.nickname ?: "" else
+                    stringResource(id = R.string.me_account_default_text),
                 color = AppTheme.colors.accent,
                 fontSize = FontSizeLarge,
                 modifier = Modifier
@@ -77,8 +90,12 @@ private fun MeHeader(isLogin: Boolean = false, notLoginClick: () -> Unit) {
                         top.linkTo(header.top)
                         bottom.linkTo(level.top)
                     })
-            if (isLogin) {
-                Text(text = "Level",
+            if (accountViewState.isLogin) {
+                Text(text = stringResource(
+                    id = R.string.me_account_info_text,
+                    accountViewState.accountData?.coinInfo?.level ?: "",
+                    accountViewState.accountData?.coinInfo?.rank ?: ""
+                ),
                     color = AppTheme.colors.focus,
                     fontSize = FontSizeSmall,
                     modifier = Modifier

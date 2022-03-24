@@ -10,6 +10,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
+import com.lee.playandroid.library.service.hepler.ModuleService
+import com.lee.playcompose.base.extensions.LocalActivity
+import com.lee.playcompose.service.AccountService
 import kotlinx.coroutines.delay
 
 /**
@@ -31,6 +34,7 @@ fun SplashLauncher(content: @Composable () -> Unit) {
 private fun SplashPage(onNextPage: () -> Unit) {
     val navigationInsets =
         rememberInsetsPaddingValues(insets = LocalWindowInsets.current.navigationBars)
+    val activity = LocalActivity.current
 
     Box(
         modifier = Modifier
@@ -39,6 +43,7 @@ private fun SplashPage(onNextPage: () -> Unit) {
             .wrapContentSize(align = Alignment.TopCenter)
     ) {
         LaunchedEffect(Unit) {
+            ModuleService.find<AccountService>().requestAccountInfo(activity)
             delay(2000)
             onNextPage()
         }

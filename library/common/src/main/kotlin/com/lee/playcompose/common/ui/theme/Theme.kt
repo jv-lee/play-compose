@@ -1,6 +1,5 @@
 package com.lee.playcompose.common.ui.theme
 
-import androidx.activity.ComponentActivity
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.TweenSpec
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -12,6 +11,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import androidx.fragment.app.FragmentActivity
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.lee.playcompose.base.extensions.LocalActivity
 
@@ -91,7 +91,7 @@ object AppTheme {
 }
 
 @Composable
-fun ComponentActivity.PlayComposeTheme(
+fun FragmentActivity.PlayComposeTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {

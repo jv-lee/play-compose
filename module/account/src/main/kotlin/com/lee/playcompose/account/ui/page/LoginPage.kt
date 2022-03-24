@@ -29,12 +29,11 @@ import com.lee.playcompose.account.R
 import com.lee.playcompose.account.ui.composable.AccountSpacer
 import com.lee.playcompose.account.ui.theme.ButtonLockColor
 import com.lee.playcompose.account.ui.theme.ButtonTextColor
-import com.lee.playcompose.account.viewmodel.LoginViewAction
-import com.lee.playcompose.account.viewmodel.LoginViewEvent
-import com.lee.playcompose.account.viewmodel.LoginViewModel
-import com.lee.playcompose.account.viewmodel.LoginViewState
+import com.lee.playcompose.account.viewmodel.*
 import com.lee.playcompose.base.bus.ChannelBus
+import com.lee.playcompose.base.extensions.activityViewModel
 import com.lee.playcompose.base.extensions.onTap
+import com.lee.playcompose.common.entity.AccountViewAction
 import com.lee.playcompose.common.entity.RegisterSuccessEvent
 import com.lee.playcompose.common.extensions.hasBottomExpend
 import com.lee.playcompose.common.extensions.toast
@@ -54,7 +53,11 @@ import kotlinx.coroutines.flow.receiveAsFlow
  */
 @OptIn(androidx.compose.ui.ExperimentalComposeUiApi::class)
 @Composable
-fun LoginPage(navController: NavController, viewModel: LoginViewModel = viewModel()) {
+fun LoginPage(
+    navController: NavController,
+    viewModel: LoginViewModel = viewModel(),
+    accountViewModel: AccountViewModel = activityViewModel()
+) {
     val imeInsets = rememberInsetsPaddingValues(insets = LocalWindowInsets.current.ime)
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -68,7 +71,9 @@ fun LoginPage(navController: NavController, viewModel: LoginViewModel = viewMode
         viewModel.viewEvents.collect { event ->
             when (event) {
                 is LoginViewEvent.LoginSuccess -> {
-                    // TODO AccountViewModel 更新登陆数据
+                    accountViewModel.dispatch(
+                        AccountViewAction.UpdateAccountStatus(event.accountData, true)
+                    )
                     keyboardController?.hide()
                     navController.popBackStack()
                 }

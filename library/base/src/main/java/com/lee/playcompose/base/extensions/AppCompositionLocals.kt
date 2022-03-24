@@ -1,7 +1,7 @@
 package com.lee.playcompose.base.extensions
 
 import androidx.compose.runtime.staticCompositionLocalOf
-import androidx.core.app.ComponentActivity
+import androidx.fragment.app.FragmentActivity
 
 /**
  * @author jv.lee
@@ -9,7 +9,7 @@ import androidx.core.app.ComponentActivity
  * @description
  */
 
-val LocalActivity = staticCompositionLocalOf<ComponentActivity> {
+val LocalActivity = staticCompositionLocalOf<FragmentActivity> {
     noLocalProvidedFor("LocalActivity")
 }
 
