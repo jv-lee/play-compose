@@ -9,23 +9,42 @@ object ParamsKey {
 }
 
 sealed class PageRoute(val route: String, val paramsKey: Map<String, Any> = emptyMap()) {
+    // module:home
     object Home : PageRoute("Home")
+
+    // module:square
     object Square : PageRoute("Square")
+    object MyShare : PageRoute("MyShare")
+    object CreateShare : PageRoute("CreateShare")
+
+    // module:system
     object System : PageRoute("System")
+    object SystemContentTab : PageRoute("SystemContentTab")
+
+    // module:me
     object Me : PageRoute("Me")
+    object Coin : PageRoute("Coin")
+    object CoinRank : PageRoute("CoinRank")
+    object Collect : PageRoute("Collect")
+    object Settings : PageRoute("Settings")
+
+    // module:todoModel
+    object Todo : PageRoute("Todo")
+
+    // module:official
     object Official : PageRoute("Official")
+
+    // module:project
     object Project : PageRoute("Project")
+
+    // module:search
     object Search : PageRoute("Search")
     object SearchResult : PageRoute(
         "SearchResult",
         paramsKey = mapOf(Pair(ParamsKey.searchKey, String::class.java))
     )
 
-    object CreateShare : PageRoute("CreateShare")
-    object MyShare : PageRoute("MyShare")
-
-    object SystemContentTab : PageRoute("SystemContentTab")
-
+    // module:details
     object Details : PageRoute(
         "Details",
         paramsKey = mapOf<String, Class<*>>(
@@ -33,6 +52,7 @@ sealed class PageRoute(val route: String, val paramsKey: Map<String, Any> = empt
         )
     )
 
+    // module:account
     object Login : PageRoute("Login")
     object Register : PageRoute("Register")
 }

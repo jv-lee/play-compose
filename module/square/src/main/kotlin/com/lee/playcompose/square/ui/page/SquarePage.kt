@@ -15,7 +15,9 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
+import com.lee.playandroid.library.service.hepler.ModuleService
 import com.lee.playcompose.base.bus.ChannelBus
+import com.lee.playcompose.base.extensions.LocalActivity
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.entity.NavigationSelectEvent
 import com.lee.playcompose.common.extensions.transformDetails
@@ -27,6 +29,7 @@ import com.lee.playcompose.common.ui.widget.AppHeaderContainer
 import com.lee.playcompose.common.ui.widget.RefreshList
 import com.lee.playcompose.router.PageRoute
 import com.lee.playcompose.router.navigateArgs
+import com.lee.playcompose.service.AccountService
 import com.lee.playcompose.square.R
 import com.lee.playcompose.square.viewmodel.SquareViewModel
 import com.lee.playcompose.square.viewmodel.SquareViewState
@@ -44,6 +47,8 @@ fun SquarePage(
     paddingValues: PaddingValues,
     viewModel: SquareViewModel = viewModel()
 ) {
+    val accountViewState =
+        ModuleService.find<AccountService>().getAccountViewStates(LocalActivity.current)
     val viewState = viewModel.viewStates
 
     LaunchedEffect(Unit) {
@@ -67,7 +72,12 @@ fun SquarePage(
                 title = stringResource(id = R.string.square_title),
                 navigationPainter = painterResource(id = R.drawable.vector_add),
                 onNavigationClick = {
-                    navController.navigate(PageRoute.CreateShare.route)
+                    // 根据登陆状态跳转
+                    if (accountViewState.isLogin) {
+                        navController.navigate(PageRoute.CreateShare.route)
+                    } else {
+                        navController.navigate(PageRoute.Login.route)
+                    }
                 }
             )
         }

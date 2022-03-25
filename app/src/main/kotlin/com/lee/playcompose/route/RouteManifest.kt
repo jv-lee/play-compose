@@ -14,7 +14,7 @@ import com.lee.playcompose.common.entity.DetailsData
 import com.lee.playcompose.common.entity.ParentTab
 import com.lee.playcompose.details.DetailsPage
 import com.lee.playcompose.home.ui.page.HomePage
-import com.lee.playcompose.me.MePage
+import com.lee.playcompose.me.*
 import com.lee.playcompose.official.ui.page.OfficialPage
 import com.lee.playcompose.project.ui.page.ProjectPage
 import com.lee.playcompose.router.*
@@ -25,6 +25,7 @@ import com.lee.playcompose.square.ui.page.MySharePage
 import com.lee.playcompose.square.ui.page.SquarePage
 import com.lee.playcompose.system.ui.page.SystemContentTabPage
 import com.lee.playcompose.system.ui.page.SystemPage
+import com.lee.playcompose.todo.TodoPage
 
 /**
  * @author jv.lee
@@ -66,6 +67,23 @@ fun Activity.appRouteManifest(
         // module:me
         composable(PageRoute.Me.route) {
             MePage(navController = navController, paddingValues)
+        }
+        sideComposable(PageRoute.Coin.route) {
+            CoinPage(navController = navController)
+        }
+        sideComposable(PageRoute.CoinRank.route) {
+            CoinRankPage(navController = navController)
+        }
+        sideComposable(PageRoute.Collect.route) {
+            CollectPage(navController = navController)
+        }
+        sideComposable(PageRoute.Settings.route) {
+            SettingsPage(navController = navController)
+        }
+
+        // module:todoModel
+        sideComposable(PageRoute.Todo.route) {
+            TodoPage(navController = navController)
         }
 
         // module:official

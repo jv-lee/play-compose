@@ -17,6 +17,7 @@ import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavController
 import com.lee.playandroid.library.service.hepler.ModuleService
+import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.base.extensions.LocalActivity
 import com.lee.playcompose.common.entity.AccountViewState
 import com.lee.playcompose.common.extensions.toast
@@ -46,7 +47,7 @@ fun MePage(navController: NavController, paddingValues: PaddingValues) {
             navController.navigate(PageRoute.Login.route)
         })
         MeLineItemList(onItemClick = { route ->
-            toast(route)
+            itemNavigation(navController, accountViewState, route)
         })
     }
 }
@@ -141,9 +142,35 @@ private sealed class MeItem(
     val icon: Int,
     val arrow: Int = CR.drawable.vector_arrow
 ) {
-    object Coin : MeItem("我的积分", R.string.me_item_coin, R.drawable.vector_coin)
-    object Collect : MeItem("我的收藏", R.string.me_item_collect, R.drawable.vector_collect)
-    object Share : MeItem("我的分享", R.string.me_item_share, R.drawable.vector_share)
-    object TODO : MeItem("TODO", R.string.me_item_todo, R.drawable.vector_todo)
-    object Settings : MeItem("系统设置", R.string.me_item_settings, R.drawable.vector_settings)
+    object Coin : MeItem(PageRoute.Coin.route, R.string.me_item_coin, R.drawable.vector_coin)
+    object Collect :
+        MeItem(PageRoute.Collect.route, R.string.me_item_collect, R.drawable.vector_collect)
+
+    object Share : MeItem(PageRoute.MyShare.route, R.string.me_item_share, R.drawable.vector_share)
+    object TODO : MeItem(PageRoute.Todo.route, R.string.me_item_todo, R.drawable.vector_todo)
+    object Settings :
+        MeItem(PageRoute.Settings.route, R.string.me_item_settings, R.drawable.vector_settings)
+}
+
+/**
+ * 我的页面item导航
+ */
+private fun itemNavigation(
+    navController: NavController,
+    accountViewState: AccountViewState,
+    route: String
+) {
+    // 无需校验登陆状态
+    if (route == MeItem.Settings.route) {
+        navController.navigate(route)
+        return
+    }
+
+    // 需要校验登陆状态
+    if (accountViewState.isLogin) {
+        navController.navigate(route)
+    } else {
+        toast(app.getString(R.string.me_login_message))
+        navController.navigate(PageRoute.Login.route)
+    }
 }
