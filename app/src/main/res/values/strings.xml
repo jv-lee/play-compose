@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Play\nCompose</string>
+    <string name="login_token_failed">登陆过期，请重新登陆！</string>
+    <string name="splash_time_text">跳过%1$d</string>
 </resources>

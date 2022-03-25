@@ -60,7 +60,8 @@ fun Activity.RouteNavigator() {
         ChannelBus.bindChannel<NavigationSelectEvent>(lifecycle)
         // 绑定登陆事件:导航至登陆页
         ChannelBus.bindChannel<LoginEvent>(lifecycle)?.receiveAsFlow()?.collect {
-            toast("loading event.")
+            toast(resources.getString(R.string.login_token_failed))
+            navController.navigate(RoutePage.Account.Login.route)
         }
     }
 
