@@ -26,8 +26,8 @@ class ProjectListViewModel(private val id: Long) : ViewModel() {
     private val api = createApi<ApiService>()
 
     private val pager by lazy {
-        pager { page ->
-            if (page == 0) delay(300)
+        pager(initialKey = 1) { page ->
+            if (page == 1) delay(300)
             api.getProjectDataAsync(page, id)
         }.cachedIn(viewModelScope)
     }
