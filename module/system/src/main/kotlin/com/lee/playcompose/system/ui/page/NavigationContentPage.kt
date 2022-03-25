@@ -28,7 +28,7 @@ import com.lee.playcompose.common.entity.NavigationSelectEvent
 import com.lee.playcompose.common.extensions.transformDetails
 import com.lee.playcompose.common.ui.composable.HeaderSpacer
 import com.lee.playcompose.common.ui.theme.*
-import com.lee.playcompose.router.PageRoute
+import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
 import com.lee.playcompose.system.ui.theme.NavigationTabHeight
 import com.lee.playcompose.system.ui.theme.SystemTabRadius
@@ -53,14 +53,14 @@ fun NavigationContentPage(
     LaunchedEffect(Unit) {
         // 监听channel全局事件NavigationSelectEvent:导航点击列表移动回顶部
         ChannelBus.getChannel<NavigationSelectEvent>()?.receiveAsFlow()?.collect { event ->
-            if (event.route == PageRoute.System.route) {
+            if (event.route == RoutePage.System.route) {
                 viewState.listState.animateScrollToItem(0)
             }
         }
     }
 
     NavigationContent(viewState = viewState, itemClick = {
-        navController.navigateArgs(PageRoute.Details.route, it.transformDetails())
+        navController.navigateArgs(RoutePage.Details.route, it.transformDetails())
     })
 }
 

@@ -40,90 +40,90 @@ fun Activity.appRouteManifest(
 ) {
     navGraphBuilder.apply {
         // module:home
-        composable(PageRoute.Home.route) {
+        composable(RoutePage.Home.route) {
             HomePage(navController = navController, paddingValues)
         }
 
         // module:square
-        composable(PageRoute.Square.route) {
+        composable(RoutePage.Square.route) {
             SquarePage(navController = navController, paddingValues)
         }
-        sideComposable(PageRoute.Square.MyShare.route) {
+        sideComposable(RoutePage.Square.MyShare.route) {
             MySharePage(navController = navController)
         }
-        sideComposable(PageRoute.Square.CreateShare.route) {
+        sideComposable(RoutePage.Square.CreateShare.route) {
             CreateSharePage(navController = navController)
         }
 
         // module:system
-        composable(PageRoute.System.route) {
+        composable(RoutePage.System.route) {
             SystemPage(navController = navController, paddingValues)
         }
-        sideComposable(PageRoute.System.SystemContentTab.route) {
-            val parentTab = WeakDataHolder.instance.getData<ParentTab>(ParamsKey.tabDataKey)
+        sideComposable(RoutePage.System.SystemContentTab.route) {
+            val parentTab = WeakDataHolder.instance.getData<ParentTab>(RouteParamsKey.tabDataKey)
             SystemContentTabPage(navController = navController, parentTab)
         }
 
         // module:me
-        composable(PageRoute.Me.route) {
+        composable(RoutePage.Me.route) {
             MePage(navController = navController, paddingValues)
         }
-        sideComposable(PageRoute.Me.Coin.route) {
+        sideComposable(RoutePage.Me.Coin.route) {
             CoinPage(navController = navController)
         }
-        sideComposable(PageRoute.Me.CoinRank.route) {
+        sideComposable(RoutePage.Me.CoinRank.route) {
             CoinRankPage(navController = navController)
         }
-        sideComposable(PageRoute.Me.Collect.route) {
+        sideComposable(RoutePage.Me.Collect.route) {
             CollectPage(navController = navController)
         }
-        sideComposable(PageRoute.Me.Settings.route) {
+        sideComposable(RoutePage.Me.Settings.route) {
             SettingsPage(navController = navController)
         }
 
         // module:todoModel
-        sideComposable(PageRoute.Todo.route) {
+        sideComposable(RoutePage.Todo.route) {
             TodoPage(navController = navController)
         }
 
         // module:official
-        sideComposable(PageRoute.Official.route) {
+        sideComposable(RoutePage.Official.route) {
             OfficialPage(navController = navController)
         }
 
         // module:project
-        sideComposable(PageRoute.Project.route) {
+        sideComposable(RoutePage.Project.route) {
             ProjectPage(navController = navController)
         }
 
         // module:search
-        sideComposable(PageRoute.Search.route) {
+        sideComposable(RoutePage.Search.route) {
             SearchPage(navController = navController)
         }
         sideComposable(
-            route = PageRoute.Search.SearchResult.parseRoute(),
-            arguments = PageRoute.Search.SearchResult.parseArguments()
+            route = RoutePage.Search.SearchResult.parseRoute(),
+            arguments = RoutePage.Search.SearchResult.parseArguments()
         ) { entry ->
-            val searchKey = entry.arguments?.getString(ParamsKey.searchKey)
+            val searchKey = entry.arguments?.getString(RouteParamsKey.searchKey)
             SearchResultPage(navController = navController, searchKey = searchKey ?: "")
         }
 
         // module:details
         sideComposable(
-            route = PageRoute.Details.parseRoute(),
-            arguments = PageRoute.Details.parseArguments()
+            route = RoutePage.Details.parseRoute(),
+            arguments = RoutePage.Details.parseArguments()
         ) { entry ->
-            val detailsJson = entry.arguments?.getString(ParamsKey.detailsDataKey)
+            val detailsJson = entry.arguments?.getString(RouteParamsKey.detailsDataKey)
             val details =
                 HttpManager.getGson().fromJson(detailsJson, DetailsData::class.java)
             DetailsPage(navController = navController, details)
         }
 
         // module:account
-        sideComposable(route = PageRoute.Account.Login.route) {
+        sideComposable(route = RoutePage.Account.Login.route) {
             LoginPage(navController = navController)
         }
-        sideComposable(route = PageRoute.Account.Register.route) {
+        sideComposable(route = RoutePage.Account.Register.route) {
             RegisterPage(navController = navController)
         }
     }

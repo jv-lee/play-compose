@@ -15,7 +15,7 @@ import com.lee.playcompose.common.ui.composable.ContentPictureItem
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.widget.AppBarViewContainer
 import com.lee.playcompose.common.ui.widget.RefreshList
-import com.lee.playcompose.router.PageRoute
+import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
 import com.lee.playcompose.search.viewmodel.SearchResultViewModel
 import com.lee.playcompose.search.viewmodel.SearchResultViewState
@@ -38,7 +38,7 @@ fun SearchResultPage(
         modifier = Modifier.background(AppTheme.colors.background),
         navigationClick = { navController.popBackStack() }) {
         SearchResultContent(viewModel.viewStates, onContentItemClick = {
-            navController.navigateArgs(PageRoute.Details.route, it.transformDetails())
+            navController.navigateArgs(RoutePage.Details.route, it.transformDetails())
         })
     }
 }

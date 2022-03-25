@@ -42,7 +42,7 @@ import com.lee.playcompose.common.ui.composable.LoadingDialog
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.theme.OffsetRadiusMedium
-import com.lee.playcompose.router.PageRoute
+import com.lee.playcompose.router.RoutePage
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.receiveAsFlow
 
@@ -105,7 +105,7 @@ fun LoginPage(
             })
             LoginFooter(viewState = viewState, gotoRegisterClick = {
                 imeInsets.hasBottomExpend({ keyboardController?.hide() }, {
-                    navController.navigate(PageRoute.Account.Register.route)
+                    navController.navigate(RoutePage.Account.Register.route)
                 })
             }, loginClick = {
                 viewModel.dispatch(LoginViewAction.RequestLogin)

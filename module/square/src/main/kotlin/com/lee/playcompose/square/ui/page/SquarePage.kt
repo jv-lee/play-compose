@@ -27,7 +27,7 @@ import com.lee.playcompose.common.ui.theme.ToolBarHeight
 import com.lee.playcompose.common.ui.widget.AppGradientTextBar
 import com.lee.playcompose.common.ui.widget.AppHeaderContainer
 import com.lee.playcompose.common.ui.widget.RefreshList
-import com.lee.playcompose.router.PageRoute
+import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
 import com.lee.playcompose.service.AccountService
 import com.lee.playcompose.square.R
@@ -54,7 +54,7 @@ fun SquarePage(
     LaunchedEffect(Unit) {
         // 监听channel全局事件NavigationSelectEvent:导航点击列表移动回顶部
         ChannelBus.getChannel<NavigationSelectEvent>()?.receiveAsFlow()?.collect { event ->
-            if (event.route == PageRoute.Square.route) {
+            if (event.route == RoutePage.Square.route) {
                 viewState.listState.animateScrollToItem(0)
             }
         }
@@ -63,7 +63,7 @@ fun SquarePage(
     Box(modifier = Modifier.padding(paddingValues)) {
         // content
         SquareContentList(viewState = viewState, onContentItemClick = {
-            navController.navigateArgs(PageRoute.Details.route, it.transformDetails())
+            navController.navigateArgs(RoutePage.Details.route, it.transformDetails())
         })
 
         // header
@@ -74,9 +74,9 @@ fun SquarePage(
                 onNavigationClick = {
                     // 根据登陆状态跳转
                     if (accountViewState.isLogin) {
-                        navController.navigate(PageRoute.Square.CreateShare.route)
+                        navController.navigate(RoutePage.Square.CreateShare.route)
                     } else {
-                        navController.navigate(PageRoute.Account.Login.route)
+                        navController.navigate(RoutePage.Account.Login.route)
                     }
                 }
             )

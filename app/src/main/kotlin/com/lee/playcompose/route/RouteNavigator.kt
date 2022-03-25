@@ -37,7 +37,7 @@ import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.widget.RouteBackHandler
 import com.lee.playcompose.common.ui.widget.SimpleAnimatedNavHost
-import com.lee.playcompose.router.PageRoute
+import com.lee.playcompose.router.RoutePage
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.receiveAsFlow
 
@@ -109,7 +109,7 @@ private fun NavigationIcon(isSelected: Boolean, item: MainTab) {
 @Composable
 private fun CheckNavigation(route: String? = null, content: @Composable (Boolean) -> Unit = {}) {
     val visible = when (route) {
-        PageRoute.Home.route, PageRoute.Square.route, PageRoute.System.route, PageRoute.Me.route -> {
+        RoutePage.Home.route, RoutePage.Square.route, RoutePage.System.route, RoutePage.Me.route -> {
             true
         }
         else -> false
@@ -141,7 +141,7 @@ private fun bottomItemNavigation(hasClick: Boolean, route: String, navController
 }
 
 private val mainRoutes =
-    listOf(PageRoute.Home.route, PageRoute.Square.route, PageRoute.System.route, PageRoute.Me.route)
+    listOf(RoutePage.Home.route, RoutePage.Square.route, RoutePage.System.route, RoutePage.Me.route)
 
 private val tabItems = listOf(MainTab.Home, MainTab.Square, MainTab.System, MainTab.Me)
 

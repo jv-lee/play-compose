@@ -18,7 +18,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -30,7 +29,7 @@ import com.lee.playcompose.common.entity.SearchHistory
 import com.lee.playcompose.common.ui.composable.AppTextField
 import com.lee.playcompose.common.ui.theme.*
 import com.lee.playcompose.common.ui.widget.AppBarView
-import com.lee.playcompose.router.PageRoute
+import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
 import com.lee.playcompose.search.R
 import com.lee.playcompose.search.model.entity.SearchHot
@@ -61,7 +60,7 @@ fun SearchPage(
                 // 导航到搜索结果页
                 is SearchViewEvent.NavigationSearch -> {
                     keyboardController?.hide()
-                    navController.navigateArgs(PageRoute.Search.SearchResult.route, event.key)
+                    navController.navigateArgs(RoutePage.Search.SearchResult.route, event.key)
                 }
             }
         }

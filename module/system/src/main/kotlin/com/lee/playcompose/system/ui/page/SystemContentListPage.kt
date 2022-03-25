@@ -10,7 +10,7 @@ import com.lee.playcompose.common.entity.Tab
 import com.lee.playcompose.common.extensions.transformDetails
 import com.lee.playcompose.common.ui.composable.ContentItem
 import com.lee.playcompose.common.ui.widget.RefreshList
-import com.lee.playcompose.router.PageRoute
+import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
 import com.lee.playcompose.system.viewmodel.SystemContentListViewModel
 
@@ -40,7 +40,7 @@ fun SystemContentListPage(
         itemsIndexed(contentList) { _, item ->
             item ?: return@itemsIndexed
             ContentItem(item, onItemClick = {
-                navController.navigateArgs(PageRoute.Details.route, it.transformDetails())
+                navController.navigateArgs(RoutePage.Details.route, it.transformDetails())
             })
         }
     }

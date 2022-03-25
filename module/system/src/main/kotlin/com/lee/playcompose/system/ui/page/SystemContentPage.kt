@@ -25,8 +25,8 @@ import com.lee.playcompose.common.ui.composable.CardItemContainer
 import com.lee.playcompose.common.ui.composable.HeaderSpacer
 import com.lee.playcompose.common.ui.theme.*
 import com.lee.playcompose.common.ui.widget.RefreshList
-import com.lee.playcompose.router.PageRoute
-import com.lee.playcompose.router.ParamsKey
+import com.lee.playcompose.router.RoutePage
+import com.lee.playcompose.router.RouteParamsKey
 import com.lee.playcompose.router.navigateArgs
 import com.lee.playcompose.system.R
 import com.lee.playcompose.system.viewmodel.SystemContentViewModel
@@ -49,15 +49,15 @@ fun SystemContentPage(
     LaunchedEffect(Unit) {
         // 监听channel全局事件NavigationSelectEvent:导航点击列表移动回顶部
         ChannelBus.getChannel<NavigationSelectEvent>()?.receiveAsFlow()?.collect { event ->
-            if (event.route == PageRoute.System.route) {
+            if (event.route == RoutePage.System.route) {
                 viewState.listState.animateScrollToItem(0)
             }
         }
     }
 
     SystemContentList(viewState = viewState, onItemClick = {
-        WeakDataHolder.instance.saveData(ParamsKey.tabDataKey, it)
-        navController.navigateArgs(PageRoute.System.SystemContentTab.route)
+        WeakDataHolder.instance.saveData(RouteParamsKey.tabDataKey, it)
+        navController.navigateArgs(RoutePage.System.SystemContentTab.route)
     })
 }
 

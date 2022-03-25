@@ -24,7 +24,7 @@ import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.ui.composable.ProfileItem
 import com.lee.playcompose.common.ui.theme.*
 import com.lee.playcompose.common.ui.widget.AppHeaderContainer
-import com.lee.playcompose.router.PageRoute
+import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.service.AccountService
 import com.lee.playcompose.common.R as CR
 
@@ -44,7 +44,7 @@ fun MePage(navController: NavController, paddingValues: PaddingValues) {
             .fillMaxSize()
     ) {
         MeHeader(accountViewState = accountViewState, notLoginClick = {
-            navController.navigate(PageRoute.Account.Login.route)
+            navController.navigate(RoutePage.Account.Login.route)
         })
         MeLineItemList(onItemClick = { route ->
             itemNavigation(navController, accountViewState, route)
@@ -142,16 +142,16 @@ private sealed class MeItem(
     val icon: Int,
     val arrow: Int = CR.drawable.vector_arrow
 ) {
-    object Coin : MeItem(PageRoute.Me.Coin.route, R.string.me_item_coin, R.drawable.vector_coin)
+    object Coin : MeItem(RoutePage.Me.Coin.route, R.string.me_item_coin, R.drawable.vector_coin)
     object Collect :
-        MeItem(PageRoute.Me.Collect.route, R.string.me_item_collect, R.drawable.vector_collect)
+        MeItem(RoutePage.Me.Collect.route, R.string.me_item_collect, R.drawable.vector_collect)
 
     object Share :
-        MeItem(PageRoute.Square.MyShare.route, R.string.me_item_share, R.drawable.vector_share)
+        MeItem(RoutePage.Square.MyShare.route, R.string.me_item_share, R.drawable.vector_share)
 
-    object TODO : MeItem(PageRoute.Todo.route, R.string.me_item_todo, R.drawable.vector_todo)
+    object TODO : MeItem(RoutePage.Todo.route, R.string.me_item_todo, R.drawable.vector_todo)
     object Settings :
-        MeItem(PageRoute.Me.Settings.route, R.string.me_item_settings, R.drawable.vector_settings)
+        MeItem(RoutePage.Me.Settings.route, R.string.me_item_settings, R.drawable.vector_settings)
 }
 
 /**
@@ -173,6 +173,6 @@ private fun itemNavigation(
         navController.navigate(route)
     } else {
         toast(app.getString(R.string.me_login_message))
-        navController.navigate(PageRoute.Account.Login.route)
+        navController.navigate(RoutePage.Account.Login.route)
     }
 }

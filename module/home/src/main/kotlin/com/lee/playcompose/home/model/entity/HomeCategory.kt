@@ -3,7 +3,7 @@ package com.lee.playcompose.home.model.entity
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.lee.playcompose.home.R
-import com.lee.playcompose.router.PageRoute
+import com.lee.playcompose.router.RoutePage
 
 
 /**
@@ -24,12 +24,12 @@ data class HomeCategory(
             HomeCategory(
                 R.drawable.vector_icon_official,
                 R.string.home_category_official,
-                PageRoute.Official.route
+                RoutePage.Official.route
             ),
             HomeCategory(
                 R.drawable.vector_icon_project,
                 R.string.home_category_project,
-                PageRoute.Project.route
+                RoutePage.Project.route
             )
         )
     }

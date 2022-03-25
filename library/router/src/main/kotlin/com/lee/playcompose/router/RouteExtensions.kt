@@ -63,7 +63,7 @@ fun NavController.navigateArgs(route: String, vararg args: Any) {
     navigate(route + argumentsBuilder.toString())
 }
 
-fun PageRoute.parseRoute(): String {
+fun RoutePage.parseRoute(): String {
     val builder = StringBuilder(route)
     paramsKey.forEach {
         builder.append("/{${it.key}}")
@@ -71,7 +71,7 @@ fun PageRoute.parseRoute(): String {
     return builder.toString()
 }
 
-fun PageRoute.parseArguments(): List<NamedNavArgument> {
+fun RoutePage.parseArguments(): List<NamedNavArgument> {
     val list = arrayListOf<NamedNavArgument>()
     paramsKey.forEach {
         list.add(navArgument(it.key) {

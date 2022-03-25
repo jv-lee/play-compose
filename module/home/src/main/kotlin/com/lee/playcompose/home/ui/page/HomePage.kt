@@ -44,7 +44,7 @@ import com.lee.playcompose.home.model.entity.HomeCategory
 import com.lee.playcompose.home.viewmodel.HomeViewAction
 import com.lee.playcompose.home.viewmodel.HomeViewModel
 import com.lee.playcompose.home.viewmodel.HomeViewState
-import com.lee.playcompose.router.PageRoute
+import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -67,7 +67,7 @@ fun HomePage(
     LaunchedEffect(Unit) {
         // 监听channel全局事件NavigationSelectEvent:导航点击列表移动回顶部
         ChannelBus.getChannel<NavigationSelectEvent>()?.receiveAsFlow()?.collect { event ->
-            if (event.route == PageRoute.Home.route) {
+            if (event.route == RoutePage.Home.route) {
                 viewState.listState.animateScrollToItem(0)
             }
         }
@@ -79,13 +79,13 @@ fun HomePage(
             viewState = viewState,
             onRefresh = { viewModel.dispatch(HomeViewAction.RequestData) },
             onBannerItemClick = {
-                navController.navigateArgs(PageRoute.Details.route, it.transformDetails())
+                navController.navigateArgs(RoutePage.Details.route, it.transformDetails())
             },
             onCategoryItemClick = {
                 navController.navigate(it.route)
             },
             onContentItemClick = {
-                navController.navigateArgs(PageRoute.Details.route, it.transformDetails())
+                navController.navigateArgs(RoutePage.Details.route, it.transformDetails())
             }
         )
 
@@ -95,7 +95,7 @@ fun HomePage(
                 title = stringResource(id = R.string.home_header_text),
                 navigationPainter = painterResource(id = CR.drawable.vector_search),
                 onNavigationClick = {
-                    navController.navigate(PageRoute.Search.route)
+                    navController.navigate(RoutePage.Search.route)
                 }
             )
         }
