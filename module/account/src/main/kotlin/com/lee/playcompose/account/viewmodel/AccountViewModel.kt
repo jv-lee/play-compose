@@ -14,6 +14,7 @@ import com.lee.playcompose.base.extensions.getCache
 import com.lee.playcompose.base.extensions.putCache
 import com.lee.playcompose.base.tools.PreferencesTools
 import com.lee.playcompose.common.BuildConfig
+import com.lee.playcompose.common.constants.ApiConstants
 import com.lee.playcompose.common.entity.AccountData
 import com.lee.playcompose.common.entity.AccountViewAction
 import com.lee.playcompose.common.entity.AccountViewEvent
@@ -64,6 +65,11 @@ class AccountViewModel : ViewModel() {
                 cacheManager.getCache<AccountData>(Constants.CACHE_KEY_ACCOUNT_DATA)?.let {
                     emit(it)
                 }
+            }.catch { error ->
+                // 登陆token失效
+                if (error.message == ApiConstants.REQUEST_TOKEN_ERROR_MESSAGE) {
+                    updateAccountStatus(null, false)
+                }
             }.collect {
                 updateAccountStatus(it, true)
             }
@@ -108,7 +114,7 @@ class AccountViewModel : ViewModel() {
     }
 
     init {
-        Log.i("jv.lee","initAccountViewModel")
+        Log.i("jv.lee", "initAccountViewModel")
     }
 
 }
