@@ -105,7 +105,7 @@ fun LoginPage(
             })
             LoginFooter(viewState = viewState, gotoRegisterClick = {
                 imeInsets.hasBottomExpend({ keyboardController?.hide() }, {
-                    navController.navigate(PageRoute.Register.route)
+                    navController.navigate(PageRoute.Account.Register.route)
                 })
             }, loginClick = {
                 viewModel.dispatch(LoginViewAction.RequestLogin)

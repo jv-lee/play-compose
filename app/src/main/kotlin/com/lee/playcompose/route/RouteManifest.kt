@@ -48,10 +48,10 @@ fun Activity.appRouteManifest(
         composable(PageRoute.Square.route) {
             SquarePage(navController = navController, paddingValues)
         }
-        sideComposable(PageRoute.MyShare.route) {
+        sideComposable(PageRoute.Square.MyShare.route) {
             MySharePage(navController = navController)
         }
-        sideComposable(PageRoute.CreateShare.route) {
+        sideComposable(PageRoute.Square.CreateShare.route) {
             CreateSharePage(navController = navController)
         }
 
@@ -59,7 +59,7 @@ fun Activity.appRouteManifest(
         composable(PageRoute.System.route) {
             SystemPage(navController = navController, paddingValues)
         }
-        sideComposable(PageRoute.SystemContentTab.route) {
+        sideComposable(PageRoute.System.SystemContentTab.route) {
             val parentTab = WeakDataHolder.instance.getData<ParentTab>(ParamsKey.tabDataKey)
             SystemContentTabPage(navController = navController, parentTab)
         }
@@ -68,16 +68,16 @@ fun Activity.appRouteManifest(
         composable(PageRoute.Me.route) {
             MePage(navController = navController, paddingValues)
         }
-        sideComposable(PageRoute.Coin.route) {
+        sideComposable(PageRoute.Me.Coin.route) {
             CoinPage(navController = navController)
         }
-        sideComposable(PageRoute.CoinRank.route) {
+        sideComposable(PageRoute.Me.CoinRank.route) {
             CoinRankPage(navController = navController)
         }
-        sideComposable(PageRoute.Collect.route) {
+        sideComposable(PageRoute.Me.Collect.route) {
             CollectPage(navController = navController)
         }
-        sideComposable(PageRoute.Settings.route) {
+        sideComposable(PageRoute.Me.Settings.route) {
             SettingsPage(navController = navController)
         }
 
@@ -101,8 +101,8 @@ fun Activity.appRouteManifest(
             SearchPage(navController = navController)
         }
         sideComposable(
-            route = PageRoute.SearchResult.parseRoute(),
-            arguments = PageRoute.SearchResult.parseArguments()
+            route = PageRoute.Search.SearchResult.parseRoute(),
+            arguments = PageRoute.Search.SearchResult.parseArguments()
         ) { entry ->
             val searchKey = entry.arguments?.getString(ParamsKey.searchKey)
             SearchResultPage(navController = navController, searchKey = searchKey ?: "")
@@ -120,10 +120,10 @@ fun Activity.appRouteManifest(
         }
 
         // module:account
-        sideComposable(route = PageRoute.Login.route) {
+        sideComposable(route = PageRoute.Account.Login.route) {
             LoginPage(navController = navController)
         }
-        sideComposable(route = PageRoute.Register.route) {
+        sideComposable(route = PageRoute.Account.Register.route) {
             RegisterPage(navController = navController)
         }
     }

@@ -74,9 +74,9 @@ fun SquarePage(
                 onNavigationClick = {
                     // 根据登陆状态跳转
                     if (accountViewState.isLogin) {
-                        navController.navigate(PageRoute.CreateShare.route)
+                        navController.navigate(PageRoute.Square.CreateShare.route)
                     } else {
-                        navController.navigate(PageRoute.Login.route)
+                        navController.navigate(PageRoute.Account.Login.route)
                     }
                 }
             )

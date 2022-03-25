@@ -44,7 +44,7 @@ fun MePage(navController: NavController, paddingValues: PaddingValues) {
             .fillMaxSize()
     ) {
         MeHeader(accountViewState = accountViewState, notLoginClick = {
-            navController.navigate(PageRoute.Login.route)
+            navController.navigate(PageRoute.Account.Login.route)
         })
         MeLineItemList(onItemClick = { route ->
             itemNavigation(navController, accountViewState, route)
@@ -142,14 +142,16 @@ private sealed class MeItem(
     val icon: Int,
     val arrow: Int = CR.drawable.vector_arrow
 ) {
-    object Coin : MeItem(PageRoute.Coin.route, R.string.me_item_coin, R.drawable.vector_coin)
+    object Coin : MeItem(PageRoute.Me.Coin.route, R.string.me_item_coin, R.drawable.vector_coin)
     object Collect :
-        MeItem(PageRoute.Collect.route, R.string.me_item_collect, R.drawable.vector_collect)
+        MeItem(PageRoute.Me.Collect.route, R.string.me_item_collect, R.drawable.vector_collect)
 
-    object Share : MeItem(PageRoute.MyShare.route, R.string.me_item_share, R.drawable.vector_share)
+    object Share :
+        MeItem(PageRoute.Square.MyShare.route, R.string.me_item_share, R.drawable.vector_share)
+
     object TODO : MeItem(PageRoute.Todo.route, R.string.me_item_todo, R.drawable.vector_todo)
     object Settings :
-        MeItem(PageRoute.Settings.route, R.string.me_item_settings, R.drawable.vector_settings)
+        MeItem(PageRoute.Me.Settings.route, R.string.me_item_settings, R.drawable.vector_settings)
 }
 
 /**
@@ -171,6 +173,6 @@ private fun itemNavigation(
         navController.navigate(route)
     } else {
         toast(app.getString(R.string.me_login_message))
-        navController.navigate(PageRoute.Login.route)
+        navController.navigate(PageRoute.Account.Login.route)
     }
 }

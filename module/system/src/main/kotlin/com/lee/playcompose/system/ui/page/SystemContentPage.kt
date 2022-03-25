@@ -57,7 +57,7 @@ fun SystemContentPage(
 
     SystemContentList(viewState = viewState, onItemClick = {
         WeakDataHolder.instance.saveData(ParamsKey.tabDataKey, it)
-        navController.navigateArgs(PageRoute.SystemContentTab.route)
+        navController.navigateArgs(PageRoute.System.SystemContentTab.route)
     })
 }
 

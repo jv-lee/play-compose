@@ -61,7 +61,7 @@ fun SearchPage(
                 // 导航到搜索结果页
                 is SearchViewEvent.NavigationSearch -> {
                     keyboardController?.hide()
-                    navController.navigateArgs(PageRoute.SearchResult.route, event.key)
+                    navController.navigateArgs(PageRoute.Search.SearchResult.route, event.key)
                 }
             }
         }
