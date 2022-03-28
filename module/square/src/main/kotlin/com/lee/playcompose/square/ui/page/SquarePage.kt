@@ -104,7 +104,7 @@ private fun SquareContentList(
         // header spacer
         item { HeaderSpacer() }
 
-        // build home content item
+        // build square content item
         itemsIndexed(contentList) { _, item ->
             item ?: return@itemsIndexed
             ContentItem(item, onContentItemClick)

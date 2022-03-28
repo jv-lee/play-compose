@@ -1,17 +1,18 @@
 package com.lee.playcompose.common.ui.widget
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -33,7 +34,7 @@ fun AppBarView(
     title: String = "",
     navigationIcon: ImageVector = Icons.Filled.ArrowBack,
     navigationClick: () -> Unit = {},
-    actionIcon: ImageVector = Icons.Filled.MoreVert,
+    @DrawableRes actionIcon: Int = -1,
     actionClick: () -> Unit = {},
     backgroundColor: Color = AppTheme.colors.item,
     contentColor: Color = contentColorFor(backgroundColor),
@@ -76,7 +77,11 @@ fun AppBarView(
                 actions = {
                     if (actionEnable) {
                         IconButton(onClick = actionClick) {
-                            Icon(actionIcon, "", tint = contentColor)
+                            Icon(
+                                painter = painterResource(id = actionIcon),
+                                "",
+                                tint = contentColor
+                            )
                         }
                     }
                 },
@@ -95,7 +100,7 @@ fun AppBarViewContainer(
     title: String = "",
     navigationIcon: ImageVector = Icons.Filled.ArrowBack,
     navigationClick: () -> Unit = {},
-    actionIcon: ImageVector = Icons.Filled.MoreVert,
+    @DrawableRes actionIcon: Int = -1,
     actionClick: () -> Unit = {},
     backgroundColor: Color = AppTheme.colors.item,
     contentColor: Color = contentColorFor(backgroundColor),
