@@ -39,7 +39,7 @@ private fun SplashPage(onNextPage: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(bottom = 140.dp + navigationInsets.calculateBottomPadding())
+            .padding(navigationInsets)
             .wrapContentSize(align = Alignment.TopCenter)
     ) {
         LaunchedEffect(Unit) {
@@ -53,7 +53,7 @@ private fun SplashPage(onNextPage: () -> Unit) {
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(),
+                .fillMaxHeight(0.8f),
         )
     }
 }
