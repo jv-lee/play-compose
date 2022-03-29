@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.lee.playcompose.common.entity.Content
+import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
 import com.lee.playcompose.common.extensions.pager
 import com.lee.playcompose.project.model.api.ApiService
@@ -28,7 +29,7 @@ class ProjectListViewModel(private val id: Long) : ViewModel() {
     private val pager by lazy {
         pager(initialKey = 1) { page ->
             if (page == 1) delay(300)
-            api.getProjectDataAsync(page, id)
+            api.getProjectDataAsync(page, id).checkData()
         }.cachedIn(viewModelScope)
     }
 

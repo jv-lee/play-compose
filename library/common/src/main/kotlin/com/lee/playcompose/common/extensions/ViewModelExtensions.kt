@@ -15,14 +15,14 @@ import kotlinx.coroutines.flow.Flow
 fun <T : Any> ViewModel.pager(
     config: PagingConfig = PagingConfig(20),
     initialKey: Int = 0,
-    requestAction: suspend (page: Int) -> Data<PageData<T>>
+    requestAction: suspend (page: Int) -> PageData<T>
 ): Flow<PagingData<T>> {
     return createPaging(config, initialKey) { params ->
         val page = params.key ?: 0
         try {
             val response = requestAction(page)
-            val data = response.checkData().data
-            val hasNext = (response.data.curPage < response.data.pageCount)
+            val data = response.data
+            val hasNext = (response.curPage < response.pageCount)
 
             PagingSource.LoadResult.Page(
                 data = data,

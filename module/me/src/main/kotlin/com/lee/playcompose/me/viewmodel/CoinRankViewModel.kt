@@ -5,10 +5,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.lee.playcompose.base.core.ApplicationExtensions
 import com.lee.playcompose.common.constants.ApiConstants
 import com.lee.playcompose.common.entity.*
+import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
 import com.lee.playcompose.common.extensions.pager
 import com.lee.playcompose.me.R
@@ -26,17 +29,17 @@ class CoinRankViewModel : ViewModel() {
     private val api = createApi<ApiService>()
 
     private val pager by lazy {
-        pager(initialKey = 1) { page ->
-            api.getCoinRankAsync(page).swapRankList(page)
-        }
+        pager(initialKey = 1) {
+            api.getCoinRankAsync(it).checkData().swapRankList(it)
+        }.cachedIn(viewModelScope)
     }
 
     var viewStates by mutableStateOf(CoinRankViewState(pagingData = pager))
         private set
 
-    private fun Data<PageData<CoinRank>>.swapRankList(page: Int): Data<PageData<CoinRank>> {
+    private fun PageData<CoinRank>.swapRankList(page: Int): PageData<CoinRank> {
         if (page == 1) {
-            val data = data.data
+            val data = data
             val list = arrayListOf<CoinRank>()
             for (index in 0..2) {
                 if (data.size > 0) {

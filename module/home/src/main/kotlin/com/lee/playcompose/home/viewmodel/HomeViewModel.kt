@@ -10,6 +10,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.lee.playcompose.common.entity.Banner
 import com.lee.playcompose.common.entity.Content
+import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
 import com.lee.playcompose.common.extensions.pager
 import com.lee.playcompose.home.model.api.ApiService
@@ -22,12 +23,12 @@ import kotlinx.coroutines.launch
  * @date 2022/2/28
  * @description HomePage ViewModel
  */
-class HomeViewModel: ViewModel() {
+class HomeViewModel : ViewModel() {
 
     private val api = createApi<ApiService>()
 
     private val pager by lazy {
-        pager { api.getContentDataAsync(it) }.cachedIn(viewModelScope)
+        pager { api.getContentDataAsync(it).checkData() }.cachedIn(viewModelScope)
     }
 
     var viewStates by mutableStateOf(HomeViewState(pagingData = pager))

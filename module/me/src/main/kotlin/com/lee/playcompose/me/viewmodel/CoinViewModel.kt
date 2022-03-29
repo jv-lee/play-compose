@@ -5,11 +5,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.common.constants.ApiConstants
 import com.lee.playcompose.common.entity.CoinRecord
 import com.lee.playcompose.common.entity.DetailsData
+import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
 import com.lee.playcompose.common.extensions.pager
 import com.lee.playcompose.me.R
@@ -26,9 +29,7 @@ class CoinViewModel : ViewModel() {
     private val api = createApi<ApiService>()
 
     private val pager by lazy {
-        pager(initialKey = 1) { page ->
-            api.getCoinRecordAsync(page)
-        }
+        pager(initialKey = 1) { api.getCoinRecordAsync(it).checkData() }.cachedIn(viewModelScope)
     }
 
     var viewStates by mutableStateOf(CoinViewState(pagingData = pager))

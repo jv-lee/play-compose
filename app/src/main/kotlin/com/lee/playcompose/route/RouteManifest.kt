@@ -14,11 +14,7 @@ import com.lee.playcompose.common.entity.DetailsData
 import com.lee.playcompose.common.entity.ParentTab
 import com.lee.playcompose.details.DetailsPage
 import com.lee.playcompose.home.ui.page.HomePage
-import com.lee.playcompose.me.*
-import com.lee.playcompose.me.ui.page.CoinPage
-import com.lee.playcompose.me.ui.page.CoinRankPage
-import com.lee.playcompose.me.ui.page.CollectPage
-import com.lee.playcompose.me.ui.page.SettingsPage
+import com.lee.playcompose.me.ui.page.*
 import com.lee.playcompose.official.ui.page.OfficialPage
 import com.lee.playcompose.project.ui.page.ProjectPage
 import com.lee.playcompose.router.*

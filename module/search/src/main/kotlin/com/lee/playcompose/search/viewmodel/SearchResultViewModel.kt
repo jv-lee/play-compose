@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.lee.playcompose.common.entity.Content
+import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
 import com.lee.playcompose.common.extensions.pager
 import com.lee.playcompose.search.model.api.ApiService
@@ -25,7 +26,7 @@ class SearchResultViewModel(private val key: String) : ViewModel() {
     private val api = createApi<ApiService>()
 
     private val pager by lazy {
-        pager { page -> api.postSearchAsync(page, key) }.cachedIn(viewModelScope)
+        pager { api.postSearchAsync(it, key).checkData() }.cachedIn(viewModelScope)
     }
 
     var viewStates by mutableStateOf(SearchResultViewState(pagingData = pager))
