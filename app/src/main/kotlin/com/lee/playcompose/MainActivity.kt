@@ -6,6 +6,7 @@ import androidx.core.view.WindowCompat
 import androidx.fragment.app.FragmentActivity
 import com.lee.playcompose.common.ui.theme.PlayComposeTheme
 import com.lee.playcompose.route.RouteNavigator
+import com.lee.playcompose.splash.SplashLauncher
 
 /**
  * @author jv.lee

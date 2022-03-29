@@ -42,7 +42,7 @@ class AccountViewModel : ViewModel() {
     private val _viewEvents = Channel<AccountViewEvent>(Channel.BUFFERED)
     val viewEvents = _viewEvents.receiveAsFlow()
 
-    fun dispatch(action: AccountViewAction) {
+    suspend fun dispatch(action: AccountViewAction) {
         when (action) {
             is AccountViewAction.RequestAccountData -> {
                 requestAccountData()
@@ -57,22 +57,20 @@ class AccountViewModel : ViewModel() {
         }
     }
 
-    private fun requestAccountData() {
-        viewModelScope.launch {
-            flow {
-                emit(api.getAccountInfoAsync().checkData())
-            }.onStart {
-                cacheManager.getCache<AccountData>(Constants.CACHE_KEY_ACCOUNT_DATA)?.let {
-                    emit(it)
-                }
-            }.catch { error ->
-                // 登陆token失效
-                if (error.message == ApiConstants.REQUEST_TOKEN_ERROR_MESSAGE) {
-                    updateAccountStatus(null, false)
-                }
-            }.collect {
-                updateAccountStatus(it, true)
+    private suspend fun requestAccountData() {
+        flow {
+            emit(api.getAccountInfoAsync().checkData())
+        }.onStart {
+            cacheManager.getCache<AccountData>(Constants.CACHE_KEY_ACCOUNT_DATA)?.let {
+                emit(it)
             }
+        }.catch { error ->
+            // 登陆token失效
+            if (error.message == ApiConstants.REQUEST_TOKEN_ERROR_MESSAGE) {
+                updateAccountStatus(null, false)
+            }
+        }.collect {
+            updateAccountStatus(it, true)
         }
     }
 

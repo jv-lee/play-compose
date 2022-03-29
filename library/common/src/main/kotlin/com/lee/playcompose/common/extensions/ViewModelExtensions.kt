@@ -21,7 +21,7 @@ fun <T : Any> ViewModel.pager(
         val page = params.key ?: 0
         try {
             val response = requestAction(page)
-            val data = response.data.data
+            val data = response.checkData().data
             val hasNext = (response.data.curPage < response.data.pageCount)
 
             PagingSource.LoadResult.Page(
@@ -42,7 +42,7 @@ fun <T : Any> ViewModel.singlePager(
     return createPaging(config, initialKey) {
         try {
             val response = requestAction()
-            val data = response.data
+            val data = response.checkData()
 
             PagingSource.LoadResult.Page(data = data, prevKey = null, nextKey = null)
         } catch (e: Exception) {
