@@ -1,12 +1,29 @@
 package com.lee.playcompose.me
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.lee.playcompose.common.ui.theme.AppTheme
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.itemsIndexed
+import com.lee.playcompose.common.entity.CoinRank
+import com.lee.playcompose.common.ui.theme.*
+import com.lee.playcompose.common.ui.widget.AppBarViewContainer
+import com.lee.playcompose.common.ui.widget.RefreshList
+import com.lee.playcompose.me.viewmodel.CoinRankViewModel
+import com.lee.playcompose.me.viewmodel.CoinRankViewState
+import com.lee.playcompose.router.RoutePage
+import com.lee.playcompose.router.navigateArgs
 
 /**
  * @author jv.lee
@@ -14,10 +31,130 @@ import com.lee.playcompose.common.ui.theme.AppTheme
  * @description
  */
 @Composable
-fun CoinRankPage(navController: NavController) {
-    Box(
+fun CoinRankPage(navController: NavController, viewModel: CoinRankViewModel = viewModel()) {
+    val viewState = viewModel.viewStates
+
+    AppBarViewContainer(title = stringResource(id = R.string.coin_rank_title),
+        actionIcon = R.drawable.vector_help,
+        actionEnable = true,
+        navigationClick = { navController.popBackStack() },
+        actionClick = { navController.navigateArgs(RoutePage.Details.route, viewState.detailsData) }
+    ) {
+        CoinRankContent(viewState = viewState)
+    }
+}
+
+@Composable
+private fun CoinRankContent(viewState: CoinRankViewState) {
+    val contentList = viewState.pagingData.collectAsLazyPagingItems()
+    val listState = if (contentList.itemCount > 0) viewState.listState else LazyListState()
+
+    RefreshList(
+        lazyPagingItems = contentList,
+        listState = listState
+    ) {
+        item { CoinRankTopHeader(data = viewState.topList) }
+
+        // build coinRank content item
+        itemsIndexed(contentList) { _, item ->
+            item ?: return@itemsIndexed
+            CoinRankItem(coinRank = item)
+        }
+    }
+}
+
+@Composable
+private fun CoinRankTopHeader(data: List<CoinRank>) {
+    Row(modifier = Modifier.fillMaxWidth()) {
+        data.forEach {
+            CoinRankTopItem(coinRank = it)
+        }
+    }
+}
+
+@Composable
+private fun RowScope.CoinRankTopItem(coinRank: CoinRank) {
+    val iconId = when (coinRank.rank) {
+        "1" -> R.drawable.vector_rank_no1
+        "2" -> R.drawable.vector_rank_no2
+        else -> R.drawable.vector_rank_no3
+    }
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            .fillMaxSize()
-            .background(AppTheme.colors.background)
-    )
+            .weight(1f)
+            .padding(OffsetLarge)
+    ) {
+        Image(painter = painterResource(id = iconId), contentDescription = null)
+        Text(
+            text = coinRank.username,
+            maxLines = 1,
+            textAlign = TextAlign.Center,
+            fontSize = FontSizeMedium,
+            color = AppTheme.colors.accent,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.padding(top = OffsetMedium)
+        )
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Image(
+                painter = painterResource(id = R.drawable.vector_user_coin),
+                contentDescription = null
+            )
+            Text(
+                text = coinRank.coinCount.toString(),
+                fontSize = FontSizeSmall,
+                color = AppTheme.colors.primary,
+                fontWeight = FontWeight.Bold,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                textAlign = TextAlign.Center,
+            )
+        }
+    }
+}
+
+@Composable
+private fun CoinRankItem(coinRank: CoinRank) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(OffsetLarge)
+    ) {
+        Text(
+            text = coinRank.rank,
+            fontSize = FontSizeLarge,
+            color = AppTheme.colors.accent,
+            fontWeight = FontWeight.Bold
+        )
+        Text(
+            text = coinRank.username,
+            fontSize = FontSizeMedium,
+            color = AppTheme.colors.accent,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.weight(1f)
+        )
+        Row(
+            horizontalArrangement = Arrangement.End,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .weight(1f)
+                .padding(end = OffsetMedium)
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.vector_user_coin),
+                contentDescription = null
+            )
+            Text(
+                text = coinRank.coinCount.toString(),
+                fontSize = FontSizeSmall,
+                color = AppTheme.colors.primary,
+                fontWeight = FontWeight.Bold,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                textAlign = TextAlign.Center,
+            )
+        }
+    }
 }

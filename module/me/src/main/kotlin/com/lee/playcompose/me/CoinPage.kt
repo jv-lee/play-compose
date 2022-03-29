@@ -25,7 +25,6 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
 import com.lee.playandroid.library.service.hepler.ModuleService
 import com.lee.playcompose.base.extensions.LocalActivity
-import com.lee.playcompose.base.extensions.onTap
 import com.lee.playcompose.common.entity.AccountViewState
 import com.lee.playcompose.common.entity.CoinRecord
 import com.lee.playcompose.common.ui.theme.*
@@ -136,7 +135,7 @@ private fun CoinRecordHeader(accountViewState: AccountViewState, coinRankClick: 
                 shape = RoundedCornerShape(OffsetRadiusMedium),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(180.dp)
+                    .wrapContentHeight()
             ) {
                 Column {
                     Box(
@@ -195,7 +194,7 @@ private fun CoinRecordHeader(accountViewState: AccountViewState, coinRankClick: 
                     }
                     Box(
                         modifier = Modifier
-                            .height(72.dp)
+                            .height(50.dp)
                             .fillMaxWidth()
                             .clickable { coinRankClick() }
                     ) {
