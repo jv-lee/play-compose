@@ -66,17 +66,17 @@ private fun CoinRankContent(viewState: CoinRankViewState) {
 @Composable
 private fun CoinRankTopHeader(data: List<CoinRank>) {
     Row(modifier = Modifier.fillMaxWidth()) {
-        data.forEach {
-            CoinRankTopItem(coinRank = it)
+        data.forEachIndexed { index, coinRank ->
+            CoinRankTopItem(index, coinRank)
         }
     }
 }
 
 @Composable
-private fun RowScope.CoinRankTopItem(coinRank: CoinRank) {
-    val iconId = when (coinRank.rank) {
-        "1" -> R.drawable.vector_rank_no1
-        "2" -> R.drawable.vector_rank_no2
+private fun RowScope.CoinRankTopItem(index: Int, coinRank: CoinRank) {
+    val iconId = when (index) {
+        0 -> R.drawable.vector_rank_no2
+        1 -> R.drawable.vector_rank_no1
         else -> R.drawable.vector_rank_no3
     }
     Column(
