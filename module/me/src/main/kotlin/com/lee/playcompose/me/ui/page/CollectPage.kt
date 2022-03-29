@@ -1,4 +1,4 @@
-package com.lee.playcompose.me
+package com.lee.playcompose.me.ui.page
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -14,7 +14,7 @@ import com.lee.playcompose.common.ui.theme.AppTheme
  * @description
  */
 @Composable
-fun SettingsPage(navController: NavController) {
+fun CollectPage(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()

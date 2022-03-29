@@ -1,4 +1,4 @@
-package com.lee.playcompose.me
+package com.lee.playcompose.me.ui.page
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -20,6 +20,7 @@ import com.lee.playcompose.common.entity.CoinRank
 import com.lee.playcompose.common.ui.theme.*
 import com.lee.playcompose.common.ui.widget.AppBarViewContainer
 import com.lee.playcompose.common.ui.widget.RefreshList
+import com.lee.playcompose.me.R
 import com.lee.playcompose.me.viewmodel.CoinRankViewModel
 import com.lee.playcompose.me.viewmodel.CoinRankViewState
 import com.lee.playcompose.router.RoutePage
