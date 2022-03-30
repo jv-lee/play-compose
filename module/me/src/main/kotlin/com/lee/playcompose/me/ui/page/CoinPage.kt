@@ -41,7 +41,7 @@ import com.lee.playcompose.common.R as CR
 /**
  * @author jv.lee
  * @date 2022/3/25
- * @description
+ * @description 个人积分页
  */
 @Composable
 fun CoinPage(navController: NavController, viewModel: CoinViewModel = viewModel()) {

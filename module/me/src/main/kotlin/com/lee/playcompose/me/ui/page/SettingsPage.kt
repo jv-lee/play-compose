@@ -11,7 +11,7 @@ import com.lee.playcompose.common.ui.theme.AppTheme
 /**
  * @author jv.lee
  * @date 2022/3/25
- * @description
+ * @description 设置页面
  */
 @Composable
 fun SettingsPage(navController: NavController) {
