@@ -76,7 +76,7 @@ private fun Modifier.adaptiveTabIndicatorOffset(
     tabWidth: Dp
 ): Modifier = composed(
     inspectorInfo = debugInspectorInfo {
-        name = "customTabIndicatorOffset"
+        name = "IndicatorAdaptiveTabRow"
         value = currentTabPosition
     }
 ) {
