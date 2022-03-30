@@ -182,33 +182,29 @@ private fun HomeCategoryChildItem(
 ) {
     val screenWidth = app.resources.displayMetrics.widthPixels
     val viewWidth = app.px2dp(screenWidth / 2)
-    Box(
+    Card(
+        backgroundColor = AppTheme.colors.item,
         modifier = Modifier
             .width(viewWidth.dp)
             .padding(OffsetMedium)
     ) {
-        Card(backgroundColor = AppTheme.colors.item) {
-            Box(modifier = Modifier
-                .fillMaxSize()
-                .clickable { onItemClick(category) }) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(OffsetLarge)
-                        .wrapContentSize(align = Alignment.Center)
-                ) {
-                    Image(
-                        painter = painterResource(id = category.iconResId),
-                        contentDescription = null,
-                        modifier = Modifier.size(50.dp)
-                    )
-                    Spacer(modifier = Modifier.height(OffsetMedium))
-                    Text(
-                        text = stringResource(id = category.nameResId),
-                        color = AppTheme.colors.accent
-                    )
-                }
-            }
+        Column(
+            modifier = Modifier
+                .clickable { onItemClick(category) }
+                .fillMaxWidth()
+                .wrapContentSize(align = Alignment.Center)
+                .padding(OffsetLarge)
+        ) {
+            Image(
+                painter = painterResource(id = category.iconResId),
+                contentDescription = null,
+                modifier = Modifier.size(50.dp)
+            )
+            Spacer(modifier = Modifier.height(OffsetMedium))
+            Text(
+                text = stringResource(id = category.nameResId),
+                color = AppTheme.colors.accent
+            )
         }
     }
 }

@@ -32,53 +32,52 @@ fun ProfileItem(
     rightSwitchEnable: Boolean = false,
     onClick: () -> Unit
 ) {
-    Box(modifier = Modifier.clickable { onClick() }) {
-        Box(
-            modifier = Modifier
-                .background(AppTheme.colors.item)
-                .fillMaxWidth()
-                .padding(16.dp, 12.dp, 16.dp, 12.dp)
-                .wrapContentHeight()
-        ) {
-            Row(modifier = Modifier.align(alignment = Alignment.CenterStart)) {
-                leftDrawable?.let {
-                    Image(
-                        painter = painterResource(id = it),
-                        contentDescription = null,
-                        modifier = Modifier.padding(start = 6.dp, end = 6.dp)
-                    )
-                }
-
-                leftText?.let {
-                    Text(
-                        text = stringResource(id = it),
-                        color = AppTheme.colors.accent,
-                        fontSize = FontSizeMedium,
-                        modifier = Modifier.align(alignment = Alignment.CenterVertically)
-                    )
-                }
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .clickable { onClick() }
+            .background(AppTheme.colors.item)
+            .padding(16.dp, 12.dp, 16.dp, 12.dp)
+    ) {
+        Row(modifier = Modifier.align(alignment = Alignment.CenterStart)) {
+            leftDrawable?.let {
+                Image(
+                    painter = painterResource(id = it),
+                    contentDescription = null,
+                    modifier = Modifier.padding(start = 6.dp, end = 6.dp)
+                )
             }
 
-            Row(modifier = Modifier.align(alignment = Alignment.CenterEnd)) {
-                if (rightSwitchEnable) {
-                    Switch(checked = true, onCheckedChange = {})
-                    return@Row
-                }
-                rightText?.let {
-                    Text(
-                        text = stringResource(id = it),
-                        color = AppTheme.colors.primary,
-                        fontSize = FontSizeSmall,
-                        modifier = Modifier.align(alignment = Alignment.CenterVertically)
-                    )
-                }
-                rightDrawable?.let {
-                    Image(
-                        painter = painterResource(id = it),
-                        contentDescription = null,
-                        modifier = Modifier.padding(start = 6.dp, end = 6.dp)
-                    )
-                }
+            leftText?.let {
+                Text(
+                    text = stringResource(id = it),
+                    color = AppTheme.colors.accent,
+                    fontSize = FontSizeMedium,
+                    modifier = Modifier.align(alignment = Alignment.CenterVertically)
+                )
+            }
+        }
+
+        Row(modifier = Modifier.align(alignment = Alignment.CenterEnd)) {
+            if (rightSwitchEnable) {
+                Switch(checked = true, onCheckedChange = {})
+                return@Row
+            }
+            rightText?.let {
+                Text(
+                    text = stringResource(id = it),
+                    color = AppTheme.colors.primary,
+                    fontSize = FontSizeSmall,
+                    modifier = Modifier.align(alignment = Alignment.CenterVertically)
+                )
+            }
+            rightDrawable?.let {
+                Image(
+                    painter = painterResource(id = it),
+                    contentDescription = null,
+                    modifier = Modifier.padding(start = 6.dp, end = 6.dp)
+                )
             }
         }
     }

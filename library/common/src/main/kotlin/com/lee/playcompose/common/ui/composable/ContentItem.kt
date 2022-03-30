@@ -26,11 +26,7 @@ fun ContentItem(
     onItemClick: (Content) -> Unit
 ) {
     CardItemContainer(onClick = { onItemClick(item) }) {
-        ConstraintLayout(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(OffsetLarge)
-        ) {
+        ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
             val (author, title, category, time) = createRefs()
 
             Text(

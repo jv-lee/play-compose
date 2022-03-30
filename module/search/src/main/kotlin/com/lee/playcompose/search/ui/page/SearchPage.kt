@@ -217,14 +217,14 @@ private fun SearchHotItem(item: SearchHot, onSearchClick: (String) -> Unit) {
         shape = RoundedCornerShape(OffsetRadiusMedium),
         modifier = Modifier.padding(OffsetSmall)
     ) {
-        Box(modifier = Modifier.clickable { onSearchClick(item.key) }) {
-            Text(
-                text = item.key,
-                color = item.color,
-                fontSize = FontSizeSmall,
-                modifier = Modifier.padding(OffsetMedium)
-            )
-        }
+        Text(
+            text = item.key,
+            color = item.color,
+            fontSize = FontSizeSmall,
+            modifier = Modifier
+                .clickable { onSearchClick(item.key) }
+                .padding(OffsetMedium)
+        )
     }
 }
 

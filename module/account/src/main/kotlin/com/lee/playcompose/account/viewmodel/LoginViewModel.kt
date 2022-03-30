@@ -1,6 +1,7 @@
 package com.lee.playcompose.account.viewmodel
 
 import android.text.TextUtils
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -8,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.playcompose.account.constants.Constants
 import com.lee.playcompose.account.model.api.ApiService
+import com.lee.playcompose.base.bus.ChannelBus.Companion.post
 import com.lee.playcompose.base.tools.PreferencesTools
 import com.lee.playcompose.common.entity.AccountData
 import com.lee.playcompose.common.extensions.checkData
@@ -94,6 +96,7 @@ class LoginViewModel : ViewModel() {
             }.catch { error ->
                 viewStates = viewStates.copy(isLoading = false)
                 _viewEvents.send(LoginViewEvent.LoginFailed(error.message))
+                Log.i("HTTP","loginError->")
             }.collect {
                 // 缓存用户明输入信息下次复用
                 PreferencesTools.put(Constants.SP_KEY_SAVE_INPUT_USERNAME, viewStates.username)

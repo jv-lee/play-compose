@@ -63,11 +63,15 @@ fun LoginPage(
     val keyboardController = LocalSoftwareKeyboardController.current
     val viewState = viewModel.viewStates
 
+    // 监听注册成功状态
     LaunchedEffect(Unit) {
-        // 监听注册成功状态
         ChannelBus.bindChannel<RegisterSuccessEvent>(lifecycle)?.receiveAsFlow()?.collect {
             navController.popBackStack()
         }
+    }
+
+    // 页面单向事件监听
+    LaunchedEffect(Unit) {
         viewModel.viewEvents.collect { event ->
             when (event) {
                 is LoginViewEvent.LoginSuccess -> {
@@ -86,31 +90,29 @@ fun LoginPage(
 
     LoadingDialog(isShow = viewState.isLoading)
 
-    Box(
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(imeInsets)
             .wrapContentSize(Alignment.Center)
             .background(AppTheme.colors.background)
-            .onTap { keyboardController?.hide() }
-    ) {
-        Column {
-            LoginTitle()
-            LoginInputContent(viewState = viewState, usernameChange = {
-                viewModel.dispatch(LoginViewAction.ChangeUsername(it))
-            }, passwordChange = {
-                viewModel.dispatch(LoginViewAction.ChangePassword(it))
-            }, doneChange = {
-                viewModel.dispatch(LoginViewAction.RequestLogin)
+            .onTap { keyboardController?.hide() })
+    {
+        LoginTitle()
+        LoginInputContent(viewState = viewState, usernameChange = {
+            viewModel.dispatch(LoginViewAction.ChangeUsername(it))
+        }, passwordChange = {
+            viewModel.dispatch(LoginViewAction.ChangePassword(it))
+        }, doneChange = {
+            viewModel.dispatch(LoginViewAction.RequestLogin)
+        })
+        LoginFooter(viewState = viewState, gotoRegisterClick = {
+            imeInsets.hasBottomExpend({ keyboardController?.hide() }, {
+                navController.navigate(RoutePage.Account.Register.route)
             })
-            LoginFooter(viewState = viewState, gotoRegisterClick = {
-                imeInsets.hasBottomExpend({ keyboardController?.hide() }, {
-                    navController.navigate(RoutePage.Account.Register.route)
-                })
-            }, loginClick = {
-                viewModel.dispatch(LoginViewAction.RequestLogin)
-            })
-        }
+        }, loginClick = {
+            viewModel.dispatch(LoginViewAction.RequestLogin)
+        })
     }
 }
 
@@ -140,7 +142,7 @@ private fun LoginInputContent(
             .fillMaxWidth()
             .padding(OffsetLarge)
     ) {
-        Column(modifier = Modifier.fillMaxWidth()) {
+        Column {
             AppTextField(
                 value = viewState.username,
                 onValueChange = usernameChange,
@@ -165,7 +167,7 @@ private fun LoginInputContent(
                 visualTransformation = PasswordVisualTransformation(),
                 keyboardActions = KeyboardActions(onDone = doneChange),
                 keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Password,
+                    keyboardType = KeyboardType.Text,
                     imeAction = ImeAction.Done
                 ),
                 leadingIcon = {

@@ -47,7 +47,7 @@ import kotlinx.coroutines.flow.collect
 /**
  * @author jv.lee
  * @date 2022/3/23
- * @description
+ * @description 用户注册页
  */
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -60,6 +60,7 @@ fun RegisterPage(
     val keyboardController = LocalSoftwareKeyboardController.current
     val viewState = viewModel.viewStates
 
+    // 页面单向事件监听
     LaunchedEffect(Unit) {
         viewModel.viewEvents.collect { event ->
             when (event) {
@@ -81,35 +82,32 @@ fun RegisterPage(
 
     LoadingDialog(isShow = viewState.isLoading)
 
-    Box(
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(imeInsets)
             .wrapContentSize(Alignment.Center)
             .background(AppTheme.colors.background)
-            .onTap { keyboardController?.hide() }
-    ) {
-        Column {
-            RegisterTitle()
+            .onTap { keyboardController?.hide() })
+    {
+        RegisterTitle()
+        RegisterInputContent(viewState = viewState, usernameChange = {
+            viewModel.dispatch(RegisterViewAction.ChangeUsername(it))
+        }, passwordChange = {
+            viewModel.dispatch(RegisterViewAction.ChangePassword(it))
+        }, rePasswordChange = {
+            viewModel.dispatch(RegisterViewAction.ChangeRePassword(it))
+        }, doneChange = {
+            viewModel.dispatch(RegisterViewAction.RequestRegister)
+        })
 
-            RegisterInputContent(viewState = viewState, usernameChange = {
-                viewModel.dispatch(RegisterViewAction.ChangeUsername(it))
-            }, passwordChange = {
-                viewModel.dispatch(RegisterViewAction.ChangePassword(it))
-            }, rePasswordChange = {
-                viewModel.dispatch(RegisterViewAction.ChangeRePassword(it))
-            }, doneChange = {
-                viewModel.dispatch(RegisterViewAction.RequestRegister)
+        RegisterFooter(viewState = viewState, gotoLoginClick = {
+            imeInsets.hasBottomExpend({ keyboardController?.hide() }, {
+                navController.popBackStack()
             })
-
-            RegisterFooter(viewState = viewState, gotoLoginClick = {
-                imeInsets.hasBottomExpend({ keyboardController?.hide() }, {
-                    navController.popBackStack()
-                })
-            }, registerClick = {
-                viewModel.dispatch(RegisterViewAction.RequestRegister)
-            })
-        }
+        }, registerClick = {
+            viewModel.dispatch(RegisterViewAction.RequestRegister)
+        })
     }
 }
 
@@ -140,7 +138,7 @@ private fun RegisterInputContent(
             .fillMaxWidth()
             .padding(OffsetLarge)
     ) {
-        Column(modifier = Modifier.fillMaxWidth()) {
+        Column {
             AppTextField(
                 value = viewState.username,
                 onValueChange = usernameChange,
@@ -164,7 +162,7 @@ private fun RegisterInputContent(
                 hintText = stringResource(id = R.string.account_password_text),
                 visualTransformation = PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Password,
+                    keyboardType = KeyboardType.Text,
                     imeAction = ImeAction.Next
                 ),
                 leadingIcon = {
@@ -182,7 +180,7 @@ private fun RegisterInputContent(
                 visualTransformation = PasswordVisualTransformation(),
                 keyboardActions = KeyboardActions(onDone = doneChange),
                 keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Password,
+                    keyboardType = KeyboardType.Text,
                     imeAction = ImeAction.Done
                 ),
                 leadingIcon = {

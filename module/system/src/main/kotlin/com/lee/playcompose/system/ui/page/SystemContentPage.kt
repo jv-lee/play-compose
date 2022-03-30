@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.core.text.HtmlCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -20,7 +19,7 @@ import com.lee.playcompose.base.bus.ChannelBus
 import com.lee.playcompose.base.tools.WeakDataHolder
 import com.lee.playcompose.common.entity.NavigationSelectEvent
 import com.lee.playcompose.common.entity.ParentTab
-import com.lee.playcompose.common.entity.Tab
+import com.lee.playcompose.common.extensions.formHtmlLabels
 import com.lee.playcompose.common.ui.composable.CardItemContainer
 import com.lee.playcompose.common.ui.composable.HeaderSpacer
 import com.lee.playcompose.common.ui.theme.*
@@ -56,6 +55,7 @@ fun SystemContentPage(
     }
 
     SystemContentList(viewState = viewState, onItemClick = {
+        // tabData跳转数据暂存 to SystemContentTabPage
         WeakDataHolder.instance.saveData(RouteParamsKey.tabDataKey, it)
         navController.navigateArgs(RoutePage.System.SystemContentTab.route)
     })
@@ -94,24 +94,24 @@ private fun SystemContentItem(item: ParentTab, onItemClick: (ParentTab) -> Unit)
                 color = AppTheme.colors.accent,
                 fontSize = FontSizeMedium,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(OffsetLarge)
             )
             Spacer(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(1.dp)
+                    .height(OffsetMedium + OffsetMedium + 1.dp)
+                    .padding(top = OffsetMedium, bottom = OffsetMedium)
                     .background(AppTheme.colors.background)
             )
             Text(
-                text = formHtmlLabels(item),
+                text = item.formHtmlLabels(),
                 color = AppTheme.colors.primary,
                 fontSize = FontSizeSmall,
-                modifier = Modifier.padding(OffsetMedium)
             )
             Spacer(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(1.dp)
+                    .height(OffsetMedium + OffsetMedium + 1.dp)
+                    .padding(top = OffsetMedium, bottom = OffsetMedium)
                     .background(AppTheme.colors.background)
             )
             Text(
@@ -120,26 +120,10 @@ private fun SystemContentItem(item: ParentTab, onItemClick: (ParentTab) -> Unit)
                 fontSize = FontSizeSmallX,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier
-                    .padding(OffsetLarge)
                     .fillMaxWidth()
                     .wrapContentSize(Alignment.CenterEnd)
             )
         }
     }
-}
-
-private fun formHtmlLabels(item: ParentTab): String {
-    return HtmlCompat.fromHtml(
-        buildChildrenLabel(item.children),
-        HtmlCompat.FROM_HTML_MODE_LEGACY
-    ).toString()
-}
-
-private fun buildChildrenLabel(tabs: List<Tab>): String {
-    val builder = StringBuilder()
-    tabs.forEach {
-        builder.append(it.name + "\t\t")
-    }
-    return builder.toString()
 }
 

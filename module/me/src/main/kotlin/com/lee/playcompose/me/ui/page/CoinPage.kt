@@ -87,24 +87,19 @@ private fun CoinRecordContent(viewState: CoinViewState) {
 
 @Composable
 private fun CoinRecordItem(item: CoinRecord) {
-    Box(
+    Text(
+        text = item.desc,
+        fontSize = FontSizeSmall,
+        color = AppTheme.colors.accent,
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis,
+        textAlign = TextAlign.Center,
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = OffsetMedium)
-    ) {
-        Text(
-            text = item.desc,
-            fontSize = FontSizeSmall,
-            color = AppTheme.colors.accent,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .background(AppTheme.colors.item)
-                .fillMaxWidth()
-                .padding(OffsetLarge)
-        )
-    }
+            .background(AppTheme.colors.item)
+            .padding(OffsetLarge)
+    )
 }
 
 @Composable
@@ -124,97 +119,83 @@ private fun CoinRecordHeader(accountViewState: AccountViewState, coinRankClick: 
                 )
         )
 
-        Box(
-            modifier = Modifier.padding(
-                top = OffsetMedium,
-                start = OffsetLarge,
-                end = OffsetLarge
-            )
+        Card(
+            backgroundColor = AppTheme.colors.item,
+            shape = RoundedCornerShape(OffsetRadiusMedium),
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .padding(
+                    top = OffsetMedium,
+                    start = OffsetLarge,
+                    end = OffsetLarge
+                )
         ) {
-            Card(
-                backgroundColor = AppTheme.colors.item,
-                shape = RoundedCornerShape(OffsetRadiusMedium),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-            ) {
-                Column {
-                    Box(
-                        modifier = Modifier
-                            .height(26.dp)
-                            .fillMaxWidth()
-                            .background(
-                                color = AppTheme.colors.onFocus,
-                                shape = RoundedCornerShape(
-                                    topStart = OffsetRadiusMedium,
-                                    topEnd = OffsetRadiusMedium
-                                )
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(
+                    text = stringResource(id = R.string.coin_title_label_text),
+                    fontSize = FontSizeSmall,
+                    color = AppTheme.colors.focus,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .height(26.dp)
+                        .fillMaxWidth()
+                        .background(
+                            color = AppTheme.colors.onFocus,
+                            shape = RoundedCornerShape(
+                                topStart = OffsetRadiusMedium,
+                                topEnd = OffsetRadiusMedium
                             )
-                    ) {
-                        Text(
-                            text = stringResource(id = R.string.coin_title_label_text),
-                            fontSize = FontSizeSmall,
-                            color = AppTheme.colors.focus,
-                            textAlign = TextAlign.Center,
-                            lineHeight = 26.sp,
-                            modifier = Modifier.align(Alignment.Center)
                         )
-                    }
-                    Text(
-                        text = stringResource(id = R.string.coin_total_description),
-                        fontSize = FontSizeSmallX,
-                        color = AppTheme.colors.primary,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .padding(top = OffsetLarge)
-                            .fillMaxWidth()
-                    )
-                    Text(
-                        text = accountViewState.accountData?.coinInfo?.coinCount.toString(),
-                        fontSize = 26.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = AppTheme.colors.accent,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .padding(top = OffsetLarge)
-                            .fillMaxWidth()
-                    )
-                    Box(
-                        modifier = Modifier.padding(
+                        .wrapContentHeight(Alignment.CenterVertically)
+                )
+                Text(
+                    text = stringResource(id = R.string.coin_total_description),
+                    fontSize = FontSizeSmallX,
+                    color = AppTheme.colors.primary,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(top = OffsetLarge)
+                )
+                Text(
+                    text = accountViewState.accountData?.coinInfo?.coinCount.toString(),
+                    fontSize = 26.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = AppTheme.colors.accent,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(top = OffsetLarge)
+                )
+                Spacer(
+                    modifier = Modifier
+                        .height(OffsetLarge + 1.dp)
+                        .fillMaxWidth()
+                        .padding(
                             start = OffsetLarge,
                             top = OffsetLarge,
                             end = OffsetLarge
                         )
-                    ) {
-                        Spacer(
-                            modifier = Modifier
-                                .height(1.dp)
-                                .fillMaxWidth()
-                                .background(AppTheme.colors.onFocus)
-                        )
-                    }
-                    Box(
+                        .background(AppTheme.colors.onFocus)
+                )
+                Box(
+                    modifier = Modifier
+                        .height(50.dp)
+                        .fillMaxWidth()
+                        .clickable { coinRankClick() }
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.coin_to_rank_text),
+                        fontSize = FontSizeLarge,
+                        color = AppTheme.colors.accent,
                         modifier = Modifier
-                            .height(50.dp)
-                            .fillMaxWidth()
-                            .clickable { coinRankClick() }
-                    ) {
-                        Text(
-                            text = stringResource(id = R.string.coin_to_rank_text),
-                            fontSize = FontSizeLarge,
-                            color = AppTheme.colors.accent,
-                            modifier = Modifier
-                                .align(Alignment.CenterStart)
-                                .padding(start = OffsetLarge)
-                        )
-                        Icon(
-                            painter = painterResource(id = CR.drawable.vector_arrow),
-                            contentDescription = null,
-                            modifier = Modifier
-                                .align(Alignment.CenterEnd)
-                                .padding(end = OffsetLarge)
-                        )
-                    }
+                            .align(Alignment.CenterStart)
+                            .padding(start = OffsetLarge)
+                    )
+                    Icon(
+                        painter = painterResource(id = CR.drawable.vector_arrow),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .align(Alignment.CenterEnd)
+                            .padding(end = OffsetLarge)
+                    )
                 }
             }
         }

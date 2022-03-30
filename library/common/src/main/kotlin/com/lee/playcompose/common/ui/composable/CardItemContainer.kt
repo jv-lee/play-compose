@@ -9,6 +9,7 @@ import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.lee.playcompose.common.ui.theme.AppTheme
+import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.theme.OffsetMedium
 
 /**
@@ -21,15 +22,14 @@ fun CardItemContainer(
     onClick: () -> Unit = {},
     content: @Composable BoxScope.() -> Unit
 ) {
-    Box(modifier = Modifier.padding(OffsetMedium)) {
-        Card(backgroundColor = AppTheme.colors.item) {
-            Box(modifier = Modifier
-                .fillMaxSize()
-                .clickable {
-                    onClick()
-                }) {
-                content()
-            }
+
+    Card(backgroundColor = AppTheme.colors.item, modifier = Modifier.padding(OffsetMedium)) {
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .clickable { onClick() }
+            .padding(OffsetLarge)
+        ) {
+            content()
         }
     }
 }

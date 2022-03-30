@@ -124,51 +124,45 @@ private fun NavigationTabItem(
 ) {
     val textColor = if (isSelected) AppTheme.colors.onFocus else AppTheme.colors.primary
     val tabColor = if (isSelected) AppTheme.colors.focus else Color.Transparent
-    Box(
+    Card(
+        elevation = 0.dp,
+        backgroundColor = tabColor,
+        shape = RoundedCornerShape(SystemTabRadius),
         modifier = Modifier
             .fillMaxWidth()
             .height(NavigationTabHeight)
             .wrapContentSize(align = Alignment.Center)
     ) {
-        Card(
-            elevation = 0.dp,
-            backgroundColor = tabColor,
-            shape = RoundedCornerShape(SystemTabRadius)
-        ) {
-            Box(modifier = Modifier.clickable { tabClick(item) }) {
-                Text(
-                    text = item.name,
-                    fontSize = FontSizeMedium,
-                    color = textColor,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier
-                        .padding(OffsetMedium),
-                )
-            }
-        }
+        Text(
+            text = item.name,
+            fontSize = FontSizeMedium,
+            color = textColor,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier
+                .clickable { tabClick(item) }
+                .padding(OffsetMedium),
+        )
     }
 }
 
 @Composable
 private fun NavigationContentItem(item: NavigationItem, itemClick: (Content) -> Unit) {
-    Box(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(OffsetLarge)
     ) {
-        Column {
-            Text(
-                text = item.name,
-                color = AppTheme.colors.accent,
-                fontSize = FontSizeMedium,
-                fontWeight = FontWeight.Bold,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-            Spacer(modifier = Modifier.height(OffsetMedium))
-            NavigationContentFlowList(item = item, itemClick = itemClick)
-        }
+        Text(
+            text = item.name,
+            color = AppTheme.colors.accent,
+            fontSize = FontSizeMedium,
+            fontWeight = FontWeight.Bold,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
+        )
+        Spacer(modifier = Modifier.height(OffsetMedium))
+        NavigationContentFlowList(item = item, itemClick = itemClick)
     }
 }
 
@@ -182,14 +176,14 @@ private fun NavigationContentFlowList(item: NavigationItem, itemClick: (Content)
                 shape = RoundedCornerShape(OffsetRadiusSmall),
                 modifier = Modifier.padding(OffsetSmall)
             ) {
-                Box(modifier = Modifier.clickable { itemClick(it) }) {
-                    Text(
-                        text = it.title,
-                        color = AppTheme.colors.primary,
-                        fontSize = FontSizeSmall,
-                        modifier = Modifier.padding(OffsetMedium)
-                    )
-                }
+                Text(
+                    text = it.title,
+                    color = AppTheme.colors.primary,
+                    fontSize = FontSizeSmall,
+                    modifier = Modifier
+                        .clickable { itemClick(it) }
+                        .padding(OffsetMedium)
+                )
             }
         }
     }
