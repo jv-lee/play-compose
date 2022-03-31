@@ -2,11 +2,16 @@ package com.lee.playcompose.common.ui.widget
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -20,14 +25,20 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.statusBarsHeight
 import com.lee.playcompose.common.ui.composable.HeaderSpacer
-import com.lee.playcompose.common.ui.theme.AppTheme
-import com.lee.playcompose.common.ui.theme.FontSizeLarge
+import com.lee.playcompose.common.ui.theme.*
 
 /**
  * @author jv.lee
  * @date 2022/2/21
  * @description 公共appbarView
  */
+
+sealed class ActionMode {
+    object Button : ActionMode()
+    object Menu : ActionMode()
+    object Default : ActionMode()
+}
+
 @Composable
 fun AppBarView(
     modifier: Modifier = Modifier,
@@ -40,9 +51,12 @@ fun AppBarView(
     contentColor: Color = contentColorFor(backgroundColor),
     elevation: Dp = AppBarDefaults.TopAppBarElevation,
     navigationEnable: Boolean = true,
-    actionEnable: Boolean = false,
-    content: @Composable BoxScope.() -> Unit = {}
+    menuVisibilityState: MutableState<Boolean> = remember { mutableStateOf(false) },
+    actionMode: ActionMode = ActionMode.Default,
+    menu: @Composable ColumnScope.() -> Unit = {},
+    content: @Composable BoxScope.() -> Unit = {},
 ) {
+
     Column(modifier = modifier.shadow(elevation)) {
         Spacer(
             modifier = Modifier
@@ -75,13 +89,38 @@ fun AppBarView(
                     }
                 },
                 actions = {
-                    if (actionEnable) {
-                        IconButton(onClick = actionClick) {
-                            Icon(
-                                painter = painterResource(id = actionIcon),
-                                "",
-                                tint = contentColor
+                    when (actionMode) {
+                        is ActionMode.Button -> {
+                            IconButton(onClick = actionClick) {
+                                Icon(
+                                    painter = painterResource(id = actionIcon),
+                                    "",
+                                    tint = contentColor
+                                )
+                            }
+                        }
+                        is ActionMode.Menu -> {
+                            IconButton(onClick = {
+                                menuVisibilityState.value = !menuVisibilityState.value
+                            }) {
+                                Icon(
+                                    painter = painterResource(id = actionIcon),
+                                    "",
+                                    tint = contentColor
+                                )
+                            }
+                            DropdownMenu(
+                                expanded = menuVisibilityState.value,
+                                onDismissRequest = { menuVisibilityState.value = false },
+                                content = menu,
+                                modifier = Modifier.background(
+                                    color = AppTheme.colors.item, shape = RoundedCornerShape(
+                                        OffsetRadiusSmall
+                                    )
+                                )
                             )
+                        }
+                        else -> {
                         }
                     }
                 },
@@ -106,10 +145,12 @@ fun AppBarViewContainer(
     contentColor: Color = contentColorFor(backgroundColor),
     elevation: Dp = AppBarDefaults.TopAppBarElevation,
     navigationEnable: Boolean = true,
-    actionEnable: Boolean = false,
     containerBackground: Color = AppTheme.colors.background,
     appBarContent: @Composable BoxScope.() -> Unit = {},
-    content: @Composable () -> Unit
+    menuVisibilityState: MutableState<Boolean> = remember { mutableStateOf(false) },
+    actionMode: ActionMode = ActionMode.Default,
+    menu: @Composable ColumnScope.() -> Unit = {},
+    content: @Composable () -> Unit,
 ) {
     Box(
         Modifier
@@ -131,8 +172,37 @@ fun AppBarViewContainer(
             contentColor,
             elevation,
             navigationEnable,
-            actionEnable,
-            appBarContent
+            menuVisibilityState,
+            actionMode,
+            menu,
+            appBarContent,
         )
     }
+}
+
+@Composable
+fun TextMenuItem(text: String, onClick: () -> Unit) {
+    Text(
+        text = text,
+        color = AppTheme.colors.accent,
+        textAlign = TextAlign.Center,
+        modifier = Modifier
+            .clickable { onClick() }
+            .padding(
+                start = OffsetLarge,
+                end = OffsetLarge,
+                top = OffsetSmall,
+                bottom = OffsetSmall
+            )
+    )
+}
+
+@Composable
+fun MenuSpacer() {
+    Spacer(
+        modifier = Modifier
+            .height(1.dp)
+            .fillMaxWidth()
+            .background(color = AppTheme.colors.accent)
+    )
 }
