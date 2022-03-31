@@ -12,8 +12,12 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 @Keep
 data class DetailsData(
-    val id: String = "0",
+    val id: String = EMPTY_ID,
     val title: String,
     val link: String,
-    val isCollect: Boolean = false
-) : Parcelable
+    var isCollect: Boolean = false
+) : Parcelable {
+    companion object {
+        const val EMPTY_ID = "0"
+    }
+}

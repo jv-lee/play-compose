@@ -10,6 +10,7 @@ import androidx.paging.compose.itemsIndexed
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.extensions.transformDetails
 import com.lee.playcompose.common.ui.composable.ActionTextItem
+import com.lee.playcompose.common.ui.widget.ActionMode
 import com.lee.playcompose.common.ui.widget.AppBarViewContainer
 import com.lee.playcompose.common.ui.widget.RefreshList
 import com.lee.playcompose.router.RoutePage
@@ -30,7 +31,7 @@ fun MySharePage(navController: NavController, viewModel: MyShareViewModel = view
     AppBarViewContainer(
         title = stringResource(id = R.string.square_my_share_title),
         actionIcon = R.drawable.vector_add,
-        actionEnable = true,
+        actionMode = ActionMode.Button,
         navigationClick = { navController.popBackStack() },
         actionClick = { navController.navigate(RoutePage.Square.CreateShare.route) }) {
         MyShareContent(viewState = viewState) {

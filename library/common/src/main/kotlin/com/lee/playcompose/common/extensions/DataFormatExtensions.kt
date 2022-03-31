@@ -30,7 +30,7 @@ fun Content.getCategory(): String {
 }
 
 fun Content.transformDetails(): DetailsData =
-    DetailsData(id = id.toString(), title = getTitle(), link = link)
+    DetailsData(id = id.toString(), title = getTitle(), link = link, isCollect = collect)
 
 fun Banner.transformDetails(): DetailsData =
     DetailsData(id = id.toString(), title = title, link = url, isCollect = collect)

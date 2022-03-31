@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="menu_collect">收藏</string>
+    <string name="menu_shared">分享</string>
+    <string name="menu_collect_completed">已收藏该内容</string>
+    <string name="menu_collect_complete">内容收藏成功</string>
+</resources>

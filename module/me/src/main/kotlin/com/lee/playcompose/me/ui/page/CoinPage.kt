@@ -28,6 +28,7 @@ import com.lee.playcompose.base.extensions.LocalActivity
 import com.lee.playcompose.common.entity.AccountViewState
 import com.lee.playcompose.common.entity.CoinRecord
 import com.lee.playcompose.common.ui.theme.*
+import com.lee.playcompose.common.ui.widget.ActionMode
 import com.lee.playcompose.common.ui.widget.AppBarViewContainer
 import com.lee.playcompose.common.ui.widget.RefreshList
 import com.lee.playcompose.me.R
@@ -52,7 +53,7 @@ fun CoinPage(navController: NavController, viewModel: CoinViewModel = viewModel(
     AppBarViewContainer(
         title = stringResource(id = R.string.me_item_coin),
         actionIcon = R.drawable.vector_help,
-        actionEnable = true,
+        actionMode = ActionMode.Button,
         backgroundColor = AppTheme.colors.focus,
         contentColor = Color.White,
         navigationClick = { navController.popBackStack() },

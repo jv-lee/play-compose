@@ -18,6 +18,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
 import com.lee.playcompose.common.entity.CoinRank
 import com.lee.playcompose.common.ui.theme.*
+import com.lee.playcompose.common.ui.widget.ActionMode
 import com.lee.playcompose.common.ui.widget.AppBarViewContainer
 import com.lee.playcompose.common.ui.widget.RefreshList
 import com.lee.playcompose.me.R
@@ -37,7 +38,7 @@ fun CoinRankPage(navController: NavController, viewModel: CoinRankViewModel = vi
 
     AppBarViewContainer(title = stringResource(id = R.string.coin_rank_title),
         actionIcon = R.drawable.vector_help,
-        actionEnable = true,
+        actionMode = ActionMode.Button,
         navigationClick = { navController.popBackStack() },
         actionClick = { navController.navigateArgs(RoutePage.Details.route, viewState.detailsData) }
     ) {
