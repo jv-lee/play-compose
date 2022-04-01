@@ -15,3 +15,6 @@ class LoginEvent
 
 @Keep
 class RegisterSuccessEvent
+
+@Keep
+class CreateShareSuccessEvent
