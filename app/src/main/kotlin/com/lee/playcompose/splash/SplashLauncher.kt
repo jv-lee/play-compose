@@ -17,7 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
-import com.lee.playandroid.library.service.hepler.ModuleService
+import com.lee.playcompose.service.helper.ModuleService
 import com.lee.playcompose.R
 import com.lee.playcompose.base.extensions.LocalActivity
 import com.lee.playcompose.common.ui.theme.OffsetLarge

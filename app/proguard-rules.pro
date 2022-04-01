@@ -149,7 +149,7 @@ java.lang.Object readResolve();
 
 
 #实体类不参与混淆 使用注释@Keep 标记实体类
-#-keep class com.lee.playandroid.library.common.entity.** {*;}
+#-keep class com.lee.playcompose.library.common.entity.** {*;}
 
 #模块服务不参与混淆 (模块服务实现类使用@Keep注解标注)
 -keep public class * extends com.lee.playcompose.service.core.IModuleService

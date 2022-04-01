@@ -15,7 +15,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
-import com.lee.playandroid.library.service.hepler.ModuleService
+import com.lee.playcompose.service.helper.ModuleService
 import com.lee.playcompose.base.bus.ChannelBus
 import com.lee.playcompose.base.extensions.LocalActivity
 import com.lee.playcompose.common.entity.Content

@@ -23,7 +23,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
-import com.lee.playandroid.library.service.hepler.ModuleService
+import com.lee.playcompose.service.helper.ModuleService
 import com.lee.playcompose.base.extensions.LocalActivity
 import com.lee.playcompose.common.entity.AccountViewState
 import com.lee.playcompose.common.entity.CoinRecord

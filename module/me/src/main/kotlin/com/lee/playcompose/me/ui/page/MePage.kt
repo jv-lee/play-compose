@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavController
-import com.lee.playandroid.library.service.hepler.ModuleService
+import com.lee.playcompose.service.helper.ModuleService
 import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.base.extensions.LocalActivity
 import com.lee.playcompose.common.entity.AccountViewState

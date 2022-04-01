@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.lee.playandroid.library.service.hepler.ModuleService
+import com.lee.playcompose.service.helper.ModuleService
 import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.base.utils.ShareUtil
 import com.lee.playcompose.common.constants.ApiConstants
