@@ -13,12 +13,15 @@ import androidx.paging.compose.itemsIndexed
 import com.lee.playcompose.base.bus.ChannelBus
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.entity.CreateShareSuccessEvent
+import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.extensions.transformDetails
 import com.lee.playcompose.common.ui.composable.ActionTextItem
 import com.lee.playcompose.common.ui.widget.*
 import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
 import com.lee.playcompose.square.R
+import com.lee.playcompose.square.viewmodel.MyShareViewAction
+import com.lee.playcompose.square.viewmodel.MyShareViewEvent
 import com.lee.playcompose.square.viewmodel.MyShareViewModel
 import com.lee.playcompose.square.viewmodel.MyShareViewState
 import kotlinx.coroutines.delay
@@ -28,7 +31,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 /**
  * @author jv.lee
  * @date 2022/3/16
- * @description
+ * @description 我的分享列表页
  */
 @Composable
 fun MySharePage(navController: NavController, viewModel: MyShareViewModel = viewModel()) {
@@ -45,6 +48,18 @@ fun MySharePage(navController: NavController, viewModel: MyShareViewModel = view
         }
     }
 
+    // 监听移除分享内容事件
+    LaunchedEffect(Unit) {
+        viewModel.viewEvents.collect { event ->
+            when (event) {
+                is MyShareViewEvent.DeleteShareEvent -> {
+                    toast(event.message)
+                    slidingPaneState.closeAction()
+                }
+            }
+        }
+    }
+
     AppBarViewContainer(
         title = stringResource(id = R.string.square_my_share_title),
         actionIcon = R.drawable.vector_add,
@@ -58,7 +73,7 @@ fun MySharePage(navController: NavController, viewModel: MyShareViewModel = view
                 navController.navigateArgs(RoutePage.Details.route, it.transformDetails())
             },
             onItemDelete = {
-
+                viewModel.dispatch(MyShareViewAction.RequestDeleteShare(it))
             })
     }
 }

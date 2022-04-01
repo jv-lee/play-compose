@@ -2,6 +2,7 @@ package com.lee.playcompose.me.ui.page
 
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.res.stringResource
@@ -10,6 +11,7 @@ import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
 import com.lee.playcompose.common.entity.Content
+import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.extensions.transformDetails
 import com.lee.playcompose.common.ui.composable.ActionTextItem
 import com.lee.playcompose.common.ui.widget.AppBarViewContainer
@@ -17,10 +19,13 @@ import com.lee.playcompose.common.ui.widget.RefreshList
 import com.lee.playcompose.common.ui.widget.SlidingPaneState
 import com.lee.playcompose.common.ui.widget.rememberSlidingPaneState
 import com.lee.playcompose.me.R
+import com.lee.playcompose.me.viewmodel.CollectViewAction
+import com.lee.playcompose.me.viewmodel.CollectViewEvent
 import com.lee.playcompose.me.viewmodel.CollectViewModel
 import com.lee.playcompose.me.viewmodel.CollectViewState
 import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
+import kotlinx.coroutines.flow.collect
 
 /**
  * @author jv.lee
@@ -32,6 +37,18 @@ fun CollectPage(navController: NavController, viewModel: CollectViewModel = view
     val viewState = viewModel.viewStates
     val slidingPaneState by rememberSlidingPaneState()
 
+    // 监听取消收藏事件
+    LaunchedEffect(Unit) {
+        viewModel.viewEvents.collect { event ->
+            when (event) {
+                is CollectViewEvent.UnCollectEvent -> {
+                    toast(event.message)
+                    slidingPaneState.closeAction()
+                }
+            }
+        }
+    }
+
     AppBarViewContainer(
         title = stringResource(id = R.string.me_item_collect),
         navigationClick = { navController.popBackStack() }) {
@@ -42,7 +59,7 @@ fun CollectPage(navController: NavController, viewModel: CollectViewModel = view
                 navController.navigateArgs(RoutePage.Details.route, it.transformDetails())
             },
             onItemDelete = {
-
+                viewModel.dispatch(CollectViewAction.RequestUnCollect(it))
             })
     }
 }
