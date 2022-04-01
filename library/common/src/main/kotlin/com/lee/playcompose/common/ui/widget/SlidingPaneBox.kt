@@ -1,5 +1,6 @@
 package com.lee.playcompose.common.ui.widget
 
+import android.view.MotionEvent
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
@@ -9,11 +10,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.pager.ExperimentalPagerApi
+import kotlin.math.abs
 
 /**
  * @author jv.lee
@@ -26,6 +28,7 @@ fun SlidingPaneBox(
     modifier: Modifier = Modifier,
     slidingWidth: Dp = 80.dp,
     slidingAlign: Alignment = Alignment.CenterEnd,
+    state: SlidingPaneState = SlidingPaneState(),
     sliding: @Composable BoxScope.() -> Unit,
     content: @Composable BoxScope.() -> Unit
 ) {
@@ -35,12 +38,13 @@ fun SlidingPaneBox(
         animationSpec = tween(durationMillis = 150, easing = FastOutSlowInEasing)
     )
 
-    val dragOut =
-        if (slidingAlign == Alignment.CenterStart) {
-            { offsetX = if (offsetX > slidingWidth / 2) slidingWidth else 0.dp }
-        } else {
-            { offsetX = if (offsetX < -(slidingWidth / 2)) -slidingWidth else 0.dp }
-        }
+    val closeAction = { offsetX = 0.dp }
+    val openAction = {
+        offsetX = if (slidingAlign == Alignment.CenterStart) slidingWidth else -slidingWidth
+        state.expand = true
+        state.closeAction = closeAction
+    }
+    val dragOut = { if (abs(offsetX.value).dp > slidingWidth / 2) openAction() else closeAction() }
 
     Box(modifier = modifier) {
         // sliding layout
@@ -57,6 +61,16 @@ fun SlidingPaneBox(
         Box(modifier = Modifier
             .fillMaxSize()
             .offset(x = offsetXAnimate)
+            .pointerInteropFilter { event ->
+                if (event.action == MotionEvent.ACTION_DOWN) {
+                    if (state.expand) {
+                        state.expand = false
+                        state.closeAction()
+                        return@pointerInteropFilter true
+                    }
+                }
+                false
+            }
             .pointerInput(Unit) {
                 detectHorizontalDragGestures(
                     onDragEnd = dragOut,
@@ -93,4 +107,12 @@ fun SlidingPaneBox(
             content()
         }
     }
+}
+
+data class SlidingPaneState(var expand: Boolean = false, var closeAction: () -> Unit = {})
+
+@ExperimentalPagerApi
+@Composable
+fun rememberSlidingPaneState(): MutableState<SlidingPaneState> = remember {
+    mutableStateOf(SlidingPaneState())
 }
