@@ -63,7 +63,9 @@ fun <T> IndicatorAdaptiveTabRow(
                 onClick = { onTabClick(index) },
                 text = {
                     Text(text = findTabText(item), onTextLayout = { textLayoutResult ->
-                        tabWidths[index] = with(density) { textLayoutResult.size.width.toDp() }
+                        if (tabWidths.size > index) {
+                            tabWidths[index] = with(density) { textLayoutResult.size.width.toDp() }
+                        }
                     })
                 },
             )
