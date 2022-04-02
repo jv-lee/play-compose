@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavController
-import com.lee.playcompose.service.helper.ModuleService
 import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.base.extensions.LocalActivity
 import com.lee.playcompose.common.entity.AccountViewState
@@ -27,6 +26,7 @@ import com.lee.playcompose.common.ui.widget.AppHeaderContainer
 import com.lee.playcompose.me.R
 import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.service.AccountService
+import com.lee.playcompose.service.helper.ModuleService
 import com.lee.playcompose.common.R as CR
 
 /**
@@ -124,11 +124,11 @@ private fun MeLineItemList(onItemClick: (String) -> Unit) {
 
 @Composable
 private fun MeLineItem(meItem: MeItem, onItemClick: (String) -> Unit) {
-    Spacer(modifier = Modifier.height(1.dp))
     ProfileItem(
         leftDrawable = meItem.icon,
-        leftText = meItem.name,
+        leftText = stringResource(id = meItem.name),
         rightDrawable = meItem.arrow,
+        modifier = Modifier.padding(top = 1.dp)
     ) {
         onItemClick(meItem.route)
     }

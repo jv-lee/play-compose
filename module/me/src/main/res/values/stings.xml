@@ -5,7 +5,6 @@
     <string name="me_item_settings">系统设置</string>
     <string name="me_item_todo">TODO</string>
     <string name="me_item_share">我的分享</string>
-    <string name="me_item_logout">退出登陆</string>
 
     <string name="me_login_message">请先登陆</string>
     <string name="me_account_default_text">未登录</string>
@@ -26,6 +25,7 @@
     <string name="dark_mode_system">夜间模式跟随系统设置</string>
     <string name="dark_mode_night">夜间模式</string>
     <string name="settings_clear_text">清除缓存</string>
+    <string name="settings_logout">退出登陆</string>
     <string name="settings_clear_title">确认清除缓存?</string>
     <string name="settings_clear_success">清除成功</string>
     <string name="settings_clear_failed">清除失败</string>

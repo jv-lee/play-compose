@@ -23,18 +23,14 @@ fun LoadingDialog(isShow: Boolean) {
                 modifier = Modifier
                     .fillMaxSize()
                     .wrapContentSize(Alignment.Center)
+                    .size(width = 100.dp, height = 78.dp)
+                    .background(
+                        color = AppTheme.colors.item,
+                        shape = RoundedCornerShape(OffsetRadiusMedium)
+                    )
+                    .wrapContentSize(Alignment.Center)
             ) {
-                Box(
-                    modifier = Modifier
-                        .size(width = 100.dp, height = 78.dp)
-                        .background(
-                            color = AppTheme.colors.item,
-                            shape = RoundedCornerShape(OffsetRadiusMedium)
-                        )
-                        .wrapContentSize(Alignment.Center)
-                ) {
-                    CircularProgressIndicator(color = AppTheme.colors.accent)
-                }
+                CircularProgressIndicator(color = AppTheme.colors.accent)
             }
         }
     }

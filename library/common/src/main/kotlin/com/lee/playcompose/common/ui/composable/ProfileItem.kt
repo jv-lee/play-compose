@@ -1,18 +1,17 @@
 package com.lee.playcompose.common.ui.composable
 
 import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Switch
+import androidx.compose.material.SwitchDefaults
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.theme.FontSizeMedium
@@ -25,17 +24,20 @@ import com.lee.playcompose.common.ui.theme.FontSizeSmall
  */
 @Composable
 fun ProfileItem(
+    modifier: Modifier = Modifier,
     @DrawableRes leftDrawable: Int? = null,
     @DrawableRes rightDrawable: Int? = null,
-    @StringRes leftText: Int? = null,
-    @StringRes rightText: Int? = null,
+    leftText: String? = null,
+    rightText: String? = null,
+    rightSwitchVisible: Boolean = false,
     rightSwitchEnable: Boolean = false,
-    onClick: () -> Unit
+    switchChecked: MutableState<Boolean> = remember { mutableStateOf(false) },
+    onClick: () -> Unit = {}
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .wrapContentHeight()
+            .height(50.dp)
             .clickable { onClick() }
             .background(AppTheme.colors.item)
             .padding(16.dp, 12.dp, 16.dp, 12.dp)
@@ -51,7 +53,7 @@ fun ProfileItem(
 
             leftText?.let {
                 Text(
-                    text = stringResource(id = it),
+                    text = leftText,
                     color = AppTheme.colors.accent,
                     fontSize = FontSizeMedium,
                     modifier = Modifier.align(alignment = Alignment.CenterVertically)
@@ -60,16 +62,25 @@ fun ProfileItem(
         }
 
         Row(modifier = Modifier.align(alignment = Alignment.CenterEnd)) {
-            if (rightSwitchEnable) {
-                Switch(checked = true, onCheckedChange = {})
-                return@Row
-            }
             rightText?.let {
                 Text(
-                    text = stringResource(id = it),
+                    text = rightText,
                     color = AppTheme.colors.primary,
                     fontSize = FontSizeSmall,
                     modifier = Modifier.align(alignment = Alignment.CenterVertically)
+                )
+            }
+            if (rightSwitchVisible) {
+                Switch(
+                    enabled = rightSwitchEnable,
+                    checked = switchChecked.value,
+                    onCheckedChange = {
+                        switchChecked.value = it
+                    },
+                    colors = SwitchDefaults.colors(
+                        checkedThumbColor = AppTheme.colors.focus,
+                        checkedTrackColor = AppTheme.colors.onFocus
+                    )
                 )
             }
             rightDrawable?.let {
