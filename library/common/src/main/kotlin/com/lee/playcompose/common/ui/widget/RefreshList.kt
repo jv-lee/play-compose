@@ -41,7 +41,8 @@ fun <T : Any> RefreshList(
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = false)
 
     // loadPage Load.
-    if (lazyPagingItems.loadState.refresh is LoadState.Loading
+    if ((lazyPagingItems.loadState.refresh is LoadState.Loading
+                || lazyPagingItems.loadState.refresh is LoadState.NotLoading)
         && lazyPagingItems.itemCount == 0
     ) {
         PageLoading()
