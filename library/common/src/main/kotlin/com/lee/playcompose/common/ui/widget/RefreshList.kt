@@ -43,6 +43,7 @@ fun <T : Any> RefreshList(
     // loadPage Load.
     if ((lazyPagingItems.loadState.refresh is LoadState.Loading
                 || lazyPagingItems.loadState.refresh is LoadState.NotLoading)
+        && !lazyPagingItems.loadState.append.endOfPaginationReached
         && lazyPagingItems.itemCount == 0
     ) {
         PageLoading()
