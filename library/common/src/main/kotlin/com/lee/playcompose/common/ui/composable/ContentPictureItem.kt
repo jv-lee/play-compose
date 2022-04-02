@@ -31,7 +31,7 @@ fun ContentPictureItem(
     item: Content,
     onItemClick: (Content) -> Unit
 ) {
-    CardItemContainer(onClick = { onItemClick(item) }) {
+    CardItemContainer(contentPadding = 0.dp, onClick = { onItemClick(item) }) {
         ConstraintLayout(
             modifier = Modifier
                 .fillMaxWidth()

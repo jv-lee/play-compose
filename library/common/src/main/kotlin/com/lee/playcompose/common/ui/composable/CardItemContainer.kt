@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.theme.OffsetMedium
@@ -19,6 +20,7 @@ import com.lee.playcompose.common.ui.theme.OffsetMedium
  */
 @Composable
 fun CardItemContainer(
+    contentPadding: Dp = OffsetLarge,
     onClick: () -> Unit = {},
     content: @Composable BoxScope.() -> Unit
 ) {
@@ -27,7 +29,7 @@ fun CardItemContainer(
         Box(modifier = Modifier
             .fillMaxSize()
             .clickable { onClick() }
-            .padding(OffsetLarge)
+            .padding(contentPadding)
         ) {
             content()
         }
