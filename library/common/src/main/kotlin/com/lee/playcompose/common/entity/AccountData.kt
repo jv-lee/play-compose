@@ -44,7 +44,7 @@ data class AccountViewState(
 )
 
 sealed class AccountViewEvent {
-    object LogoutSuccess : AccountViewEvent()
+    data class LogoutSuccess(val message: String? = "") : AccountViewEvent()
     data class LogoutFailed(val message: String? = "") : AccountViewEvent()
 }
 

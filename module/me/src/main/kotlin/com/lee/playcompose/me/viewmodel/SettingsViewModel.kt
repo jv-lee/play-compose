@@ -38,6 +38,12 @@ class SettingsViewModel : ViewModel() {
             is SettingsViewAction.InitCacheSize -> {
                 initCacheSize()
             }
+            is SettingsViewAction.VisibleCacheDialog -> {
+                visibleCacheDialog(action.visibility)
+            }
+            is SettingsViewAction.VisibleLogoutDialog -> {
+                visibleLogoutDialog(action.visibility)
+            }
             is SettingsViewAction.RequestClearCache -> {
                 requestClearCache()
             }
@@ -47,6 +53,18 @@ class SettingsViewModel : ViewModel() {
     private fun initCacheSize() {
         val totalCacheSize = CacheUtil.getTotalCacheSize(app)
         viewStates = viewStates.copy(totalCacheSize = totalCacheSize)
+    }
+
+    private fun visibleCacheDialog(visibility: Boolean) {
+        viewModelScope.launch {
+            viewStates = viewStates.copy(isCacheConfirm = visibility)
+        }
+    }
+
+    private fun visibleLogoutDialog(visibility: Boolean) {
+        viewModelScope.launch {
+            viewStates = viewStates.copy(isLogoutConfirm = visibility)
+        }
     }
 
     private fun requestClearCache() {
@@ -61,7 +79,7 @@ class SettingsViewModel : ViewModel() {
                 val message =
                     app.getString(if (it) R.string.settings_clear_success else R.string.settings_clear_failed)
                 _viewEvents.send(SettingsViewEvent.ClearCacheResult(message = message))
-                viewStates = viewStates.copy(isLoading = false)
+                viewStates = viewStates.copy(isLoading = false, isCacheConfirm = false)
                 dispatch(SettingsViewAction.InitCacheSize)
             }
         }
@@ -71,6 +89,8 @@ class SettingsViewModel : ViewModel() {
 
 data class SettingsViewState(
     val isLoading: Boolean = false,
+    val isCacheConfirm: Boolean = false,
+    val isLogoutConfirm: Boolean = false,
     val totalCacheSize: String = ""
 )
 
@@ -79,6 +99,8 @@ sealed class SettingsViewEvent {
 }
 
 sealed class SettingsViewAction {
+    data class VisibleCacheDialog(val visibility: Boolean) : SettingsViewAction()
+    data class VisibleLogoutDialog(val visibility: Boolean) : SettingsViewAction()
     object RequestClearCache : SettingsViewAction()
     object InitCacheSize : SettingsViewAction()
 }

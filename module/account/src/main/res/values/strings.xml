@@ -9,4 +9,5 @@
     <string name="account_re_password_text">repassword</string>
     <string name="account_go_to_register_text">没有账号，去注册？</string>
     <string name="account_go_to_login_text">已有账号，去登陆？</string>
+    <string name="account_logout_success">已退出当前账号</string>
 </resources>

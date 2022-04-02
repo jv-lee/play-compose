@@ -13,7 +13,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.lee.playcompose.base.extensions.LocalActivity
+import com.lee.playcompose.common.entity.AccountViewEvent
 import com.lee.playcompose.common.extensions.toast
+import com.lee.playcompose.common.ui.composable.ConfirmDialog
 import com.lee.playcompose.common.ui.composable.LoadingDialog
 import com.lee.playcompose.common.ui.composable.ProfileItem
 import com.lee.playcompose.common.ui.theme.AppTheme
@@ -37,8 +39,10 @@ fun SettingsPage(navController: NavController, viewModel: SettingsViewModel = vi
     val activity = LocalActivity.current
     val coroutine = rememberCoroutineScope()
     val accountState = viewModel.accountService.getAccountViewStates(activity = activity)
+    val accountEvent = viewModel.accountService.getAccountViewEvents(activity = activity)
     val viewState = viewModel.viewStates
 
+    // 监听清除缓存成功事件
     LaunchedEffect(Unit) {
         viewModel.viewEvents.collect { event ->
             when (event) {
@@ -49,7 +53,39 @@ fun SettingsPage(navController: NavController, viewModel: SettingsViewModel = vi
         }
     }
 
+    // 监听退出登陆成功事件
+    LaunchedEffect(Unit) {
+        accountEvent.collect { event ->
+            when (event) {
+                is AccountViewEvent.LogoutSuccess -> {
+                    toast(event.message)
+                }
+                is AccountViewEvent.LogoutFailed -> {
+                    toast(event.message)
+                }
+            }
+        }
+    }
+
     LoadingDialog(isShow = viewState.isLoading || accountState.isLoading)
+
+    ConfirmDialog(
+        isShow = viewState.isCacheConfirm,
+        titleText = stringResource(id = R.string.settings_clear_title),
+        onCancel = { viewModel.dispatch(SettingsViewAction.VisibleCacheDialog(visibility = false)) },
+        onConfirm = { viewModel.dispatch(SettingsViewAction.RequestClearCache) })
+
+    ConfirmDialog(
+        isShow = viewState.isLogoutConfirm,
+        titleText = stringResource(id = R.string.settings_logout_title),
+        onCancel = { viewModel.dispatch(SettingsViewAction.VisibleLogoutDialog(visibility = false)) },
+        onConfirm = {
+            coroutine.launch {
+                viewModel.dispatch(SettingsViewAction.VisibleLogoutDialog(visibility = false))
+                viewModel.accountService.requestLogout(activity = activity)
+            }
+        })
+
     AppBarViewContainer(
         title = stringResource(id = R.string.me_item_settings),
         navigationClick = {
@@ -76,7 +112,7 @@ fun SettingsPage(navController: NavController, viewModel: SettingsViewModel = vi
                 rightDrawable = CR.drawable.vector_arrow,
                 modifier = Modifier.padding(top = OffsetMedium)
             ) {
-                viewModel.dispatch(SettingsViewAction.RequestClearCache)
+                viewModel.dispatch(SettingsViewAction.VisibleCacheDialog(visibility = true))
             }
             if (accountState.isLogin) {
                 ProfileItem(
@@ -85,9 +121,7 @@ fun SettingsPage(navController: NavController, viewModel: SettingsViewModel = vi
                     rightDrawable = CR.drawable.vector_arrow,
                     modifier = Modifier.padding(top = OffsetMedium)
                 ) {
-                    coroutine.launch {
-                        viewModel.accountService.requestLogout(activity = activity)
-                    }
+                    viewModel.dispatch(SettingsViewAction.VisibleLogoutDialog(visibility = true))
                 }
             }
 

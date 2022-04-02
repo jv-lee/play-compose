@@ -6,9 +6,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.lee.playcompose.account.R
 import com.lee.playcompose.account.constants.Constants
 import com.lee.playcompose.account.model.api.ApiService
 import com.lee.playcompose.base.cache.CacheManager
+import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.base.extensions.clearCache
 import com.lee.playcompose.base.extensions.getCache
 import com.lee.playcompose.base.extensions.putCache
@@ -80,6 +82,7 @@ class AccountViewModel : ViewModel() {
     private fun requestLogout() {
         viewModelScope.launch {
             flow {
+                kotlinx.coroutines.delay(500)
                 emit(api.getLogoutAsync().checkData())
             }.onStart {
                 viewStates = viewStates.copy(isLoading = true)
@@ -89,7 +92,7 @@ class AccountViewModel : ViewModel() {
             }.collect {
                 viewStates = viewStates.copy(isLoading = false)
                 updateAccountStatus(null, false)
-                _viewEvents.send(AccountViewEvent.LogoutSuccess)
+                _viewEvents.send(AccountViewEvent.LogoutSuccess(app.getString(R.string.account_logout_success)))
             }
         }
     }
