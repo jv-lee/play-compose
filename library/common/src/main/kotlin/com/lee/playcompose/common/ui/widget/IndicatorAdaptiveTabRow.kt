@@ -49,10 +49,14 @@ fun <T> IndicatorAdaptiveTabRow(
         backgroundColor = background,
         edgePadding = 0.dp,
         indicator = { tabPositions ->
+            val tabPosition = if (tabPositions.size > selectedTabIndex)
+                tabPositions[selectedTabIndex] else tabPositions[0]
+            val tabWidth = if (tabWidths.size > selectedTabIndex)
+                tabWidths[selectedTabIndex] else tabWidths[0]
             TabRowDefaults.Indicator(
                 modifier = Modifier.adaptiveTabIndicatorOffset(
-                    currentTabPosition = tabPositions[selectedTabIndex],
-                    tabWidth = tabWidths[selectedTabIndex]
+                    currentTabPosition = tabPosition,
+                    tabWidth = tabWidth
                 )
             )
         }
