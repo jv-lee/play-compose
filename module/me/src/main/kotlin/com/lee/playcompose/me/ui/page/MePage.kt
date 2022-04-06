@@ -23,6 +23,7 @@ import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.ui.composable.ProfileItem
 import com.lee.playcompose.common.ui.theme.*
 import com.lee.playcompose.common.ui.widget.AppHeaderContainer
+import com.lee.playcompose.common.ui.widget.RouteBackHandler
 import com.lee.playcompose.me.R
 import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.service.AccountService
@@ -38,6 +39,9 @@ import com.lee.playcompose.common.R as CR
 fun MePage(navController: NavController, paddingValues: PaddingValues) {
     val accountViewState =
         ModuleService.find<AccountService>().getAccountViewStates(LocalActivity.current)
+
+    // double click close app.
+    RouteBackHandler()
 
     Column(
         modifier = Modifier

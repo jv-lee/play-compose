@@ -37,7 +37,6 @@ import com.lee.playcompose.common.entity.LoginEvent
 import com.lee.playcompose.common.entity.NavigationSelectEvent
 import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.ui.theme.AppTheme
-import com.lee.playcompose.common.ui.widget.RouteBackHandler
 import com.lee.playcompose.common.ui.widget.SimpleAnimatedNavHost
 import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.system.ui.theme.NavigationTabHeight
@@ -70,9 +69,6 @@ fun Activity.RouteNavigator() {
             navController.navigate(RoutePage.Account.Login.route)
         }
     }
-
-    // double click close app.
-    RouteBackHandler({ finish() }, navController, mainRoutes)
 
     Scaffold(
         modifier = Modifier.padding(rememberInsetsPaddingValues(insets = LocalWindowInsets.current.navigationBars)),

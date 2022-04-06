@@ -19,6 +19,7 @@ import com.lee.playcompose.common.ui.theme.FontSizeMedium
 import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.theme.ToolBarHeight
 import com.lee.playcompose.common.ui.widget.AppHeaderContainer
+import com.lee.playcompose.common.ui.widget.RouteBackHandler
 import com.lee.playcompose.system.R
 import com.lee.playcompose.system.ui.theme.SystemTabHeight
 import com.lee.playcompose.system.ui.theme.SystemTabRadius
@@ -33,6 +34,10 @@ import kotlinx.coroutines.launch
 @Composable
 fun SystemPage(navController: NavController, paddingValues: PaddingValues) {
     val pagerState = rememberPagerState()
+
+    // double click close app.
+    RouteBackHandler()
+
     Box(modifier = Modifier.padding(paddingValues)) {
         // pageContent
         HorizontalPager(count = 2, state = pagerState) { page ->

@@ -35,10 +35,7 @@ import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.theme.OffsetMedium
 import com.lee.playcompose.common.ui.theme.ToolBarHeight
-import com.lee.playcompose.common.ui.widget.AppGradientTextBar
-import com.lee.playcompose.common.ui.widget.AppHeaderContainer
-import com.lee.playcompose.common.ui.widget.BannerView
-import com.lee.playcompose.common.ui.widget.RefreshList
+import com.lee.playcompose.common.ui.widget.*
 import com.lee.playcompose.home.R
 import com.lee.playcompose.home.model.entity.HomeCategory
 import com.lee.playcompose.home.viewmodel.HomeViewAction
@@ -72,6 +69,9 @@ fun HomePage(
             }
         }
     }
+
+    // double click close app.
+    RouteBackHandler()
 
     Box(modifier = Modifier.padding(paddingValues)) {
         // content
