@@ -138,27 +138,6 @@ private fun MeLineItem(meItem: MeItem, onItemClick: (String) -> Unit) {
     }
 }
 
-private val meItems =
-    listOf(MeItem.Coin, MeItem.Collect, MeItem.Share, MeItem.TODO, MeItem.Settings)
-
-private sealed class MeItem(
-    val route: String,
-    val name: Int,
-    val icon: Int,
-    val arrow: Int = CR.drawable.vector_arrow
-) {
-    object Coin : MeItem(RoutePage.Me.Coin.route, R.string.me_item_coin, R.drawable.vector_coin)
-    object Collect :
-        MeItem(RoutePage.Me.Collect.route, R.string.me_item_collect, R.drawable.vector_collect)
-
-    object Share :
-        MeItem(RoutePage.Square.MyShare.route, R.string.me_item_share, R.drawable.vector_share)
-
-    object TODO : MeItem(RoutePage.Todo.route, R.string.me_item_todo, R.drawable.vector_todo)
-    object Settings :
-        MeItem(RoutePage.Me.Settings.route, R.string.me_item_settings, R.drawable.vector_settings)
-}
-
 /**
  * 我的页面item导航
  */
@@ -180,4 +159,25 @@ private fun itemNavigation(
         toast(app.getString(R.string.me_login_message))
         navController.navigate(RoutePage.Account.Login.route)
     }
+}
+
+private val meItems =
+    listOf(MeItem.Coin, MeItem.Collect, MeItem.Share, MeItem.TODO, MeItem.Settings)
+
+private sealed class MeItem(
+    val route: String,
+    val name: Int,
+    val icon: Int,
+    val arrow: Int = CR.drawable.vector_arrow
+) {
+    object Coin : MeItem(RoutePage.Me.Coin.route, R.string.me_item_coin, R.drawable.vector_coin)
+    object Collect :
+        MeItem(RoutePage.Me.Collect.route, R.string.me_item_collect, R.drawable.vector_collect)
+
+    object Share :
+        MeItem(RoutePage.Square.MyShare.route, R.string.me_item_share, R.drawable.vector_share)
+
+    object TODO : MeItem(RoutePage.Todo.route, R.string.me_item_todo, R.drawable.vector_todo)
+    object Settings :
+        MeItem(RoutePage.Me.Settings.route, R.string.me_item_settings, R.drawable.vector_settings)
 }

@@ -78,14 +78,14 @@ fun Activity.RouteNavigator() {
                 BottomNavigation(backgroundColor = AppTheme.colors.item, elevation = 3.dp) {
                     tabItems.forEachIndexed { _, item ->
                         val isSelect =
-                            currentDestination?.hierarchy?.any { it.route == item.name } == true
+                            currentDestination?.hierarchy?.any { it.route == item.route } == true
 
                         BottomNavigationItem(selected = isSelect, icon = {
                             NavigationIcon(isSelected = isSelect, item = item)
                         }, onClick = {
-                            bottomItemNavigation(hasClick, item.name, navController)
+                            bottomItemNavigation(hasClick, item.route, navController)
                             ChannelBus.getChannel<NavigationSelectEvent>()?.post(
-                                NavigationSelectEvent(item.name)
+                                NavigationSelectEvent(item.route)
                             )
                         })
                     }
@@ -95,7 +95,7 @@ fun Activity.RouteNavigator() {
         content = { paddingValues ->
             SimpleAnimatedNavHost(
                 navController = navController,
-                startDestination = MainTab.Home.name
+                startDestination = MainTab.Home.route
             ) {
                 appRouteManifest(this, navController, paddingValues)
             }
@@ -134,6 +134,9 @@ private fun CheckNavigation(route: String? = null, content: @Composable (Boolean
     if (!visible) Box(modifier = Modifier.height(NavigationTabHeight))
 }
 
+/**
+ * bottomItem 导航
+ */
 private fun bottomItemNavigation(hasClick: Boolean, route: String, navController: NavController) {
     if (hasClick) {
         navController.navigate(route) {
@@ -148,9 +151,13 @@ private fun bottomItemNavigation(hasClick: Boolean, route: String, navController
 
 private val tabItems = listOf(MainTab.Home, MainTab.Square, MainTab.System, MainTab.Me)
 
-private sealed class MainTab(val name: String, val icon: Int, val selectIcon: Int) {
-    object Home : MainTab("Home", R.drawable.vector_home, R.drawable.vector_home_fill)
-    object Square : MainTab("Square", R.drawable.vector_square, R.drawable.vector_square_fill)
-    object System : MainTab("System", R.drawable.vector_system, R.drawable.vector_system_fill)
-    object Me : MainTab("Me", R.drawable.vector_me, R.drawable.vector_me_fill)
+private sealed class MainTab(val route: String, val icon: Int, val selectIcon: Int) {
+    object Home : MainTab(RoutePage.Home.route, R.drawable.vector_home, R.drawable.vector_home_fill)
+    object Square :
+        MainTab(RoutePage.Square.route, R.drawable.vector_square, R.drawable.vector_square_fill)
+
+    object System :
+        MainTab(RoutePage.System.route, R.drawable.vector_system, R.drawable.vector_system_fill)
+
+    object Me : MainTab(RoutePage.Me.route, R.drawable.vector_me, R.drawable.vector_me_fill)
 }
