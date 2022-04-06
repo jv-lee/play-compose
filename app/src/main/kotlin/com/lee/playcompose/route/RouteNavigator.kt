@@ -8,6 +8,8 @@ import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -38,6 +40,7 @@ import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.widget.RouteBackHandler
 import com.lee.playcompose.common.ui.widget.SimpleAnimatedNavHost
 import com.lee.playcompose.router.RoutePage
+import com.lee.playcompose.system.ui.theme.NavigationTabHeight
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.receiveAsFlow
 
@@ -119,7 +122,8 @@ private fun CheckNavigation(route: String? = null, content: @Composable (Boolean
         else -> false
     }
     AnimatedVisibility(
-        visible = visible, enter = slideInVertically(
+        visible = visible,
+        enter = slideInVertically(
             initialOffsetY = { fullHeight -> fullHeight },
             animationSpec = tween(durationMillis = 150, easing = LinearOutSlowInEasing)
         ),
@@ -130,6 +134,8 @@ private fun CheckNavigation(route: String? = null, content: @Composable (Boolean
     ) {
         content(visible)
     }
+    // 设置占位容器防止离开主页时bottomNavigation平移后内容空间多出间距拉伸滑动导致底部显示移动
+    if (!visible) Box(modifier = Modifier.height(NavigationTabHeight))
 }
 
 private fun bottomItemNavigation(hasClick: Boolean, route: String, navController: NavController) {
