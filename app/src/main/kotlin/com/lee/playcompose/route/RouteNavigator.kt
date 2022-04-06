@@ -146,9 +146,6 @@ private fun bottomItemNavigation(hasClick: Boolean, route: String, navController
     }
 }
 
-private val mainRoutes =
-    listOf(RoutePage.Home.route, RoutePage.Square.route, RoutePage.System.route, RoutePage.Me.route)
-
 private val tabItems = listOf(MainTab.Home, MainTab.Square, MainTab.System, MainTab.Me)
 
 private sealed class MainTab(val name: String, val icon: Int, val selectIcon: Int) {
