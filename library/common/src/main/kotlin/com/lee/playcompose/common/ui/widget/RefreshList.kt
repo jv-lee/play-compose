@@ -75,7 +75,7 @@ fun <T : Any> RefreshList(
             lazyPagingItems.refresh()
         }) {
         swipeRefreshState.isRefreshing =
-            ((lazyPagingItems.loadState.refresh is LoadState.Loading) || isRefreshing)
+            ((lazyPagingItems.loadState.refresh is LoadState.Loading) || isRefreshing) && swipeEnable
 
         // build list
         LazyColumn(

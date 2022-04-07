@@ -25,7 +25,7 @@ import com.lee.playcompose.square.ui.page.MySharePage
 import com.lee.playcompose.square.ui.page.SquarePage
 import com.lee.playcompose.system.ui.page.SystemContentTabPage
 import com.lee.playcompose.system.ui.page.SystemPage
-import com.lee.playcompose.todo.TodoPage
+import com.lee.playcompose.todo.ui.page.TodoPage
 
 /**
  * @author jv.lee

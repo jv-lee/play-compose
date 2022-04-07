@@ -116,3 +116,18 @@ data class SlidingPaneState(var expand: Boolean = false, var closeAction: () -> 
 fun rememberSlidingPaneState(): MutableState<SlidingPaneState> = remember {
     mutableStateOf(SlidingPaneState())
 }
+
+@OptIn(ExperimentalComposeUiApi::class)
+@Stable
+@Suppress("ModifierSlidingPaneState")
+fun Modifier.slidingPaneState(state: SlidingPaneState) =
+    this.then(pointerInteropFilter { event ->
+        if (event.action == MotionEvent.ACTION_DOWN) {
+            if (state.expand) {
+                state.expand = false
+                state.closeAction()
+                return@pointerInteropFilter true
+            }
+        }
+        false
+    })

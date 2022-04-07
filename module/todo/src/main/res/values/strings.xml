@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_complete">已完成</string>
+    <string name="title_upcoming">待完成</string>
+
+    <string name="title_create_todo">新增</string>
+    <string name="title_edit_todo">编辑</string>
+
+    <string name="todo_title_default">只用这一个</string>
+    <string name="todo_title_work">工作</string>
+    <string name="todo_title_life">生活</string>
+    <string name="todo_title_play">娱乐</string>
+
+    <string name="todo_create_title_label">标题：</string>
+    <string name="todo_create_title_hint">必填</string>
+    <string name="todo_create_content_label">详情：</string>
+    <string name="todo_create_content_hint">非必填</string>
+    <string name="todo_create_level_label">优先级：</string>
+    <string name="todo_create_level_low">一般</string>
+    <string name="todo_create_level_height">重要</string>
+    <string name="todo_create_date_label">日期：</string>
+    <string name="todo_create_save">保存</string>
+
+    <string name="todo_create_success">创建TODO成功</string>
+    <string name="todo_delete_success">删除TODO成功</string>
+    <string name="todo_update_success">更新TODO成功</string>
+    <string name="todo_move_success">TODO状态修改成功</string>
+    <string name="todo_item_complete">标记已完成</string>
+    <string name="todo_item_upcoming">标记未完成</string>
+
+    <string name="todo_item_level_height">重要</string>
+</resources>
