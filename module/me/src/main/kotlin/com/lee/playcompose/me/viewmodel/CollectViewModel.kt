@@ -59,7 +59,7 @@ class CollectViewModel : ViewModel() {
             flow {
                 emit(api.postUnCollectAsync(content.id, content.originId).checkData())
             }.catch { error ->
-                _viewEvents.send(CollectViewEvent.UnCollectEvent(error.message ?: "未知错误"))
+                _viewEvents.send(CollectViewEvent.UnCollectEvent(error.message))
             }.collect {
                 itemsDelete(content)
                 _viewEvents.send(CollectViewEvent.UnCollectEvent(app.getString(R.string.collect_remove_item_success)))
@@ -85,7 +85,7 @@ data class CollectViewState(
 )
 
 sealed class CollectViewEvent {
-    data class UnCollectEvent(val message: String) : CollectViewEvent()
+    data class UnCollectEvent(val message: String?) : CollectViewEvent()
 }
 
 sealed class CollectViewAction {

@@ -112,7 +112,7 @@ data class RegisterViewState(
 
 sealed class RegisterViewEvent {
     data class RegisterSuccess(val accountData: AccountData) : RegisterViewEvent()
-    data class RegisterFailed(val message: String? = "") : RegisterViewEvent()
+    data class RegisterFailed(val message: String?) : RegisterViewEvent()
 }
 
 sealed class RegisterViewAction {

@@ -76,7 +76,7 @@ class DetailsViewModel(private val details: DetailsData) : ViewModel() {
                 viewStates = viewStates.copy(isLoading = true)
             }.catch { error ->
                 viewStates = viewStates.copy(isLoading = false)
-                _viewEvents.send(DetailsViewEvent.CollectEvent(error.message ?: "未知错误"))
+                _viewEvents.send(DetailsViewEvent.CollectEvent(error.message))
             }.collect {
                 viewStates = viewStates.copy(isLoading = false)
                 _viewEvents.send(DetailsViewEvent.CollectEvent(app.getString(R.string.menu_collect_complete)))
@@ -102,7 +102,7 @@ data class DetailsViewState(
 )
 
 sealed class DetailsViewEvent {
-    data class CollectEvent(val message: String) : DetailsViewEvent()
+    data class CollectEvent(val message: String?) : DetailsViewEvent()
 }
 
 sealed class DetailsViewAction {

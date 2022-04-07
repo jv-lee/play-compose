@@ -9,6 +9,8 @@ import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
@@ -18,6 +20,7 @@ import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.widget.AppBarViewContainer
 import com.lee.playcompose.todo.R
 import com.lee.playcompose.todo.model.entity.TodoType
+import com.lee.playcompose.todo.ui.callback.TodoListCallbackHandler
 import kotlinx.coroutines.launch
 
 /**
@@ -29,7 +32,8 @@ import kotlinx.coroutines.launch
 fun TodoPage(navController: NavController) {
     val coroutine = rememberCoroutineScope()
     val pagerState = rememberPagerState()
-
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+    val callbackHandler by remember { mutableStateOf(TodoListCallbackHandler(lifecycle = lifecycle)) }
 
     AppBarViewContainer(title = stringResource(id = R.string.todo_title_default)) {
         Column(
@@ -40,11 +44,17 @@ fun TodoPage(navController: NavController) {
             HorizontalPager(
                 count = tabItems.size,
                 state = pagerState,
+                userScrollEnabled = false,
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
             ) { page ->
-                TodoListPage(navController = navController, TodoType.DEFAULT, status = page)
+                TodoListPage(
+                    navController = navController,
+                    TodoType.DEFAULT,
+                    status = page,
+                    callbackHandler = callbackHandler
+                )
             }
 
             BottomNavigation(backgroundColor = AppTheme.colors.item) {

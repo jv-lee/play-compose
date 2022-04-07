@@ -57,7 +57,7 @@ class TodoListViewModel(private val type: Int, private val status: Int) : ViewMo
             flow {
                 emit(api.postDeleteTodoAsync(todoData.id).checkData())
             }.catch { error ->
-                _viewEvents.send(TodoListViewEvent.RequestFailed(error.message ?: "未知错误"))
+                _viewEvents.send(TodoListViewEvent.RequestFailed(error.message))
             }.collect {
                 _viewEvents.send(TodoListViewEvent.RefreshTodoData)
             }
@@ -71,7 +71,7 @@ class TodoListViewModel(private val type: Int, private val status: Int) : ViewMo
                     todoData.copy(status = if (status == STATUS_UPCOMING) STATUS_COMPLETE else STATUS_UPCOMING)
                 emit(api.postUpdateTodoStatusAsync(newItem.id, newItem.status).checkData())
             }.catch { error ->
-                _viewEvents.send(TodoListViewEvent.RequestFailed(error.message ?: "未知错误"))
+                _viewEvents.send(TodoListViewEvent.RequestFailed(error.message))
             }.collect {
                 _viewEvents.send(TodoListViewEvent.RefreshTodoData)
             }
@@ -94,7 +94,7 @@ data class TodoListViewState(
 
 sealed class TodoListViewEvent {
     object RefreshTodoData : TodoListViewEvent()
-    data class RequestFailed(val message: String) : TodoListViewEvent()
+    data class RequestFailed(val message: String?) : TodoListViewEvent()
 }
 
 sealed class TodoListViewAction {

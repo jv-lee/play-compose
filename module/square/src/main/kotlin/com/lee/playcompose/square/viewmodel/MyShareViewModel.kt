@@ -58,7 +58,7 @@ class MyShareViewModel : ViewModel() {
             flow {
                 emit(api.postDeleteShareAsync(content.id).checkData())
             }.catch { error ->
-                _viewEvents.send(MyShareViewEvent.DeleteShareEvent(error.message ?: "未知错误"))
+                _viewEvents.send(MyShareViewEvent.DeleteShareEvent(error.message))
             }.collect {
                 itemsDelete(content)
                 _viewEvents.send(MyShareViewEvent.DeleteShareEvent(app.getString(R.string.share_delete_success)))
@@ -84,7 +84,7 @@ data class MyShareViewState(
 )
 
 sealed class MyShareViewEvent {
-    data class DeleteShareEvent(val message: String) : MyShareViewEvent()
+    data class DeleteShareEvent(val message: String?) : MyShareViewEvent()
 }
 
 sealed class MyShareViewAction {

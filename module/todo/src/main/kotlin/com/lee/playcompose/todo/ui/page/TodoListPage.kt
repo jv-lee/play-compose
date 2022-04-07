@@ -24,6 +24,8 @@ import com.lee.playcompose.common.ui.theme.*
 import com.lee.playcompose.common.ui.widget.*
 import com.lee.playcompose.todo.R
 import com.lee.playcompose.todo.constants.Constants.STATUS_UPCOMING
+import com.lee.playcompose.todo.ui.callback.TodoListCallback
+import com.lee.playcompose.todo.ui.callback.TodoListCallbackHandler
 import com.lee.playcompose.todo.ui.theme.*
 import com.lee.playcompose.todo.viewmodel.TodoListViewAction
 import com.lee.playcompose.todo.viewmodel.TodoListViewEvent
@@ -44,6 +46,7 @@ fun TodoListPage(
     navController: NavController,
     type: Int,
     status: Int,
+    callbackHandler: TodoListCallbackHandler,
     viewModel: TodoListViewModel = viewModel(
         key = (type + status).toString(),
         factory = TodoListViewModel.CreateFactory(type, status)
@@ -53,12 +56,21 @@ fun TodoListPage(
     val contentList = viewState.pagingData.collectAsLazyPagingItems()
     val slidingPaneState by rememberSlidingPaneState()
 
+    // 监听多页面刷新联动回调
+    LaunchedEffect(Unit) {
+        callbackHandler.addCallback(object : TodoListCallback {
+            override fun refresh() {
+                slidingPaneState.closeAction()
+                contentList.refresh()
+            }
+        })
+    }
+
     LaunchedEffect(type, status) {
         viewModel.viewEvents.collect { event ->
             when (event) {
                 is TodoListViewEvent.RefreshTodoData -> {
-                    slidingPaneState.closeAction()
-                    contentList.refresh()
+                    callbackHandler.dispatchCallback()
                 }
                 is TodoListViewEvent.RequestFailed -> {
                     slidingPaneState.closeAction()
@@ -217,7 +229,6 @@ private fun TodoListItem(
 private fun isFirstGroupItem(list: List<TodoData>, item: TodoData): Boolean {
     val index = list.indexOf(item)
     if (index == 0) return true
-    if (index == list.size - 1) return false
 
     val prev = list[index - 1]
     if (item.dateStr != prev.dateStr) return true
