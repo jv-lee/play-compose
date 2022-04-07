@@ -60,7 +60,6 @@ fun TodoListPage(
     LaunchedEffect(Unit) {
         callbackHandler.addCallback(object : TodoListCallback {
             override fun refresh() {
-                slidingPaneState.closeAction()
                 contentList.refresh()
             }
         })
@@ -75,6 +74,10 @@ fun TodoListPage(
                 is TodoListViewEvent.RequestFailed -> {
                     slidingPaneState.closeAction()
                     toast(event.message)
+                }
+                is TodoListViewEvent.ResetSlidingState -> {
+                    slidingPaneState.closeAction()
+                    event.removeCall()
                 }
             }
         }

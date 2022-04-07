@@ -1,6 +1,5 @@
 package com.lee.playcompose.todo.viewmodel
 
-import android.util.Log
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -10,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import androidx.paging.filter
 import com.lee.playcompose.common.entity.TodoData
 import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
@@ -29,10 +29,18 @@ import kotlinx.coroutines.launch
 class TodoListViewModel(private val type: Int, private val status: Int) : ViewModel() {
     private val api = createApi<ApiService>()
 
+    // paging3 移除数据过滤项
+    private var _removedItemsFlow = MutableStateFlow(mutableListOf<TodoData>())
+    private val removedItemsFlow: Flow<MutableList<TodoData>> get() = _removedItemsFlow
+
     private val pager by lazy {
         pager(initialKey = 1) { page ->
             api.postTodoDataAsync(page, type, status).checkData()
         }.cachedIn(viewModelScope)
+            // 添加被移除的数据过滤逻辑
+            .combine(removedItemsFlow) { pagingData, removed ->
+                pagingData.filter { it !in removed }
+            }
     }
 
     var viewStates by mutableStateOf(TodoListViewState(pagingData = pager))
@@ -56,9 +64,15 @@ class TodoListViewModel(private val type: Int, private val status: Int) : ViewMo
         viewModelScope.launch {
             flow {
                 emit(api.postDeleteTodoAsync(todoData.id).checkData())
+            }.onStart {
+                _viewEvents.send(TodoListViewEvent.ResetSlidingState {
+                    itemsDelete(todoData)
+                })
             }.catch { error ->
+                itemsInsert(todoData)
                 _viewEvents.send(TodoListViewEvent.RequestFailed(error.message))
             }.collect {
+                clearRemoveItems()
                 _viewEvents.send(TodoListViewEvent.RefreshTodoData)
             }
         }
@@ -70,12 +84,44 @@ class TodoListViewModel(private val type: Int, private val status: Int) : ViewMo
                 val newItem =
                     todoData.copy(status = if (status == STATUS_UPCOMING) STATUS_COMPLETE else STATUS_UPCOMING)
                 emit(api.postUpdateTodoStatusAsync(newItem.id, newItem.status).checkData())
+            }.onStart {
+                _viewEvents.send(TodoListViewEvent.ResetSlidingState {
+                    itemsDelete(todoData)
+                })
             }.catch { error ->
+                itemsInsert(todoData)
                 _viewEvents.send(TodoListViewEvent.RequestFailed(error.message))
             }.collect {
+                clearRemoveItems()
                 _viewEvents.send(TodoListViewEvent.RefreshTodoData)
             }
         }
+    }
+
+    /**
+     * 移除数据处理
+     */
+    private fun itemsDelete(item: TodoData) {
+        val removes = _removedItemsFlow.value
+        val list = mutableListOf(item)
+        list.addAll(removes)
+        _removedItemsFlow.value = list
+    }
+
+    /**
+     * 添加数据处理
+     */
+    private fun itemsInsert(item: TodoData) {
+        val removes = _removedItemsFlow.value
+        removes.remove(item)
+        _removedItemsFlow.value = removes
+    }
+
+    /**
+     * 移除所有被删除item重新加载时使用
+     */
+    private fun clearRemoveItems() {
+        _removedItemsFlow.value = mutableListOf()
     }
 
     class CreateFactory(private val type: Int, private val status: Int) :
@@ -93,6 +139,7 @@ data class TodoListViewState(
 )
 
 sealed class TodoListViewEvent {
+    data class ResetSlidingState(val removeCall: () -> Unit) : TodoListViewEvent()
     object RefreshTodoData : TodoListViewEvent()
     data class RequestFailed(val message: String?) : TodoListViewEvent()
 }
