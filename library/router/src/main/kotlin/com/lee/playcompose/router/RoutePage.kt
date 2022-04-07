@@ -48,7 +48,9 @@ sealed class RoutePage(val route: String, val paramsKey: Map<String, Any> = empt
     /**
      * module:todoModel
      */
-    object Todo : RoutePage("Todo")
+    object Todo : RoutePage("Todo") {
+        object CreateTodo : RoutePage("CreateTodo")
+    }
 
     /**
      * module:official

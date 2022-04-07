@@ -22,6 +22,7 @@ import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.ui.composable.HorizontallySpacer
 import com.lee.playcompose.common.ui.theme.*
 import com.lee.playcompose.common.ui.widget.*
+import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.todo.R
 import com.lee.playcompose.todo.constants.Constants.STATUS_UPCOMING
 import com.lee.playcompose.todo.ui.callback.TodoListCallback
@@ -87,7 +88,7 @@ fun TodoListPage(
         viewState = viewState,
         slidingPaneState = slidingPaneState,
         onContentItemClick = {
-
+            navController.navigate(RoutePage.Todo.CreateTodo.route)
         }, onDelete = {
             viewModel.dispatch(TodoListViewAction.RequestDeleteTodo(it))
         }, onUpdate = {
@@ -198,8 +199,8 @@ private fun TodoListItem(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .clickable { onContentItemClick(todoData) }
                 .background(AppTheme.colors.item)
+                .clickable { onContentItemClick(todoData) }
         ) {
             Text(
                 text = todoData.title,
@@ -207,9 +208,7 @@ private fun TodoListItem(
                 color = AppTheme.colors.accent,
                 modifier = Modifier
                     .padding(start = OffsetLarge, top = OffsetMedium)
-                    .align(
-                        Alignment.TopStart
-                    )
+                    .align(Alignment.TopStart)
             )
             Text(
                 text = todoData.content,
@@ -217,9 +216,7 @@ private fun TodoListItem(
                 color = AppTheme.colors.primary,
                 modifier = Modifier
                     .padding(start = OffsetLarge, bottom = OffsetMedium)
-                    .align(
-                        Alignment.BottomStart
-                    )
+                    .align(Alignment.BottomStart)
             )
             HorizontallySpacer(color = AppTheme.colors.background)
         }

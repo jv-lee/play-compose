@@ -25,6 +25,7 @@ import com.lee.playcompose.square.ui.page.MySharePage
 import com.lee.playcompose.square.ui.page.SquarePage
 import com.lee.playcompose.system.ui.page.SystemContentTabPage
 import com.lee.playcompose.system.ui.page.SystemPage
+import com.lee.playcompose.todo.ui.page.CreateTodoPage
 import com.lee.playcompose.todo.ui.page.TodoPage
 
 /**
@@ -84,6 +85,9 @@ fun Activity.appRouteManifest(
         // module:todoModel
         sideComposable(RoutePage.Todo.route) {
             TodoPage(navController = navController)
+        }
+        sideComposable(RoutePage.Todo.CreateTodo.route) {
+            CreateTodoPage(navController = navController)
         }
 
         // module:official

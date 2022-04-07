@@ -48,13 +48,15 @@ fun SlidingPaneBox(
 
     Box(modifier = modifier) {
         // sliding layout
-        Box(
-            modifier = Modifier
-                .fillMaxHeight()
-                .width(slidingWidth)
-                .align(slidingAlign)
-        ) {
-            sliding()
+        if (abs(offsetXAnimate.value) > 0f) {
+            Box(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .width(slidingWidth)
+                    .align(slidingAlign)
+            ) {
+                sliding()
+            }
         }
 
         // content layout
