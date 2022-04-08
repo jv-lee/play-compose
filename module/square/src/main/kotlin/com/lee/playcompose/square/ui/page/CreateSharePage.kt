@@ -1,6 +1,5 @@
 package com.lee.playcompose.square.ui.page
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -13,6 +12,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -32,6 +32,7 @@ import com.lee.playcompose.square.R
 import com.lee.playcompose.square.viewmodel.CreateShareViewAction
 import com.lee.playcompose.square.viewmodel.CreateShareViewEvent
 import com.lee.playcompose.square.viewmodel.CreateShareViewModel
+import com.lee.playcompose.square.viewmodel.CreateShareViewState
 import kotlinx.coroutines.flow.collect
 
 /**
@@ -71,79 +72,99 @@ fun CreateSharePage(navController: NavController, viewModel: CreateShareViewMode
             keyboardController?.hide()
             navController.popBackStack()
         }) {
-        ConstraintLayout(
+        CreateShareContent(
+            viewState = viewState,
+            keyboardController = keyboardController,
+            onChangeTitle = {
+                viewModel.dispatch(CreateShareViewAction.ChangeShareTitle(it))
+            },
+            onChangeContent = {
+                viewModel.dispatch(CreateShareViewAction.ChangeShareContent(it))
+            },
+            onActionShare = {
+                viewModel.dispatch(CreateShareViewAction.RequestShare)
+            })
+    }
+}
+
+@OptIn(ExperimentalComposeUiApi::class)
+@Composable
+private fun CreateShareContent(
+    viewState: CreateShareViewState,
+    keyboardController: SoftwareKeyboardController?,
+    onChangeTitle: (String) -> Unit,
+    onChangeContent: (String) -> Unit,
+    onActionShare: () -> Unit
+) {
+    ConstraintLayout(
+        modifier = Modifier
+            .onTap { keyboardController?.hide() }
+            .fillMaxSize()
+    ) {
+        val (tvTitle, editTitle, tvContent, editContent, tvDescription) = createRefs()
+        Text(
+            text = stringResource(id = R.string.share_title_text),
+            fontSize = FontSizeLarge,
+            color = AppTheme.colors.accent,
+            modifier = Modifier.constrainAs(tvTitle) {
+                top.linkTo(parent.top, OffsetMedium)
+                start.linkTo(parent.start, OffsetLarge)
+            }
+        )
+
+        AppTextField(
+            value = viewState.shareTitle,
+            onValueChange = onChangeTitle,
+            hintText = stringResource(id = R.string.share_title_hint),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Next
+            ),
             modifier = Modifier
-                .onTap { keyboardController?.hide() }
-                .fillMaxSize()
-                .background(AppTheme.colors.background)
-        ) {
-            val (tvTitle, editTitle, tvContent, editContent, tvDescription) = createRefs()
-            Text(
-                text = stringResource(id = R.string.share_title_text),
-                fontSize = FontSizeLarge,
-                color = AppTheme.colors.accent,
-                modifier = Modifier.constrainAs(tvTitle) {
-                    top.linkTo(parent.top, OffsetMedium)
-                    start.linkTo(parent.start, OffsetLarge)
+                .height(ToolBarHeight)
+                .fillMaxWidth()
+                .constrainAs(editTitle) {
+                    top.linkTo(tvTitle.bottom)
+                })
+
+        Text(
+            text = stringResource(id = R.string.share_content_text),
+            fontSize = FontSizeLarge,
+            color = AppTheme.colors.accent,
+            modifier = Modifier.constrainAs(tvContent) {
+                top.linkTo(editTitle.bottom)
+                start.linkTo(parent.start, OffsetLarge)
+            }
+        )
+
+        AppTextField(
+            value = viewState.shareContent,
+            onValueChange = onChangeContent,
+            hintText = stringResource(id = R.string.share_content_hint),
+            keyboardActions = KeyboardActions(onSend = { onActionShare() }),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Send
+            ),
+            modifier = Modifier
+                .height(ToolBarHeight)
+                .fillMaxWidth()
+                .constrainAs(editContent) {
+                    top.linkTo(tvContent.bottom)
+                })
+
+        Text(
+            text = stringResource(id = R.string.share_description),
+            fontSize = FontSizeSmall,
+            color = AppTheme.colors.primary,
+            letterSpacing = 4.sp,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = OffsetLarge, end = OffsetLarge)
+                .constrainAs(tvDescription) {
+                    bottom.linkTo(parent.bottom)
                 }
-            )
+        )
 
-            AppTextField(
-                value = viewState.shareTitle,
-                onValueChange = { viewModel.dispatch(CreateShareViewAction.ChangeShareTitle(it)) },
-                hintText = stringResource(id = R.string.share_title_hint),
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Text,
-                    imeAction = ImeAction.Next
-                ),
-                modifier = Modifier
-                    .height(ToolBarHeight)
-                    .fillMaxWidth()
-                    .constrainAs(editTitle) {
-                        top.linkTo(tvTitle.bottom)
-                    })
-
-            Text(
-                text = stringResource(id = R.string.share_content_text),
-                fontSize = FontSizeLarge,
-                color = AppTheme.colors.accent,
-                modifier = Modifier.constrainAs(tvContent) {
-                    top.linkTo(editTitle.bottom)
-                    start.linkTo(parent.start, OffsetLarge)
-                }
-            )
-
-            AppTextField(
-                value = viewState.shareContent,
-                onValueChange = { viewModel.dispatch(CreateShareViewAction.ChangeShareContent(it)) },
-                hintText = stringResource(id = R.string.share_content_hint),
-                keyboardActions = KeyboardActions(onSend = {
-                    viewModel.dispatch(CreateShareViewAction.RequestShare)
-                }),
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Text,
-                    imeAction = ImeAction.Send
-                ),
-                modifier = Modifier
-                    .height(ToolBarHeight)
-                    .fillMaxWidth()
-                    .constrainAs(editContent) {
-                        top.linkTo(tvContent.bottom)
-                    })
-
-            Text(
-                text = stringResource(id = R.string.share_description),
-                fontSize = FontSizeSmall,
-                color = AppTheme.colors.primary,
-                letterSpacing = 4.sp,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = OffsetLarge, end = OffsetLarge)
-                    .constrainAs(tvDescription) {
-                        bottom.linkTo(parent.bottom)
-                    }
-            )
-
-        }
     }
 }
