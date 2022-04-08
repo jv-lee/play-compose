@@ -91,11 +91,7 @@ fun SettingsPage(navController: NavController, viewModel: SettingsViewModel = vi
         navigationClick = {
             navController.popBackStack()
         }) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(AppTheme.colors.background)
-        ) {
+        Column(modifier = Modifier.fillMaxSize()) {
             ProfileItem(
                 leftText = stringResource(id = R.string.dark_mode_system),
                 rightSwitchVisible = true,

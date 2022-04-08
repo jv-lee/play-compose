@@ -40,7 +40,7 @@ fun OfficialPage(navController: NavController, viewModel: OfficialViewModel = vi
         elevation = 0.dp,
         navigationClick = { navController.popBackStack() }) {
         UiStatusPage(
-            pageStatus,
+            status = pageStatus,
             retry = { viewModel.dispatch(OfficialViewAction.RequestTabData) }) {
             Column {
                 if (tabData.isNotEmpty()) {

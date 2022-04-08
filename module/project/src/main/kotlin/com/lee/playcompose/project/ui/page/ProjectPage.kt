@@ -40,7 +40,7 @@ fun ProjectPage(navController: NavController, viewModel: ProjectViewModel = view
         elevation = 0.dp,
         navigationClick = { navController.popBackStack() }) {
         UiStatusPage(
-            pageStatus,
+            status = pageStatus,
             retry = { viewModel.dispatch(ProjectViewAction.RequestTabData) }) {
             Column {
                 if (tabData.isNotEmpty()) {
