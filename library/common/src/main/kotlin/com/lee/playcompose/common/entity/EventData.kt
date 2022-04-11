@@ -20,4 +20,12 @@ class RegisterSuccessEvent
 class CreateShareSuccessEvent
 
 @Keep
-class RefreshTodoListEvent
+class NavigationForResult<T>(val version: Int = 0, data: T) {
+    private val versions = arrayListOf<Int>()
+
+    companion object {
+        fun <T> NavigationForResult<T>.change(change:(data: T)->Unit) {
+
+        }
+    }
+}
