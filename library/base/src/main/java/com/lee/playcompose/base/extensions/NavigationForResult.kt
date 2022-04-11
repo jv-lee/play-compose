@@ -19,7 +19,7 @@ import kotlinx.parcelize.Parcelize
 data class NavigationForResult(val version: String, val code: Int) : Parcelable
 
 @Composable
-fun NavController.forResult(key: String, callback: (Int) -> Unit) {
+fun NavController.forResult(key: String, delay: Long = 0, callback: (Int) -> Unit) {
     val coroutine = rememberCoroutineScope()
     var forResultVersion by remember { mutableStateOf(System.currentTimeMillis().toString()) }
 
@@ -28,7 +28,7 @@ fun NavController.forResult(key: String, callback: (Int) -> Unit) {
             if (forResultVersion != it.version) {
                 forResultVersion = it.version
                 coroutine.launch {
-                    delay(500)
+                    delay(delay)
                     callback(it.code)
                 }
             }

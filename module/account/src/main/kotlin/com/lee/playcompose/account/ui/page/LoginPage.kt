@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -27,16 +26,16 @@ import androidx.navigation.NavController
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.lee.playcompose.account.R
+import com.lee.playcompose.account.constants.Constants.REQUEST_KEY_LOGIN
 import com.lee.playcompose.account.ui.composable.AccountSpacer
 import com.lee.playcompose.account.ui.theme.ButtonLockColor
 import com.lee.playcompose.account.ui.theme.ButtonTextColor
 import com.lee.playcompose.account.viewmodel.*
-import com.lee.playcompose.base.bus.ChannelBus
 import com.lee.playcompose.base.extensions.activityViewModel
+import com.lee.playcompose.base.extensions.forResult
 import com.lee.playcompose.base.extensions.onTap
 import com.lee.playcompose.base.extensions.rememberImePaddingValue
 import com.lee.playcompose.common.entity.AccountViewAction
-import com.lee.playcompose.common.entity.RegisterSuccessEvent
 import com.lee.playcompose.common.extensions.hasBottomExpend
 import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.ui.composable.AppTextField
@@ -46,7 +45,6 @@ import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.theme.OffsetRadiusMedium
 import com.lee.playcompose.router.RoutePage
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.receiveAsFlow
 
 /**
  * @author jv.lee
@@ -62,15 +60,12 @@ fun LoginPage(
 ) {
     val imeInsets = rememberInsetsPaddingValues(insets = LocalWindowInsets.current.ime)
     val imePadding = rememberImePaddingValue(imeInsets = imeInsets)
-    val lifecycle = LocalLifecycleOwner.current.lifecycle
     val keyboardController = LocalSoftwareKeyboardController.current
     val viewState = viewModel.viewStates
 
     // 监听注册成功状态
-    LaunchedEffect(Unit) {
-        ChannelBus.bindChannel<RegisterSuccessEvent>(lifecycle)?.receiveAsFlow()?.collect {
-            navController.popBackStack()
-        }
+    navController.forResult(key = REQUEST_KEY_LOGIN) {
+        navController.popBackStack()
     }
 
     // 页面单向事件监听

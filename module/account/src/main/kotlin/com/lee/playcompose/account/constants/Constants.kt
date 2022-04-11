@@ -13,4 +13,6 @@ object Constants {
     const val SP_KEY_IS_LOGIN = "spKey:is-login"
     // 登陆用户名（用于下次登陆自动输入）
     const val SP_KEY_SAVE_INPUT_USERNAME = "spKey:save-input-username"
+
+    const val REQUEST_KEY_LOGIN = "requestKey:login"
 }

@@ -27,16 +27,16 @@ import androidx.navigation.NavController
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.lee.playcompose.account.R
+import com.lee.playcompose.account.constants.Constants.REQUEST_KEY_LOGIN
 import com.lee.playcompose.account.ui.composable.AccountSpacer
 import com.lee.playcompose.account.ui.theme.ButtonLockColor
 import com.lee.playcompose.account.ui.theme.ButtonTextColor
 import com.lee.playcompose.account.viewmodel.*
-import com.lee.playcompose.base.bus.ChannelBus
 import com.lee.playcompose.base.extensions.activityViewModel
 import com.lee.playcompose.base.extensions.onTap
 import com.lee.playcompose.base.extensions.rememberImePaddingValue
+import com.lee.playcompose.base.extensions.setResult
 import com.lee.playcompose.common.entity.AccountViewAction
-import com.lee.playcompose.common.entity.RegisterSuccessEvent
 import com.lee.playcompose.common.extensions.hasBottomExpend
 import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.ui.composable.AppTextField
@@ -72,9 +72,9 @@ fun RegisterPage(
                         AccountViewAction.UpdateAccountStatus(event.accountData, true)
                     )
                     keyboardController?.hide()
-                    navController.popBackStack()
                     // 通知login页面注册成功销毁页面
-                    ChannelBus.getChannel<RegisterSuccessEvent>()?.send(RegisterSuccessEvent())
+                    navController.setResult(REQUEST_KEY_LOGIN, 0)
+                    navController.popBackStack()
                 }
                 is RegisterViewEvent.RegisterFailed -> {
                     toast(event.message)

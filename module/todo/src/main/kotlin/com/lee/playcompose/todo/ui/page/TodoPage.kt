@@ -1,6 +1,5 @@
 package com.lee.playcompose.todo.ui.page
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -42,10 +41,9 @@ fun TodoPage(navController: NavController) {
     var forResultVersion by remember { mutableStateOf(System.currentTimeMillis().toString()) }
 
     // 监听创建修改成功回调
-    navController.forResult(key = Constants.CREATE_TODO_KEY, callback = {
-        Log.i("jv.lee", "changeResult->$it")
+    navController.forResult(key = Constants.CREATE_TODO_KEY, delay = 500) {
         callbackHandler.dispatchCallback()
-    })
+    }
 
     AppBarViewContainer(
         title = stringResource(id = R.string.todo_title_default),

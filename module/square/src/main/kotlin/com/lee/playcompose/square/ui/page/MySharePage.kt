@@ -4,29 +4,26 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
-import com.lee.playcompose.base.bus.ChannelBus
+import com.lee.playcompose.base.extensions.forResult
 import com.lee.playcompose.common.entity.Content
-import com.lee.playcompose.common.entity.CreateShareSuccessEvent
 import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.extensions.transformDetails
 import com.lee.playcompose.common.ui.composable.ActionTextItem
 import com.lee.playcompose.common.ui.widget.*
 import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
+import com.lee.playcompose.square.Constants
 import com.lee.playcompose.square.R
 import com.lee.playcompose.square.viewmodel.MyShareViewAction
 import com.lee.playcompose.square.viewmodel.MyShareViewEvent
 import com.lee.playcompose.square.viewmodel.MyShareViewModel
 import com.lee.playcompose.square.viewmodel.MyShareViewState
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.receiveAsFlow
 
 /**
  * @author jv.lee
@@ -35,17 +32,13 @@ import kotlinx.coroutines.flow.receiveAsFlow
  */
 @Composable
 fun MySharePage(navController: NavController, viewModel: MyShareViewModel = viewModel()) {
-    val lifecycle = LocalLifecycleOwner.current.lifecycle
     val viewState = viewModel.viewStates
     val contentList = viewState.pagingData.collectAsLazyPagingItems()
     val slidingPaneState by rememberSlidingPaneState()
 
     // 监听创建分享成功事件刷新列表
-    LaunchedEffect(Unit) {
-        ChannelBus.bindChannel<CreateShareSuccessEvent>(lifecycle)?.receiveAsFlow()?.collect {
-            delay(500)
-            contentList.refresh()
-        }
+    navController.forResult(key = Constants.REQUEST_KEY_SHARE_REFRESH, delay = 500) {
+        contentList.refresh()
     }
 
     // 监听移除分享内容事件

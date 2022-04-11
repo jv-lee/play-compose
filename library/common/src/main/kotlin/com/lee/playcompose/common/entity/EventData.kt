@@ -12,20 +12,3 @@ data class NavigationSelectEvent(val route: String)
 
 @Keep
 class LoginEvent
-
-@Keep
-class RegisterSuccessEvent
-
-@Keep
-class CreateShareSuccessEvent
-
-@Keep
-class NavigationForResult<T>(val version: Int = 0, data: T) {
-    private val versions = arrayListOf<Int>()
-
-    companion object {
-        fun <T> NavigationForResult<T>.change(change:(data: T)->Unit) {
-
-        }
-    }
-}

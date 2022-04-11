@@ -20,14 +20,14 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.lee.playcompose.base.bus.ChannelBus
 import com.lee.playcompose.base.extensions.onTap
-import com.lee.playcompose.common.entity.CreateShareSuccessEvent
+import com.lee.playcompose.base.extensions.setResult
 import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.ui.composable.AppTextField
 import com.lee.playcompose.common.ui.composable.LoadingDialog
 import com.lee.playcompose.common.ui.theme.*
 import com.lee.playcompose.common.ui.widget.AppBarViewContainer
+import com.lee.playcompose.square.Constants
 import com.lee.playcompose.square.R
 import com.lee.playcompose.square.viewmodel.CreateShareViewAction
 import com.lee.playcompose.square.viewmodel.CreateShareViewEvent
@@ -52,9 +52,8 @@ fun CreateSharePage(navController: NavController, viewModel: CreateShareViewMode
         viewModel.viewEvents.collect { event ->
             when (event) {
                 is CreateShareViewEvent.CreateSuccess -> {
-                    ChannelBus.getChannel<CreateShareSuccessEvent>()
-                        ?.send(CreateShareSuccessEvent())
                     toast(shareSuccess)
+                    navController.setResult(Constants.REQUEST_KEY_SHARE_REFRESH, 0)
                     navController.popBackStack()
                 }
                 is CreateShareViewEvent.CreateFailed -> {
