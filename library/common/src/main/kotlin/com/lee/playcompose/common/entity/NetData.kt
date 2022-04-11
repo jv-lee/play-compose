@@ -168,6 +168,6 @@ data class TodoData(
     companion object {
         // 0：一般 1：重要
         const val PRIORITY_LOW = 0
-        const val PRIORITY_HEIGHT = 1
+        const val PRIORITY_HIGH = 1
     }
 }

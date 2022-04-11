@@ -6,9 +6,10 @@ import android.os.Parcelable
  * 全局路由参数key
  */
 object RouteParamsKey {
-    const val detailsDataKey = "detailsData"
-    const val tabDataKey = "tabData"
+    const val detailsDataKey = "detailsDataKey"
+    const val tabDataKey = "tabDataKey"
     const val searchKey = "searchKey"
+    const val todoDataKey = "todoDataKey"
 }
 
 /**
@@ -49,7 +50,11 @@ sealed class RoutePage(val route: String, val paramsKey: Map<String, Any> = empt
      * module:todoModel
      */
     object Todo : RoutePage("Todo") {
-        object CreateTodo : RoutePage("CreateTodo")
+        object CreateTodo : RoutePage(
+            "CreateTodo", paramsKey = mapOf<String, Class<*>>(
+                Pair(RouteParamsKey.todoDataKey, Parcelable::class.java)
+            )
+        )
     }
 
     /**

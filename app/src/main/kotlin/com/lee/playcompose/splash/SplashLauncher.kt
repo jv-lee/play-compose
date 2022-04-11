@@ -76,7 +76,7 @@ private fun SplashPage(viewModel: SplashViewModel = viewModel(), onNextPage: () 
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(0.8f),
+                .fillMaxHeight(0.7f),
         )
 
         AnimatedVisibility(

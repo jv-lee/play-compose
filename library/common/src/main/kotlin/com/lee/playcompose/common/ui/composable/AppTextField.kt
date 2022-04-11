@@ -30,6 +30,7 @@ fun AppTextField(
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions(),
     singleLine: Boolean = true,
+    maxLine: Int = 1,
     hintText: String = "",
 ) {
     TextField(
@@ -37,6 +38,7 @@ fun AppTextField(
         onValueChange = onValueChange,
         textStyle = TextStyle.Default.copy(fontSize = FontSizeMedium),
         singleLine = singleLine,
+        maxLines = maxLine,
         visualTransformation = visualTransformation,
         keyboardActions = keyboardActions,
         keyboardOptions = keyboardOptions,

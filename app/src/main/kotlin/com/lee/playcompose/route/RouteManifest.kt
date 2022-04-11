@@ -12,6 +12,7 @@ import com.lee.playcompose.base.net.HttpManager
 import com.lee.playcompose.base.tools.WeakDataHolder
 import com.lee.playcompose.common.entity.DetailsData
 import com.lee.playcompose.common.entity.ParentTab
+import com.lee.playcompose.common.entity.TodoData
 import com.lee.playcompose.details.DetailsPage
 import com.lee.playcompose.home.ui.page.HomePage
 import com.lee.playcompose.me.ui.page.*
@@ -88,6 +89,14 @@ fun Activity.appRouteManifest(
         }
         sideComposable(RoutePage.Todo.CreateTodo.route) {
             CreateTodoPage(navController = navController)
+        }
+        sideComposable(
+            RoutePage.Todo.CreateTodo.parseRoute(),
+            arguments = RoutePage.Todo.CreateTodo.parseArguments()
+        ) { entry ->
+            val detailsJson = entry.arguments?.getString(RouteParamsKey.todoDataKey)
+            val todoData = HttpManager.getGson().fromJson(detailsJson, TodoData::class.java)
+            CreateTodoPage(navController = navController, todoData = todoData)
         }
 
         // module:official

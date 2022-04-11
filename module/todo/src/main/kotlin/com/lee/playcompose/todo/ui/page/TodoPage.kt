@@ -1,23 +1,26 @@
 package com.lee.playcompose.todo.ui.page
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLifecycleOwner
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
 import com.lee.playcompose.common.ui.theme.AppTheme
+import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.widget.AppBarViewContainer
+import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.todo.R
 import com.lee.playcompose.todo.model.entity.TodoType
 import com.lee.playcompose.todo.ui.callback.TodoListCallbackHandler
@@ -35,27 +38,20 @@ fun TodoPage(navController: NavController) {
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     val callbackHandler by remember { mutableStateOf(TodoListCallbackHandler(lifecycle = lifecycle)) }
 
-    AppBarViewContainer(title = stringResource(id = R.string.todo_title_default)) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(AppTheme.colors.background)
-        ) {
-            HorizontalPager(
-                count = tabItems.size,
-                state = pagerState,
-                userScrollEnabled = false,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-            ) { page ->
-                TodoListPage(
-                    navController = navController,
-                    TodoType.DEFAULT,
-                    status = page,
-                    callbackHandler = callbackHandler
-                )
-            }
+    AppBarViewContainer(
+        title = stringResource(id = R.string.todo_title_default),
+        navigationClick = {
+            navController.popBackStack()
+        }) {
+        Column(modifier = Modifier.fillMaxSize()) {
+            TodoContent(
+                navController = navController,
+                pagerState = pagerState,
+                callbackHandler = callbackHandler,
+                onCreateClick = {
+                    navController.navigate(RoutePage.Todo.CreateTodo.route)
+                }
+            )
 
             BottomNavigation(backgroundColor = AppTheme.colors.item) {
                 tabItems.forEachIndexed { index, item ->
@@ -67,6 +63,47 @@ fun TodoPage(navController: NavController) {
                     })
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun ColumnScope.TodoContent(
+    navController: NavController,
+    pagerState: PagerState,
+    callbackHandler: TodoListCallbackHandler,
+    onCreateClick: () -> Unit,
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .weight(1f)
+    ) {
+        HorizontalPager(
+            count = tabItems.size,
+            state = pagerState,
+            userScrollEnabled = false
+        ) { page ->
+            TodoListPage(
+                navController = navController,
+                TodoType.DEFAULT,
+                status = page,
+                callbackHandler = callbackHandler
+            )
+        }
+
+        FloatingActionButton(
+            onClick = { onCreateClick() },
+            backgroundColor = AppTheme.colors.focus,
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(OffsetLarge)
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.vector_create),
+                tint = Color.White,
+                contentDescription = null
+            )
         }
     }
 }

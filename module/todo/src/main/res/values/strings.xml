@@ -17,7 +17,7 @@
     <string name="todo_create_content_hint">非必填</string>
     <string name="todo_create_level_label">优先级：</string>
     <string name="todo_create_level_low">一般</string>
-    <string name="todo_create_level_height">重要</string>
+    <string name="todo_create_level_high">重要</string>
     <string name="todo_create_date_label">日期：</string>
     <string name="todo_create_save">保存</string>
 

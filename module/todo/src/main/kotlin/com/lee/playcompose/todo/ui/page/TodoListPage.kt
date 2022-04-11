@@ -23,6 +23,8 @@ import com.lee.playcompose.common.ui.composable.HorizontallySpacer
 import com.lee.playcompose.common.ui.theme.*
 import com.lee.playcompose.common.ui.widget.*
 import com.lee.playcompose.router.RoutePage
+import com.lee.playcompose.router.navigateArgs
+import com.lee.playcompose.router.parseRoute
 import com.lee.playcompose.todo.R
 import com.lee.playcompose.todo.constants.Constants.STATUS_UPCOMING
 import com.lee.playcompose.todo.ui.callback.TodoListCallback
@@ -88,7 +90,7 @@ fun TodoListPage(
         viewState = viewState,
         slidingPaneState = slidingPaneState,
         onContentItemClick = {
-            navController.navigate(RoutePage.Todo.CreateTodo.route)
+            navController.navigateArgs(RoutePage.Todo.CreateTodo.route, it)
         }, onDelete = {
             viewModel.dispatch(TodoListViewAction.RequestDeleteTodo(it))
         }, onUpdate = {
