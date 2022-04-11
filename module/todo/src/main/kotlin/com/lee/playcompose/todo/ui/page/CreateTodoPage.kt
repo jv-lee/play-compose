@@ -4,8 +4,10 @@ import android.app.DatePickerDialog
 import android.os.Build
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -26,6 +28,7 @@ import androidx.navigation.NavController
 import com.lee.playcompose.base.bus.ChannelBus
 import com.lee.playcompose.base.extensions.LocalActivity
 import com.lee.playcompose.base.extensions.onTap
+import com.lee.playcompose.base.extensions.rememberImePaddingValue
 import com.lee.playcompose.common.entity.RefreshTodoListEvent
 import com.lee.playcompose.common.entity.TodoData
 import com.lee.playcompose.common.extensions.toast
@@ -61,6 +64,7 @@ fun CreateTodoPage(
     todoData: TodoData? = null,
     viewModel: CreateTodoViewModel = viewModel(factory = CreateTodoViewModel.CreateFactory(todoData))
 ) {
+    val imePadding = rememberImePaddingValue()
     val keyboardController = LocalSoftwareKeyboardController.current
     val viewState = viewModel.viewStates
     val datePickerDialog = rememberDatePickerDialog(
@@ -93,6 +97,7 @@ fun CreateTodoPage(
         }) {
         Column(modifier = Modifier
             .fillMaxSize()
+            .padding(bottom = imePadding.dp)
             .onTap { keyboardController?.hide() }) {
             CreateTodoContent(
                 viewState = viewState,
@@ -120,6 +125,7 @@ private fun ColumnScope.CreateTodoContent(
         modifier = Modifier
             .fillMaxWidth()
             .weight(1f)
+            .verticalScroll(rememberScrollState())
     ) {
         Row(
             modifier = Modifier

@@ -20,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -33,6 +34,7 @@ import com.lee.playcompose.account.viewmodel.*
 import com.lee.playcompose.base.bus.ChannelBus
 import com.lee.playcompose.base.extensions.activityViewModel
 import com.lee.playcompose.base.extensions.onTap
+import com.lee.playcompose.base.extensions.rememberImePaddingValue
 import com.lee.playcompose.common.entity.AccountViewAction
 import com.lee.playcompose.common.entity.RegisterSuccessEvent
 import com.lee.playcompose.common.extensions.hasBottomExpend
@@ -57,6 +59,7 @@ fun RegisterPage(
     accountViewModel: AccountViewModel = activityViewModel()
 ) {
     val imeInsets = rememberInsetsPaddingValues(insets = LocalWindowInsets.current.ime)
+    val imePadding = rememberImePaddingValue(imeInsets = imeInsets)
     val keyboardController = LocalSoftwareKeyboardController.current
     val viewState = viewModel.viewStates
 
@@ -85,7 +88,7 @@ fun RegisterPage(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(imeInsets)
+            .padding(bottom = imePadding.dp)
             .wrapContentSize(Alignment.Center)
             .background(AppTheme.colors.background)
             .onTap { keyboardController?.hide() })
