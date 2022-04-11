@@ -53,7 +53,7 @@ fun CreateSharePage(navController: NavController, viewModel: CreateShareViewMode
             when (event) {
                 is CreateShareViewEvent.CreateSuccess -> {
                     toast(shareSuccess)
-                    navController.setResult(Constants.REQUEST_KEY_SHARE_REFRESH, 0)
+                    navController.setResult(Constants.REQUEST_KEY_SHARE_REFRESH)
                     navController.popBackStack()
                 }
                 is CreateShareViewEvent.CreateFailed -> {

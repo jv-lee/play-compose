@@ -38,10 +38,9 @@ fun TodoPage(navController: NavController) {
     val pagerState = rememberPagerState()
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     val callbackHandler by remember { mutableStateOf(TodoListCallbackHandler(lifecycle = lifecycle)) }
-    var forResultVersion by remember { mutableStateOf(System.currentTimeMillis().toString()) }
 
     // 监听创建修改成功回调
-    navController.forResult(key = Constants.CREATE_TODO_KEY, delay = 500) {
+    navController.forResult<Int>(key = Constants.CREATE_TODO_KEY, delay = 500) {
         callbackHandler.dispatchCallback()
     }
 

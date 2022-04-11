@@ -64,7 +64,7 @@ fun LoginPage(
     val viewState = viewModel.viewStates
 
     // 监听注册成功状态
-    navController.forResult(key = REQUEST_KEY_LOGIN) {
+    navController.forResult<Int>(key = REQUEST_KEY_LOGIN) {
         navController.popBackStack()
     }
 

@@ -13,5 +13,4 @@ object Constants {
     const val STATUS_COMPLETE = 1
 
     const val CREATE_TODO_KEY = "create_todo_key"
-    const val CREATE_TODO_VALUE = 0
 }

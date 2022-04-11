@@ -41,7 +41,6 @@ import com.lee.playcompose.common.ui.theme.OffsetRadiusMedium
 import com.lee.playcompose.common.ui.widget.AppBarViewContainer
 import com.lee.playcompose.todo.R
 import com.lee.playcompose.todo.constants.Constants.CREATE_TODO_KEY
-import com.lee.playcompose.todo.constants.Constants.CREATE_TODO_VALUE
 import com.lee.playcompose.todo.ui.theme.TodoEditContentHeight
 import com.lee.playcompose.todo.ui.theme.TodoEditHeight
 import com.lee.playcompose.todo.ui.theme.TodoSaveButton
@@ -78,7 +77,7 @@ fun CreateTodoPage(
         viewModel.viewEvents.collect { event ->
             when (event) {
                 is CreateTodoViewEvent.RequestSuccess -> {
-                    navController.setResult(CREATE_TODO_KEY, CREATE_TODO_VALUE)
+                    navController.setResult(CREATE_TODO_KEY)
                     navController.popBackStack()
                 }
                 is CreateTodoViewEvent.RequestFailed -> {

@@ -73,7 +73,7 @@ fun RegisterPage(
                     )
                     keyboardController?.hide()
                     // 通知login页面注册成功销毁页面
-                    navController.setResult(REQUEST_KEY_LOGIN, 0)
+                    navController.setResult(REQUEST_KEY_LOGIN)
                     navController.popBackStack()
                 }
                 is RegisterViewEvent.RegisterFailed -> {
