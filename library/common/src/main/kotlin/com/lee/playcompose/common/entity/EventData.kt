@@ -18,3 +18,6 @@ class RegisterSuccessEvent
 
 @Keep
 class CreateShareSuccessEvent
+
+@Keep
+class RefreshTodoListEvent

@@ -7,9 +7,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.lee.playcompose.base.utils.TimeUtil
 import com.lee.playcompose.common.entity.TodoData
+import com.lee.playcompose.common.extensions.checkData
+import com.lee.playcompose.common.extensions.createApi
 import com.lee.playcompose.todo.R
+import com.lee.playcompose.todo.constants.Constants.STATUS_UPCOMING
+import com.lee.playcompose.todo.model.api.ApiService
+import com.lee.playcompose.todo.model.entity.TodoType
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -21,8 +30,13 @@ import java.util.*
 class CreateTodoViewModel(private val todoData: TodoData?) : ViewModel(),
     DatePickerDialog.OnDateSetListener {
 
+    private val api = createApi<ApiService>()
+
     var viewStates by mutableStateOf(CreateTodoViewState())
         private set
+
+    private val _viewEvents = Channel<CreateTodoViewEvent>(Channel.BUFFERED)
+    val viewEvents = _viewEvents.receiveAsFlow()
 
     init {
         initPageState()
@@ -42,6 +56,9 @@ class CreateTodoViewModel(private val todoData: TodoData?) : ViewModel(),
             is CreateTodoViewAction.ChangeDate -> {
                 changeDate(action.date)
             }
+            is CreateTodoViewAction.RequestPostTodo -> {
+                requestPostTodo()
+            }
         }
     }
 
@@ -59,6 +76,58 @@ class CreateTodoViewModel(private val todoData: TodoData?) : ViewModel(),
 
     private fun changeDate(date: String) {
         viewStates = viewStates.copy(date = date, calendar = stringToCalendar(date))
+    }
+
+    private fun requestPostTodo() {
+        if (viewStates.isCreate) requestAddTodo() else requestUpdateTodo()
+    }
+
+    private fun requestAddTodo() {
+        viewModelScope.launch {
+            flow {
+                val response = api.postAddTodoAsync(
+                    viewStates.title,
+                    viewStates.content,
+                    viewStates.date,
+                    TodoType.DEFAULT,
+                    viewStates.priority
+                ).checkData()
+                emit(response)
+            }.onStart {
+                viewStates = viewStates.copy(isLoading = true)
+            }.catch { error ->
+                viewStates = viewStates.copy(isLoading = false)
+                _viewEvents.send(CreateTodoViewEvent.RequestFailed(error.message))
+            }.collect {
+                viewStates = viewStates.copy(isLoading = false)
+                _viewEvents.send(CreateTodoViewEvent.RequestSuccess)
+            }
+        }
+    }
+
+    private fun requestUpdateTodo() {
+        viewModelScope.launch {
+            flow {
+                val response = api.postUpdateTodoAsync(
+                    todoData?.id ?: 0,
+                    viewStates.title,
+                    viewStates.content,
+                    viewStates.date,
+                    TodoType.DEFAULT,
+                    viewStates.priority,
+                    todoData?.status ?: STATUS_UPCOMING
+                ).checkData()
+                emit(response)
+            }.onStart {
+                viewStates = viewStates.copy(isLoading = true)
+            }.catch { error ->
+                viewStates = viewStates.copy(isLoading = false)
+                _viewEvents.send(CreateTodoViewEvent.RequestFailed(error.message))
+            }.collect {
+                viewStates = viewStates.copy(isLoading = false)
+                _viewEvents.send(CreateTodoViewEvent.RequestSuccess)
+            }
+        }
     }
 
     private fun initPageState() {
@@ -101,6 +170,7 @@ class CreateTodoViewModel(private val todoData: TodoData?) : ViewModel(),
 }
 
 data class CreateTodoViewState(
+    val isLoading: Boolean = false,
     val appTitleRes: Int = R.string.title_create_todo,
     val isCreate: Boolean = true,
     val title: String = "",
@@ -111,9 +181,15 @@ data class CreateTodoViewState(
     val onDateSetListener: DatePickerDialog.OnDateSetListener? = null
 )
 
+sealed class CreateTodoViewEvent {
+    object RequestSuccess : CreateTodoViewEvent()
+    data class RequestFailed(val message: String?) : CreateTodoViewEvent()
+}
+
 sealed class CreateTodoViewAction {
     data class ChangeTitle(val title: String) : CreateTodoViewAction()
     data class ChangeContent(val content: String) : CreateTodoViewAction()
     data class ChangePriority(val priority: Int) : CreateTodoViewAction()
     data class ChangeDate(val date: String) : CreateTodoViewAction()
+    object RequestPostTodo : CreateTodoViewAction()
 }

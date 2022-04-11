@@ -1,6 +1,5 @@
 package com.lee.playcompose.todo.ui.page
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -17,6 +16,8 @@ import androidx.navigation.NavController
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
+import com.lee.playcompose.base.bus.ChannelBus
+import com.lee.playcompose.common.entity.RefreshTodoListEvent
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.widget.AppBarViewContainer
@@ -24,6 +25,8 @@ import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.todo.R
 import com.lee.playcompose.todo.model.entity.TodoType
 import com.lee.playcompose.todo.ui.callback.TodoListCallbackHandler
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 /**
@@ -37,6 +40,12 @@ fun TodoPage(navController: NavController) {
     val pagerState = rememberPagerState()
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     val callbackHandler by remember { mutableStateOf(TodoListCallbackHandler(lifecycle = lifecycle)) }
+
+    LaunchedEffect(Unit) {
+        ChannelBus.bindChannel<RefreshTodoListEvent>(lifecycle)?.receiveAsFlow()?.collect {
+            callbackHandler.dispatchCallback()
+        }
+    }
 
     AppBarViewContainer(
         title = stringResource(id = R.string.todo_title_default),

@@ -9,6 +9,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -22,11 +23,15 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.lee.playcompose.base.bus.ChannelBus
 import com.lee.playcompose.base.extensions.LocalActivity
 import com.lee.playcompose.base.extensions.onTap
+import com.lee.playcompose.common.entity.RefreshTodoListEvent
 import com.lee.playcompose.common.entity.TodoData
+import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.ui.composable.AppTextField
 import com.lee.playcompose.common.ui.composable.HorizontallySpacer
+import com.lee.playcompose.common.ui.composable.LoadingDialog
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.theme.FontSizeMedium
 import com.lee.playcompose.common.ui.theme.OffsetLarge
@@ -37,8 +42,10 @@ import com.lee.playcompose.todo.ui.theme.TodoEditContentHeight
 import com.lee.playcompose.todo.ui.theme.TodoEditHeight
 import com.lee.playcompose.todo.ui.theme.TodoSaveButton
 import com.lee.playcompose.todo.viewmodel.CreateTodoViewAction
+import com.lee.playcompose.todo.viewmodel.CreateTodoViewEvent
 import com.lee.playcompose.todo.viewmodel.CreateTodoViewModel
 import com.lee.playcompose.todo.viewmodel.CreateTodoViewState
+import kotlinx.coroutines.flow.collect
 import java.util.*
 import com.lee.playcompose.common.R as CR
 
@@ -62,6 +69,22 @@ fun CreateTodoPage(
         onDateSetListener = viewState.onDateSetListener
     )
 
+    LaunchedEffect(Unit) {
+        viewModel.viewEvents.collect { event ->
+            when (event) {
+                is CreateTodoViewEvent.RequestSuccess -> {
+                    ChannelBus.getChannel<RefreshTodoListEvent>()?.send(RefreshTodoListEvent())
+                    navController.popBackStack()
+                }
+                is CreateTodoViewEvent.RequestFailed -> {
+                    toast(event.message)
+                }
+            }
+        }
+    }
+
+    LoadingDialog(isShow = viewState.isLoading)
+
     AppBarViewContainer(
         title = stringResource(id = viewState.appTitleRes),
         navigationClick = {
@@ -77,7 +100,10 @@ fun CreateTodoPage(
                 changeContent = { viewModel.dispatch(CreateTodoViewAction.ChangeContent(it)) },
                 changePriority = { viewModel.dispatch(CreateTodoViewAction.ChangePriority(it)) },
                 dateClick = { datePickerDialog.show() })
-            CreateTodoBottomButton()
+            CreateTodoBottomButton(saveClick = {
+                keyboardController?.hide()
+                viewModel.dispatch(CreateTodoViewAction.RequestPostTodo)
+            })
         }
     }
 }
@@ -216,9 +242,9 @@ private fun ColumnScope.CreateTodoContent(
 }
 
 @Composable
-private fun CreateTodoBottomButton() {
+private fun CreateTodoBottomButton(saveClick: () -> Unit) {
     Button(
-        onClick = { },
+        onClick = { saveClick() },
         shape = RoundedCornerShape(OffsetRadiusMedium),
         colors = ButtonDefaults.buttonColors(backgroundColor = AppTheme.colors.focus),
         modifier = Modifier
