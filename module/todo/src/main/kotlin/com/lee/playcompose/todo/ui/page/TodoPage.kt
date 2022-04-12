@@ -5,7 +5,9 @@ import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,6 +25,7 @@ import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.todo.R
 import com.lee.playcompose.todo.model.entity.TodoType
 import com.lee.playcompose.todo.ui.callback.TodoListCallbackHandler
+import com.lee.playcompose.todo.ui.callback.rememberCallbackHandler
 import kotlinx.coroutines.launch
 
 /**
@@ -34,8 +37,7 @@ import kotlinx.coroutines.launch
 fun TodoPage(navController: NavController) {
     val coroutine = rememberCoroutineScope()
     val pagerState = rememberPagerState()
-    val lifecycle = LocalLifecycleOwner.current.lifecycle
-    val callbackHandler by remember { mutableStateOf(TodoListCallbackHandler(lifecycle = lifecycle)) }
+    val callbackHandler by rememberCallbackHandler(lifecycle = LocalLifecycleOwner.current.lifecycle)
 
     AppBarViewContainer(
         title = stringResource(id = R.string.todo_title_default),
