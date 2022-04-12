@@ -121,6 +121,7 @@ fun AppBarView(
                             )
                         }
                         else -> {
+                            Box(modifier = Modifier.size(ToolBarHeight))
                         }
                     }
                 },
