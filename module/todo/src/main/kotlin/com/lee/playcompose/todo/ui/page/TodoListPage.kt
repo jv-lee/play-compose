@@ -74,6 +74,11 @@ fun TodoListPage(
         })
     }
 
+    // 监听页面type变化重新加载数据
+    LaunchedEffect(type) {
+        contentList.refresh()
+    }
+
     // 监听viewModel单向事件
     LaunchedEffect(type, status) {
         viewModel.viewEvents.collect { event ->

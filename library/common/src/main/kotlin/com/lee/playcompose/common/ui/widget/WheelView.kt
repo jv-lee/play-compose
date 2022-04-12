@@ -21,7 +21,7 @@ import com.lee.playcompose.common.ui.theme.FontSizeMedium
 /**
  * @author jv.lee
  * @date 2022/4/12
- * @description
+ * @description 多类型滑动选择器
  */
 annotation class SelectItemStyle {
     companion object {

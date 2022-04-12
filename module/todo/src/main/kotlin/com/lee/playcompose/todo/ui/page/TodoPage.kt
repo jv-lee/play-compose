@@ -5,27 +5,29 @@ import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.theme.OffsetLarge
+import com.lee.playcompose.common.ui.widget.ActionMode
 import com.lee.playcompose.common.ui.widget.AppBarViewContainer
 import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.todo.R
 import com.lee.playcompose.todo.model.entity.TodoType
 import com.lee.playcompose.todo.ui.callback.TodoListCallbackHandler
 import com.lee.playcompose.todo.ui.callback.rememberCallbackHandler
+import com.lee.playcompose.todo.viewmodel.TodoViewAction
+import com.lee.playcompose.todo.viewmodel.TodoViewModel
 import kotlinx.coroutines.launch
 
 /**
@@ -34,19 +36,32 @@ import kotlinx.coroutines.launch
  * @description todo页面（待完成/已完成）
  */
 @Composable
-fun TodoPage(navController: NavController) {
+fun TodoPage(navController: NavController, viewModel: TodoViewModel = viewModel()) {
     val coroutine = rememberCoroutineScope()
     val pagerState = rememberPagerState()
     val callbackHandler by rememberCallbackHandler(lifecycle = LocalLifecycleOwner.current.lifecycle)
+    val viewState = viewModel.viewStates
+
+    SelectTodoTypeDialog(
+        isShow = viewState.isShowTypeDialog,
+        onDismissRequest = { type ->
+            viewModel.dispatch(TodoViewAction.ChangeTypeSelected(type = type))
+            viewModel.dispatch(TodoViewAction.ChangeTypeDialogVisible(visible = false))
+        }
+    )
 
     AppBarViewContainer(
-        title = stringResource(id = R.string.todo_title_default),
+        title = stringResource(id = viewState.todoTitleRes),
+        actionIcon = R.drawable.vector_replace,
+        actionMode = ActionMode.Button,
+        actionClick = { viewModel.dispatch(TodoViewAction.ChangeTypeDialogVisible(visible = true)) },
         navigationClick = {
             navController.popBackStack()
         }) {
         Column(modifier = Modifier.fillMaxSize()) {
             TodoContent(
                 navController = navController,
+                type = viewState.type,
                 pagerState = pagerState,
                 callbackHandler = callbackHandler,
                 onCreateClick = {
@@ -71,6 +86,7 @@ fun TodoPage(navController: NavController) {
 @Composable
 private fun ColumnScope.TodoContent(
     navController: NavController,
+    @TodoType type: Int,
     pagerState: PagerState,
     callbackHandler: TodoListCallbackHandler,
     onCreateClick: () -> Unit,
@@ -87,7 +103,7 @@ private fun ColumnScope.TodoContent(
         ) { page ->
             TodoListPage(
                 navController = navController,
-                TodoType.DEFAULT,
+                type = type,
                 status = page,
                 callbackHandler = callbackHandler
             )

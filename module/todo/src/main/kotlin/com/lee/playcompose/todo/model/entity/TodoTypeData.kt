@@ -31,4 +31,7 @@ annotation class TodoType {
     }
 }
 
-data class TodoTypeWheelData(val startIndex: Int, val todoTypes: MutableList<TodoTypeData>)
+data class TodoTypeWheelData(
+    val startIndex: Int,
+    val todoTypes: MutableList<TodoTypeData>
+)

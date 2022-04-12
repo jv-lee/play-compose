@@ -6,6 +6,8 @@ package com.lee.playcompose.todo.constants
  * @description
  */
 object Constants {
+    const val SP_KEY_TODO_TYPE = "spKey:todo-type"
+
     // 待完成TODO列表状态值
     const val STATUS_UPCOMING = 0
 
