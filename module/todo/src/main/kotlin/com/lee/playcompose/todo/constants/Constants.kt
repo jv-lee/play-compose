@@ -12,5 +12,5 @@ object Constants {
     // 已完成TODO列表状态值
     const val STATUS_COMPLETE = 1
 
-    const val CREATE_TODO_KEY = "create_todo_key"
+    const val REFRESH_TODO_KEY = "refresh_todo_key"
 }

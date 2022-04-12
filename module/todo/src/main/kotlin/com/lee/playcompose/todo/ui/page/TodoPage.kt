@@ -16,13 +16,11 @@ import androidx.navigation.NavController
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
-import com.lee.playcompose.base.extensions.forResult
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.widget.AppBarViewContainer
 import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.todo.R
-import com.lee.playcompose.todo.constants.Constants
 import com.lee.playcompose.todo.model.entity.TodoType
 import com.lee.playcompose.todo.ui.callback.TodoListCallbackHandler
 import kotlinx.coroutines.launch
@@ -38,11 +36,6 @@ fun TodoPage(navController: NavController) {
     val pagerState = rememberPagerState()
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     val callbackHandler by remember { mutableStateOf(TodoListCallbackHandler(lifecycle = lifecycle)) }
-
-    // 监听创建修改成功回调
-    navController.forResult<Int>(key = Constants.CREATE_TODO_KEY, delay = 500) {
-        callbackHandler.dispatchCallback()
-    }
 
     AppBarViewContainer(
         title = stringResource(id = R.string.todo_title_default),

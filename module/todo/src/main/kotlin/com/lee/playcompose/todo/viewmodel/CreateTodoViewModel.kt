@@ -100,7 +100,7 @@ class CreateTodoViewModel(private val todoData: TodoData?) : ViewModel(),
                 _viewEvents.send(CreateTodoViewEvent.RequestFailed(error.message))
             }.collect {
                 viewStates = viewStates.copy(isLoading = false)
-                _viewEvents.send(CreateTodoViewEvent.RequestSuccess)
+                _viewEvents.send(CreateTodoViewEvent.RequestSuccess(STATUS_UPCOMING))
             }
         }
     }
@@ -125,7 +125,11 @@ class CreateTodoViewModel(private val todoData: TodoData?) : ViewModel(),
                 _viewEvents.send(CreateTodoViewEvent.RequestFailed(error.message))
             }.collect {
                 viewStates = viewStates.copy(isLoading = false)
-                _viewEvents.send(CreateTodoViewEvent.RequestSuccess)
+                _viewEvents.send(
+                    CreateTodoViewEvent.RequestSuccess(
+                        todoData?.status ?: STATUS_UPCOMING
+                    )
+                )
             }
         }
     }
@@ -182,7 +186,7 @@ data class CreateTodoViewState(
 )
 
 sealed class CreateTodoViewEvent {
-    object RequestSuccess : CreateTodoViewEvent()
+    data class RequestSuccess(val status: Int) : CreateTodoViewEvent()
     data class RequestFailed(val message: String?) : CreateTodoViewEvent()
 }
 

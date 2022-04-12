@@ -17,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.lee.playcompose.base.extensions.forResult
 import com.lee.playcompose.common.entity.TodoData
 import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.ui.composable.HorizontallySpacer
@@ -24,8 +25,8 @@ import com.lee.playcompose.common.ui.theme.*
 import com.lee.playcompose.common.ui.widget.*
 import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
-import com.lee.playcompose.router.parseRoute
 import com.lee.playcompose.todo.R
+import com.lee.playcompose.todo.constants.Constants
 import com.lee.playcompose.todo.constants.Constants.STATUS_UPCOMING
 import com.lee.playcompose.todo.ui.callback.TodoListCallback
 import com.lee.playcompose.todo.ui.callback.TodoListCallbackHandler
@@ -59,7 +60,12 @@ fun TodoListPage(
     val contentList = viewState.pagingData.collectAsLazyPagingItems()
     val slidingPaneState by rememberSlidingPaneState()
 
-    // 监听多页面刷新联动回调
+    // 监听创建修改成功回调
+    navController.forResult<Int>(key = Constants.REFRESH_TODO_KEY, 200) {
+        it?.takeIf { it == status }?.run { contentList.refresh() }
+    }
+
+    // 监听多页面状态修改移除刷新联动回调
     LaunchedEffect(Unit) {
         callbackHandler.addCallback(object : TodoListCallback {
             override fun refresh() {
@@ -68,6 +74,7 @@ fun TodoListPage(
         })
     }
 
+    // 监听viewModel单向事件
     LaunchedEffect(type, status) {
         viewModel.viewEvents.collect { event ->
             when (event) {
