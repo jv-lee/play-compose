@@ -70,7 +70,7 @@ fun AppBarView(
                     Text(
                         text = title,
                         modifier = Modifier
-                            .fillMaxWidth(0.75f)
+                            .fillMaxWidth(0.9f)
                             .wrapContentSize(Alignment.Center),
                         fontSize = FontSizeLarge,
                         fontWeight = FontWeight.Bold,
