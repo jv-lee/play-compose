@@ -58,6 +58,7 @@ class PagerSnapState {
 class PagerSnapNestedScrollConnection(
     private val state: PagerSnapState,
     private val listState: LazyListState,
+    private val scrollAction: () -> Unit,
     private val scrollTo: () -> Unit
 ) : NestedScrollConnection {
 
@@ -77,6 +78,8 @@ class PagerSnapNestedScrollConnection(
     }
 
     private fun onScroll(): Offset {
+        state.updateScrollToItemPosition(listState.layoutInfo.visibleItemsInfo.firstOrNull())
+        scrollAction()
         state.isSwiping.value = true
         return Offset.Zero
     }
@@ -131,16 +134,10 @@ fun ComposePagerSnapHelper(
     }
 
     val connection = remember(state, listState) {
-        PagerSnapNestedScrollConnection(state, listState) {
-
-            val firstItemIndex = state.firstVisibleItemIndex.value
-            val firstItemOffset = abs(state.offsetInfo.value)
-
-            val position = when {
-                firstItemOffset <= itemOffsetPx.div(2) -> firstItemIndex
-                else -> firstItemIndex.plus(1)
-            }
-
+        PagerSnapNestedScrollConnection(state, listState, {
+            state.currentIndex = findPosition(state, itemOffsetPx)
+        }) {
+            val position = findPosition(state, itemOffsetPx)
             scope.launch {
                 state.scrollItemToSnapPosition(listState, position)
             }
@@ -153,5 +150,15 @@ fun ComposePagerSnapHelper(
             .nestedScroll(connection)
     ) {
         content(listState)
+    }
+}
+
+private fun findPosition(state: PagerSnapState, itemOffsetPx: Int): Int {
+    val firstItemIndex = state.firstVisibleItemIndex.value
+    val firstItemOffset = abs(state.offsetInfo.value)
+
+    return when {
+        firstItemOffset <= itemOffsetPx.div(2) -> firstItemIndex
+        else -> firstItemIndex.plus(1)
     }
 }
