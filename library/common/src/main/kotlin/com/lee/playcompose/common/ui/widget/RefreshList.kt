@@ -96,6 +96,8 @@ fun <T : Any> RefreshList(
                             is LoadState.NotLoading -> {
                                 if (loadState.append.endOfPaginationReached) {
                                     ItemNoMore()
+                                } else {
+                                    ItemSpacer()
                                 }
                             }
                         }
@@ -212,4 +214,9 @@ private fun ItemLoading() {
         Spacer(modifier = Modifier.size(4.dp))
         Text(text = stringResource(id = R.string.item_load_more), color = AppTheme.colors.accent)
     }
+}
+
+@Composable
+private fun ItemSpacer() {
+    Spacer(modifier = Modifier.height(ListStateItemHeight))
 }
