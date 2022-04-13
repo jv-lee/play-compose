@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.paging.PagingData
 import com.lee.playcompose.common.entity.NavigationItem
 import com.lee.playcompose.common.extensions.createApi
-import com.lee.playcompose.common.extensions.singlePager
+import com.lee.playcompose.common.paging.extensions.singlePager
 import com.lee.playcompose.system.model.api.ApiService
 import kotlinx.coroutines.flow.Flow
 

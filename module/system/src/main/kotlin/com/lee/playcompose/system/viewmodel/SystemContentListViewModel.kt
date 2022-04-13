@@ -10,10 +10,9 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.lee.playcompose.common.entity.Content
-import com.lee.playcompose.common.entity.PageData
 import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
-import com.lee.playcompose.common.extensions.pager
+import com.lee.playcompose.common.paging.extensions.pager
 import com.lee.playcompose.system.model.api.ApiService
 import kotlinx.coroutines.flow.Flow
 
@@ -27,7 +26,7 @@ class SystemContentListViewModel(private val id: Long) : ViewModel() {
     private val api = createApi<ApiService>()
 
     private val pager by lazy {
-        pager { api.getContentDataAsync(it, id).checkData() }.cachedIn(viewModelScope)
+        pager { api.getContentDataAsync(it, id).checkData() }
     }
 
     var viewStates by mutableStateOf(SystemContentListViewState(pagingData = pager))

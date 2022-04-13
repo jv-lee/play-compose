@@ -13,7 +13,7 @@ import androidx.paging.filter
 import com.lee.playcompose.common.entity.TodoData
 import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
-import com.lee.playcompose.common.extensions.pager
+import com.lee.playcompose.common.paging.extensions.pager
 import com.lee.playcompose.todo.constants.Constants.STATUS_COMPLETE
 import com.lee.playcompose.todo.constants.Constants.STATUS_UPCOMING
 import com.lee.playcompose.todo.model.api.ApiService
@@ -27,6 +27,7 @@ import kotlinx.coroutines.launch
  * @description
  */
 class TodoListViewModel(private val type: Int, private val status: Int) : ViewModel() {
+
     private val api = createApi<ApiService>()
 
     // paging3 移除数据过滤项
@@ -36,7 +37,7 @@ class TodoListViewModel(private val type: Int, private val status: Int) : ViewMo
     private val pager by lazy {
         pager(initialKey = 1) { page ->
             api.postTodoDataAsync(page, type, status).checkData()
-        }.cachedIn(viewModelScope)
+        }
             // 添加被移除的数据过滤逻辑
             .combine(removedItemsFlow) { pagingData, removed ->
                 pagingData.filter { it !in removed }

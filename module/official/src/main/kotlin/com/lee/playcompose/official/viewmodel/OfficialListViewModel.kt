@@ -12,7 +12,7 @@ import androidx.paging.cachedIn
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
-import com.lee.playcompose.common.extensions.pager
+import com.lee.playcompose.common.paging.extensions.pager
 import com.lee.playcompose.official.model.api.ApiService
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -30,7 +30,7 @@ class OfficialListViewModel(private val id: Long) : ViewModel() {
         pager(initialKey = 1) { page ->
             if (page == 1) delay(300)
             api.getOfficialDataAsync(id, page).checkData()
-        }.cachedIn(viewModelScope)
+        }
     }
 
     var viewStates by mutableStateOf(OfficialListViewState(pager))

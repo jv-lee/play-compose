@@ -13,7 +13,7 @@ import com.lee.playcompose.common.constants.ApiConstants
 import com.lee.playcompose.common.entity.*
 import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
-import com.lee.playcompose.common.extensions.pager
+import com.lee.playcompose.common.paging.extensions.pager
 import com.lee.playcompose.me.R
 import com.lee.playcompose.me.model.api.ApiService
 import kotlinx.coroutines.flow.Flow
@@ -31,7 +31,7 @@ class CoinRankViewModel : ViewModel() {
     private val pager by lazy {
         pager(initialKey = 1) {
             api.getCoinRankAsync(it).checkData().swapRankList(it)
-        }.cachedIn(viewModelScope)
+        }
     }
 
     var viewStates by mutableStateOf(CoinRankViewState(pagingData = pager))

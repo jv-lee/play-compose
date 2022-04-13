@@ -11,7 +11,7 @@ import androidx.paging.cachedIn
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
-import com.lee.playcompose.common.extensions.pager
+import com.lee.playcompose.common.paging.extensions.pager
 import com.lee.playcompose.square.model.api.ApiService
 import kotlinx.coroutines.flow.Flow
 
@@ -24,7 +24,7 @@ class SquareViewModel : ViewModel() {
     private val api = createApi<ApiService>()
 
     private val pager by lazy {
-        pager { api.getSquareDataSync(it).checkData() }.cachedIn(viewModelScope)
+        pager { api.getSquareDataSync(it).checkData() }
     }
 
     var viewStates by mutableStateOf(SquareViewState(pagingData = pager))

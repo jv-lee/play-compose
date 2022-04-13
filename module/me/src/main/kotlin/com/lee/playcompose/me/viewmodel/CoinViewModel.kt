@@ -14,7 +14,7 @@ import com.lee.playcompose.common.entity.CoinRecord
 import com.lee.playcompose.common.entity.DetailsData
 import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
-import com.lee.playcompose.common.extensions.pager
+import com.lee.playcompose.common.paging.extensions.pager
 import com.lee.playcompose.me.R
 import com.lee.playcompose.me.model.api.ApiService
 import kotlinx.coroutines.flow.Flow
@@ -29,7 +29,7 @@ class CoinViewModel : ViewModel() {
     private val api = createApi<ApiService>()
 
     private val pager by lazy {
-        pager(initialKey = 1) { api.getCoinRecordAsync(it).checkData() }.cachedIn(viewModelScope)
+        pager(initialKey = 1) { api.getCoinRecordAsync(it).checkData() }
     }
 
     var viewStates by mutableStateOf(CoinViewState(pagingData = pager))

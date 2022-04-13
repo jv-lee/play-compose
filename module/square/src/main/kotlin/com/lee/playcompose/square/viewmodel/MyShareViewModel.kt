@@ -13,7 +13,7 @@ import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
-import com.lee.playcompose.common.extensions.pager
+import com.lee.playcompose.common.paging.extensions.pager
 import com.lee.playcompose.square.R
 import com.lee.playcompose.square.model.api.ApiService
 import kotlinx.coroutines.channels.Channel
@@ -33,7 +33,7 @@ class MyShareViewModel : ViewModel() {
     private val removedItemsFlow: Flow<MutableList<Content>> get() = _removedItemsFlow
 
     private val pager by lazy {
-        pager { api.getMyShareDataSync(it).checkData().shareArticles }.cachedIn(viewModelScope)
+        pager { api.getMyShareDataSync(it).checkData().shareArticles }
             // 添加被移除的数据过滤逻辑
             .combine(removedItemsFlow) { pagingData, removed ->
                 pagingData.filter { it !in removed }
