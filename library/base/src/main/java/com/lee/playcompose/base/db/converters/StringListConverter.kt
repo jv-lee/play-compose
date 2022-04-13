@@ -1,4 +1,4 @@
-package com.lee.library.db.converters
+package com.lee.playcompose.base.db.converters
 
 import com.lee.playcompose.base.db.base.BaseConverter
 
@@ -7,6 +7,4 @@ import com.lee.playcompose.base.db.base.BaseConverter
  * @date 2020/4/17
  * @description
  */
-class StringListConverter : BaseConverter<String>() {
-
-}
+class StringListConverter : BaseConverter<String>()
