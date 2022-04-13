@@ -101,6 +101,7 @@ fun DependencyHandlerScope.commonDependencies() {
 
     api(Dependencies.room)
     api(Dependencies.roomRuntime)
+    api(Dependencies.roomPaging)
 
     api(Dependencies.retrofit)
     api(Dependencies.retrofitConverterGson) { exclude("com.google.code.gson") }

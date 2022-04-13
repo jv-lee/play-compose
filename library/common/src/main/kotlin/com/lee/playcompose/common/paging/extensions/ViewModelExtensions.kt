@@ -1,10 +1,11 @@
-package com.lee.playcompose.common.extensions
+package com.lee.playcompose.common.paging.extensions
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
 import com.lee.playcompose.common.entity.Data
 import com.lee.playcompose.common.entity.PageData
+import com.lee.playcompose.common.extensions.checkData
 import kotlinx.coroutines.flow.Flow
 
 /**

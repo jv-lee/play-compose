@@ -79,6 +79,7 @@ object Dependencies {
     //room数据库
     const val room = "androidx.room:room-ktx:${Version.room}"
     const val roomRuntime = "androidx.room:room-runtime:${Version.room}"
+    const val roomPaging = "androidx.room:room-paging:${Version.roomPaging}"
 
     //图片加载
     const val glide = "com.github.bumptech.glide:glide:${Version.glide}"
