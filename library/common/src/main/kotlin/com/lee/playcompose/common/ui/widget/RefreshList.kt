@@ -83,7 +83,7 @@ fun <T : Any> RefreshList(
             ((lazyPagingItems.loadState.refresh is LoadState.Loading) || isRefreshing) && swipeEnable
 
         // refresh list scroll to top
-        if (lazyPagingItems.loadState.prepend is LoadState.Loading) {
+        if (!lazyPagingItems.loadState.prepend.endOfPaginationReached) {
             scope.launch { listState.animateScrollToItem(0) }
         }
 

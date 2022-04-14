@@ -19,7 +19,12 @@ import kotlinx.coroutines.flow.map
  */
 @OptIn(ExperimentalPagingApi::class)
 inline fun <reified T : Any> ViewModel.localPager(
-    config: PagingConfig = PagingConfig(20),
+    config: PagingConfig = PagingConfig(
+        pageSize = 20,
+        prefetchDistance = 5,
+        initialLoadSize = 20,
+        enablePlaceholders = true
+    ),
     initialKey: Int = 0,
     remoteKey: String = this.javaClass.simpleName,
     isSingle: Boolean = false,
