@@ -1,6 +1,5 @@
 package com.lee.playcompose.common.paging.extensions
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
@@ -16,20 +15,20 @@ import kotlinx.coroutines.flow.map
 /**
  * @author jv.lee
  * @date 2022/4/13
- * @description
+ * @description paging3分页数据加载使用room数据库做缓存处理
  */
 @OptIn(ExperimentalPagingApi::class)
 inline fun <reified T : Any> ViewModel.localPaging(
     config: PagingConfig = PagingConfig(20),
     initialKey: Int = 0,
-    remoteKey: String,
-    crossinline requestAction: suspend (page: Int) -> List<T>
+    remoteKey: String = this.javaClass.simpleName,
+    noinline requestAction: suspend (page: Int) -> List<T>
 ): Flow<PagingData<T>> {
     val database = RemoteCacheDatabase.get()
     return Pager(
         config = config,
         initialKey = initialKey,
-        remoteMediator = createRemoteMediator(database, initialKey, remoteKey, requestAction)
+        remoteMediator = RemoteRoomMediator(remoteKey, initialKey, database, requestAction)
     ) {
         database.remoteContentDao().getList(remoteKey = remoteKey)
     }.flow.map { pagingData ->
@@ -41,80 +40,107 @@ inline fun <reified T : Any> ViewModel.localPaging(
 }
 
 @OptIn(ExperimentalPagingApi::class)
-inline fun <reified T : Any> createRemoteMediator(
-    database: RemoteCacheDatabase,
-    initialKey: Int,
-    remoteKey: String,
-    crossinline requestAction: suspend (page: Int) -> List<T>
-): RemoteMediator<Int, RemoteContent> {
-    return object : RemoteMediator<Int, RemoteContent>() {
-        override suspend fun load(
-            loadType: LoadType,
-            state: PagingState<Int, RemoteContent>
-        ): MediatorResult {
-            try {
-                // 第一步： 判断 LoadType
-                val pageKey = when (loadType) {
-                    // 首次访问 或者调用 PagingDataAdapter.refresh()
-                    LoadType.REFRESH -> {
-                        Log.i("jv.lee", "REFRESH")
-                        null
-                    }
-                    // 在当前加载的数据集的开头加载数据时
-                    LoadType.PREPEND -> {
-                        Log.i("jv.lee", "PREPEND")
-                        return MediatorResult.Success(endOfPaginationReached = true)
-                    }
-                    LoadType.APPEND -> { // 下来加载更多时触发
-                        Log.i("jv.lee", "APPEND")
-                        database.withTransaction {
-                            database.remoteKeyDao().getRemoteKey(remoteKey = remoteKey)
-                        }?.nextKey ?: kotlin.run {
-                            return MediatorResult.Success(endOfPaginationReached = true)
-                        }
-                    }
-                }
+class RemoteRoomMediator<T>(
+    private val remoteKey: String,
+    private val initialKey: Int,
+    private val database: RemoteCacheDatabase,
+    private val requestAction: suspend (page: Int) -> List<T>
+) : RemoteMediator<Int, RemoteContent>() {
 
-                // 第二步： 请问网络分页数据
-                val page = pageKey ?: 0
-                val result = requestAction(page)
+    override suspend fun load(
+        loadType: LoadType,
+        state: PagingState<Int, RemoteContent>
+    ): MediatorResult {
+        return when (loadType) {
+            // 首次访问 || PagingDataAdapter.refresh()
+            LoadType.REFRESH -> {
+                loadRefresh(loadType, state)
+            }
+            // 刷新数据到位后设置当前数据成功状态显示
+            LoadType.PREPEND -> {
+                loadPrepend(loadType, state)
+            }
+            // 加载更多分页
+            LoadType.APPEND -> {
+                loadAppend(loadType, state)
+            }
+        }
+    }
 
-                val endOfPaginationReached = result.isEmpty()
+    private suspend fun loadRefresh(
+        loadType: LoadType,
+        state: PagingState<Int, RemoteContent>
+    ): MediatorResult {
+        return loadDataTransaction(loadType, initialKey)
+    }
 
-                val item = result.map {
-                    RemoteContent(
-                        remoteKey = remoteKey,
-                        content = HttpManager.getGson().toJson(it)
-                    )
-                }
+    private fun loadPrepend(
+        loadType: LoadType,
+        state: PagingState<Int, RemoteContent>
+    ): MediatorResult {
+        return MediatorResult.Success(endOfPaginationReached = true)
+    }
 
-                // 第三步： 插入数据库
-                database.withTransaction {
-                    if (loadType == LoadType.REFRESH) {
-                        database.remoteContentDao().clear(remoteKey)
-                    }
-                    val nextKey = if (endOfPaginationReached) null else page + 1
-                    val entity = RemoteKey(remoteKey = remoteKey, nextKey = nextKey)
+    private suspend fun loadAppend(
+        loadType: LoadType,
+        state: PagingState<Int, RemoteContent>
+    ): MediatorResult {
+        val page = database.withTransaction {
+            database.remoteKeyDao().getRemoteKey(remoteKey = remoteKey)
+        }?.nextKey ?: run {
+            return MediatorResult.Success(endOfPaginationReached = true)
+        }
+        return loadDataTransaction(loadType, page)
+    }
 
+    private suspend fun loadDataTransaction(loadType: LoadType, page: Int): MediatorResult {
+        try {
+            val result = requestAction(page)
+            val endOfPaginationReached = result.isEmpty()
+
+            val item = result.map {
+                RemoteContent(
+                    remoteKey = remoteKey,
+                    content = HttpManager.getGson().toJson(it)
+                )
+            }
+
+            // 插入数据库
+            database.withTransaction {
+                if (loadType == LoadType.REFRESH) {
                     database.remoteKeyDao().clearRemoteKey(remoteKey)
-                    database.remoteKeyDao().insert(entity)
-                    database.remoteContentDao().insertList(item)
+                    database.remoteContentDao().clear(remoteKey)
                 }
+                val nextKey = if (endOfPaginationReached) null else page + 1
+                val entity = RemoteKey(remoteKey = remoteKey, nextKey = nextKey)
 
-                return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
-            } catch (e: Exception) {
-                return database.withTransaction {
-                    val count = database.remoteContentDao().getCount()
-                    val remoteKey = database.remoteKeyDao().getRemoteKey(remoteKey = remoteKey)
-                    Log.i("jv.lee", "count:$count,remoteKey:$remoteKey")
-                    return@withTransaction if (count > 0) {
+                database.remoteKeyDao().insert(entity)
+                database.remoteContentDao().insertList(item)
+            }
+
+            return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
+        } catch (e: Exception) {
+            // 错误情况处理
+            return loadFailed(loadType, e)
+        }
+    }
+
+    private suspend fun loadFailed(loadType: LoadType, e: Exception): MediatorResult {
+        return database.withTransaction {
+            val count = database.remoteContentDao().getCount()
+            when (loadType) {
+                LoadType.REFRESH, LoadType.PREPEND -> {
+                    if (count > 0) {
                         MediatorResult.Success(endOfPaginationReached = false)
                     } else {
                         MediatorResult.Error(e)
                     }
                 }
+                LoadType.APPEND -> {
+                    MediatorResult.Error(e)
+                }
             }
         }
-
     }
+
 }
