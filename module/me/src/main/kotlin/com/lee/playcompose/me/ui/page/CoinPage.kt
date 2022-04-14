@@ -59,17 +59,18 @@ fun CoinPage(navController: NavController, viewModel: CoinViewModel = viewModel(
         navigationClick = { navController.popBackStack() },
         actionClick = { navController.navigateArgs(RoutePage.Details.route, viewState.detailsData) }
     ) {
-        Column {
-            CoinRecordHeader(accountViewState = accountViewState, coinRankClick = {
-                navController.navigate(RoutePage.Me.CoinRank.route)
-            })
-            CoinRecordContent(viewState = viewState)
+        CoinRecordContent(viewState = viewState, accountViewState = accountViewState) {
+            navController.navigate(RoutePage.Me.CoinRank.route)
         }
     }
 }
 
 @Composable
-private fun CoinRecordContent(viewState: CoinViewState) {
+private fun CoinRecordContent(
+    viewState: CoinViewState,
+    accountViewState: AccountViewState,
+    coinRankClick: () -> Unit
+) {
     val contentList = viewState.pagingData.collectAsLazyPagingItems()
     val listState = if (contentList.itemCount > 0) viewState.listState else LazyListState()
 
@@ -78,6 +79,9 @@ private fun CoinRecordContent(viewState: CoinViewState) {
         lazyPagingItems = contentList,
         listState = listState,
     ) {
+        item {
+            CoinRecordHeader(accountViewState = accountViewState, coinRankClick = coinRankClick)
+        }
         // build coinRecord content item
         itemsIndexed(contentList) { _, item ->
             item ?: return@itemsIndexed
