@@ -13,6 +13,7 @@ import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
+import com.lee.playcompose.common.paging.extensions.localPager
 import com.lee.playcompose.common.paging.extensions.pager
 import com.lee.playcompose.me.R
 import com.lee.playcompose.me.model.api.ApiService
@@ -33,7 +34,7 @@ class CollectViewModel : ViewModel() {
     private val removedItemsFlow: Flow<MutableList<Content>> get() = _removedItemsFlow
 
     private val pager by lazy {
-        pager { api.getCollectListAsync(it).checkData() }
+        localPager { api.getCollectListAsync(it).checkData().data }
             // 添加被移除的数据过滤逻辑
             .combine(removedItemsFlow) { pagingData, removed ->
                 pagingData.filter { it !in removed }
