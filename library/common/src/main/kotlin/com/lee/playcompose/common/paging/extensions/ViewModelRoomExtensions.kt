@@ -22,13 +22,20 @@ inline fun <reified T : Any> ViewModel.localPager(
     config: PagingConfig = PagingConfig(20),
     initialKey: Int = 0,
     remoteKey: String = this.javaClass.simpleName,
+    isSingle: Boolean = false,
     noinline requestAction: suspend (page: Int) -> List<T>
 ): Flow<PagingData<T>> {
     val database = RemoteCacheDatabase.get()
     return Pager(
         config = config,
         initialKey = initialKey,
-        remoteMediator = RemoteRoomMediator(remoteKey, initialKey, database, requestAction)
+        remoteMediator = RemoteRoomMediator(
+            remoteKey,
+            initialKey,
+            database,
+            requestAction,
+            isSingle
+        )
     ) {
         database.remoteContentDao().getList(remoteKey = remoteKey)
     }.flow.map { pagingData ->
@@ -44,7 +51,8 @@ class RemoteRoomMediator<T>(
     private val remoteKey: String,
     private val initialKey: Int,
     private val database: RemoteCacheDatabase,
-    private val requestAction: suspend (page: Int) -> List<T>
+    private val requestAction: suspend (page: Int) -> List<T>,
+    private val isSingle: Boolean = false
 ) : RemoteMediator<Int, RemoteContent>() {
 
     override suspend fun load(
@@ -54,7 +62,7 @@ class RemoteRoomMediator<T>(
         return when (loadType) {
             // 首次访问 || PagingDataAdapter.refresh()
             LoadType.REFRESH -> {
-                loadRefresh(loadType, state)
+                loadRefresh(loadType, state, isSingle)
             }
             // 刷新数据到位后设置当前数据成功状态显示
             LoadType.PREPEND -> {
@@ -69,9 +77,10 @@ class RemoteRoomMediator<T>(
 
     private suspend fun loadRefresh(
         loadType: LoadType,
-        state: PagingState<Int, RemoteContent>
+        state: PagingState<Int, RemoteContent>,
+        isSingle: Boolean
     ): MediatorResult {
-        return loadDataTransaction(loadType, initialKey)
+        return loadDataTransaction(loadType, initialKey, isSingle)
     }
 
     private fun loadPrepend(
@@ -93,7 +102,11 @@ class RemoteRoomMediator<T>(
         return loadDataTransaction(loadType, page)
     }
 
-    private suspend fun loadDataTransaction(loadType: LoadType, page: Int): MediatorResult {
+    private suspend fun loadDataTransaction(
+        loadType: LoadType,
+        page: Int,
+        isSingle: Boolean = false,
+    ): MediatorResult {
         try {
             val result = requestAction(page)
             val endOfPaginationReached = result.isEmpty()
@@ -112,7 +125,8 @@ class RemoteRoomMediator<T>(
                     database.remoteContentDao().clear(remoteKey)
                 }
                 val nextKey = if (endOfPaginationReached) null else page + 1
-                val entity = RemoteKey(remoteKey = remoteKey, nextKey = nextKey)
+                val entity =
+                    RemoteKey(remoteKey = remoteKey, nextKey = if (isSingle) null else nextKey)
 
                 database.remoteKeyDao().insert(entity)
                 database.remoteContentDao().insertList(item)
