@@ -67,8 +67,6 @@ fun HomePage(
         ChannelBus.getChannel<NavigationSelectEvent>()?.receiveAsFlow()?.collect { event ->
             if (event.route == RoutePage.Home.route) {
                 listContent.refresh()
-//                viewState.listState.scrollToItem(0)
-//                viewState.listState.animateScrollToItem(0)
             }
         }
     }
