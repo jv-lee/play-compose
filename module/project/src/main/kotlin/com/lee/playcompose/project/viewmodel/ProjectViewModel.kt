@@ -5,13 +5,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.lee.playcompose.base.cache.CacheManager
+import com.lee.playcompose.base.extensions.cacheFlow
 import com.lee.playcompose.common.entity.Tab
 import com.lee.playcompose.common.extensions.createApi
 import com.lee.playcompose.common.ui.widget.UiStatus
+import com.lee.playcompose.project.constants.Constants.CACHE_KEY_PROJECT_TAB
 import com.lee.playcompose.project.model.api.ApiService
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
@@ -23,6 +25,7 @@ import kotlinx.coroutines.launch
 class ProjectViewModel : ViewModel() {
 
     private val api = createApi<ApiService>()
+    private val cacheManager = CacheManager.getDefault()
 
     var viewStates by mutableStateOf(ProjectViewState())
         private set
@@ -39,17 +42,16 @@ class ProjectViewModel : ViewModel() {
 
     private fun requestTabData() {
         viewModelScope.launch {
-            flow { emit(api.getProjectTabsAsync()) }
-                .onStart {
-                    viewStates = viewStates.copy(pageStatus = UiStatus.Loading)
-                }
-                .catch {
-                    viewStates = viewStates.copy(pageStatus = UiStatus.Failed)
-                }
-                .collect {
-                    viewStates = viewStates.copy(tab = it.data)
-                    viewStates = viewStates.copy(pageStatus = UiStatus.Complete)
-                }
+            cacheManager.cacheFlow(CACHE_KEY_PROJECT_TAB) {
+                api.getProjectTabsAsync()
+            }.onStart {
+                viewStates = viewStates.copy(pageStatus = UiStatus.Loading)
+            }.catch {
+                viewStates = viewStates.copy(pageStatus = UiStatus.Failed)
+            }.collect {
+                viewStates = viewStates.copy(tab = it.data)
+                viewStates = viewStates.copy(pageStatus = UiStatus.Complete)
+            }
         }
     }
 

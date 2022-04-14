@@ -10,7 +10,7 @@ import androidx.paging.PagingData
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
-import com.lee.playcompose.common.paging.extensions.localPager
+import com.lee.playcompose.common.paging.extensions.pager
 import com.lee.playcompose.system.model.api.ApiService
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -25,9 +25,9 @@ class SystemContentListViewModel(private val id: Long) : ViewModel() {
     private val api = createApi<ApiService>()
 
     private val pager by lazy {
-        localPager(remoteKey = this.javaClass.simpleName.plus(id)) { page ->
+        pager { page ->
             if (page == 0) delay(300)
-            api.getContentDataAsync(page, id).checkData().data
+            api.getContentDataAsync(page, id).checkData()
         }
     }
 

@@ -109,7 +109,7 @@ class RemoteRoomMediator<T>(
     ): MediatorResult {
         try {
             val result = requestAction(page)
-            val endOfPaginationReached = result.isEmpty()
+            val endOfPaginationReached = if (isSingle) true else result.isEmpty()
 
             val item = result.map {
                 RemoteContent(
@@ -125,8 +125,7 @@ class RemoteRoomMediator<T>(
                     database.remoteContentDao().clear(remoteKey)
                 }
                 val nextKey = if (endOfPaginationReached) null else page + 1
-                val entity =
-                    RemoteKey(remoteKey = remoteKey, nextKey = if (isSingle) null else nextKey)
+                val entity = RemoteKey(remoteKey = remoteKey, nextKey = nextKey)
 
                 database.remoteKeyDao().insert(entity)
                 database.remoteContentDao().insertList(item)
