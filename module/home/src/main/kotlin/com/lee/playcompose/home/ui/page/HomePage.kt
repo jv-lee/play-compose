@@ -60,12 +60,15 @@ fun HomePage(
     viewModel: HomeViewModel = viewModel()
 ) {
     val viewState = viewModel.viewStates
+    val listContent = viewState.pagingData.collectAsLazyPagingItems()
 
     LaunchedEffect(Unit) {
         // 监听channel全局事件NavigationSelectEvent:导航点击列表移动回顶部
         ChannelBus.getChannel<NavigationSelectEvent>()?.receiveAsFlow()?.collect { event ->
             if (event.route == RoutePage.Home.route) {
-                viewState.listState.animateScrollToItem(0)
+                listContent.refresh()
+//                viewState.listState.scrollToItem(0)
+//                viewState.listState.animateScrollToItem(0)
             }
         }
     }

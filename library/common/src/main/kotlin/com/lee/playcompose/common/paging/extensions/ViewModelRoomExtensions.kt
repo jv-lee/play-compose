@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.map
  * @description paging3分页数据加载使用room数据库做缓存处理
  */
 @OptIn(ExperimentalPagingApi::class)
-inline fun <reified T : Any> ViewModel.localPaging(
+inline fun <reified T : Any> ViewModel.localPager(
     config: PagingConfig = PagingConfig(20),
     initialKey: Int = 0,
     remoteKey: String = this.javaClass.simpleName,
