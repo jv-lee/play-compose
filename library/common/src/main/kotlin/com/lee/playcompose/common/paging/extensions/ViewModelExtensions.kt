@@ -38,14 +38,11 @@ fun <T : Any> ViewModel.pager(
 
 fun <T : Any> ViewModel.singlePager(
     config: PagingConfig = PagingConfig(100), initialKey: Int = 0,
-    requestAction: suspend () -> Data<List<T>>
+    requestAction: suspend () -> List<T>
 ): Flow<PagingData<T>> {
     return createPaging(config, initialKey) {
         try {
-            val response = requestAction()
-            val data = response.checkData()
-
-            PagingSource.LoadResult.Page(data = data, prevKey = null, nextKey = null)
+            PagingSource.LoadResult.Page(data = requestAction(), prevKey = null, nextKey = null)
         } catch (e: Exception) {
             PagingSource.LoadResult.Error(e)
         }
