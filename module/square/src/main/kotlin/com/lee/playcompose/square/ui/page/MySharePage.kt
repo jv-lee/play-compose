@@ -7,7 +7,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
 import com.lee.playcompose.base.extensions.forResult
 import com.lee.playcompose.common.entity.Content
@@ -33,7 +32,7 @@ import kotlinx.coroutines.flow.collect
 @Composable
 fun MySharePage(navController: NavController, viewModel: MyShareViewModel = viewModel()) {
     val viewState = viewModel.viewStates
-    val contentList = viewState.pagingData.collectAsLazyPagingItems()
+    val contentList = viewState.savedPager.getLazyPagingItems()
     val slidingPaneState by rememberSlidingPaneState()
 
     // 监听创建分享成功事件刷新列表
@@ -78,7 +77,7 @@ private fun MyShareContent(
     onItemClick: (Content) -> Unit,
     onItemDelete: (Content) -> Unit
 ) {
-    val contentList = viewState.pagingData.collectAsLazyPagingItems()
+    val contentList = viewState.savedPager.getLazyPagingItems()
     val listState = if (contentList.itemCount > 0) viewState.listState else LazyListState()
 
     RefreshList(

@@ -6,14 +6,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
 import com.lee.playcompose.base.cache.CacheManager
 import com.lee.playcompose.base.extensions.cacheFlow
 import com.lee.playcompose.common.entity.Banner
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
-import com.lee.playcompose.common.paging.extensions.savedPager
+import com.lee.playcompose.common.paging.saved.SavedPager
+import com.lee.playcompose.common.paging.saved.savedPager
 import com.lee.playcompose.home.constants.Constants.CACHE_KEY_HOME_CONTENT
 import com.lee.playcompose.home.model.api.ApiService
 import com.lee.playcompose.home.model.entity.HomeCategory
@@ -37,7 +37,7 @@ class HomeViewModel : ViewModel() {
         }
     }
 
-    var viewStates by mutableStateOf(HomeViewState(pagingData = pager))
+    var viewStates by mutableStateOf(HomeViewState(savedPager = pager))
         private set
 
     fun dispatch(action: HomeViewAction) {
@@ -66,7 +66,7 @@ class HomeViewModel : ViewModel() {
 }
 
 data class HomeViewState(
-    val pagingData: Flow<PagingData<Content>>,
+    val savedPager: SavedPager<Content>,
     val isRefreshing: Boolean = false,
     val banners: List<Banner> = emptyList(),
     val category: List<HomeCategory> = emptyList(),

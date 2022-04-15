@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.map
  * @description paging3分页数据加载使用room数据库做缓存处理
  */
 @OptIn(ExperimentalPagingApi::class)
-inline fun <reified T : Any> ViewModel.savedPager(
+inline fun <reified T : Any> ViewModel.roomPager(
     config: PagingConfig = PagingConfig(
         pageSize = 20,
         prefetchDistance = 5,
@@ -51,7 +51,7 @@ inline fun <reified T : Any> ViewModel.savedPager(
 }
 
 @OptIn(ExperimentalPagingApi::class)
-inline fun <reified T : Any> ViewModel.savedSinglePager(
+inline fun <reified T : Any> ViewModel.singleRoomPager(
     config: PagingConfig = PagingConfig(
         pageSize = 20,
         prefetchDistance = 5,

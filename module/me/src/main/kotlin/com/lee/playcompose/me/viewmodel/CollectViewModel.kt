@@ -6,13 +6,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
 import androidx.paging.filter
 import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
-import com.lee.playcompose.common.paging.extensions.savedPager
+import com.lee.playcompose.common.paging.saved.SavedPager
+import com.lee.playcompose.common.paging.saved.savedPager
 import com.lee.playcompose.me.R
 import com.lee.playcompose.me.model.api.ApiService
 import kotlinx.coroutines.channels.Channel
@@ -32,14 +32,16 @@ class CollectViewModel : ViewModel() {
     private val removedItemsFlow: Flow<MutableList<Content>> get() = _removedItemsFlow
 
     private val pager by lazy {
-        savedPager { api.getCollectListAsync(it).checkData() }
+        savedPager { api.getCollectListAsync(it).checkData() }.flowScope { scope ->
             // 添加被移除的数据过滤逻辑
-            .combine(removedItemsFlow) { pagingData, removed ->
+            scope.combine(removedItemsFlow) { pagingData, removed ->
                 pagingData.filter { it !in removed }
             }
+        }
+
     }
 
-    var viewStates by mutableStateOf(CollectViewState(pagingData = pager))
+    var viewStates by mutableStateOf(CollectViewState(savedPager = pager))
         private set
 
     private val _viewEvents = Channel<CollectViewEvent>(Channel.BUFFERED)
@@ -79,7 +81,7 @@ class CollectViewModel : ViewModel() {
 }
 
 data class CollectViewState(
-    val pagingData: Flow<PagingData<Content>>,
+    val savedPager: SavedPager<Content>,
     val listState: LazyListState = LazyListState()
 )
 

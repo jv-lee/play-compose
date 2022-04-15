@@ -8,7 +8,6 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.extensions.toast
@@ -72,7 +71,7 @@ private fun CollectContent(
     onItemClick: (Content) -> Unit,
     onItemDelete: (Content) -> Unit
 ) {
-    val contentList = viewState.pagingData.collectAsLazyPagingItems()
+    val contentList = viewState.savedPager.getLazyPagingItems()
     val listState = if (contentList.itemCount > 0) viewState.listState else LazyListState()
 
     RefreshList(

@@ -5,36 +5,38 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import androidx.paging.PagingData
 import com.lee.playcompose.common.entity.ParentTab
 import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
-import com.lee.playcompose.common.paging.extensions.singlePager
+import com.lee.playcompose.common.paging.saved.SavedSinglePager
+import com.lee.playcompose.common.paging.saved.singleSavedPager
 import com.lee.playcompose.system.model.api.ApiService
-import kotlinx.coroutines.flow.Flow
 
 /**
  * @author jv.lee
  * @date 2022/3/8
  * @description 体系内容 viewModel
  */
+
 class SystemContentViewModel : ViewModel() {
 
     private val api = createApi<ApiService>()
 
-    private val pager by lazy {
-        singlePager {
+    private val savedPager by lazy {
+        singleSavedPager {
             api.getParentTabAsync().checkData().filter {
                 it.children.isNotEmpty()
             }
         }
     }
 
-    var viewStates by mutableStateOf(SystemContentViewState(pagingData = pager))
+    var viewStates by mutableStateOf(
+        SystemContentViewState(savedPager = savedPager)
+    )
         private set
 }
 
 data class SystemContentViewState(
-    val pagingData: Flow<PagingData<ParentTab>>,
+    val savedPager: SavedSinglePager<ParentTab>,
     val listState: LazyListState = LazyListState()
 )

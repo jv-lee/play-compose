@@ -12,7 +12,8 @@ import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
-import com.lee.playcompose.common.paging.extensions.savedPager
+import com.lee.playcompose.common.paging.saved.SavedPager
+import com.lee.playcompose.common.paging.saved.savedPager
 import com.lee.playcompose.square.R
 import com.lee.playcompose.square.model.api.ApiService
 import kotlinx.coroutines.channels.Channel
@@ -32,14 +33,17 @@ class MyShareViewModel : ViewModel() {
     private val removedItemsFlow: Flow<MutableList<Content>> get() = _removedItemsFlow
 
     private val pager by lazy {
-        savedPager(initialKey = 1) { api.getMyShareDataSync(it).checkData().shareArticles }
+        savedPager(initialKey = 1) {
+            api.getMyShareDataSync(it).checkData().shareArticles
+        }.flowScope { scope ->
             // 添加被移除的数据过滤逻辑
-            .combine(removedItemsFlow) { pagingData, removed ->
+            scope.combine(removedItemsFlow) { pagingData, removed ->
                 pagingData.filter { it !in removed }
             }
+        }
     }
 
-    var viewStates by mutableStateOf(MyShareViewState(pagingData = pager))
+    var viewStates by mutableStateOf(MyShareViewState(savedPager = pager))
 
     private val _viewEvents = Channel<MyShareViewEvent>(Channel.BUFFERED)
     val viewEvents = _viewEvents.receiveAsFlow()
@@ -78,7 +82,7 @@ class MyShareViewModel : ViewModel() {
 }
 
 data class MyShareViewState(
-    val pagingData: Flow<PagingData<Content>>,
+    val savedPager: SavedPager<Content>,
     val listState: LazyListState = LazyListState()
 )
 

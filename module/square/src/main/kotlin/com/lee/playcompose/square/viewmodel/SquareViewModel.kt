@@ -9,7 +9,8 @@ import androidx.paging.PagingData
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
-import com.lee.playcompose.common.paging.extensions.savedPager
+import com.lee.playcompose.common.paging.saved.SavedPager
+import com.lee.playcompose.common.paging.saved.savedPager
 import com.lee.playcompose.square.model.api.ApiService
 import kotlinx.coroutines.flow.Flow
 
@@ -25,11 +26,11 @@ class SquareViewModel : ViewModel() {
         savedPager { api.getSquareDataSync(it).checkData() }
     }
 
-    var viewStates by mutableStateOf(SquareViewState(pagingData = pager))
+    var viewStates by mutableStateOf(SquareViewState(savedPager = pager))
         private set
 }
 
 data class SquareViewState(
-    val pagingData: Flow<PagingData<Content>>,
+    val savedPager: SavedPager<Content>,
     val listState: LazyListState = LazyListState()
 )

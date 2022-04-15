@@ -111,7 +111,7 @@ private fun HomeContentList(
     onCategoryItemClick: (HomeCategory) -> Unit,
     onContentItemClick: (Content) -> Unit,
 ) {
-    val contentList = viewState.pagingData.collectAsLazyPagingItems()
+    val contentList = viewState.savedPager.getLazyPagingItems()
     val bannerList = viewState.banners
     val categoryList = viewState.category
     val isRefreshing = viewState.isRefreshing

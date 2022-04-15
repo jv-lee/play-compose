@@ -16,7 +16,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
 import com.google.accompanist.flowlayout.FlowRow
 import com.google.accompanist.insets.LocalWindowInsets
@@ -73,7 +72,7 @@ private fun NavigationContent(
         rememberInsetsPaddingValues(insets = LocalWindowInsets.current.statusBars)
     val scrollOffset = (-(statusInsets.calculateTopPadding().value + ToolBarHeight.value)).toInt()
 
-    val contentList = viewState.pagingData.collectAsLazyPagingItems()
+    val contentList = viewState.savedPager.getLazyPagingItems()
     val listState = if (contentList.itemCount > 0) viewState.listState else LazyListState()
     val tabState = if (contentList.itemCount > 0) viewState.tabState else LazyListState()
     val currentIndex = remember { mutableStateOf(0) }
