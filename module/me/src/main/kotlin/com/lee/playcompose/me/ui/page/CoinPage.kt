@@ -23,7 +23,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
-import com.lee.playcompose.service.helper.ModuleService
 import com.lee.playcompose.base.extensions.LocalActivity
 import com.lee.playcompose.common.entity.AccountViewState
 import com.lee.playcompose.common.entity.CoinRecord
@@ -37,6 +36,7 @@ import com.lee.playcompose.me.viewmodel.CoinViewState
 import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
 import com.lee.playcompose.service.AccountService
+import com.lee.playcompose.service.helper.ModuleService
 import com.lee.playcompose.common.R as CR
 
 /**
@@ -59,18 +59,17 @@ fun CoinPage(navController: NavController, viewModel: CoinViewModel = viewModel(
         navigationClick = { navController.popBackStack() },
         actionClick = { navController.navigateArgs(RoutePage.Details.route, viewState.detailsData) }
     ) {
-        CoinRecordContent(viewState = viewState, accountViewState = accountViewState) {
-            navController.navigate(RoutePage.Me.CoinRank.route)
+        Column {
+            CoinRecordHeader(accountViewState = accountViewState, coinRankClick = {
+                navController.navigate(RoutePage.Me.CoinRank.route)
+            })
+            CoinRecordContent(viewState = viewState)
         }
     }
 }
 
 @Composable
-private fun CoinRecordContent(
-    viewState: CoinViewState,
-    accountViewState: AccountViewState,
-    coinRankClick: () -> Unit
-) {
+private fun CoinRecordContent(viewState: CoinViewState) {
     val contentList = viewState.pagingData.collectAsLazyPagingItems()
     val listState = if (contentList.itemCount > 0) viewState.listState else LazyListState()
 
@@ -79,9 +78,6 @@ private fun CoinRecordContent(
         lazyPagingItems = contentList,
         listState = listState,
     ) {
-        item {
-            CoinRecordHeader(accountViewState = accountViewState, coinRankClick = coinRankClick)
-        }
         // build coinRecord content item
         itemsIndexed(contentList) { _, item ->
             item ?: return@itemsIndexed
