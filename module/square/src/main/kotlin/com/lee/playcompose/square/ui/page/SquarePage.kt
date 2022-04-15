@@ -51,13 +51,12 @@ fun SquarePage(
     val accountViewState =
         ModuleService.find<AccountService>().getAccountViewStates(LocalActivity.current)
     val viewState = viewModel.viewStates
-    val listContent = viewState.pagingData.collectAsLazyPagingItems()
 
     LaunchedEffect(Unit) {
         // 监听channel全局事件NavigationSelectEvent:导航点击列表移动回顶部
         ChannelBus.getChannel<NavigationSelectEvent>()?.receiveAsFlow()?.collect { event ->
             if (event.route == RoutePage.Square.route) {
-                listContent.refresh()
+                viewState.listState.animateScrollToItem(0)
             }
         }
     }

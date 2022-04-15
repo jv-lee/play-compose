@@ -11,7 +11,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -24,7 +23,6 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.lee.playcompose.common.R
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.theme.ListStateItemHeight
-import kotlinx.coroutines.launch
 
 /**
  * @author jv.lee
@@ -78,14 +76,8 @@ fun <T : Any> RefreshList(
             onRefresh()
             lazyPagingItems.refresh()
         }) {
-        val scope = rememberCoroutineScope()
         swipeRefreshState.isRefreshing =
             ((lazyPagingItems.loadState.refresh is LoadState.Loading) || isRefreshing) && swipeEnable
-
-        // refresh list scroll to top
-        if (!lazyPagingItems.loadState.prepend.endOfPaginationReached) {
-            scope.launch { listState.animateScrollToItem(0) }
-        }
 
         // build list
         LazyColumn(
