@@ -6,6 +6,7 @@ import androidx.paging.*
 import androidx.room.withTransaction
 import com.google.gson.reflect.TypeToken
 import com.lee.playcompose.base.net.HttpManager
+import com.lee.playcompose.common.entity.PageData
 import com.lee.playcompose.common.paging.RemoteContent
 import com.lee.playcompose.common.paging.RemoteKey
 import com.lee.playcompose.common.paging.db.RemoteCacheDatabase
@@ -18,7 +19,7 @@ import kotlinx.coroutines.flow.map
  * @description paging3分页数据加载使用room数据库做缓存处理
  */
 @OptIn(ExperimentalPagingApi::class)
-inline fun <reified T : Any> ViewModel.localPager(
+inline fun <reified T : Any> ViewModel.savedPager(
     config: PagingConfig = PagingConfig(
         pageSize = 20,
         prefetchDistance = 5,
@@ -27,8 +28,7 @@ inline fun <reified T : Any> ViewModel.localPager(
     ),
     initialKey: Int = 0,
     remoteKey: String = this.javaClass.simpleName,
-    isSingle: Boolean = false,
-    noinline requestAction: suspend (page: Int) -> List<T>
+    noinline requestAction: suspend (page: Int) -> PageData<T>
 ): Flow<PagingData<T>> {
     val database = RemoteCacheDatabase.get()
     return Pager(
@@ -39,8 +39,40 @@ inline fun <reified T : Any> ViewModel.localPager(
             initialKey,
             database,
             requestAction,
-            isSingle
         )
+    ) {
+        database.remoteContentDao().getList(remoteKey = remoteKey)
+    }.flow.map { pagingData ->
+        pagingData.map { remoteContent ->
+            val type = object : TypeToken<T>() {}.type
+            HttpManager.getGson().fromJson<T>(remoteContent.content, type)
+        }
+    }.cachedIn(viewModelScope)
+}
+
+@OptIn(ExperimentalPagingApi::class)
+inline fun <reified T : Any> ViewModel.savedSinglePager(
+    config: PagingConfig = PagingConfig(
+        pageSize = 20,
+        prefetchDistance = 5,
+        initialLoadSize = 20,
+        enablePlaceholders = true
+    ),
+    initialKey: Int = 0,
+    remoteKey: String = this.javaClass.simpleName,
+    noinline requestAction: suspend (page: Int) -> List<T>
+): Flow<PagingData<T>> {
+    val database = RemoteCacheDatabase.get()
+    return Pager(
+        config = config,
+        initialKey = initialKey,
+        remoteMediator = RemoteRoomMediator(
+            remoteKey,
+            initialKey,
+            database,
+        ) { page ->
+            PageData(data = requestAction(page))
+        }
     ) {
         database.remoteContentDao().getList(remoteKey = remoteKey)
     }.flow.map { pagingData ->
@@ -56,8 +88,7 @@ class RemoteRoomMediator<T>(
     private val remoteKey: String,
     private val initialKey: Int,
     private val database: RemoteCacheDatabase,
-    private val requestAction: suspend (page: Int) -> List<T>,
-    private val isSingle: Boolean = false
+    private val requestAction: suspend (page: Int) -> PageData<T>,
 ) : RemoteMediator<Int, RemoteContent>() {
 
     override suspend fun load(
@@ -67,7 +98,7 @@ class RemoteRoomMediator<T>(
         return when (loadType) {
             // 首次访问 || PagingDataAdapter.refresh()
             LoadType.REFRESH -> {
-                loadRefresh(loadType, state, isSingle)
+                loadRefresh(loadType, state)
             }
             // 刷新数据到位后设置当前数据成功状态显示
             LoadType.PREPEND -> {
@@ -82,10 +113,9 @@ class RemoteRoomMediator<T>(
 
     private suspend fun loadRefresh(
         loadType: LoadType,
-        state: PagingState<Int, RemoteContent>,
-        isSingle: Boolean
+        state: PagingState<Int, RemoteContent>
     ): MediatorResult {
-        return loadDataTransaction(loadType, initialKey, isSingle)
+        return loadDataTransaction(loadType, initialKey)
     }
 
     private fun loadPrepend(
@@ -110,13 +140,12 @@ class RemoteRoomMediator<T>(
     private suspend fun loadDataTransaction(
         loadType: LoadType,
         page: Int,
-        isSingle: Boolean = false,
     ): MediatorResult {
         try {
             val result = requestAction(page)
-            val endOfPaginationReached = if (isSingle) true else result.isEmpty()
+            val endOfPaginationReached = result.curPage >= result.pageCount
 
-            val item = result.map {
+            val item = result.data.map {
                 RemoteContent(
                     remoteKey = remoteKey,
                     content = HttpManager.getGson().toJson(it)

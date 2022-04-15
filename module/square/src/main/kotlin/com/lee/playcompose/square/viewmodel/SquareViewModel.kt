@@ -9,7 +9,7 @@ import androidx.paging.PagingData
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
-import com.lee.playcompose.common.paging.extensions.localPager
+import com.lee.playcompose.common.paging.extensions.savedPager
 import com.lee.playcompose.square.model.api.ApiService
 import kotlinx.coroutines.flow.Flow
 
@@ -22,7 +22,7 @@ class SquareViewModel : ViewModel() {
     private val api = createApi<ApiService>()
 
     private val pager by lazy {
-        localPager { api.getSquareDataSync(it).checkData().data }
+        savedPager { api.getSquareDataSync(it).checkData() }
     }
 
     var viewStates by mutableStateOf(SquareViewState(pagingData = pager))

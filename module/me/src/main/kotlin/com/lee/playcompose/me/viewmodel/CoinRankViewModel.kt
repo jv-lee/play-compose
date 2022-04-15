@@ -39,7 +39,8 @@ class CoinRankViewModel : ViewModel() {
 
     private fun PageData<CoinRank>.swapRankList(page: Int): PageData<CoinRank> {
         if (page == 1) {
-            val data = data
+            val data = data.toMutableList()
+
             val list = arrayListOf<CoinRank>()
             for (index in 0..2) {
                 if (data.size > 0) {

@@ -7,9 +7,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagingData
 import com.lee.playcompose.common.entity.NavigationItem
-import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
-import com.lee.playcompose.common.paging.extensions.localPager
+import com.lee.playcompose.common.paging.extensions.savedSinglePager
 import com.lee.playcompose.system.model.api.ApiService
 import kotlinx.coroutines.flow.Flow
 
@@ -23,7 +22,7 @@ class NavigationContentViewModel : ViewModel() {
     private val api = createApi<ApiService>()
 
     private val pager by lazy {
-        localPager(isSingle = true) { api.getNavigationDataAsync().checkData() }
+        savedSinglePager { api.getNavigationDataAsync().data }
     }
 
     var viewStates by mutableStateOf(NavigationContentViewState(pagingData = pager))

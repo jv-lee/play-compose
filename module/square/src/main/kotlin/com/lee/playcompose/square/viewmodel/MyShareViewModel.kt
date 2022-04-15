@@ -7,14 +7,12 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
-import androidx.paging.cachedIn
 import androidx.paging.filter
 import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
-import com.lee.playcompose.common.paging.extensions.localPager
-import com.lee.playcompose.common.paging.extensions.pager
+import com.lee.playcompose.common.paging.extensions.savedPager
 import com.lee.playcompose.square.R
 import com.lee.playcompose.square.model.api.ApiService
 import kotlinx.coroutines.channels.Channel
@@ -34,7 +32,7 @@ class MyShareViewModel : ViewModel() {
     private val removedItemsFlow: Flow<MutableList<Content>> get() = _removedItemsFlow
 
     private val pager by lazy {
-        localPager(initialKey = 1) { api.getMyShareDataSync(it).checkData().shareArticles.data }
+        savedPager(initialKey = 1) { api.getMyShareDataSync(it).checkData().shareArticles }
             // 添加被移除的数据过滤逻辑
             .combine(removedItemsFlow) { pagingData, removed ->
                 pagingData.filter { it !in removed }

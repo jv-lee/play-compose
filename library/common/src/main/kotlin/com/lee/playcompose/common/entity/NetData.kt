@@ -20,13 +20,13 @@ data class Data<T>(
 @Keep
 data class PageData<T>(
     @SerializedName("datas")
-    val data: MutableList<T>,
-    val curPage: Int,
-    val offset: Int,
-    val over: Boolean,
-    val pageCount: Int,
-    val size: Int,
-    val total: Int,
+    val data: List<T>,
+    val curPage: Int = 0,
+    val offset: Int = 0,
+    val over: Boolean = false,
+    val pageCount: Int = 0,
+    val size: Int = 0,
+    val total: Int = 0,
 )
 
 /**

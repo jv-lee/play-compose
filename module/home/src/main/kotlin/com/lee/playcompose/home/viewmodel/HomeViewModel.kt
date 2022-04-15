@@ -13,7 +13,7 @@ import com.lee.playcompose.common.entity.Banner
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
-import com.lee.playcompose.common.paging.extensions.localPager
+import com.lee.playcompose.common.paging.extensions.savedPager
 import com.lee.playcompose.home.constants.Constants.CACHE_KEY_HOME_CONTENT
 import com.lee.playcompose.home.model.api.ApiService
 import com.lee.playcompose.home.model.entity.HomeCategory
@@ -31,9 +31,9 @@ class HomeViewModel : ViewModel() {
     private val cacheManager = CacheManager.getDefault()
 
     private val pager by lazy {
-        localPager { page ->
+        savedPager { page ->
             if (page == 0) dispatch(HomeViewAction.RequestData)
-            api.getContentDataAsync(page).checkData().data
+            api.getContentDataAsync(page).checkData()
         }
     }
 
