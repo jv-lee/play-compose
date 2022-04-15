@@ -24,7 +24,7 @@ import kotlinx.coroutines.flow.flow
 class SavedPager<T : Any>(
     viewModel: ViewModel,
     initialKey: Int = 0,
-    removedFlow: Flow<MutableList<T>> = flow { },
+    removedFlow: Flow<MutableList<T>>,
     requestAction: suspend (Int) -> PageData<T>,
     localAction: suspend () -> List<T>
 ) {
@@ -63,7 +63,7 @@ class SavedPager<T : Any>(
 inline fun <reified T : Any> ViewModel.savedPager(
     initialKey: Int = 0,
     remoteKey: String = this::class.java.simpleName,
-    removedFlow: Flow<MutableList<T>> = flow { },
+    removedFlow: Flow<MutableList<T>> = flow { emit(mutableListOf()) },
     crossinline requestAction: suspend (Int) -> PageData<T>
 ) = SavedPager(this,
     removedFlow = removedFlow,

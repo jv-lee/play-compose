@@ -12,7 +12,6 @@ import com.lee.playcompose.base.extensions.putCache
 import com.lee.playcompose.common.paging.extensions.singlePager
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flow
 
 /**
  * @author jv.lee
@@ -21,7 +20,7 @@ import kotlinx.coroutines.flow.flow
  */
 class SavedSinglePager<T : Any>(
     viewModel: ViewModel,
-    removedFlow: Flow<MutableList<T>> = flow { },
+    removedFlow: Flow<MutableList<T>>? = null,
     requestAction: suspend () -> List<T>,
     localAction: suspend () -> List<T>
 ) {
@@ -33,13 +32,21 @@ class SavedSinglePager<T : Any>(
         viewModel.apply {
             pager = singlePager {
                 requestAction()
-            }.combine(removedFlow) { pagingData, removed ->
-                pagingData.filter { it !in removed }
+            }.apply {
+                removedFlow?.let {
+                    combine(removedFlow) { pagingData, removed ->
+                        pagingData.filter { it !in removed }
+                    }
+                }
             }
             localPager = singlePager {
                 localAction()
-            }.combine(removedFlow) { pagingData, removed ->
-                pagingData.filter { it !in removed }
+            }.apply {
+                removedFlow?.let {
+                    combine(removedFlow) { pagingData, removed ->
+                        pagingData.filter { it !in removed }
+                    }
+                }
             }
         }
     }
@@ -60,7 +67,7 @@ class SavedSinglePager<T : Any>(
 
 inline fun <reified T : Any> ViewModel.singleSavedPager(
     remoteKey: String = this::class.java.simpleName,
-    removedFlow: Flow<MutableList<T>> = flow { },
+    removedFlow: Flow<MutableList<T>>? = null,
     crossinline requestAction: suspend () -> List<T>
 ) = SavedSinglePager(this,
     removedFlow = removedFlow,
