@@ -20,7 +20,7 @@ data class Data<T>(
 @Keep
 data class PageData<T>(
     @SerializedName("datas")
-    val data: List<T>,
+    var data: List<T>,
     val curPage: Int = 0,
     val offset: Int = 0,
     val over: Boolean = false,

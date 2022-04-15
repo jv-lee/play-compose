@@ -39,14 +39,15 @@ class CoinRankViewModel : ViewModel() {
 
     private fun PageData<CoinRank>.swapRankList(page: Int): PageData<CoinRank> {
         if (page == 1) {
-            val data = data.toMutableList()
+            val mutableData = data.toMutableList()
 
             val list = arrayListOf<CoinRank>()
             for (index in 0..2) {
-                if (data.size > 0) {
-                    list.add(data.removeAt(0))
+                if (mutableData.size > 0) {
+                    list.add(mutableData.removeAt(0))
                 }
             }
+            this.data = mutableData
 
             if (list.size >= 2) {
                 //排行榜UI显示 0 —><- 1 位置数据对掉
