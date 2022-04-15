@@ -33,13 +33,8 @@ class MyShareViewModel : ViewModel() {
     private val removedItemsFlow: Flow<MutableList<Content>> get() = _removedItemsFlow
 
     private val pager by lazy {
-        savedPager(initialKey = 1) {
+        savedPager(initialKey = 1, removedFlow = removedItemsFlow) {
             api.getMyShareDataSync(it).checkData().shareArticles
-        }.flowScope { scope ->
-            // 添加被移除的数据过滤逻辑
-            scope.combine(removedItemsFlow) { pagingData, removed ->
-                pagingData.filter { it !in removed }
-            }
         }
     }
 

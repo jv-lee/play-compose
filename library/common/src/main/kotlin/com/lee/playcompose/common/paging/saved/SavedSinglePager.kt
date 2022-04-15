@@ -5,11 +5,14 @@ import androidx.lifecycle.ViewModel
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.filter
 import com.lee.playcompose.base.cache.CacheManager
 import com.lee.playcompose.base.extensions.getCache
 import com.lee.playcompose.base.extensions.putCache
 import com.lee.playcompose.common.paging.extensions.singlePager
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flow
 
 /**
  * @author jv.lee
@@ -18,6 +21,7 @@ import kotlinx.coroutines.flow.Flow
  */
 class SavedSinglePager<T : Any>(
     viewModel: ViewModel,
+    removedFlow: Flow<MutableList<T>> = flow { },
     requestAction: suspend () -> List<T>,
     localAction: suspend () -> List<T>
 ) {
@@ -29,9 +33,13 @@ class SavedSinglePager<T : Any>(
         viewModel.apply {
             pager = singlePager {
                 requestAction()
+            }.combine(removedFlow) { pagingData, removed ->
+                pagingData.filter { it !in removed }
             }
             localPager = singlePager {
                 localAction()
+            }.combine(removedFlow) { pagingData, removed ->
+                pagingData.filter { it !in removed }
             }
         }
     }
@@ -48,17 +56,14 @@ class SavedSinglePager<T : Any>(
         return if (pagerContent.itemCount > 0) pagerContent else localContent
     }
 
-    fun flowScope(scope: (Flow<PagingData<T>>) -> Unit): SavedSinglePager<T> {
-        scope(pager)
-        scope(localPager)
-        return this
-    }
 }
 
 inline fun <reified T : Any> ViewModel.singleSavedPager(
     remoteKey: String = this::class.java.simpleName,
+    removedFlow: Flow<MutableList<T>> = flow { },
     crossinline requestAction: suspend () -> List<T>
 ) = SavedSinglePager(this,
+    removedFlow = removedFlow,
     requestAction = {
         requestAction().also {
             CacheManager.getDefault().putCache(remoteKey, it)

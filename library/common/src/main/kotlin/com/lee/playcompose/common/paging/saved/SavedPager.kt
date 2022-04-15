@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.filter
 import com.lee.playcompose.base.cache.CacheManager
 import com.lee.playcompose.base.extensions.getCache
 import com.lee.playcompose.base.extensions.putCache
@@ -12,6 +13,8 @@ import com.lee.playcompose.common.entity.PageData
 import com.lee.playcompose.common.paging.extensions.pager
 import com.lee.playcompose.common.paging.extensions.singlePager
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flow
 
 /**
  * @author jv.lee
@@ -21,6 +24,7 @@ import kotlinx.coroutines.flow.Flow
 class SavedPager<T : Any>(
     viewModel: ViewModel,
     initialKey: Int = 0,
+    removedFlow: Flow<MutableList<T>> = flow { },
     requestAction: suspend (Int) -> PageData<T>,
     localAction: suspend () -> List<T>
 ) {
@@ -32,9 +36,13 @@ class SavedPager<T : Any>(
         viewModel.apply {
             pager = pager(initialKey = initialKey) {
                 requestAction(it)
+            }.combine(removedFlow) { pagingData, removed ->
+                pagingData.filter { it !in removed }
             }
             localPager = singlePager {
                 localAction()
+            }.combine(removedFlow) { pagingData, removed ->
+                pagingData.filter { it !in removed }
             }
         }
     }
@@ -50,19 +58,15 @@ class SavedPager<T : Any>(
 
         return if (pagerContent.itemCount > 0) pagerContent else localContent
     }
-
-    fun flowScope(scope: (Flow<PagingData<T>>) -> Unit): SavedPager<T> {
-        scope(pager)
-        scope(localPager)
-        return this
-    }
 }
 
 inline fun <reified T : Any> ViewModel.savedPager(
     initialKey: Int = 0,
     remoteKey: String = this::class.java.simpleName,
+    removedFlow: Flow<MutableList<T>> = flow { },
     crossinline requestAction: suspend (Int) -> PageData<T>
 ) = SavedPager(this,
+    removedFlow = removedFlow,
     requestAction = { page ->
         requestAction(page).also {
             if (initialKey == page) CacheManager.getDefault().putCache(remoteKey, it.data)

@@ -6,7 +6,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.filter
 import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.extensions.checkData
@@ -32,13 +31,7 @@ class CollectViewModel : ViewModel() {
     private val removedItemsFlow: Flow<MutableList<Content>> get() = _removedItemsFlow
 
     private val pager by lazy {
-        savedPager { api.getCollectListAsync(it).checkData() }.flowScope { scope ->
-            // 添加被移除的数据过滤逻辑
-            scope.combine(removedItemsFlow) { pagingData, removed ->
-                pagingData.filter { it !in removed }
-            }
-        }
-
+        savedPager(removedFlow = removedItemsFlow) { api.getCollectListAsync(it).checkData() }
     }
 
     var viewStates by mutableStateOf(CollectViewState(savedPager = pager))
