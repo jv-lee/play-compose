@@ -12,6 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.paging.CombinedLoadStates
+import androidx.paging.LoadState
 import com.lee.playcompose.base.extensions.delayState
 import com.lee.playcompose.common.R
 import com.lee.playcompose.common.ui.theme.AppTheme
@@ -38,6 +40,27 @@ fun UiStatusPage(
         is UiStatus.Failed -> PageError(retry)
         is UiStatus.Complete -> content()
     }
+}
+
+@Composable
+fun UiStatusListPage(
+    loadState: CombinedLoadStates,
+    retry: () -> Unit,
+    content: @Composable () -> Unit
+) {
+    // loadPage Load.
+    if (loadState.refresh is LoadState.Loading) {
+        PageLoading()
+        return
+    }
+
+    // loadPage Error.
+    if (loadState.refresh is LoadState.Error) {
+        PageError { retry() }
+        return
+    }
+
+    content()
 }
 
 

@@ -27,6 +27,7 @@ import com.lee.playcompose.common.entity.NavigationSelectEvent
 import com.lee.playcompose.common.extensions.transformDetails
 import com.lee.playcompose.common.ui.composable.HeaderSpacer
 import com.lee.playcompose.common.ui.theme.*
+import com.lee.playcompose.common.ui.widget.UiStatusListPage
 import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
 import com.lee.playcompose.system.ui.theme.NavigationTabHeight
@@ -66,7 +67,7 @@ fun NavigationContentPage(
 @Composable
 private fun NavigationContent(
     viewState: NavigationContentViewState,
-    itemClick: (Content) -> Unit
+    itemClick: (Content) -> Unit,
 ) {
     val statusInsets =
         rememberInsetsPaddingValues(insets = LocalWindowInsets.current.statusBars)
@@ -90,28 +91,30 @@ private fun NavigationContent(
         }
     }
 
-    Row(Modifier.fillMaxSize()) {
-        LazyColumn(modifier = Modifier.weight(0.32f), tabState, content = {
-            item { HeaderSpacer() }
+    UiStatusListPage(loadState = contentList.loadState, retry = { contentList.retry() }) {
+        Row(Modifier.fillMaxSize()) {
+            LazyColumn(modifier = Modifier.weight(0.32f), tabState, content = {
+                item { HeaderSpacer() }
 
-            itemsIndexed(contentList) { index, item ->
-                item ?: return@itemsIndexed
-                NavigationTabItem(currentIndex.value == index, item = item, tabClick = {
-                    currentIndex.value = index
-                    upsetIndex.value = false
-                    coroutine.launch { listState.scrollToItem(index, scrollOffset) }
-                })
-            }
-        })
+                itemsIndexed(contentList) { index, item ->
+                    item ?: return@itemsIndexed
+                    NavigationTabItem(currentIndex.value == index, item = item, tabClick = {
+                        currentIndex.value = index
+                        upsetIndex.value = false
+                        coroutine.launch { listState.scrollToItem(index, scrollOffset) }
+                    })
+                }
+            })
 
-        LazyColumn(modifier = Modifier.weight(0.68f), listState, content = {
-            item { HeaderSpacer() }
+            LazyColumn(modifier = Modifier.weight(0.68f), listState, content = {
+                item { HeaderSpacer() }
 
-            itemsIndexed(contentList) { _, item ->
-                item ?: return@itemsIndexed
-                NavigationContentItem(item = item, itemClick = itemClick)
-            }
-        })
+                itemsIndexed(contentList) { _, item ->
+                    item ?: return@itemsIndexed
+                    NavigationContentItem(item = item, itemClick = itemClick)
+                }
+            })
+        }
     }
 }
 
