@@ -14,6 +14,8 @@ import com.lee.playcompose.common.entity.TodoData
 import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
 import com.lee.playcompose.common.paging.extensions.pager
+import com.lee.playcompose.common.paging.saved.SavedPager
+import com.lee.playcompose.common.paging.saved.savedPager
 import com.lee.playcompose.todo.constants.Constants.STATUS_COMPLETE
 import com.lee.playcompose.todo.constants.Constants.STATUS_UPCOMING
 import com.lee.playcompose.todo.model.api.ApiService
@@ -35,16 +37,16 @@ class TodoListViewModel(private val type: Int, private val status: Int) : ViewMo
     private val removedItemsFlow: Flow<MutableList<TodoData>> get() = _removedItemsFlow
 
     private val pager by lazy {
-        pager(initialKey = 1) { page ->
+        savedPager(
+            initialKey = 1,
+            remoteKey = javaClass.simpleName.plus(type).plus(status),
+            removedFlow = removedItemsFlow
+        ) { page ->
             api.postTodoDataAsync(page, type, status).checkData()
         }
-            // 添加被移除的数据过滤逻辑
-            .combine(removedItemsFlow) { pagingData, removed ->
-                pagingData.filter { it !in removed }
-            }
     }
 
-    var viewStates by mutableStateOf(TodoListViewState(pagingData = pager))
+    var viewStates by mutableStateOf(TodoListViewState(savedPager = pager))
         private set
 
     private val _viewEvents = Channel<TodoListViewEvent>(Channel.BUFFERED)
@@ -135,7 +137,7 @@ class TodoListViewModel(private val type: Int, private val status: Int) : ViewMo
 }
 
 data class TodoListViewState(
-    val pagingData: Flow<PagingData<TodoData>>,
+    val savedPager: SavedPager<TodoData>,
     val listState: LazyListState = LazyListState()
 )
 

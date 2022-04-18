@@ -57,7 +57,7 @@ fun TodoListPage(
     )
 ) {
     val viewState = viewModel.viewStates
-    val contentList = viewState.pagingData.collectAsLazyPagingItems()
+    val contentList = viewState.savedPager.getLazyPagingItems()
     val slidingPaneState by rememberSlidingPaneState()
 
     // 监听创建修改成功回调
@@ -119,7 +119,7 @@ private fun TodoListContent(
     onDelete: (TodoData) -> Unit,
     onUpdate: (TodoData) -> Unit,
 ) {
-    val contentList = viewState.pagingData.collectAsLazyPagingItems()
+    val contentList = viewState.savedPager.getLazyPagingItems()
     val listState = if (contentList.itemCount > 0) viewState.listState else LazyListState()
 
     RefreshList(
