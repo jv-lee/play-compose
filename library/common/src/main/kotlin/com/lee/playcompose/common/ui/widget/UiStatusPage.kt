@@ -1,5 +1,6 @@
 package com.lee.playcompose.common.ui.widget
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -11,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.lee.playcompose.base.extensions.delayState
 import com.lee.playcompose.common.R
 import com.lee.playcompose.common.ui.theme.AppTheme
 
@@ -66,11 +68,17 @@ private fun PageError(retry: () -> Unit = { }) {
 
 @Composable
 private fun PageLoading() {
+    val visible = delayState(default = false, update = true)
     Box(
         modifier = Modifier
             .fillMaxSize()
             .wrapContentSize(align = Alignment.Center)
     ) {
-        CircularProgressIndicator(color = AppTheme.colors.accent, modifier = Modifier.height(50.dp))
+        AnimatedVisibility(visible = visible.value) {
+            CircularProgressIndicator(
+                color = AppTheme.colors.accent,
+                modifier = Modifier.height(50.dp)
+            )
+        }
     }
 }

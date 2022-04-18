@@ -1,7 +1,7 @@
 package com.lee.playcompose.search.model.entity
 
 import androidx.compose.ui.graphics.Color
-import com.lee.playcompose.common.extensions.randomColor
+import java.util.*
 
 /**
  * @author jv.lee
@@ -31,4 +31,9 @@ data class SearchHot(
             SearchHot("FFmpeg")
         )
     }
+}
+
+private fun randomColor(): Color {
+    val random = Random()
+    return Color(random.nextInt(256), random.nextInt(256), random.nextInt(256))
 }
