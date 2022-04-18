@@ -11,7 +11,6 @@ import com.lee.playcompose.base.extensions.getCache
 import com.lee.playcompose.base.extensions.putCache
 import com.lee.playcompose.common.entity.PageData
 import com.lee.playcompose.common.paging.extensions.pager
-import com.lee.playcompose.common.paging.extensions.singlePager
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
@@ -19,14 +18,14 @@ import kotlinx.coroutines.flow.flow
 /**
  * @author jv.lee
  * @date 2022/4/13
- * @description paging3 分页加载本地缓存首页数据
+ * @description paging3 分页列表数据三级缓存数据
  */
 class SavedPager<T : Any>(
     viewModel: ViewModel,
     initialKey: Int = 0,
     removedFlow: Flow<MutableList<T>>,
     requestAction: suspend (Int) -> PageData<T>,
-    localAction: suspend () -> List<T>
+    localAction: suspend () -> PageData<T>,
 ) {
 
     private var pager: Flow<PagingData<T>>
@@ -39,8 +38,12 @@ class SavedPager<T : Any>(
             }.combine(removedFlow) { pagingData, removed ->
                 pagingData.filter { it !in removed }
             }
-            localPager = singlePager {
-                localAction()
+            localPager = pager(initialKey = initialKey) { page ->
+                if (page == initialKey) {
+                    localAction()
+                } else {
+                    requestAction(page)
+                }
             }.combine(removedFlow) { pagingData, removed ->
                 pagingData.filter { it !in removed }
             }
@@ -66,11 +69,12 @@ inline fun <reified T : Any> ViewModel.savedPager(
     removedFlow: Flow<MutableList<T>> = flow { emit(mutableListOf()) },
     crossinline requestAction: suspend (Int) -> PageData<T>
 ) = SavedPager(this,
+    initialKey = initialKey,
     removedFlow = removedFlow,
     requestAction = { page ->
         requestAction(page).also {
-            if (initialKey == page) CacheManager.getDefault().putCache(remoteKey, it.data)
+            if (initialKey == page) CacheManager.getDefault().putCache(remoteKey, it)
         }
     }, localAction = {
-        CacheManager.getDefault().getCache(remoteKey) ?: emptyList()
+        CacheManager.getDefault().getCache(remoteKey) ?: PageData(data = emptyList())
     })

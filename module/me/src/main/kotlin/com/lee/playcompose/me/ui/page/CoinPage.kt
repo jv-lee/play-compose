@@ -70,7 +70,7 @@ fun CoinPage(navController: NavController, viewModel: CoinViewModel = viewModel(
 
 @Composable
 private fun CoinRecordContent(viewState: CoinViewState) {
-    val contentList = viewState.pagingData.collectAsLazyPagingItems()
+    val contentList = viewState.savedPager.getLazyPagingItems()
     val listState = if (contentList.itemCount > 0) viewState.listState else LazyListState()
 
     RefreshList(

@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.flow
 /**
  * @author jv.lee
  * @date 2022/4/13
- * @description paging3 分页加载本地缓存首页数据
+ * @description paging3 单页面列表数据三级缓存数据
  */
 class SavedSinglePager<T : Any>(
     viewModel: ViewModel,
