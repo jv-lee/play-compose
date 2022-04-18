@@ -52,7 +52,7 @@ fun TodoListPage(
     status: Int,
     callbackHandler: TodoListCallbackHandler,
     viewModel: TodoListViewModel = viewModel(
-        key = (type + status).toString(),
+        key = type.toString() + status.toString(),
         factory = TodoListViewModel.CreateFactory(type, status)
     )
 ) {
