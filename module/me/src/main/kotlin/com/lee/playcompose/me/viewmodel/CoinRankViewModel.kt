@@ -5,12 +5,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
-import androidx.paging.cachedIn
 import com.lee.playcompose.base.core.ApplicationExtensions
 import com.lee.playcompose.common.constants.ApiConstants
-import com.lee.playcompose.common.entity.*
+import com.lee.playcompose.common.entity.CoinRank
+import com.lee.playcompose.common.entity.DetailsData
+import com.lee.playcompose.common.entity.PageData
 import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
 import com.lee.playcompose.common.paging.extensions.pager
