@@ -51,6 +51,7 @@ private fun CoinRankContent(viewState: CoinRankViewState) {
     val contentList = viewState.pagingData.collectAsLazyPagingItems()
     val listState = if (contentList.itemCount > 0) viewState.listState else LazyListState()
 
+    // TODO 此处应该使用  LazyVerticalGrid实现，但是现阶段LazyVerticalGrid存在bug , 所以coinRank暂时不使用缓存方式获取数据
     RefreshList(
         lazyPagingItems = contentList,
         listState = listState
