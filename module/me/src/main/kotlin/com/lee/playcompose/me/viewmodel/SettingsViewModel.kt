@@ -91,7 +91,7 @@ data class SettingsViewState(
     val isLoading: Boolean = false,
     val isCacheConfirm: Boolean = false,
     val isLogoutConfirm: Boolean = false,
-    val totalCacheSize: String = ""
+    val totalCacheSize: String = "",
 )
 
 sealed class SettingsViewEvent {

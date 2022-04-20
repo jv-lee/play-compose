@@ -31,7 +31,8 @@ fun ProfileItem(
     rightText: String? = null,
     rightSwitchVisible: Boolean = false,
     rightSwitchEnable: Boolean = false,
-    switchChecked: MutableState<Boolean> = remember { mutableStateOf(false) },
+    switchChecked: Boolean = false,
+    onCheckedChange: ((Boolean) -> Unit) = {},
     onClick: () -> Unit = {}
 ) {
     Box(
@@ -73,9 +74,9 @@ fun ProfileItem(
             if (rightSwitchVisible) {
                 Switch(
                     enabled = rightSwitchEnable,
-                    checked = switchChecked.value,
+                    checked = switchChecked,
                     onCheckedChange = {
-                        switchChecked.value = it
+                        onCheckedChange(it)
                     },
                     colors = SwitchDefaults.colors(
                         checkedThumbColor = AppTheme.colors.focus,

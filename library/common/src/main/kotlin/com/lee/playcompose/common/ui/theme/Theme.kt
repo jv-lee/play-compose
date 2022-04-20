@@ -2,7 +2,6 @@ package com.lee.playcompose.common.ui.theme
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.TweenSpec
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Typography
 import androidx.compose.runtime.*
@@ -14,6 +13,11 @@ import androidx.compose.ui.unit.sp
 import androidx.fragment.app.FragmentActivity
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.lee.playcompose.base.extensions.LocalActivity
+import com.lee.playcompose.base.extensions.activityViewModel
+import com.lee.playcompose.base.tools.StatusTools.setDarkStatusIcon
+import com.lee.playcompose.base.tools.StatusTools.setLightStatusIcon
+import com.lee.playcompose.base.tools.StatusTools.setNavigationBarColor
+import com.lee.playcompose.common.viewmodel.ThemeViewModel
 
 
 private val DarkColorPalette = AppColors(
@@ -84,18 +88,23 @@ object AppTheme {
     val colors: AppColors
         @Composable
         get() = LocalAppColors.current
-
-    enum class Theme {
-        Light, Dark
-    }
 }
 
 @Composable
 fun FragmentActivity.PlayComposeTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    viewModel: ThemeViewModel = activityViewModel(this),
     content: @Composable () -> Unit
 ) {
-    val colors = if (darkTheme) DarkColorPalette else LightColorPalette
+    val viewState = viewModel.viewStates
+    val colors = if (viewState.isDark) DarkColorPalette else LightColorPalette
+
+    if (viewState.isDark) {
+        setNavigationBarColor(android.graphics.Color.BLACK)
+        setLightStatusIcon()
+    } else {
+        setNavigationBarColor(android.graphics.Color.WHITE)
+        setDarkStatusIcon()
+    }
 
     val primary = animateColorAsState(colors.primary, TweenSpec(600))
     val primaryDark = animateColorAsState(colors.primaryDark, TweenSpec(600))

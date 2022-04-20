@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -13,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.lee.playcompose.base.extensions.LocalActivity
+import com.lee.playcompose.base.extensions.activityViewModel
 import com.lee.playcompose.common.entity.AccountViewEvent
 import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.ui.composable.ConfirmDialog
@@ -21,6 +23,8 @@ import com.lee.playcompose.common.ui.composable.ProfileItem
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.theme.OffsetMedium
 import com.lee.playcompose.common.ui.widget.AppBarViewContainer
+import com.lee.playcompose.common.viewmodel.ThemeViewAction
+import com.lee.playcompose.common.viewmodel.ThemeViewModel
 import com.lee.playcompose.me.R
 import com.lee.playcompose.me.viewmodel.SettingsViewAction
 import com.lee.playcompose.me.viewmodel.SettingsViewEvent
@@ -35,12 +39,17 @@ import com.lee.playcompose.common.R as CR
  * @description 设置页面
  */
 @Composable
-fun SettingsPage(navController: NavController, viewModel: SettingsViewModel = viewModel()) {
+fun SettingsPage(
+    navController: NavController,
+    viewModel: SettingsViewModel = viewModel(),
+    themeViewModel: ThemeViewModel = activityViewModel()
+) {
     val activity = LocalActivity.current
     val coroutine = rememberCoroutineScope()
+    val viewState = viewModel.viewStates
     val accountState = viewModel.accountService.getAccountViewStates(activity = activity)
     val accountEvent = viewModel.accountService.getAccountViewEvents(activity = activity)
-    val viewState = viewModel.viewStates
+    val themeViewState = themeViewModel.viewStates
 
     // 监听清除缓存成功事件
     LaunchedEffect(Unit) {
@@ -94,13 +103,23 @@ fun SettingsPage(navController: NavController, viewModel: SettingsViewModel = vi
         Column(modifier = Modifier.fillMaxSize()) {
             ProfileItem(
                 leftText = stringResource(id = R.string.dark_mode_system),
+                rightSwitchEnable = true,
                 rightSwitchVisible = true,
-                modifier = Modifier.padding(top = OffsetMedium)
+                modifier = Modifier.padding(top = OffsetMedium),
+                switchChecked = themeViewState.isSystem,
+                onCheckedChange = {
+                    themeViewModel.dispatch(ThemeViewAction.UpdateSystemAction(it))
+                }
             )
             ProfileItem(
                 leftText = stringResource(id = R.string.dark_mode_night),
+                rightSwitchEnable = true,
                 rightSwitchVisible = true,
-                modifier = Modifier.padding(top = 1.dp)
+                modifier = Modifier.padding(top = 1.dp),
+                switchChecked = themeViewState.isDark,
+                onCheckedChange = {
+                    themeViewModel.dispatch(ThemeViewAction.UpdateDarkAction(it))
+                }
             )
             ProfileItem(
                 leftText = stringResource(id = R.string.settings_clear_text),

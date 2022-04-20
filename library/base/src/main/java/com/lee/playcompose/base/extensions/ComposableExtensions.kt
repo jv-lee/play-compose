@@ -7,6 +7,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
@@ -87,7 +88,8 @@ fun <T> delayState(default: T, update: T): MutableState<T> {
 @Suppress("MissingJvmstatic")
 @Composable
 inline fun <reified VM : ViewModel> activityViewModel(
-    viewModelStoreOwner: ViewModelStoreOwner = checkNotNull(LocalActivity.current) {
+    activity: FragmentActivity? = null,
+    viewModelStoreOwner: ViewModelStoreOwner = checkNotNull(activity ?: LocalActivity.current) {
         "No ViewModelStoreOwner was provided via LocalActivity"
     },
     key: String? = null,
