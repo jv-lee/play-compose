@@ -113,7 +113,7 @@ fun SettingsPage(
             )
             ProfileItem(
                 leftText = stringResource(id = R.string.dark_mode_night),
-                rightSwitchEnable = true,
+                rightSwitchEnable = !themeViewState.isSystem,
                 rightSwitchVisible = true,
                 modifier = Modifier.padding(top = 1.dp),
                 switchChecked = themeViewState.isDark,
