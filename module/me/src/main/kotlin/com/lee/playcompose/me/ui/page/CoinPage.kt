@@ -19,17 +19,22 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
+import com.google.accompanist.systemuicontroller.SystemUiController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.lee.playcompose.base.extensions.LocalActivity
+import com.lee.playcompose.base.extensions.OnLifecycleEvent
+import com.lee.playcompose.base.extensions.activityViewModel
 import com.lee.playcompose.common.entity.AccountViewState
 import com.lee.playcompose.common.entity.CoinRecord
 import com.lee.playcompose.common.ui.theme.*
 import com.lee.playcompose.common.ui.widget.ActionMode
 import com.lee.playcompose.common.ui.widget.AppBarViewContainer
 import com.lee.playcompose.common.ui.widget.RefreshList
+import com.lee.playcompose.common.viewmodel.ThemeViewModel
 import com.lee.playcompose.me.R
 import com.lee.playcompose.me.viewmodel.CoinViewModel
 import com.lee.playcompose.me.viewmodel.CoinViewState
@@ -45,13 +50,29 @@ import com.lee.playcompose.common.R as CR
  * @description 个人积分页
  */
 @Composable
-fun CoinPage(navController: NavController, viewModel: CoinViewModel = viewModel()) {
+fun CoinPage(
+    navController: NavController,
+    viewModel: CoinViewModel = viewModel(),
+    themeViewModel: ThemeViewModel = activityViewModel(),
+    systemUiController: SystemUiController = rememberSystemUiController()
+) {
+    val viewState = viewModel.viewStates
+    val themeState = themeViewModel.viewStates
     val accountViewState =
         ModuleService.find<AccountService>().getAccountViewStates(LocalActivity.current)
-    val viewState = viewModel.viewStates
+
+    OnLifecycleEvent(onEvent = { event ->
+        if (event == Lifecycle.Event.ON_START) {
+            systemUiController.statusBarDarkContentEnabled = false
+        }
+        if (event == Lifecycle.Event.ON_STOP) {
+            systemUiController.statusBarDarkContentEnabled = themeState.statusBarDarkContentEnabled
+        }
+    })
 
     AppBarViewContainer(
         title = stringResource(id = R.string.me_item_coin),
+        elevation = 0.dp,
         actionIcon = R.drawable.vector_help,
         actionMode = ActionMode.Button,
         backgroundColor = AppTheme.colors.focus,

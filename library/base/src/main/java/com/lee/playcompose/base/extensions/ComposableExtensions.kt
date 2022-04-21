@@ -6,11 +6,10 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.*
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import kotlinx.coroutines.delay
@@ -100,3 +99,19 @@ inline fun <reified VM : ViewModel> activityViewModel(
     key,
     factory
 )
+
+@Composable
+fun OnLifecycleEvent(onEvent: (event: Lifecycle.Event) -> Unit) {
+    val eventHandler = rememberUpdatedState(newValue = onEvent)
+    val lifecycleOwner = rememberUpdatedState(newValue = LocalLifecycleOwner.current)
+
+    DisposableEffect(lifecycleOwner.value) {
+        val lifecycle = lifecycleOwner.value.lifecycle
+        val observer = LifecycleEventObserver { _, event ->
+            eventHandler.value(event)
+        }
+        lifecycle.addObserver(observer)
+
+        onDispose { lifecycle.removeObserver(observer) }
+    }
+}
