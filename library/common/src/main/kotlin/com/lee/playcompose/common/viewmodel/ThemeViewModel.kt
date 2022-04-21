@@ -13,6 +13,8 @@ import com.lee.playcompose.base.tools.DarkModeTools
  */
 class ThemeViewModel : ViewModel() {
 
+    private val darkModeTools: DarkModeTools = DarkModeTools.get()
+
     var viewStates by mutableStateOf(ThemeViewState())
         private set
 
@@ -28,31 +30,42 @@ class ThemeViewModel : ViewModel() {
             is ThemeViewAction.UpdateSystemAction -> {
                 updateSystem(action.enable)
             }
+            is ThemeViewAction.ResetThemeStatus -> {
+                initDarkTheme()
+            }
         }
     }
 
     private fun updateDark(enable: Boolean) {
-        DarkModeTools.get().updateNightTheme(enable = enable)
+        darkModeTools.updateNightTheme(enable = enable)
         initDarkTheme()
     }
 
     private fun updateSystem(enable: Boolean) {
-        DarkModeTools.get().updateSystemTheme(enable = enable)
+        darkModeTools.updateSystemTheme(enable = enable)
         initDarkTheme()
     }
 
     private fun initDarkTheme() {
+        val isDark = darkModeTools.isDarkTheme()
+        val isSystem = darkModeTools.isSystemTheme()
         viewStates = viewStates.copy(
-            isDark = DarkModeTools.get().isDarkTheme(),
-            isSystem = DarkModeTools.get().isSystemTheme()
+            isDark = isDark,
+            isSystem = isSystem,
+            statusBarDarkContentEnabled = !isDark
         )
     }
 
 }
 
-data class ThemeViewState(val isDark: Boolean = false, val isSystem: Boolean = false)
+data class ThemeViewState(
+    val isDark: Boolean = false,
+    val isSystem: Boolean = false,
+    val statusBarDarkContentEnabled: Boolean = false,
+)
 
 sealed class ThemeViewAction {
     data class UpdateDarkAction(val enable: Boolean) : ThemeViewAction()
     data class UpdateSystemAction(val enable: Boolean) : ThemeViewAction()
+    object ResetThemeStatus : ThemeViewAction()
 }

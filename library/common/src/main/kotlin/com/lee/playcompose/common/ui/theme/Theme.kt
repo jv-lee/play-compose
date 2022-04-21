@@ -110,7 +110,7 @@ fun FragmentActivity.PlayComposeTheme(
     val shadow = animateColorAsState(colors.shadow, TweenSpec(600))
     val placeholder = animateColorAsState(colors.placeholder, TweenSpec(600))
 
-    systemUiController.statusBarDarkContentEnabled = !viewState.isDark
+    systemUiController.statusBarDarkContentEnabled = viewState.statusBarDarkContentEnabled
     systemUiController.setNavigationBarColor(window.value)
 
     val appColors = AppColors(
