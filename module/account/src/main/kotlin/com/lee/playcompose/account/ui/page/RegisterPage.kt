@@ -137,6 +137,7 @@ private fun RegisterInputContent(
     doneChange: KeyboardActionScope.() -> Unit,
 ) {
     Card(
+        backgroundColor = AppTheme.colors.item,
         modifier = Modifier
             .fillMaxWidth()
             .padding(OffsetLarge)

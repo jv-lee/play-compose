@@ -132,6 +132,7 @@ private fun LoginInputContent(
     doneChange: KeyboardActionScope.() -> Unit,
 ) {
     Card(
+        backgroundColor = AppTheme.colors.item,
         modifier = Modifier
             .fillMaxWidth()
             .padding(OffsetLarge)
