@@ -41,7 +41,7 @@ class App : BaseApplication() {
 
     override fun init() {
         // 初始化深色模式工具
-        DarkModeTools.get(this)
+        DarkModeTools.init(this)
         // 缓存管理工具初始化
         CacheManager.init(this, BuildConfig.VERSION_CODE)
         // 初始化网络拦截器

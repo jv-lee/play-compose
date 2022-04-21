@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatDelegate
  * @description 深色主题适配方法
  */
 class DarkModeTools(val context: Context) {
-
     private val TAG = "DarkModeTools"
 
     companion object {
@@ -21,8 +20,11 @@ class DarkModeTools(val context: Context) {
         private var instance: DarkModeTools? = null
 
         @JvmStatic
-        fun get(context: Context) = instance ?: synchronized(this) {
-            instance ?: DarkModeTools(context).also { instance = it }
+        fun init(context: Context) = instance ?: synchronized(this) {
+            instance ?: DarkModeTools(context).also {
+                instance = it
+                it.init()
+            }
         }
 
         fun get(): DarkModeTools {
@@ -37,12 +39,22 @@ class DarkModeTools(val context: Context) {
     private val preferences =
         context.applicationContext.getSharedPreferences(modeKey, Context.MODE_PRIVATE)
 
+    fun init() {
+        Log.i(TAG, "init.")
+        if (!isSystemTheme()) {
+            updateNightTheme(isDarkTheme())
+        }
+    }
+
     /**
      * 当前是否为系统主题
      */
     fun isSystemTheme(): Boolean {
         val mode = preferences.getInt(modeKey, AppCompatDelegate.getDefaultNightMode())
-        return mode != AppCompatDelegate.MODE_NIGHT_YES && mode != AppCompatDelegate.MODE_NIGHT_NO
+        val isSystemTheme =
+            mode != AppCompatDelegate.MODE_NIGHT_YES && mode != AppCompatDelegate.MODE_NIGHT_NO
+        Log.i(TAG, "isSystemTheme:$isSystemTheme")
+        return isSystemTheme
     }
 
     /**
@@ -50,8 +62,8 @@ class DarkModeTools(val context: Context) {
      */
     fun isDarkTheme(): Boolean {
         val flag = context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-        val mode = preferences.getInt(modeKey, -1)
-        return when {
+        val mode = preferences.getInt(modeKey, AppCompatDelegate.getDefaultNightMode())
+        val isDarkTheme = when {
             flag == Configuration.UI_MODE_NIGHT_YES -> {
                 true
             }
@@ -63,6 +75,8 @@ class DarkModeTools(val context: Context) {
             }
             else -> false
         }
+        Log.i(TAG, "isDarkTheme:$isDarkTheme")
+        return isDarkTheme
     }
 
     /**
@@ -70,6 +84,7 @@ class DarkModeTools(val context: Context) {
      */
     @SuppressLint("CommitPrefEdits")
     fun updateSystemTheme(enable: Boolean) {
+        Log.i(TAG, "updateSystemTheme:$enable")
         if (enable) {
             preferences.edit().putInt(modeKey, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM).apply()
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
@@ -83,6 +98,7 @@ class DarkModeTools(val context: Context) {
      */
     @SuppressLint("CommitPrefEdits")
     fun updateNightTheme(enable: Boolean) {
+        Log.i(TAG, "updateNightTheme:$enable")
         if (enable) {
             preferences.edit().putInt(modeKey, AppCompatDelegate.MODE_NIGHT_YES).apply()
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
