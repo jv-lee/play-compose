@@ -2,6 +2,8 @@ package com.lee.playcompose.splash
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -32,18 +34,20 @@ import kotlinx.coroutines.flow.collect
  * @description 闪屏页路由组件 闪屏切换主路由ui
  */
 @Composable
-fun SplashLauncher(content: @Composable () -> Unit) {
-    var isSplash by remember { mutableStateOf(true) }
-    if (isSplash) {
-        SplashPage { isSplash = false }
-    } else {
+fun SplashLauncher(viewModel: SplashViewModel = viewModel(), content: @Composable () -> Unit) {
+    val viewState = viewModel.viewStates
+    AnimatedVisibility(visible = !viewState.contentVisible, enter = fadeIn(), exit = fadeOut()) {
+        SplashPage(viewModel)
+    }
+
+    AnimatedVisibility(visible = viewState.contentVisible, enter = fadeIn(), exit = fadeOut()) {
         content()
     }
 }
 
 @SuppressLint("UnrememberedMutableState")
 @Composable
-private fun SplashPage(viewModel: SplashViewModel = viewModel(), onNextPage: () -> Unit) {
+private fun SplashPage(viewModel: SplashViewModel) {
     val statusInsets =
         rememberInsetsPaddingValues(insets = LocalWindowInsets.current.statusBars)
     val navigationInsets =
@@ -57,11 +61,6 @@ private fun SplashPage(viewModel: SplashViewModel = viewModel(), onNextPage: () 
 
         // 加载splash逻辑
         viewModel.dispatch(SplashViewAction.StartTimeTask)
-        viewModel.viewEvents.collect { event ->
-            if (event is SplashViewEvent.NavigationMain) {
-                onNextPage()
-            }
-        }
     }
 
     Box(

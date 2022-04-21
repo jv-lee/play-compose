@@ -50,14 +50,19 @@ class SplashViewModel : ViewModel() {
     }
 
     private fun navigationMain() {
-        viewModelScope.launch {
-            _viewEvents.send(SplashViewEvent.NavigationMain)
-        }
+        viewStates = viewStates.copy(contentVisible = true)
+//        viewModelScope.launch {
+//            _viewEvents.send(SplashViewEvent.NavigationMain)
+//        }
     }
 
 }
 
-data class SplashViewState(val timeText: String = "", val timeVisible: Boolean = false)
+data class SplashViewState(
+    val contentVisible: Boolean = false,
+    val timeText: String = "",
+    val timeVisible: Boolean = false
+)
 
 sealed class SplashViewEvent {
     object NavigationMain : SplashViewEvent()
