@@ -32,11 +32,14 @@ class SplashViewModel : ViewModel() {
 
     fun dispatch(action: SplashViewAction) {
         when (action) {
-            is SplashViewAction.NavigationMain -> {
-                navigationMain()
-            }
             is SplashViewAction.RequestSplashAd -> {
                 playTime()
+            }
+            is SplashViewAction.HideSplash -> {
+                hideSplash()
+            }
+            is SplashViewAction.ShowContent -> {
+                showContent()
             }
         }
     }
@@ -45,7 +48,7 @@ class SplashViewModel : ViewModel() {
         viewModelScope.launch {
             flowOf(5, 4, 3, 2, 1)
                 .onStart { viewStates = viewStates.copy(splashAdVisible = true) }
-                .onCompletion { navigationMain() }
+                .onCompletion { hideSplash() }
                 .collect {
                     val timeText = app.getString(R.string.splash_time_text, it)
                     viewStates = viewStates.copy(timeText = timeText)
@@ -54,8 +57,12 @@ class SplashViewModel : ViewModel() {
         }
     }
 
-    private fun navigationMain() {
-        viewStates = viewStates.copy(splashVisible = false, contentVisible = true)
+    private fun showContent() {
+        viewStates = viewStates.copy(contentVisible = true)
+    }
+
+    private fun hideSplash() {
+        viewStates = viewStates.copy(splashVisible = false)
     }
 
     private fun initSplashInfo() {
@@ -76,5 +83,6 @@ data class SplashViewState(
 
 sealed class SplashViewAction {
     object RequestSplashAd : SplashViewAction()
-    object NavigationMain : SplashViewAction()
+    object ShowContent : SplashViewAction()
+    object HideSplash : SplashViewAction()
 }

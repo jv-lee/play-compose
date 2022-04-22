@@ -36,12 +36,15 @@ import com.lee.playcompose.common.R as CR
 @Composable
 fun SplashLauncher(viewModel: SplashViewModel = viewModel(), content: @Composable () -> Unit) {
     val viewState = viewModel.viewStates
-    FadeAnimatedVisibility(visible = viewState.splashVisible) {
-        SplashPage(viewModel)
-    }
 
+    // 主页内容
     FadeAnimatedVisibility(visible = viewState.contentVisible) {
         content()
+    }
+
+    // 闪屏内容
+    FadeAnimatedVisibility(visible = viewState.splashVisible) {
+        SplashPage(viewModel)
     }
 }
 
@@ -53,6 +56,9 @@ private fun SplashPage(viewModel: SplashViewModel) {
     LaunchedEffect(Unit) {
         // 同步获取账户配置
         ModuleService.find<AccountService>().requestAccountInfo(activity)
+
+        // 配置获取成功后启动主页构建
+        viewModel.dispatch(SplashViewAction.ShowContent)
 
         // 加载splashAd逻辑
         viewModel.dispatch(SplashViewAction.RequestSplashAd)
@@ -75,7 +81,7 @@ private fun SplashPage(viewModel: SplashViewModel) {
             modifier = Modifier.align(alignment = Alignment.BottomCenter)
         )
         SplashAdView(viewState = viewState, onNextClick = {
-            viewModel.dispatch(SplashViewAction.NavigationMain)
+            viewModel.dispatch(SplashViewAction.HideSplash)
         })
     }
 }
