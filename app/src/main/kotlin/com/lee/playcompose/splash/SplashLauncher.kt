@@ -2,6 +2,7 @@ package com.lee.playcompose.splash
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.TweenSpec
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
@@ -10,7 +11,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,14 +21,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
-import com.lee.playcompose.service.helper.ModuleService
 import com.lee.playcompose.R
 import com.lee.playcompose.base.extensions.LocalActivity
 import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.theme.OffsetRadiusMedium
 import com.lee.playcompose.common.ui.theme.OffsetSmall
 import com.lee.playcompose.service.AccountService
-import kotlinx.coroutines.flow.collect
+import com.lee.playcompose.service.helper.ModuleService
 
 /**
  * @author jv.lee
@@ -36,11 +37,19 @@ import kotlinx.coroutines.flow.collect
 @Composable
 fun SplashLauncher(viewModel: SplashViewModel = viewModel(), content: @Composable () -> Unit) {
     val viewState = viewModel.viewStates
-    AnimatedVisibility(visible = !viewState.contentVisible, enter = fadeIn(), exit = fadeOut()) {
+    AnimatedVisibility(
+        visible = viewState.splashVisible,
+        enter = fadeIn(animationSpec = TweenSpec(600)),
+        exit = fadeOut(animationSpec = TweenSpec(600))
+    ) {
         SplashPage(viewModel)
     }
 
-    AnimatedVisibility(visible = viewState.contentVisible, enter = fadeIn(), exit = fadeOut()) {
+    AnimatedVisibility(
+        visible = viewState.contentVisible,
+        enter = fadeIn(animationSpec = TweenSpec(600)),
+        exit = fadeOut(animationSpec = TweenSpec(600))
+    ) {
         content()
     }
 }

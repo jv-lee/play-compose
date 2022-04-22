@@ -7,9 +7,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.playcompose.R
 import com.lee.playcompose.base.core.ApplicationExtensions.app
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 /**
@@ -21,9 +23,6 @@ class SplashViewModel : ViewModel() {
 
     var viewStates by mutableStateOf(SplashViewState())
         private set
-
-    private val _viewEvents = Channel<SplashViewEvent>(Channel.BUFFERED)
-    val viewEvents = _viewEvents.receiveAsFlow()
 
     fun dispatch(action: SplashViewAction) {
         when (action) {
@@ -50,23 +49,17 @@ class SplashViewModel : ViewModel() {
     }
 
     private fun navigationMain() {
-        viewStates = viewStates.copy(contentVisible = true)
-//        viewModelScope.launch {
-//            _viewEvents.send(SplashViewEvent.NavigationMain)
-//        }
+        viewStates = viewStates.copy(splashVisible = false, contentVisible = true)
     }
 
 }
 
 data class SplashViewState(
+    val splashVisible: Boolean = true,
     val contentVisible: Boolean = false,
+    val timeVisible: Boolean = false,
     val timeText: String = "",
-    val timeVisible: Boolean = false
 )
-
-sealed class SplashViewEvent {
-    object NavigationMain : SplashViewEvent()
-}
 
 sealed class SplashViewAction {
     object StartTimeTask : SplashViewAction()
