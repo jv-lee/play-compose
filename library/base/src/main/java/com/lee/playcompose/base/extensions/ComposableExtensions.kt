@@ -1,6 +1,8 @@
 package com.lee.playcompose.base.extensions
 
 import android.annotation.SuppressLint
+import androidx.compose.animation.*
+import androidx.compose.animation.core.TweenSpec
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.*
@@ -37,6 +39,21 @@ fun PaddingValues.hasBottomExpend(expend: () -> Unit, close: () -> Unit) {
     } else {
         close()
     }
+}
+
+/**
+ * fade模式动画显示组件
+ */
+@Composable
+fun FadeAnimatedVisibility(
+    visible: Boolean,
+    modifier: Modifier = Modifier,
+    enter: EnterTransition = fadeIn(animationSpec = TweenSpec(600)),
+    exit: ExitTransition = fadeOut(animationSpec = TweenSpec(600)),
+    label: String = "FadeAnimatedVisibility",
+    content: @Composable() AnimatedVisibilityScope.() -> Unit
+) {
+    AnimatedVisibility(visible, modifier, enter, exit, label, content)
 }
 
 /**

@@ -1,9 +1,5 @@
 package com.lee.playcompose.splash
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.TweenSpec
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -22,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.insets.statusBarsPadding
 import com.lee.playcompose.R
+import com.lee.playcompose.base.extensions.FadeAnimatedVisibility
 import com.lee.playcompose.base.extensions.LocalActivity
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.theme.OffsetLarge
@@ -39,19 +36,11 @@ import com.lee.playcompose.common.R as CR
 @Composable
 fun SplashLauncher(viewModel: SplashViewModel = viewModel(), content: @Composable () -> Unit) {
     val viewState = viewModel.viewStates
-    AnimatedVisibility(
-        visible = viewState.splashVisible,
-        enter = fadeIn(animationSpec = TweenSpec(600)),
-        exit = fadeOut(animationSpec = TweenSpec(600))
-    ) {
+    FadeAnimatedVisibility(visible = viewState.splashVisible) {
         SplashPage(viewModel)
     }
 
-    AnimatedVisibility(
-        visible = viewState.contentVisible,
-        enter = fadeIn(animationSpec = TweenSpec(600)),
-        exit = fadeOut(animationSpec = TweenSpec(600))
-    ) {
+    FadeAnimatedVisibility(visible = viewState.contentVisible) {
         content()
     }
 }
@@ -93,11 +82,7 @@ private fun SplashPage(viewModel: SplashViewModel) {
 
 @Composable
 private fun SplashAdView(viewState: SplashViewState, onNextClick: () -> Unit) {
-    AnimatedVisibility(
-        visible = viewState.splashAdVisible,
-        enter = fadeIn(animationSpec = TweenSpec(600)),
-        exit = fadeOut(animationSpec = TweenSpec(600))
-    ) {
+    FadeAnimatedVisibility(visible = viewState.splashAdVisible) {
         Box {
             Image(
                 painter = painterResource(id = R.mipmap.splash_ad),
