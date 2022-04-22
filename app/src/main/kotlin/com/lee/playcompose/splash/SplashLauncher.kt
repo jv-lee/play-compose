@@ -20,8 +20,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.google.accompanist.insets.LocalWindowInsets
-import com.google.accompanist.insets.rememberInsetsPaddingValues
+import com.google.accompanist.insets.statusBarsPadding
 import com.lee.playcompose.R
 import com.lee.playcompose.base.extensions.LocalActivity
 import com.lee.playcompose.common.ui.theme.AppTheme
@@ -94,9 +93,6 @@ private fun SplashPage(viewModel: SplashViewModel) {
 
 @Composable
 private fun SplashAdView(viewState: SplashViewState, onNextClick: () -> Unit) {
-    val statusInsets =
-        rememberInsetsPaddingValues(insets = LocalWindowInsets.current.statusBars)
-
     AnimatedVisibility(
         visible = viewState.splashAdVisible,
         enter = fadeIn(animationSpec = TweenSpec(600)),
@@ -117,10 +113,8 @@ private fun SplashAdView(viewState: SplashViewState, onNextClick: () -> Unit) {
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color(0x1a000000)),
                 modifier = Modifier
                     .align(Alignment.TopEnd)
-                    .padding(
-                        top = statusInsets.calculateTopPadding() + OffsetSmall,
-                        end = OffsetLarge
-                    )
+                    .statusBarsPadding()
+                    .padding(top = OffsetSmall, end = OffsetLarge)
             ) {
                 Text(text = viewState.timeText, color = Color.White)
             }
