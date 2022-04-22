@@ -1,11 +1,11 @@
 package com.lee.playcompose.splash
 
-import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.TweenSpec
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
@@ -18,16 +18,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.lee.playcompose.R
 import com.lee.playcompose.base.extensions.LocalActivity
+import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.theme.OffsetRadiusMedium
 import com.lee.playcompose.common.ui.theme.OffsetSmall
 import com.lee.playcompose.service.AccountService
 import com.lee.playcompose.service.helper.ModuleService
+import com.lee.playcompose.common.R as CR
 
 /**
  * @author jv.lee
@@ -54,13 +57,8 @@ fun SplashLauncher(viewModel: SplashViewModel = viewModel(), content: @Composabl
     }
 }
 
-@SuppressLint("UnrememberedMutableState")
 @Composable
 private fun SplashPage(viewModel: SplashViewModel) {
-    val statusInsets =
-        rememberInsetsPaddingValues(insets = LocalWindowInsets.current.statusBars)
-    val navigationInsets =
-        rememberInsetsPaddingValues(insets = LocalWindowInsets.current.navigationBars)
     val activity = LocalActivity.current
     val viewState = viewModel.viewStates
 
@@ -68,39 +66,61 @@ private fun SplashPage(viewModel: SplashViewModel) {
         // 同步获取账户配置
         ModuleService.find<AccountService>().requestAccountInfo(activity)
 
-        // 加载splash逻辑
-        viewModel.dispatch(SplashViewAction.StartTimeTask)
+        // 加载splashAd逻辑
+        viewModel.dispatch(SplashViewAction.RequestSplashAd)
     }
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(navigationInsets)
-            .wrapContentSize(align = Alignment.TopCenter)
+            .background(color = AppTheme.colors.window)
+            .padding(bottom = 86.dp)
     ) {
         Image(
-            painter = painterResource(id = R.mipmap.splash_ad),
+            painter = painterResource(id = CR.mipmap.ic_splash_logo),
             contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(0.7f),
+            modifier = Modifier.align(alignment = Alignment.Center)
         )
+        Image(
+            painter = painterResource(id = viewState.splashInfoRes),
+            contentDescription = null,
+            modifier = Modifier.align(alignment = Alignment.BottomCenter)
+        )
+        SplashAdView(viewState = viewState, onNextClick = {
+            viewModel.dispatch(SplashViewAction.NavigationMain)
+        })
+    }
+}
 
-        AnimatedVisibility(
-            visible = viewState.timeVisible,
-            modifier = Modifier
-                .align(Alignment.TopEnd)
-                .padding(
-                    top = statusInsets.calculateTopPadding() + OffsetSmall,
-                    end = OffsetLarge
-                )
-        ) {
+@Composable
+private fun SplashAdView(viewState: SplashViewState, onNextClick: () -> Unit) {
+    val statusInsets =
+        rememberInsetsPaddingValues(insets = LocalWindowInsets.current.statusBars)
+
+    AnimatedVisibility(
+        visible = viewState.splashAdVisible,
+        enter = fadeIn(animationSpec = TweenSpec(600)),
+        exit = fadeOut(animationSpec = TweenSpec(600))
+    ) {
+        Box {
+            Image(
+                painter = painterResource(id = R.mipmap.splash_ad),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(0.7f),
+            )
             Button(
-                onClick = { viewModel.dispatch(SplashViewAction.NavigationMain) },
+                onClick = { onNextClick() },
                 shape = RoundedCornerShape(OffsetRadiusMedium),
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color(0x1a000000)),
-                modifier = Modifier.align(Alignment.TopEnd)
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(
+                        top = statusInsets.calculateTopPadding() + OffsetSmall,
+                        end = OffsetLarge
+                    )
             ) {
                 Text(text = viewState.timeText, color = Color.White)
             }
