@@ -24,8 +24,7 @@ object Version {
     const val protobuf = "3.10.0"
     const val autoService = "1.0"
 
-    // compose 0.24.7-alpha14 -> kotlinCompiler 1.6.20 / composeCompiler 1.2.0-alpha08
-    const val kotlinCompiler = "1.6.10"
+    // compose 0.24.7-alpha14 -> kotlin-gradle-plugin:1.6.20 / composeCompiler 1.2.0-alpha08
     const val composeCompiler = "1.2.0-alpha07"
     const val accompanist = "0.24.1-alpha"
     const val paging = "3.1.0"
