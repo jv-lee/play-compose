@@ -23,7 +23,10 @@ object Version {
     const val gson = "2.8.8"
     const val protobuf = "3.10.0"
     const val autoService = "1.0"
-    const val compose = "1.2.0-alpha03"
+
+    // compose
+    const val kotlinCompiler = "1.6.10"
+    const val composeCompiler = "1.2.0-alpha07"
     const val accompanist = "0.24.1-alpha"
     const val paging = "3.1.0"
     const val pagingCompose = "1.0.0-alpha14"

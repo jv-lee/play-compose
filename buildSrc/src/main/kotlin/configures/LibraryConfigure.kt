@@ -52,8 +52,8 @@ fun Project.libraryConfigure(
         }
 
         composeOptions {
-            kotlinCompilerExtensionVersion = Version.compose
-            kotlinCompilerVersion = "1.6.10"
+            kotlinCompilerExtensionVersion = Version.composeCompiler
+            kotlinCompilerVersion = Version.kotlinCompiler
         }
 
         packagingOptions {

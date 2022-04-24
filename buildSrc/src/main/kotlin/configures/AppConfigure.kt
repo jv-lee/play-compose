@@ -4,6 +4,7 @@ import appDependencies
 import build.*
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import configures.core.freeCompilerArgs
+import dependencies.Version
 import kapt
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
@@ -11,7 +12,6 @@ import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import dependencies.Version
 
 /**
  * @author jv.lee
@@ -63,8 +63,8 @@ fun Project.appConfigure(
         }
 
         composeOptions {
-            kotlinCompilerExtensionVersion = Version.compose
-            kotlinCompilerVersion = "1.6.10"
+            kotlinCompilerExtensionVersion = Version.composeCompiler
+            kotlinCompilerVersion = Version.kotlinCompiler
         }
 
         packagingOptions {
@@ -95,14 +95,12 @@ fun Project.appConfigure(
                 applicationIdSuffix = ".debug"
                 manifestPlaceholders["app_name"] = "Debug\nCompose"
                 isMinifyEnabled = BuildDebug.isMinifyEnabled //混淆模式
-                isZipAlignEnabled = BuildDebug.zipAlignEnabled
                 proguardFiles("proguard-android-optimize.txt", "proguard-rules.pro")
             }
 
             getByName(BuildTypes.RELEASE) {
                 manifestPlaceholders["app_name"] = "Play\nCompose"
                 isMinifyEnabled = BuildRelease.isMinifyEnabled //混淆模式
-                isZipAlignEnabled = BuildRelease.zipAlignEnabled
                 proguardFiles("proguard-android-optimize.txt", "proguard-rules.pro")
                 signingConfig = signingConfigs
             }
