@@ -56,7 +56,6 @@ fun Project.moduleConfigure(
 
         composeOptions {
             kotlinCompilerExtensionVersion = Version.composeCompiler
-            kotlinCompilerVersion = Version.kotlinCompiler
         }
 
         packagingOptions {
