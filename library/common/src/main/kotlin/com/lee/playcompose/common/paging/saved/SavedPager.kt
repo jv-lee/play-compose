@@ -65,7 +65,7 @@ class SavedPager<T : Any>(
 
 inline fun <reified T : Any> ViewModel.savedPager(
     initialKey: Int = 0,
-    remoteKey: String = this::class.java.simpleName,
+    savedKey: String = this::class.java.simpleName,
     removedFlow: Flow<MutableList<T>> = flow { emit(mutableListOf()) },
     crossinline requestAction: suspend (Int) -> PageData<T>
 ) = SavedPager(this,
@@ -73,8 +73,8 @@ inline fun <reified T : Any> ViewModel.savedPager(
     removedFlow = removedFlow,
     requestAction = { page ->
         requestAction(page).also {
-            if (initialKey == page) CacheManager.getDefault().putCache(remoteKey, it)
+            if (initialKey == page) CacheManager.getDefault().putCache(savedKey, it)
         }
     }, localAction = {
-        CacheManager.getDefault().getCache(remoteKey) ?: PageData(data = emptyList())
+        CacheManager.getDefault().getCache(savedKey) ?: PageData(data = emptyList())
     })

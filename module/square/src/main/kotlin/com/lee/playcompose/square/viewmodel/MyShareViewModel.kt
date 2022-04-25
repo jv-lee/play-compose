@@ -6,14 +6,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
-import androidx.paging.filter
 import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
 import com.lee.playcompose.common.paging.saved.SavedPager
 import com.lee.playcompose.common.paging.saved.savedPager
+import com.lee.playcompose.service.AccountService
+import com.lee.playcompose.service.helper.ModuleService
 import com.lee.playcompose.square.R
 import com.lee.playcompose.square.model.api.ApiService
 import kotlinx.coroutines.channels.Channel
@@ -26,14 +26,20 @@ import kotlinx.coroutines.launch
  * @description
  */
 class MyShareViewModel : ViewModel() {
+
     private val api = createApi<ApiService>()
+    private val accountService: AccountService = ModuleService.find()
 
     // paging3 移除数据过滤项
     private var _removedItemsFlow = MutableStateFlow(mutableListOf<Content>())
     private val removedItemsFlow: Flow<MutableList<Content>> get() = _removedItemsFlow
 
     private val pager by lazy {
-        savedPager(initialKey = 1, removedFlow = removedItemsFlow) {
+        savedPager(
+            savedKey = javaClass.simpleName.plus(accountService.getUserId()),
+            initialKey = 1,
+            removedFlow = removedItemsFlow
+        ) {
             api.getMyShareDataSync(it).checkData().shareArticles
         }
     }

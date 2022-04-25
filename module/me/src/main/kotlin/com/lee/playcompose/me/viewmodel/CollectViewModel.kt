@@ -14,6 +14,8 @@ import com.lee.playcompose.common.paging.saved.SavedPager
 import com.lee.playcompose.common.paging.saved.savedPager
 import com.lee.playcompose.me.R
 import com.lee.playcompose.me.model.api.ApiService
+import com.lee.playcompose.service.AccountService
+import com.lee.playcompose.service.helper.ModuleService
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -24,14 +26,19 @@ import kotlinx.coroutines.launch
  * @description
  */
 class CollectViewModel : ViewModel() {
+
     private val api = createApi<ApiService>()
+    private val accountService: AccountService = ModuleService.find()
 
     // paging3 移除数据过滤项
     private var _removedItemsFlow = MutableStateFlow(mutableListOf<Content>())
     private val removedItemsFlow: Flow<MutableList<Content>> get() = _removedItemsFlow
 
     private val pager by lazy {
-        savedPager(removedFlow = removedItemsFlow) { api.getCollectListAsync(it).checkData() }
+        savedPager(
+            savedKey = javaClass.simpleName.plus(accountService.getUserId()),
+            removedFlow = removedItemsFlow
+        ) { api.getCollectListAsync(it).checkData() }
     }
 
     var viewStates by mutableStateOf(CollectViewState(savedPager = pager))

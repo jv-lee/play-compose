@@ -59,15 +59,15 @@ class SavedSinglePager<T : Any>(
 }
 
 inline fun <reified T : Any> ViewModel.singleSavedPager(
-    remoteKey: String = this::class.java.simpleName,
+    savedKey: String = this::class.java.simpleName,
     removedFlow: Flow<MutableList<T>> = flow { emit(mutableListOf()) },
     crossinline requestAction: suspend () -> List<T>
 ) = SavedSinglePager(this,
     removedFlow = removedFlow,
     requestAction = {
         requestAction().also {
-            CacheManager.getDefault().putCache(remoteKey, it)
+            CacheManager.getDefault().putCache(savedKey, it)
         }
     }, localAction = {
-        CacheManager.getDefault().getCache(remoteKey) ?: emptyList()
+        CacheManager.getDefault().getCache(savedKey) ?: emptyList()
     })

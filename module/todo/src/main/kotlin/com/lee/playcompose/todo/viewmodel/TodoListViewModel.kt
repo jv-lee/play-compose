@@ -7,15 +7,13 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
-import androidx.paging.filter
 import com.lee.playcompose.common.entity.TodoData
 import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
-import com.lee.playcompose.common.paging.extensions.pager
 import com.lee.playcompose.common.paging.saved.SavedPager
 import com.lee.playcompose.common.paging.saved.savedPager
+import com.lee.playcompose.service.AccountService
+import com.lee.playcompose.service.helper.ModuleService
 import com.lee.playcompose.todo.constants.Constants.STATUS_COMPLETE
 import com.lee.playcompose.todo.constants.Constants.STATUS_UPCOMING
 import com.lee.playcompose.todo.model.api.ApiService
@@ -31,6 +29,7 @@ import kotlinx.coroutines.launch
 class TodoListViewModel(private val type: Int, private val status: Int) : ViewModel() {
 
     private val api = createApi<ApiService>()
+    private val accountService: AccountService = ModuleService.find()
 
     // paging3 移除数据过滤项
     private var _removedItemsFlow = MutableStateFlow(mutableListOf<TodoData>())
@@ -39,7 +38,8 @@ class TodoListViewModel(private val type: Int, private val status: Int) : ViewMo
     private val pager by lazy {
         savedPager(
             initialKey = 1,
-            remoteKey = javaClass.simpleName.plus(type).plus(status),
+            savedKey = javaClass.simpleName
+                .plus(accountService.getUserId()).plus(type).plus(status),
             removedFlow = removedItemsFlow
         ) { page ->
             api.postTodoDataAsync(page, type, status).checkData()

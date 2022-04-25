@@ -1,6 +1,7 @@
 package com.lee.playcompose.service
 
 import androidx.fragment.app.FragmentActivity
+import com.lee.playcompose.common.entity.AccountData
 import com.lee.playcompose.common.entity.AccountViewEvent
 import com.lee.playcompose.common.entity.AccountViewState
 import kotlinx.coroutines.flow.Flow
@@ -19,4 +20,10 @@ interface AccountService {
     suspend fun requestAccountInfo(activity: FragmentActivity)
 
     suspend fun requestLogout(activity: FragmentActivity)
+
+    fun getAccountInfo(): AccountData?
+
+    fun getUserId(): Long
+
+    fun isLogin(): Boolean
 }

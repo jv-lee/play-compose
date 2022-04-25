@@ -28,8 +28,6 @@ import com.lee.playcompose.common.ui.widget.RefreshList
 import com.lee.playcompose.common.ui.widget.RouteBackHandler
 import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
-import com.lee.playcompose.service.AccountService
-import com.lee.playcompose.service.helper.ModuleService
 import com.lee.playcompose.square.R
 import com.lee.playcompose.square.viewmodel.SquareViewModel
 import com.lee.playcompose.square.viewmodel.SquareViewState
@@ -46,9 +44,8 @@ fun SquarePage(
     paddingValues: PaddingValues,
     viewModel: SquareViewModel = viewModel()
 ) {
-    val accountViewState =
-        ModuleService.find<AccountService>().getAccountViewStates(LocalActivity.current)
     val viewState = viewModel.viewStates
+    val accountViewState = viewModel.accountService.getAccountViewStates(LocalActivity.current)
 
     LaunchedEffect(Unit) {
         // 监听channel全局事件NavigationSelectEvent:导航点击列表移动回顶部

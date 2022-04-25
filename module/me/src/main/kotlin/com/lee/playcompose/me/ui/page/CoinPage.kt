@@ -40,8 +40,6 @@ import com.lee.playcompose.me.viewmodel.CoinViewModel
 import com.lee.playcompose.me.viewmodel.CoinViewState
 import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
-import com.lee.playcompose.service.AccountService
-import com.lee.playcompose.service.helper.ModuleService
 import com.lee.playcompose.common.R as CR
 
 /**
@@ -58,8 +56,7 @@ fun CoinPage(
 ) {
     val viewState = viewModel.viewStates
     val themeState = themeViewModel.viewStates
-    val accountViewState =
-        ModuleService.find<AccountService>().getAccountViewStates(LocalActivity.current)
+    val accountViewState = viewModel.accountService.getAccountViewStates(LocalActivity.current)
 
     OnLifecycleEvent(onEvent = { event ->
         if (event == Lifecycle.Event.ON_START) {

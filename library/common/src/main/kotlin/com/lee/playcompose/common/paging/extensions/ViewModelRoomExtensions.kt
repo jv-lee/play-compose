@@ -27,7 +27,7 @@ inline fun <reified T : Any> ViewModel.roomPager(
         enablePlaceholders = true
     ),
     initialKey: Int = 0,
-    remoteKey: String = this.javaClass.simpleName,
+    savedKey: String = this.javaClass.simpleName,
     noinline requestAction: suspend (page: Int) -> PageData<T>
 ): Flow<PagingData<T>> {
     val database = RemoteCacheDatabase.get()
@@ -35,13 +35,13 @@ inline fun <reified T : Any> ViewModel.roomPager(
         config = config,
         initialKey = initialKey,
         remoteMediator = RemoteRoomMediator(
-            remoteKey,
+            savedKey,
             initialKey,
             database,
             requestAction,
         )
     ) {
-        database.remoteContentDao().getList(remoteKey = remoteKey)
+        database.remoteContentDao().getList(remoteKey = savedKey)
     }.flow.map { pagingData ->
         pagingData.map { remoteContent ->
             val type = object : TypeToken<T>() {}.type
@@ -59,7 +59,7 @@ inline fun <reified T : Any> ViewModel.singleRoomPager(
         enablePlaceholders = true
     ),
     initialKey: Int = 0,
-    remoteKey: String = this.javaClass.simpleName,
+    savedKey: String = this.javaClass.simpleName,
     noinline requestAction: suspend (page: Int) -> List<T>
 ): Flow<PagingData<T>> {
     val database = RemoteCacheDatabase.get()
@@ -67,14 +67,14 @@ inline fun <reified T : Any> ViewModel.singleRoomPager(
         config = config,
         initialKey = initialKey,
         remoteMediator = RemoteRoomMediator(
-            remoteKey,
+            savedKey,
             initialKey,
             database,
         ) { page ->
             PageData(data = requestAction(page))
         }
     ) {
-        database.remoteContentDao().getList(remoteKey = remoteKey)
+        database.remoteContentDao().getList(remoteKey = savedKey)
     }.flow.map { pagingData ->
         pagingData.map { remoteContent ->
             val type = object : TypeToken<T>() {}.type
@@ -85,7 +85,7 @@ inline fun <reified T : Any> ViewModel.singleRoomPager(
 
 @OptIn(ExperimentalPagingApi::class)
 class RemoteRoomMediator<T>(
-    private val remoteKey: String,
+    private val savedKey: String,
     private val initialKey: Int,
     private val database: RemoteCacheDatabase,
     private val requestAction: suspend (page: Int) -> PageData<T>,
@@ -130,7 +130,7 @@ class RemoteRoomMediator<T>(
         state: PagingState<Int, RemoteContent>
     ): MediatorResult {
         val page = database.withTransaction {
-            database.remoteKeyDao().getRemoteKey(remoteKey = remoteKey)
+            database.remoteKeyDao().getRemoteKey(remoteKey = savedKey)
         }?.nextKey ?: run {
             return MediatorResult.Success(endOfPaginationReached = true)
         }
@@ -147,7 +147,7 @@ class RemoteRoomMediator<T>(
 
             val item = result.data.map {
                 RemoteContent(
-                    remoteKey = remoteKey,
+                    remoteKey = savedKey,
                     content = HttpManager.getGson().toJson(it)
                 )
             }
@@ -155,11 +155,11 @@ class RemoteRoomMediator<T>(
             // 插入数据库
             database.withTransaction {
                 if (loadType == LoadType.REFRESH) {
-                    database.remoteKeyDao().clearRemoteKey(remoteKey)
-                    database.remoteContentDao().clear(remoteKey)
+                    database.remoteKeyDao().clearRemoteKey(savedKey)
+                    database.remoteContentDao().clear(savedKey)
                 }
                 val nextKey = if (endOfPaginationReached) null else page + 1
-                val entity = RemoteKey(remoteKey = remoteKey, nextKey = nextKey)
+                val entity = RemoteKey(remoteKey = savedKey, nextKey = nextKey)
 
                 database.remoteKeyDao().insert(entity)
                 database.remoteContentDao().insertList(item)

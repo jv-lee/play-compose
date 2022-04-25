@@ -3,7 +3,12 @@ package com.lee.playcompose.account
 import androidx.activity.viewModels
 import androidx.fragment.app.FragmentActivity
 import com.google.auto.service.AutoService
+import com.lee.playcompose.account.constants.Constants
 import com.lee.playcompose.account.viewmodel.AccountViewModel
+import com.lee.playcompose.base.cache.CacheManager
+import com.lee.playcompose.base.extensions.getCache
+import com.lee.playcompose.base.tools.PreferencesTools
+import com.lee.playcompose.common.entity.AccountData
 import com.lee.playcompose.common.entity.AccountViewAction
 import com.lee.playcompose.common.entity.AccountViewEvent
 import com.lee.playcompose.common.entity.AccountViewState
@@ -31,5 +36,17 @@ class AccountServiceImpl : AccountService {
 
     override suspend fun requestLogout(activity: FragmentActivity) {
         activity.viewModels<AccountViewModel>().value.dispatch(AccountViewAction.RequestLogout)
+    }
+
+    override fun getAccountInfo(): AccountData? {
+        return CacheManager.getDefault().getCache(Constants.CACHE_KEY_ACCOUNT_DATA)
+    }
+
+    override fun getUserId(): Long {
+        return getAccountInfo()?.run { userInfo.id } ?: kotlin.run { 0 }
+    }
+
+    override fun isLogin(): Boolean {
+        return PreferencesTools.get(Constants.SP_KEY_IS_LOGIN, false)
     }
 }

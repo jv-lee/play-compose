@@ -5,14 +5,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import androidx.paging.PagingData
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
 import com.lee.playcompose.common.paging.saved.SavedPager
 import com.lee.playcompose.common.paging.saved.savedPager
+import com.lee.playcompose.service.AccountService
+import com.lee.playcompose.service.helper.ModuleService
 import com.lee.playcompose.square.model.api.ApiService
-import kotlinx.coroutines.flow.Flow
 
 /**
  * @author jv.lee
@@ -20,7 +20,9 @@ import kotlinx.coroutines.flow.Flow
  * @description 广场页 viewModel
  */
 class SquareViewModel : ViewModel() {
+
     private val api = createApi<ApiService>()
+    val accountService: AccountService = ModuleService.find()
 
     private val pager by lazy {
         savedPager { api.getSquareDataSync(it).checkData() }

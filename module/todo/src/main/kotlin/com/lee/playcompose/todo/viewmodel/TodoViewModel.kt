@@ -5,6 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.lee.playcompose.base.tools.PreferencesTools
+import com.lee.playcompose.service.AccountService
+import com.lee.playcompose.service.helper.ModuleService
 import com.lee.playcompose.todo.R
 import com.lee.playcompose.todo.constants.Constants.SP_KEY_TODO_TYPE
 import com.lee.playcompose.todo.model.entity.TodoType
@@ -15,6 +17,10 @@ import com.lee.playcompose.todo.model.entity.TodoType
  * @description
  */
 class TodoViewModel : ViewModel() {
+
+    private val accountService: AccountService = ModuleService.find()
+
+    private val typeSavedKey = SP_KEY_TODO_TYPE.plus(accountService.getUserId())
 
     var viewStates by mutableStateOf(TodoViewState())
         private set
@@ -34,9 +40,7 @@ class TodoViewModel : ViewModel() {
         }
     }
 
-    private fun changePageData(
-        type: Int = PreferencesTools.get(SP_KEY_TODO_TYPE, TodoType.DEFAULT)
-    ) {
+    private fun changePageData(type: Int = PreferencesTools.get(typeSavedKey, TodoType.DEFAULT)) {
         val todoTitleRes = when (type) {
             TodoType.WORK -> R.string.todo_title_work
             TodoType.LIFE -> R.string.todo_title_life
@@ -51,7 +55,7 @@ class TodoViewModel : ViewModel() {
     }
 
     private fun changeTypeSelected(@TodoType type: Int) {
-        PreferencesTools.put(SP_KEY_TODO_TYPE, type)
+        PreferencesTools.put(typeSavedKey, type)
         changePageData(type)
     }
 
