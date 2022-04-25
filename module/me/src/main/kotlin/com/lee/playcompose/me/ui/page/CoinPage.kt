@@ -77,11 +77,13 @@ fun CoinPage(
         navigationClick = { navController.popBackStack() },
         actionClick = { navController.navigateArgs(RoutePage.Details.route, viewState.detailsData) }
     ) {
-        Column {
+        Box {
+            Box(modifier = Modifier.padding(top = 182.dp)) {
+                CoinRecordContent(viewState = viewState)
+            }
             CoinRecordHeader(accountViewState = accountViewState, coinRankClick = {
                 navController.navigateArgs(RoutePage.Me.CoinRank.route)
             })
-            CoinRecordContent(viewState = viewState)
         }
     }
 }
