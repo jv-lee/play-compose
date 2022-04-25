@@ -1,6 +1,5 @@
 package com.lee.playcompose.account.viewmodel
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -24,7 +23,10 @@ import com.lee.playcompose.common.entity.AccountViewState
 import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 /**
@@ -112,10 +114,6 @@ class AccountViewModel : ViewModel() {
             PreferencesTools.put(BuildConfig.BASE_URI, "")
             viewStates.copy(accountData = accountData, isLogin = isLogin)
         }
-    }
-
-    init {
-        Log.i("jv.lee", "initAccountViewModel")
     }
 
 }

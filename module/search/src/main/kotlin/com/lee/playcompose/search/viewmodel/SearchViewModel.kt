@@ -10,7 +10,6 @@ import com.lee.playcompose.search.model.db.SearchHistoryDatabase
 import com.lee.playcompose.search.model.entity.SearchHot
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -31,20 +30,14 @@ class SearchViewModel : ViewModel() {
     val viewEvents = _viewEvents.receiveAsFlow()
 
     init {
-        dispatch(SearchViewAction.RequestSearchHotData)
-        dispatch(SearchViewAction.RequestSearchHistoryData)
+        requestSearchHotData()
+        requestSearchHistoryData()
     }
 
     fun dispatch(action: SearchViewAction) {
         when (action) {
             is SearchViewAction.ChangeSearchKey -> {
                 changeSearchKey(action.key)
-            }
-            is SearchViewAction.RequestSearchHotData -> {
-                requestSearchHotData()
-            }
-            is SearchViewAction.RequestSearchHistoryData -> {
-                requestSearchHistoryData()
             }
             is SearchViewAction.NavigationSearchKey -> {
                 navigationSearchKey(action.key)
@@ -57,14 +50,6 @@ class SearchViewModel : ViewModel() {
             }
         }
     }
-
-    /**
-     * 搜索文本监听处理
-     */
-    private fun changeSearchKey(key: String) {
-        viewStates = viewStates.copy(searchKey = key)
-    }
-
 
     /**
      * 获取搜索热门标签
@@ -90,6 +75,13 @@ class SearchViewModel : ViewModel() {
                 viewStates = viewStates.copy(searchHistory = it)
             }
         }
+    }
+
+    /**
+     * 搜索文本监听处理
+     */
+    private fun changeSearchKey(key: String) {
+        viewStates = viewStates.copy(searchKey = key)
     }
 
     /**
@@ -160,8 +152,6 @@ sealed class SearchViewEvent {
 }
 
 sealed class SearchViewAction {
-    object RequestSearchHotData : SearchViewAction()
-    object RequestSearchHistoryData : SearchViewAction()
     data class NavigationSearchKey(val key: String) : SearchViewAction()
     data class DeleteSearchHistory(val key: String) : SearchViewAction()
     object ClearSearchHistory : SearchViewAction()

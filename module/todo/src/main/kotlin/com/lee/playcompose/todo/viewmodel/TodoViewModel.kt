@@ -34,15 +34,6 @@ class TodoViewModel : ViewModel() {
         }
     }
 
-    private fun changeTypeDialogVisible(visible: Boolean) {
-        viewStates = viewStates.copy(isShowTypeDialog = visible)
-    }
-
-    private fun changeTypeSelected(@TodoType type: Int) {
-        PreferencesTools.put(SP_KEY_TODO_TYPE, type)
-        changePageData(type)
-    }
-
     private fun changePageData(
         type: Int = PreferencesTools.get(SP_KEY_TODO_TYPE, TodoType.DEFAULT)
     ) {
@@ -53,6 +44,15 @@ class TodoViewModel : ViewModel() {
             else -> R.string.todo_title_default
         }
         viewStates = viewStates.copy(type = type, todoTitleRes = todoTitleRes)
+    }
+
+    private fun changeTypeDialogVisible(visible: Boolean) {
+        viewStates = viewStates.copy(isShowTypeDialog = visible)
+    }
+
+    private fun changeTypeSelected(@TodoType type: Int) {
+        PreferencesTools.put(SP_KEY_TODO_TYPE, type)
+        changePageData(type)
     }
 
 }

@@ -6,15 +6,18 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.lee.playcompose.service.helper.ModuleService
 import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.base.utils.ShareUtil
 import com.lee.playcompose.common.constants.ApiConstants
 import com.lee.playcompose.common.entity.DetailsData
 import com.lee.playcompose.common.ui.widget.ActionMode
 import com.lee.playcompose.service.MeService
+import com.lee.playcompose.service.helper.ModuleService
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 /**
@@ -33,14 +36,11 @@ class DetailsViewModel(private val details: DetailsData) : ViewModel() {
     val viewEvents = _viewEvents.receiveAsFlow()
 
     init {
-        dispatch(DetailsViewAction.UpdateMoreButtonVisible)
+        moreButtonVisible()
     }
 
     fun dispatch(action: DetailsViewAction) {
         when (action) {
-            is DetailsViewAction.UpdateMoreButtonVisible -> {
-                updateMoreButtonVisible()
-            }
             is DetailsViewAction.RequestCollectDetails -> {
                 requestCollect()
             }
@@ -50,7 +50,7 @@ class DetailsViewModel(private val details: DetailsData) : ViewModel() {
         }
     }
 
-    private fun updateMoreButtonVisible() {
+    private fun moreButtonVisible() {
         val actionMode =
             if (details.id != DetailsData.EMPTY_ID) ActionMode.Menu else ActionMode.Default
         viewStates = viewStates.copy(actionModel = actionMode)
@@ -106,7 +106,6 @@ sealed class DetailsViewEvent {
 }
 
 sealed class DetailsViewAction {
-    object UpdateMoreButtonVisible : DetailsViewAction()
     object RequestCollectDetails : DetailsViewAction()
     object ShareDetails : DetailsViewAction()
 }

@@ -30,14 +30,11 @@ class SettingsViewModel : ViewModel() {
     val viewEvents = _viewEvents.receiveAsFlow()
 
     init {
-        dispatch(SettingsViewAction.InitCacheSize)
+        initCacheSize()
     }
 
     fun dispatch(action: SettingsViewAction) {
         when (action) {
-            is SettingsViewAction.InitCacheSize -> {
-                initCacheSize()
-            }
             is SettingsViewAction.VisibleCacheDialog -> {
                 visibleCacheDialog(action.visibility)
             }
@@ -80,7 +77,7 @@ class SettingsViewModel : ViewModel() {
                     app.getString(if (it) R.string.settings_clear_success else R.string.settings_clear_failed)
                 _viewEvents.send(SettingsViewEvent.ClearCacheResult(message = message))
                 viewStates = viewStates.copy(isLoading = false, isCacheConfirm = false)
-                dispatch(SettingsViewAction.InitCacheSize)
+                initCacheSize()
             }
         }
     }
@@ -102,5 +99,4 @@ sealed class SettingsViewAction {
     data class VisibleCacheDialog(val visibility: Boolean) : SettingsViewAction()
     data class VisibleLogoutDialog(val visibility: Boolean) : SettingsViewAction()
     object RequestClearCache : SettingsViewAction()
-    object InitCacheSize : SettingsViewAction()
 }

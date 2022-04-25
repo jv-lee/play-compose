@@ -13,7 +13,10 @@ import com.lee.playcompose.common.entity.AccountData
 import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 /**
@@ -32,7 +35,7 @@ class LoginViewModel : ViewModel() {
     val viewEvents = _viewEvents.receiveAsFlow()
 
     init {
-        setInputUsername()
+        restoreInputUsername()
     }
 
     fun dispatch(action: LoginViewAction) {
@@ -49,7 +52,7 @@ class LoginViewModel : ViewModel() {
         }
     }
 
-    private fun setInputUsername() {
+    private fun restoreInputUsername() {
         viewModelScope.launch {
             flow {
                 val username = PreferencesTools.get<String>(Constants.SP_KEY_SAVE_INPUT_USERNAME)
