@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -22,8 +23,6 @@ import coil.annotation.ExperimentalCoilApi
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.lee.playcompose.base.bus.ChannelBus
-import com.lee.playcompose.base.core.ApplicationExtensions.app
-import com.lee.playcompose.base.extensions.px2dp
 import com.lee.playcompose.common.entity.Banner
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.entity.NavigationSelectEvent
@@ -178,12 +177,13 @@ private fun HomeCategoryChildItem(
     category: HomeCategory,
     onItemClick: (HomeCategory) -> Unit
 ) {
-    val screenWidth = app.resources.displayMetrics.widthPixels
-    val viewWidth = app.px2dp(screenWidth / 2)
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp.dp
+    val viewWidth = screenWidth / 2
     Card(
         backgroundColor = AppTheme.colors.item,
         modifier = Modifier
-            .width(viewWidth.dp)
+            .width(viewWidth)
             .padding(OffsetMedium)
     ) {
         Column(
