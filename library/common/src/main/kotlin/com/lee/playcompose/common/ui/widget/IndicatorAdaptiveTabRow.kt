@@ -3,6 +3,7 @@ package com.lee.playcompose.common.ui.widget
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.width
@@ -20,6 +21,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.debugInspectorInfo
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.lee.playcompose.common.ui.theme.AppTheme
 
 /**
  * @author jv.lee
@@ -54,6 +56,7 @@ fun <T> IndicatorAdaptiveTabRow(
             val tabWidth = if (tabWidths.size > selectedTabIndex)
                 tabWidths[selectedTabIndex] else tabWidths[0]
             TabRowDefaults.Indicator(
+                color = AppTheme.colors.accent,
                 modifier = Modifier.adaptiveTabIndicatorOffset(
                     currentTabPosition = tabPosition,
                     tabWidth = tabWidth
