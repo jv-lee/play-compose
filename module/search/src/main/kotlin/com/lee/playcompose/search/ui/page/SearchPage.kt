@@ -212,7 +212,7 @@ private fun ColumnScope.SearchHistoryEmptyLayout(viewState: SearchViewState) {
 private fun SearchHotItem(item: SearchHot, onSearchClick: (String) -> Unit) {
     Card(
         elevation = 0.dp,
-        backgroundColor = Color(0xFFEBEBEB),
+        backgroundColor = AppTheme.colors.label,
         shape = RoundedCornerShape(OffsetRadiusMedium),
         modifier = Modifier.padding(OffsetSmall)
     ) {

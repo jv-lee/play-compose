@@ -31,6 +31,7 @@ private val DarkColorPalette = AppColors(
     item = Color(0xFF1B1B1B),
     shadow = Color(0xFF111111),
     placeholder = Color(0xFF575757),
+    label = Color(0xFF575757)
 )
 
 private val LightColorPalette = AppColors(
@@ -46,6 +47,7 @@ private val LightColorPalette = AppColors(
     item = Color(0xFFFFFFFF),
     shadow = Color(0xFFEBEBEB),
     placeholder = Color(0xFFF9F9F9),
+    label = Color(0xFFEBEBEB)
 )
 
 @Stable
@@ -61,7 +63,8 @@ class AppColors(
     divider: Color,
     item: Color,
     shadow: Color,
-    placeholder: Color
+    placeholder: Color,
+    label: Color,
 ) {
     var primary: Color by mutableStateOf(primary)
     var primaryDark: Color by mutableStateOf(primaryDark)
@@ -75,6 +78,7 @@ class AppColors(
     var item: Color by mutableStateOf(item)
     var shadow: Color by mutableStateOf(shadow)
     var placeholder: Color by mutableStateOf(placeholder)
+    var label: Color by mutableStateOf(label)
 }
 
 var LocalAppColors = compositionLocalOf {
@@ -109,6 +113,7 @@ fun FragmentActivity.PlayComposeTheme(
     val item = animateColorAsState(colors.item, TweenSpec(600))
     val shadow = animateColorAsState(colors.shadow, TweenSpec(600))
     val placeholder = animateColorAsState(colors.placeholder, TweenSpec(600))
+    val label = animateColorAsState(colors.label, TweenSpec(600))
 
     systemUiController.statusBarDarkContentEnabled = viewState.statusBarDarkContentEnabled
     systemUiController.setNavigationBarColor(window.value)
@@ -126,6 +131,7 @@ fun FragmentActivity.PlayComposeTheme(
         item = item.value,
         shadow = shadow.value,
         placeholder = placeholder.value,
+        label = label.value
     )
 
     val typography = Typography(
