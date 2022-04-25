@@ -54,13 +54,25 @@ fun NavGraphBuilder.sideComposable(
     )
 }
 
-fun NavController.navigateArgs(route: String, vararg args: Any) {
+fun NavController.navigateArgs(
+    route: String,
+    vararg args: Any,
+    builder: (NavOptionsBuilder.() -> Unit)? = null
+) {
     val argumentsBuilder = StringBuilder()
     args.iterator()
         .forEach { arg ->
             argumentsBuilder.append(checkTypeFormat(arg))
         }
-    navigate(route + argumentsBuilder.toString())
+
+    builder?.let {
+        navigate(route + argumentsBuilder.toString(), builder = builder)
+    } ?: kotlin.run {
+        navigate(route + argumentsBuilder.toString()) {
+            launchSingleTop = true
+            restoreState = true
+        }
+    }
 }
 
 fun RoutePage.parseRoute(): String {

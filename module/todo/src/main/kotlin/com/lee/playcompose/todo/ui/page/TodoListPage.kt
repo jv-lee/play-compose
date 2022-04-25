@@ -16,7 +16,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.paging.compose.collectAsLazyPagingItems
 import com.lee.playcompose.base.extensions.forResult
 import com.lee.playcompose.common.entity.TodoData
 import com.lee.playcompose.common.extensions.toast
@@ -35,7 +34,6 @@ import com.lee.playcompose.todo.viewmodel.TodoListViewAction
 import com.lee.playcompose.todo.viewmodel.TodoListViewEvent
 import com.lee.playcompose.todo.viewmodel.TodoListViewModel
 import com.lee.playcompose.todo.viewmodel.TodoListViewState
-import kotlinx.coroutines.flow.collect
 import com.lee.playcompose.common.R as CR
 
 /**

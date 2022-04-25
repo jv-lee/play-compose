@@ -24,7 +24,6 @@ import com.lee.playcompose.me.viewmodel.CollectViewModel
 import com.lee.playcompose.me.viewmodel.CollectViewState
 import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
-import kotlinx.coroutines.flow.collect
 
 /**
  * @author jv.lee

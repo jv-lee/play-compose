@@ -37,7 +37,6 @@ import com.lee.playcompose.search.viewmodel.SearchViewAction
 import com.lee.playcompose.search.viewmodel.SearchViewEvent
 import com.lee.playcompose.search.viewmodel.SearchViewModel
 import com.lee.playcompose.search.viewmodel.SearchViewState
-import kotlinx.coroutines.flow.collect
 
 /**
  * @author jv.lee

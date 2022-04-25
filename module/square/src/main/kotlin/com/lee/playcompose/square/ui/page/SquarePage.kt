@@ -33,7 +33,6 @@ import com.lee.playcompose.service.helper.ModuleService
 import com.lee.playcompose.square.R
 import com.lee.playcompose.square.viewmodel.SquareViewModel
 import com.lee.playcompose.square.viewmodel.SquareViewState
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.receiveAsFlow
 
 /**
@@ -77,9 +76,9 @@ fun SquarePage(
                 onNavigationClick = {
                     // 根据登陆状态跳转
                     if (accountViewState.isLogin) {
-                        navController.navigate(RoutePage.Square.CreateShare.route)
+                        navController.navigateArgs(RoutePage.Square.CreateShare.route)
                     } else {
-                        navController.navigate(RoutePage.Account.Login.route)
+                        navController.navigateArgs(RoutePage.Account.Login.route)
                     }
                 }
             )

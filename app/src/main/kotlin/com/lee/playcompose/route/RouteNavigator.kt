@@ -39,8 +39,8 @@ import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.widget.SimpleAnimatedNavHost
 import com.lee.playcompose.router.RoutePage
+import com.lee.playcompose.router.navigateArgs
 import com.lee.playcompose.system.ui.theme.NavigationTabHeight
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.receiveAsFlow
 
 /**
@@ -66,7 +66,7 @@ fun Activity.RouteNavigator() {
     LaunchedEffect(Unit) {
         ChannelBus.bindChannel<LoginEvent>(lifecycle)?.receiveAsFlow()?.collect {
             toast(resources.getString(R.string.login_token_failed))
-            navController.navigate(RoutePage.Account.Login.route)
+            navController.navigateArgs(RoutePage.Account.Login.route)
         }
     }
 

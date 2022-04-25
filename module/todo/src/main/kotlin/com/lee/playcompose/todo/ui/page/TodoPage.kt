@@ -22,6 +22,7 @@ import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.widget.ActionMode
 import com.lee.playcompose.common.ui.widget.AppBarViewContainer
 import com.lee.playcompose.router.RoutePage
+import com.lee.playcompose.router.navigateArgs
 import com.lee.playcompose.todo.R
 import com.lee.playcompose.todo.model.entity.TodoType
 import com.lee.playcompose.todo.ui.callback.TodoListCallbackHandler
@@ -65,7 +66,7 @@ fun TodoPage(navController: NavController, viewModel: TodoViewModel = viewModel(
                 pagerState = pagerState,
                 callbackHandler = callbackHandler,
                 onCreateClick = {
-                    navController.navigate(RoutePage.Todo.CreateTodo.route)
+                    navController.navigateArgs(RoutePage.Todo.CreateTodo.route)
                 }
             )
 

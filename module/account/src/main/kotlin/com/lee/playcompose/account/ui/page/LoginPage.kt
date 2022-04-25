@@ -40,7 +40,7 @@ import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.theme.OffsetRadiusMedium
 import com.lee.playcompose.router.RoutePage
-import kotlinx.coroutines.flow.collect
+import com.lee.playcompose.router.navigateArgs
 
 /**
  * @author jv.lee
@@ -102,7 +102,7 @@ fun LoginPage(
         })
         LoginFooter(viewState = viewState, gotoRegisterClick = {
             imeInsets.hasBottomExpend({ keyboardController?.hide() }, {
-                navController.navigate(RoutePage.Account.Register.route)
+                navController.navigateArgs(RoutePage.Account.Register.route)
             })
         }, loginClick = {
             viewModel.dispatch(LoginViewAction.RequestLogin)

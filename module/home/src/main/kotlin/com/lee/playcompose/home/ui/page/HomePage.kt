@@ -17,7 +17,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
 import coil.annotation.ExperimentalCoilApi
 import com.google.accompanist.insets.LocalWindowInsets
@@ -43,7 +42,6 @@ import com.lee.playcompose.home.viewmodel.HomeViewModel
 import com.lee.playcompose.home.viewmodel.HomeViewState
 import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.receiveAsFlow
 import com.lee.playcompose.common.R as CR
 
@@ -82,7 +80,7 @@ fun HomePage(
                 navController.navigateArgs(RoutePage.Details.route, it.transformDetails())
             },
             onCategoryItemClick = {
-                navController.navigate(it.route)
+                navController.navigateArgs(it.route)
             },
             onContentItemClick = {
                 navController.navigateArgs(RoutePage.Details.route, it.transformDetails())
@@ -95,7 +93,7 @@ fun HomePage(
                 title = stringResource(id = R.string.home_header_text),
                 navigationPainter = painterResource(id = CR.drawable.vector_search),
                 onNavigationClick = {
-                    navController.navigate(RoutePage.Search.route)
+                    navController.navigateArgs(RoutePage.Search.route)
                 }
             )
         }

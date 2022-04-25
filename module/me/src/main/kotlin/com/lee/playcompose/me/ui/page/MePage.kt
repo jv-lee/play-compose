@@ -26,6 +26,7 @@ import com.lee.playcompose.common.ui.widget.AppHeaderContainer
 import com.lee.playcompose.common.ui.widget.RouteBackHandler
 import com.lee.playcompose.me.R
 import com.lee.playcompose.router.RoutePage
+import com.lee.playcompose.router.navigateArgs
 import com.lee.playcompose.service.AccountService
 import com.lee.playcompose.service.helper.ModuleService
 import com.lee.playcompose.common.R as CR
@@ -49,7 +50,7 @@ fun MePage(navController: NavController, paddingValues: PaddingValues) {
             .fillMaxSize()
     ) {
         MeHeader(accountViewState = accountViewState, notLoginClick = {
-            navController.navigate(RoutePage.Account.Login.route)
+            navController.navigateArgs(RoutePage.Account.Login.route)
         })
         MeLineItemList(onItemClick = { route ->
             itemNavigation(navController, accountViewState, route)
@@ -148,16 +149,16 @@ private fun itemNavigation(
 ) {
     // 无需校验登陆状态
     if (route == MeItem.Settings.route) {
-        navController.navigate(route)
+        navController.navigateArgs(route)
         return
     }
 
     // 需要校验登陆状态
     if (accountViewState.isLogin) {
-        navController.navigate(route)
+        navController.navigateArgs(route)
     } else {
         toast(app.getString(R.string.me_login_message))
-        navController.navigate(RoutePage.Account.Login.route)
+        navController.navigateArgs(RoutePage.Account.Login.route)
     }
 }
 

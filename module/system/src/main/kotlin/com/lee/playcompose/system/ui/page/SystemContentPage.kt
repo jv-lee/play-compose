@@ -29,7 +29,6 @@ import com.lee.playcompose.router.navigateArgs
 import com.lee.playcompose.system.R
 import com.lee.playcompose.system.viewmodel.SystemContentViewModel
 import com.lee.playcompose.system.viewmodel.SystemContentViewState
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.receiveAsFlow
 
 /**

@@ -34,7 +34,6 @@ import com.lee.playcompose.system.ui.theme.NavigationTabHeight
 import com.lee.playcompose.system.ui.theme.SystemTabRadius
 import com.lee.playcompose.system.viewmodel.NavigationContentViewModel
 import com.lee.playcompose.system.viewmodel.NavigationContentViewState
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 

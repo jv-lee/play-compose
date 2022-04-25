@@ -82,7 +82,7 @@ fun CoinPage(
     ) {
         Column {
             CoinRecordHeader(accountViewState = accountViewState, coinRankClick = {
-                navController.navigate(RoutePage.Me.CoinRank.route)
+                navController.navigateArgs(RoutePage.Me.CoinRank.route)
             })
             CoinRecordContent(viewState = viewState)
         }

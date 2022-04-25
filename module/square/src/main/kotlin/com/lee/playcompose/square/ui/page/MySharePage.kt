@@ -22,7 +22,6 @@ import com.lee.playcompose.square.viewmodel.MyShareViewAction
 import com.lee.playcompose.square.viewmodel.MyShareViewEvent
 import com.lee.playcompose.square.viewmodel.MyShareViewModel
 import com.lee.playcompose.square.viewmodel.MyShareViewState
-import kotlinx.coroutines.flow.collect
 
 /**
  * @author jv.lee
@@ -57,7 +56,7 @@ fun MySharePage(navController: NavController, viewModel: MyShareViewModel = view
         actionIcon = R.drawable.vector_add,
         actionMode = ActionMode.Button,
         navigationClick = { navController.popBackStack() },
-        actionClick = { navController.navigate(RoutePage.Square.CreateShare.route) }) {
+        actionClick = { navController.navigateArgs(RoutePage.Square.CreateShare.route) }) {
         MyShareContent(
             viewState = viewState,
             slidingPaneState = slidingPaneState,
