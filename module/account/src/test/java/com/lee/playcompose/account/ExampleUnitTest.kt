@@ -22,7 +22,7 @@ class ExampleUnitTest {
 //        println("result:${convertDecimalToBinary(6)}") // 1 1 0
 //        println("result:${convertDecimalToBinary(7)}") // 1 1 1
 
-        val state = 30
+        val state = 4294967294
 
         println("2#->${convertDecimalToBinary(state)}")
         println("bit 1 >>>>>>>>> : ${valueAtBit(state, 1)}")
@@ -34,18 +34,18 @@ class ExampleUnitTest {
         // 以后可能会扩展新的配置，例如增加bit5, bit4，假设state=30，二进制表示是11110
     }
 
-    private fun valueAtBit(num: Int, bit: Int): Int {
+    private fun valueAtBit(num: Long, bit: Int): Long {
         return (num shr (bit - 1)) and 1
     }
 
-    private fun convertDecimalToBinary(num: Int): Long {
+    private fun convertDecimalToBinary(num: Long): Long {
         var n = num
         var binaryNumber: Long = 0
         var remainder: Int
         var i = 1
 
-        while (n != 0) {
-            remainder = n % 2
+        while (n != 0L) {
+            remainder = (n % 2).toInt()
             n /= 2
             binaryNumber += (remainder * i).toLong()
             i *= 10
