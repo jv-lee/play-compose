@@ -15,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.base.extensions.LocalActivity
@@ -25,10 +26,9 @@ import com.lee.playcompose.common.ui.theme.*
 import com.lee.playcompose.common.ui.widget.AppHeaderContainer
 import com.lee.playcompose.common.ui.widget.RouteBackHandler
 import com.lee.playcompose.me.R
+import com.lee.playcompose.me.viewmodel.MeViewModel
 import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
-import com.lee.playcompose.service.AccountService
-import com.lee.playcompose.service.helper.ModuleService
 import com.lee.playcompose.common.R as CR
 
 /**
@@ -37,9 +37,12 @@ import com.lee.playcompose.common.R as CR
  * @description 首页第四个tab 我的页面
  */
 @Composable
-fun MePage(navController: NavController, paddingValues: PaddingValues) {
-    val accountViewState =
-        ModuleService.find<AccountService>().getAccountViewStates(LocalActivity.current)
+fun MePage(
+    navController: NavController,
+    paddingValues: PaddingValues,
+    viewModel: MeViewModel = viewModel()
+) {
+    val accountViewState = viewModel.accountService.getAccountViewStates(LocalActivity.current)
 
     // double click close app.
     RouteBackHandler()
