@@ -41,103 +41,125 @@ fun Activity.appRouteManifest(
     paddingValues: PaddingValues
 ) {
     navGraphBuilder.apply {
+
         // module:home
-        composable(RoutePage.Home.route) {
-            HomePage(navController = navController, paddingValues)
+        RoutePage.Home.run {
+            composable(RoutePage.Home.route) {
+                HomePage(navController = navController, paddingValues)
+            }
         }
 
         // module:square
-        composable(RoutePage.Square.route) {
-            SquarePage(navController = navController, paddingValues)
-        }
-        sideComposable(RoutePage.Square.MyShare.route) {
-            MySharePage(navController = navController)
-        }
-        sideComposable(RoutePage.Square.CreateShare.route) {
-            CreateSharePage(navController = navController)
+        RoutePage.Square.run {
+            composable(RoutePage.Square.route) {
+                SquarePage(navController = navController, paddingValues)
+            }
+            sideComposable(RoutePage.Square.MyShare.route) {
+                MySharePage(navController = navController)
+            }
+            sideComposable(RoutePage.Square.CreateShare.route) {
+                CreateSharePage(navController = navController)
+            }
         }
 
         // module:system
-        composable(RoutePage.System.route) {
-            SystemPage(navController = navController, paddingValues)
-        }
-        sideComposable(RoutePage.System.SystemContentTab.route) {
-            val parentTab = WeakDataHolder.instance.getData<ParentTab>(RouteParamsKey.tabDataKey)
-            SystemContentTabPage(navController = navController, parentTab)
+        RoutePage.System.run {
+            composable(RoutePage.System.route) {
+                SystemPage(navController = navController, paddingValues)
+            }
+            sideComposable(RoutePage.System.SystemContentTab.route) {
+                val parentTab =
+                    WeakDataHolder.instance.getData<ParentTab>(RouteParamsKey.tabDataKey)
+                SystemContentTabPage(navController = navController, parentTab)
+            }
         }
 
         // module:me
-        composable(RoutePage.Me.route) {
-            MePage(navController = navController, paddingValues)
-        }
-        sideComposable(RoutePage.Me.Coin.route) {
-            CoinPage(navController = navController)
-        }
-        sideComposable(RoutePage.Me.CoinRank.route) {
-            CoinRankPage(navController = navController)
-        }
-        sideComposable(RoutePage.Me.Collect.route) {
-            CollectPage(navController = navController)
-        }
-        sideComposable(RoutePage.Me.Settings.route) {
-            SettingsPage(navController = navController)
+        RoutePage.Me.run {
+            composable(RoutePage.Me.route) {
+                MePage(navController = navController, paddingValues)
+            }
+            sideComposable(RoutePage.Me.Coin.route) {
+                CoinPage(navController = navController)
+            }
+            sideComposable(RoutePage.Me.CoinRank.route) {
+                CoinRankPage(navController = navController)
+            }
+            sideComposable(RoutePage.Me.Collect.route) {
+                CollectPage(navController = navController)
+            }
+            sideComposable(RoutePage.Me.Settings.route) {
+                SettingsPage(navController = navController)
+            }
         }
 
         // module:todoModel
-        sideComposable(RoutePage.Todo.route) {
-            TodoPage(navController = navController)
-        }
-        sideComposable(RoutePage.Todo.CreateTodo.route) {
-            CreateTodoPage(navController = navController)
-        }
-        sideComposable(
-            RoutePage.Todo.CreateTodo.parseRoute(),
-            arguments = RoutePage.Todo.CreateTodo.parseArguments()
-        ) { entry ->
-            val detailsJson = entry.arguments?.getString(RouteParamsKey.todoDataKey)
-            val todoData = HttpManager.getGson().fromJson(detailsJson, TodoData::class.java)
-            CreateTodoPage(navController = navController, todoData = todoData)
+        RoutePage.Todo.run {
+            sideComposable(RoutePage.Todo.route) {
+                TodoPage(navController = navController)
+            }
+            sideComposable(RoutePage.Todo.CreateTodo.route) {
+                CreateTodoPage(navController = navController)
+            }
+            sideComposable(
+                RoutePage.Todo.CreateTodo.parseRoute(),
+                arguments = RoutePage.Todo.CreateTodo.parseArguments()
+            ) { entry ->
+                val detailsJson = entry.arguments?.getString(RouteParamsKey.todoDataKey)
+                val todoData = HttpManager.getGson().fromJson(detailsJson, TodoData::class.java)
+                CreateTodoPage(navController = navController, todoData = todoData)
+            }
         }
 
         // module:official
-        sideComposable(RoutePage.Official.route) {
-            OfficialPage(navController = navController)
+        RoutePage.Official.run {
+            sideComposable(RoutePage.Official.route) {
+                OfficialPage(navController = navController)
+            }
         }
 
         // module:project
-        sideComposable(RoutePage.Project.route) {
-            ProjectPage(navController = navController)
+        RoutePage.Project.run {
+            sideComposable(RoutePage.Project.route) {
+                ProjectPage(navController = navController)
+            }
         }
 
         // module:search
-        sideComposable(RoutePage.Search.route) {
-            SearchPage(navController = navController)
-        }
-        sideComposable(
-            route = RoutePage.Search.SearchResult.parseRoute(),
-            arguments = RoutePage.Search.SearchResult.parseArguments()
-        ) { entry ->
-            val searchKey = entry.arguments?.getString(RouteParamsKey.searchKey)
-            SearchResultPage(navController = navController, searchKey = searchKey ?: "")
+        RoutePage.Search.run {
+            sideComposable(RoutePage.Search.route) {
+                SearchPage(navController = navController)
+            }
+            sideComposable(
+                route = RoutePage.Search.SearchResult.parseRoute(),
+                arguments = RoutePage.Search.SearchResult.parseArguments()
+            ) { entry ->
+                val searchKey = entry.arguments?.getString(RouteParamsKey.searchKey)
+                SearchResultPage(navController = navController, searchKey = searchKey ?: "")
+            }
         }
 
         // module:details
-        sideComposable(
-            route = RoutePage.Details.parseRoute(),
-            arguments = RoutePage.Details.parseArguments()
-        ) { entry ->
-            val detailsJson = entry.arguments?.getString(RouteParamsKey.detailsDataKey)
-            val details =
-                HttpManager.getGson().fromJson(detailsJson, DetailsData::class.java)
-            DetailsPage(navController = navController, details)
+        RoutePage.Details.run {
+            sideComposable(
+                route = RoutePage.Details.parseRoute(),
+                arguments = RoutePage.Details.parseArguments()
+            ) { entry ->
+                val detailsJson = entry.arguments?.getString(RouteParamsKey.detailsDataKey)
+                val details =
+                    HttpManager.getGson().fromJson(detailsJson, DetailsData::class.java)
+                DetailsPage(navController = navController, details)
+            }
         }
 
         // module:account
-        sideComposable(route = RoutePage.Account.Login.route) {
-            LoginPage(navController = navController)
-        }
-        sideComposable(route = RoutePage.Account.Register.route) {
-            RegisterPage(navController = navController)
+        RoutePage.Account.run {
+            sideComposable(route = RoutePage.Account.Login.route) {
+                LoginPage(navController = navController)
+            }
+            sideComposable(route = RoutePage.Account.Register.route) {
+                RegisterPage(navController = navController)
+            }
         }
     }
 }
