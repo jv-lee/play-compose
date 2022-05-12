@@ -44,8 +44,8 @@ class SaveCookieInterceptor : Interceptor {
             .map { cookie ->
                 cookie.split(";".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             }
-            .forEach {
-                it.filterNot { set.contains(it) }.forEach { set.add(it) }
+            .forEach { array ->
+                array.filterNot { set.contains(it) }.forEach { set.add(it) }
             }
         val ite = set.iterator()
         while (ite.hasNext()) {
