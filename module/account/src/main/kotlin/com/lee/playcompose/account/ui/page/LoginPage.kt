@@ -21,6 +21,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.google.accompanist.insets.LocalWindowInsets
@@ -41,6 +42,7 @@ import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.theme.OffsetRadiusMedium
 import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
+import kotlinx.coroutines.launch
 
 /**
  * @author jv.lee
@@ -98,6 +100,7 @@ fun LoginPage(
         }, passwordChange = {
             viewModel.dispatch(LoginViewAction.ChangePassword(it))
         }, doneChange = {
+            keyboardController?.hide()
             viewModel.dispatch(LoginViewAction.RequestLogin)
         })
         LoginFooter(viewState = viewState, gotoRegisterClick = {
@@ -105,6 +108,7 @@ fun LoginPage(
                 navController.navigateArgs(RoutePage.Account.Register.route)
             })
         }, loginClick = {
+            keyboardController?.hide()
             viewModel.dispatch(LoginViewAction.RequestLogin)
         })
     }

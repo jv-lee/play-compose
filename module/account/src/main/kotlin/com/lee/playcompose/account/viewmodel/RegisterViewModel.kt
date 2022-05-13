@@ -10,7 +10,11 @@ import com.lee.playcompose.common.entity.AccountData
 import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 /**
@@ -70,9 +74,9 @@ class RegisterViewModel : ViewModel() {
 
     private fun requestRegister() {
         viewModelScope.launch {
+            delay(300) // 延迟隐藏软键盘
             flow {
-                kotlinx.coroutines.delay(500)
-
+                delay(200) // 延时让loading显示更平滑
                 // 校验输入格式
                 if (viewStates.username.isEmpty() ||
                     viewStates.password.isEmpty() ||

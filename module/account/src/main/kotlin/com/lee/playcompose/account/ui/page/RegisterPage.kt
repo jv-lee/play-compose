@@ -22,6 +22,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.google.accompanist.insets.LocalWindowInsets
@@ -32,11 +33,7 @@ import com.lee.playcompose.account.ui.composable.AccountSpacer
 import com.lee.playcompose.account.ui.theme.ButtonLockColor
 import com.lee.playcompose.account.ui.theme.ButtonTextColor
 import com.lee.playcompose.account.viewmodel.*
-import com.lee.playcompose.base.extensions.activityViewModel
-import com.lee.playcompose.base.extensions.onTap
-import com.lee.playcompose.base.extensions.hasBottomExpend
-import com.lee.playcompose.base.extensions.rememberImePaddingValue
-import com.lee.playcompose.base.extensions.setResult
+import com.lee.playcompose.base.extensions.*
 import com.lee.playcompose.common.entity.AccountViewAction
 import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.ui.composable.AppTextField
@@ -44,7 +41,7 @@ import com.lee.playcompose.common.ui.composable.LoadingDialog
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.theme.OffsetRadiusMedium
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 /**
  * @author jv.lee
@@ -101,6 +98,7 @@ fun RegisterPage(
         }, rePasswordChange = {
             viewModel.dispatch(RegisterViewAction.ChangeRePassword(it))
         }, doneChange = {
+            keyboardController?.hide()
             viewModel.dispatch(RegisterViewAction.RequestRegister)
         })
 
@@ -109,6 +107,7 @@ fun RegisterPage(
                 navController.popBackStack()
             })
         }, registerClick = {
+            keyboardController?.hide()
             viewModel.dispatch(RegisterViewAction.RequestRegister)
         })
     }

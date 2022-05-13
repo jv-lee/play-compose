@@ -13,6 +13,7 @@ import com.lee.playcompose.common.entity.AccountData
 import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onStart
@@ -81,9 +82,9 @@ class LoginViewModel : ViewModel() {
 
     private fun requestLogin() {
         viewModelScope.launch {
+            delay(300) // 延迟隐藏软键盘
             flow {
-                kotlinx.coroutines.delay(500)
-
+                delay(200) // 延时让loading显示更平滑
                 // 校验输入格式
                 if (TextUtils.isEmpty(viewStates.username) || TextUtils.isEmpty(viewStates.password)) {
                     throw IllegalArgumentException("username || password is empty.")
