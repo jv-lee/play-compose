@@ -34,5 +34,5 @@ inline fun <reified T> createApi(
         callTypes = intArrayOf(IRequest.CallType.COROUTINE, IRequest.CallType.FLOW)
     )
 ): T {
-    return HttpManager.getInstance().getService(T::class.java, request)
+    return HttpManager.instance.getService(T::class.java, request)
 }

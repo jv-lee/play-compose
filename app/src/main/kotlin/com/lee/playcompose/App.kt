@@ -45,7 +45,7 @@ class App : BaseApplication() {
         // 缓存管理工具初始化
         CacheManager.init(this, BuildConfig.VERSION_CODE)
         // 初始化网络拦截器
-        HttpManager.getInstance().setCommonInterceptor()
+        HttpManager.instance.setCommonInterceptor()
         // 初始化远程缓存数据库
         RemoteCacheDatabase.getInstance(this)
         // 子模块统一初始化
