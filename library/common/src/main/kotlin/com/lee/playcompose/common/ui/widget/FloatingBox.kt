@@ -7,11 +7,16 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Card
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.onSizeChanged
@@ -30,6 +35,7 @@ fun FloatingBox(
     modifier: Modifier = Modifier,
     @ReindexType type: Int = ReindexType.MOVE,
     limitBound: Boolean = false,
+    shape: Shape = MaterialTheme.shapes.medium,
     content: @Composable BoxScope.() -> Unit
 ) {
     val density = LocalDensity.current.density
@@ -53,24 +59,29 @@ fun FloatingBox(
             // 记录父容器 rect l t r b 位于屏幕坐标
             scope = scope.copy(parentRect = scope.parentRect())
         }) {
-        Box(modifier = modifier
-            .onGloballyPositioned {
-                // 记录当前view offset x y 位于屏幕坐标
-                scope = scope.copy(localOffset = it.localToWindow(Offset.Zero))
-            }
-            .onSizeChanged {
-                // 记录当前view size width height
-                scope = scope.copy(localSize = it.toSize())
-            }
-            .offset(offsetXAnimate, offsetYAnimate)
-            .pointerInput(Unit) {
-                detectDragGestures(
-                    onDragEnd = { scope = scope.reindexScope() },
-                    onDragCancel = { scope = scope.reindexScope() },
-                    onDrag = { _, dragAmount ->
-                        scope = scope.updateOffsetXY(dragAmount.x, dragAmount.y)
-                    })
-            }) {
+        Card(
+            shape = shape,
+            backgroundColor = Color.Transparent,
+            contentColor = Color.Transparent,
+            elevation = 0.dp,
+            modifier = modifier
+                .onGloballyPositioned {
+                    // 记录当前view offset x y 位于屏幕坐标
+                    scope = scope.copy(localOffset = it.localToWindow(Offset.Zero))
+                }
+                .onSizeChanged {
+                    // 记录当前view size width height
+                    scope = scope.copy(localSize = it.toSize())
+                }
+                .offset(offsetXAnimate, offsetYAnimate)
+                .pointerInput(Unit) {
+                    detectDragGestures(
+                        onDragEnd = { scope = scope.reindexScope() },
+                        onDragCancel = { scope = scope.reindexScope() },
+                        onDrag = { _, dragAmount ->
+                            scope = scope.updateOffsetXY(dragAmount.x, dragAmount.y)
+                        })
+                }) {
             content()
         }
     }

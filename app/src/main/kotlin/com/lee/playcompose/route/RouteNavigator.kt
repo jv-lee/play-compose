@@ -9,7 +9,11 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
@@ -19,6 +23,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -34,7 +39,6 @@ import com.lee.playcompose.BuildConfig
 import com.lee.playcompose.R
 import com.lee.playcompose.base.bus.ChannelBus
 import com.lee.playcompose.base.bus.ChannelBus.Companion.post
-import com.lee.playcompose.base.extensions.onTap
 import com.lee.playcompose.common.entity.LoginEvent
 import com.lee.playcompose.common.entity.NavigationSelectEvent
 import com.lee.playcompose.common.extensions.toast
@@ -180,14 +184,16 @@ private fun FloatingView() {
         ) {
             FloatingBox(
                 type = ReindexType.REINDEX_X,
+                shape = CircleShape,
                 modifier = Modifier
                     .size(68.dp)
+                    .background(color = Color.Transparent, shape = RoundedCornerShape(26.dp))
                     .align(alignment = Alignment.BottomEnd)
             ) {
                 Image(
                     painter = painterResource(id = com.lee.playcompose.common.R.mipmap.ic_launcher_round),
                     contentDescription = null,
-                    modifier = Modifier.onTap { toast("Welcome to Play Compose.") }
+                    modifier = Modifier.clickable { toast("Welcome to Play Compose.") }
                 )
             }
         }
