@@ -8,9 +8,8 @@ import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
@@ -18,6 +17,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
@@ -30,13 +30,17 @@ import coil.annotation.ExperimentalCoilApi
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import com.lee.playcompose.BuildConfig
 import com.lee.playcompose.R
 import com.lee.playcompose.base.bus.ChannelBus
 import com.lee.playcompose.base.bus.ChannelBus.Companion.post
+import com.lee.playcompose.base.extensions.onTap
 import com.lee.playcompose.common.entity.LoginEvent
 import com.lee.playcompose.common.entity.NavigationSelectEvent
 import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.ui.theme.AppTheme
+import com.lee.playcompose.common.ui.widget.FloatingBox
+import com.lee.playcompose.common.ui.widget.ReindexType
 import com.lee.playcompose.common.ui.widget.SimpleAnimatedNavHost
 import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
@@ -100,6 +104,9 @@ fun Activity.RouteNavigator() {
                 appRouteManifest(this, navController, paddingValues)
             }
         })
+
+    // 添加全局FloatingView
+    FloatingView()
 }
 
 @Composable
@@ -160,4 +167,29 @@ private sealed class MainTab(val route: String, val icon: Int, val selectIcon: I
         MainTab(RoutePage.System.route, R.drawable.vector_system, R.drawable.vector_system_fill)
 
     object Me : MainTab(RoutePage.Me.route, R.drawable.vector_me, R.drawable.vector_me_fill)
+}
+
+@Composable
+private fun FloatingView() {
+    if (BuildConfig.DEBUG) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(rememberInsetsPaddingValues(insets = LocalWindowInsets.current.navigationBars))
+                .padding(bottom = NavigationTabHeight),
+        ) {
+            FloatingBox(
+                type = ReindexType.REINDEX_X,
+                modifier = Modifier
+                    .size(68.dp)
+                    .align(alignment = Alignment.BottomEnd)
+            ) {
+                Image(
+                    painter = painterResource(id = com.lee.playcompose.common.R.mipmap.ic_launcher_round),
+                    contentDescription = null,
+                    modifier = Modifier.onTap { toast("Welcome to Play Compose.") }
+                )
+            }
+        }
+    }
 }
