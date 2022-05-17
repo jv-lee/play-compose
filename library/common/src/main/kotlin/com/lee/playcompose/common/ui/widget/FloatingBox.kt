@@ -1,5 +1,7 @@
 package com.lee.playcompose.common.ui.widget
 
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -34,6 +36,8 @@ fun FloatingBox(
     var scope by remember {
         mutableStateOf(FloatingBoxScope(density = density, type = type, limitBound = limitBound))
     }
+    val offsetXAnimate by animateDpAsState(targetValue = scope.offsetX)
+    val offsetYAnimate by animateDpAsState(targetValue = scope.offsetY)
 
     Box(modifier = Modifier
         .fillMaxSize()
@@ -58,7 +62,7 @@ fun FloatingBox(
                 // 记录当前view size width height
                 scope = scope.copy(localSize = it.toSize())
             }
-            .offset(scope.offsetX, scope.offsetY)
+            .offset(offsetXAnimate, offsetYAnimate)
             .pointerInput(Unit) {
                 detectDragGestures(
                     onDragEnd = { scope = scope.reindexScope() },
@@ -92,6 +96,8 @@ private data class FloatingBoxScope(
     val parentRect: Rect = Rect.Zero,
     val offsetX: Dp = 0.dp,
     val offsetY: Dp = 0.dp,
+    val animateOffsetX: Dp = 0.dp,
+    val animateOffsetY: Dp = 0.dp,
 ) {
 
     // 更新当前view位置
