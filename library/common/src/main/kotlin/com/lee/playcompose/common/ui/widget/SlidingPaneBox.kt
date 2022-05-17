@@ -1,9 +1,7 @@
 package com.lee.playcompose.common.ui.widget
 
 import android.view.MotionEvent
-import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
@@ -33,10 +31,7 @@ fun SlidingPaneBox(
     content: @Composable BoxScope.() -> Unit
 ) {
     var offsetX by remember { mutableStateOf(0.dp) }
-    val offsetXAnimate by animateDpAsState(
-        targetValue = offsetX,
-        animationSpec = tween(durationMillis = 150, easing = FastOutSlowInEasing)
-    )
+    val offsetXAnimate by animateDpAsState(targetValue = offsetX)
 
     val closeAction = { offsetX = 0.dp }
     val openAction = {
@@ -88,7 +83,7 @@ fun SlidingPaneBox(
                                     offsetX = 0.dp
                                 }
                                 else -> {
-                                    offsetX += dragAmount.dp
+                                    offsetX += dragAmount.toDp()
                                 }
                             }
                         } else {
@@ -100,7 +95,7 @@ fun SlidingPaneBox(
                                     offsetX = 0.dp
                                 }
                                 else -> {
-                                    offsetX += dragAmount.dp
+                                    offsetX += dragAmount.toDp()
                                 }
                             }
                         }
