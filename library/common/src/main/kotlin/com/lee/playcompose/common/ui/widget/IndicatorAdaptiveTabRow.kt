@@ -3,7 +3,6 @@ package com.lee.playcompose.common.ui.widget
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.width
@@ -38,11 +37,7 @@ fun <T> IndicatorAdaptiveTabRow(
 ) {
     val density = LocalDensity.current
     val tabWidths = remember {
-        mutableStateListOf<Dp>().apply {
-            repeat(tabs.size) {
-                add(0.dp)
-            }
-        }
+        mutableStateListOf<Dp>().apply { repeat(tabs.size) { add(0.dp) } }
     }
 
     ScrollableTabRow(
@@ -55,6 +50,7 @@ fun <T> IndicatorAdaptiveTabRow(
                 tabPositions[selectedTabIndex] else tabPositions[0]
             val tabWidth = if (tabWidths.size > selectedTabIndex)
                 tabWidths[selectedTabIndex] else tabWidths[0]
+
             TabRowDefaults.Indicator(
                 color = AppTheme.colors.accent,
                 modifier = Modifier.adaptiveTabIndicatorOffset(

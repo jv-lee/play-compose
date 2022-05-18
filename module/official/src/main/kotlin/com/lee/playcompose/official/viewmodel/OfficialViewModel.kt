@@ -13,8 +13,6 @@ import com.lee.playcompose.common.ui.widget.UiStatus
 import com.lee.playcompose.official.constants.Constants.CACHE_KEY_OFFICIAL_TAB
 import com.lee.playcompose.official.model.api.ApiService
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
@@ -38,6 +36,7 @@ class OfficialViewModel : ViewModel() {
     fun dispatch(action: OfficialViewAction) {
         when (action) {
             is OfficialViewAction.RequestTabData -> requestTabData()
+            is OfficialViewAction.SelectedTabIndex -> selectedTabIndex(action.index)
         }
     }
 
@@ -46,23 +45,29 @@ class OfficialViewModel : ViewModel() {
             cacheManager.cacheFlow(CACHE_KEY_OFFICIAL_TAB) {
                 api.getOfficialTabsAsync()
             }.onStart {
-                viewStates = viewStates.copy(pageStatus = UiStatus.Loading)
+                viewStates = viewStates.copy(uiStatus = UiStatus.Loading)
             }.catch {
-                viewStates = viewStates.copy(pageStatus = UiStatus.Failed)
+                viewStates = viewStates.copy(uiStatus = UiStatus.Failed)
             }.collect {
                 viewStates = viewStates.copy(tab = it.data)
-                viewStates = viewStates.copy(pageStatus = UiStatus.Complete)
+                viewStates = viewStates.copy(uiStatus = UiStatus.Complete)
             }
         }
+    }
+
+    private fun selectedTabIndex(index: Int) {
+        viewStates = viewStates.copy(selectedIndex = index)
     }
 
 }
 
 data class OfficialViewState(
+    val selectedIndex: Int = 0,
     val tab: List<Tab> = emptyList(),
-    val pageStatus: UiStatus = UiStatus.Loading
+    val uiStatus: UiStatus = UiStatus.Loading
 )
 
 sealed class OfficialViewAction {
     object RequestTabData : OfficialViewAction()
+    data class SelectedTabIndex(val index: Int) : OfficialViewAction()
 }

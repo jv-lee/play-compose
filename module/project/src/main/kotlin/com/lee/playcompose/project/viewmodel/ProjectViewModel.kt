@@ -13,7 +13,6 @@ import com.lee.playcompose.common.ui.widget.UiStatus
 import com.lee.playcompose.project.constants.Constants.CACHE_KEY_PROJECT_TAB
 import com.lee.playcompose.project.model.api.ApiService
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
@@ -37,6 +36,7 @@ class ProjectViewModel : ViewModel() {
     fun dispatch(action: ProjectViewAction) {
         when (action) {
             is ProjectViewAction.RequestTabData -> requestTabData()
+            is ProjectViewAction.SelectedTabIndex -> selectedTabIndex(action.index)
         }
     }
 
@@ -45,23 +45,29 @@ class ProjectViewModel : ViewModel() {
             cacheManager.cacheFlow(CACHE_KEY_PROJECT_TAB) {
                 api.getProjectTabsAsync()
             }.onStart {
-                viewStates = viewStates.copy(pageStatus = UiStatus.Loading)
+                viewStates = viewStates.copy(uiStatus = UiStatus.Loading)
             }.catch {
-                viewStates = viewStates.copy(pageStatus = UiStatus.Failed)
+                viewStates = viewStates.copy(uiStatus = UiStatus.Failed)
             }.collect {
                 viewStates = viewStates.copy(tab = it.data)
-                viewStates = viewStates.copy(pageStatus = UiStatus.Complete)
+                viewStates = viewStates.copy(uiStatus = UiStatus.Complete)
             }
         }
+    }
+
+    private fun selectedTabIndex(index: Int) {
+        viewStates = viewStates.copy(selectedIndex = index)
     }
 
 }
 
 data class ProjectViewState(
+    val selectedIndex: Int = 0,
     val tab: List<Tab> = emptyList(),
-    val pageStatus: UiStatus = UiStatus.Loading
+    val uiStatus: UiStatus = UiStatus.Loading
 )
 
 sealed class ProjectViewAction {
     object RequestTabData : ProjectViewAction()
+    data class SelectedTabIndex(val index: Int) : ProjectViewAction()
 }

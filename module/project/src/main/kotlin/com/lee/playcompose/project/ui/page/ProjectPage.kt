@@ -1,7 +1,9 @@
 package com.lee.playcompose.project.ui.page
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -26,13 +28,12 @@ import kotlinx.coroutines.launch
 fun ProjectPage(navController: NavController, viewModel: ProjectViewModel = viewModel()) {
     val coroutine = rememberCoroutineScope()
     val pagerState = rememberPagerState()
-    var selectIndex by remember { mutableStateOf(0) }
-
+    val selectIndex = viewModel.viewStates.selectedIndex
     val tabData = viewModel.viewStates.tab
-    val pageStatus = viewModel.viewStates.pageStatus
+    val uiStatus = viewModel.viewStates.uiStatus
 
     LaunchedEffect(pagerState.currentPage) {
-        selectIndex = pagerState.currentPage
+        viewModel.dispatch(ProjectViewAction.SelectedTabIndex(pagerState.currentPage))
     }
 
     AppBarViewContainer(
@@ -40,7 +41,7 @@ fun ProjectPage(navController: NavController, viewModel: ProjectViewModel = view
         elevation = 0.dp,
         navigationClick = { navController.popBackStack() }) {
         UiStatusPage(
-            status = pageStatus,
+            status = uiStatus,
             retry = { viewModel.dispatch(ProjectViewAction.RequestTabData) }) {
             Column {
                 if (tabData.isNotEmpty()) {
@@ -50,7 +51,7 @@ fun ProjectPage(navController: NavController, viewModel: ProjectViewModel = view
                         selectedTabIndex = selectIndex,
                         findTabText = { it.name },
                         onTabClick = { tabIndex ->
-                            selectIndex = tabIndex
+                            viewModel.dispatch(ProjectViewAction.SelectedTabIndex(tabIndex))
                             coroutine.launch { pagerState.animateScrollToPage(tabIndex) }
                         },
                     )
