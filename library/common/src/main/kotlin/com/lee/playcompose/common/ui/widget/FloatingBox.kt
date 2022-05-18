@@ -1,13 +1,11 @@
 package com.lee.playcompose.common.ui.widget
 
 import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.spring
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
@@ -107,8 +105,6 @@ private data class FloatingBoxScope(
     val parentRect: Rect = Rect.Zero,
     val offsetX: Dp = 0.dp,
     val offsetY: Dp = 0.dp,
-    val animateOffsetX: Dp = 0.dp,
-    val animateOffsetY: Dp = 0.dp,
 ) {
 
     // 更新当前view位置
