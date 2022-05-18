@@ -39,6 +39,7 @@ import com.lee.playcompose.BuildConfig
 import com.lee.playcompose.R
 import com.lee.playcompose.base.bus.ChannelBus
 import com.lee.playcompose.base.bus.ChannelBus.Companion.post
+import com.lee.playcompose.base.extensions.LocalActivity
 import com.lee.playcompose.common.entity.LoginEvent
 import com.lee.playcompose.common.entity.NavigationSelectEvent
 import com.lee.playcompose.common.extensions.toast
@@ -48,6 +49,8 @@ import com.lee.playcompose.common.ui.widget.ReindexType
 import com.lee.playcompose.common.ui.widget.SimpleAnimatedNavHost
 import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
+import com.lee.playcompose.service.AccountService
+import com.lee.playcompose.service.helper.ModuleService
 import com.lee.playcompose.system.ui.theme.NavigationTabHeight
 import kotlinx.coroutines.flow.receiveAsFlow
 
@@ -60,6 +63,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 @ExperimentalAnimationApi
 @Composable
 fun Activity.RouteNavigator() {
+    val activity = LocalActivity.current
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     val navController = rememberAnimatedNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -74,6 +78,7 @@ fun Activity.RouteNavigator() {
     LaunchedEffect(Unit) {
         ChannelBus.bindChannel<LoginEvent>(lifecycle)?.receiveAsFlow()?.collect {
             toast(resources.getString(R.string.login_token_failed))
+            ModuleService.find<AccountService>().requestLogout(activity)
             navController.navigateArgs(RoutePage.Account.Login.route)
         }
     }
