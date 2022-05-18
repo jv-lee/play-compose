@@ -212,6 +212,7 @@ private fun CoinRecordHeader(accountViewState: AccountViewState, coinRankClick: 
                     )
                     Icon(
                         painter = painterResource(id = CR.drawable.vector_arrow),
+                        tint = AppTheme.colors.accent,
                         contentDescription = null,
                         modifier = Modifier
                             .align(Alignment.CenterEnd)
