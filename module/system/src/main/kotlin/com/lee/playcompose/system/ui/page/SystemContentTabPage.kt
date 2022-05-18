@@ -1,8 +1,11 @@
 package com.lee.playcompose.system.ui.page
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
@@ -10,6 +13,8 @@ import com.lee.playcompose.common.entity.ParentTab
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.widget.AppBarViewContainer
 import com.lee.playcompose.common.ui.widget.IndicatorAdaptiveTabRow
+import com.lee.playcompose.system.viewmodel.SystemContentTabViewAction
+import com.lee.playcompose.system.viewmodel.SystemContentTabViewModel
 import kotlinx.coroutines.launch
 
 /**
@@ -20,15 +25,16 @@ import kotlinx.coroutines.launch
 @Composable
 fun SystemContentTabPage(
     navController: NavController,
-    parentTab: ParentTab? = null
+    parentTab: ParentTab? = null,
+    viewModel: SystemContentTabViewModel = viewModel()
 ) {
     parentTab ?: return
     val coroutine = rememberCoroutineScope()
     val pagerState = rememberPagerState()
-    var selectIndex by remember { mutableStateOf(0) }
+    val selectIndex = viewModel.viewStates.selectedIndex
 
     LaunchedEffect(pagerState.currentPage) {
-        selectIndex = pagerState.currentPage
+        viewModel.dispatch(SystemContentTabViewAction.SelectedTabIndex(pagerState.currentPage))
     }
 
     AppBarViewContainer(
@@ -43,7 +49,7 @@ fun SystemContentTabPage(
                     selectedTabIndex = selectIndex,
                     findTabText = { it.name },
                     onTabClick = { tabIndex ->
-                        selectIndex = tabIndex
+                        viewModel.dispatch(SystemContentTabViewAction.SelectedTabIndex(tabIndex))
                         coroutine.launch { pagerState.animateScrollToPage(tabIndex) }
                     },
                 )
