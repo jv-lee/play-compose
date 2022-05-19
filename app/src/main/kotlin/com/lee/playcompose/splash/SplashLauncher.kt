@@ -26,7 +26,6 @@ import com.lee.playcompose.common.ui.theme.OffsetRadiusMedium
 import com.lee.playcompose.common.ui.theme.OffsetSmall
 import com.lee.playcompose.service.AccountService
 import com.lee.playcompose.service.helper.ModuleService
-import com.lee.playcompose.common.R as CR
 
 /**
  * @author jv.lee
@@ -71,7 +70,7 @@ private fun SplashPage(viewModel: SplashViewModel) {
             .padding(bottom = 86.dp)
     ) {
         Image(
-            painter = painterResource(id = CR.mipmap.ic_splash_logo),
+            painter = painterResource(id = viewState.splashLogoRes),
             contentDescription = null,
             modifier = Modifier.align(alignment = Alignment.Center)
         )
