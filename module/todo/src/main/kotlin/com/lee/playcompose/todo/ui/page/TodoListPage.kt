@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.lee.playcompose.base.extensions.forResult
@@ -208,7 +209,7 @@ private fun TodoListItem(
                 )
             }
         }) {
-        Box(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(AppTheme.colors.item)
@@ -218,17 +219,19 @@ private fun TodoListItem(
                 text = todoData.title,
                 fontSize = FontSizeMedium,
                 color = AppTheme.colors.accent,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
                 modifier = Modifier
-                    .padding(start = OffsetLarge, top = OffsetMedium)
-                    .align(Alignment.TopStart)
+                    .padding(start = OffsetLarge, top = OffsetMedium, end = OffsetLarge)
             )
             Text(
                 text = todoData.content,
                 fontSize = FontSizeMedium,
                 color = AppTheme.colors.primary,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
                 modifier = Modifier
-                    .padding(start = OffsetLarge, bottom = OffsetMedium)
-                    .align(Alignment.BottomStart)
+                    .padding(start = OffsetLarge, bottom = OffsetMedium, end = OffsetLarge)
             )
             HorizontallySpacer(color = AppTheme.colors.background)
         }
