@@ -26,7 +26,12 @@ import androidx.compose.ui.unit.toSize
 /**
  * @author jv.lee
  * @date 2022/5/17
- * @description
+ * @description 可拖拽悬浮Box容器
+ * @param modifier 当前容器属性
+ * @param type 拖拽回弹模式 [ReindexType]
+ * @param limitBound 是否限制拖拽范围不超过父容器
+ * @param shape 拖拽容器范围shape 点击回馈范围
+ * @param content 子view
  */
 @Composable
 fun FloatingBox(
