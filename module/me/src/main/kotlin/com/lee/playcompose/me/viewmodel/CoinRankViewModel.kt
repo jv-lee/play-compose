@@ -20,9 +20,9 @@ import kotlinx.coroutines.flow.Flow
 import java.util.*
 
 /**
+ *
  * @author jv.lee
  * @date 2022/3/28
- * @description
  */
 class CoinRankViewModel : ViewModel() {
 

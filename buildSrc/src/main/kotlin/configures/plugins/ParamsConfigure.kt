@@ -8,9 +8,9 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 
 /**
+ * 项目公共参数配置依赖扩展
  * @author jv.lee
  * @date 2021/10/1
- * @description 项目公共参数配置依赖扩展
  */
 @Suppress("MISSING_DEPENDENCY_SUPERCLASS")
 fun Project.paramsConfigure() {

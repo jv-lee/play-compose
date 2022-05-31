@@ -34,9 +34,9 @@ import com.lee.playcompose.square.viewmodel.SquareViewState
 import kotlinx.coroutines.flow.receiveAsFlow
 
 /**
+ * 首页第二个tab 广场页面
  * @author jv.lee
  * @date 2022/2/24
- * @description 首页第二个tab 广场页面
  */
 @Composable
 fun SquarePage(

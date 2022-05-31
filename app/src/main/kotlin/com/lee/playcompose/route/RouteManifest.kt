@@ -30,9 +30,9 @@ import com.lee.playcompose.todo.ui.page.CreateTodoPage
 import com.lee.playcompose.todo.ui.page.TodoPage
 
 /**
+ * app路由配置 (页面路由注册)
  * @author jv.lee
  * @date 2022/3/16
- * @description app路由配置 (页面路由注册)
  */
 @OptIn(ExperimentalCoilApi::class)
 fun Activity.appRouteManifest(

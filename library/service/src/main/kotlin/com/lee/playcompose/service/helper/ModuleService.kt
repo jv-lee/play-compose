@@ -3,9 +3,9 @@ package com.lee.playcompose.service.helper
 import java.util.*
 
 /**
+ * AutoService工具类
  * @author jv.lee
  * @date 2021/9/9
- * @description AutoService工具类
  */
 object ModuleService {
     inline fun <reified T> find(): T {

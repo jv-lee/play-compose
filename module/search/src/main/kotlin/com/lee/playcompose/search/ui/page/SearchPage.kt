@@ -39,9 +39,9 @@ import com.lee.playcompose.search.viewmodel.SearchViewModel
 import com.lee.playcompose.search.viewmodel.SearchViewState
 
 /**
+ * 搜索页
  * @author jv.lee
  * @date 2022/3/16
- * @description 搜索页
  */
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

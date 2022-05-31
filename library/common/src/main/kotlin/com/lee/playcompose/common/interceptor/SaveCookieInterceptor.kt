@@ -6,9 +6,9 @@ import okhttp3.Interceptor
 import okhttp3.Response
 
 /**
+ * Cookie处理拦截器 用于保存账号cookie信息
  * @author jv.lee
  * @date 2021/11/24
- * @description Cookie处理拦截器 用于保存账号cookie信息
  */
 class SaveCookieInterceptor : Interceptor {
 

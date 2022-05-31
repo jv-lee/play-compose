@@ -55,9 +55,9 @@ import com.lee.playcompose.system.ui.theme.NavigationTabHeight
 import kotlinx.coroutines.flow.receiveAsFlow
 
 /**
+ * app路由管理
  * @author jv.lee
  * @date 2022/2/24
- * @description app路由管理
  */
 @OptIn(ExperimentalCoilApi::class)
 @ExperimentalAnimationApi

@@ -17,9 +17,9 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 /**
+ *
  * @author jv.lee
  * @date 2022/3/11
- * @description
  */
 class OfficialViewModel : ViewModel() {
 

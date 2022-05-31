@@ -20,9 +20,9 @@ import com.lee.playcompose.official.viewmodel.OfficialViewModel
 import kotlinx.coroutines.launch
 
 /**
+ *
  * @author jv.lee
  * @date 2022/3/11
- * @description
  */
 @Composable
 fun OfficialPage(navController: NavController, viewModel: OfficialViewModel = viewModel()) {

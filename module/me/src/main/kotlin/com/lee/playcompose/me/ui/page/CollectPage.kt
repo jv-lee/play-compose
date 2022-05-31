@@ -26,9 +26,9 @@ import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
 
 /**
+ * 个人收藏页
  * @author jv.lee
  * @date 2022/3/25
- * @description 个人收藏页
  */
 @Composable
 fun CollectPage(navController: NavController, viewModel: CollectViewModel = viewModel()) {

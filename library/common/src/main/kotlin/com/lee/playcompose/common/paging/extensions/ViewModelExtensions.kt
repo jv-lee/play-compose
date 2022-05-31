@@ -9,9 +9,9 @@ import com.lee.playcompose.common.extensions.checkData
 import kotlinx.coroutines.flow.Flow
 
 /**
+ * 公共viewModel 功能扩展函数
  * @author jv.lee
  * @date 2022/2/28
- * @description 公共viewModel 功能扩展函数
  */
 fun <T : Any> ViewModel.pager(
     config: PagingConfig = PagingConfig(20),

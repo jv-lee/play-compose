@@ -21,9 +21,9 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 /**
+ *
  * @author jv.lee
  * @date 2022/3/23
- * @description
  */
 class LoginViewModel : ViewModel() {
 

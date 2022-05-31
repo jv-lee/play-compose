@@ -6,9 +6,9 @@ import androidx.compose.ui.graphics.Color
 import com.lee.playcompose.base.core.ApplicationExtensions.app
 
 /**
+ * 公共ui能力扩展函数
  * @author jv.lee
  * @date 2022/2/24
- * @description 公共ui能力扩展函数
  */
 
 fun toast(message: String?) {

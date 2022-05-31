@@ -15,9 +15,9 @@ import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
 
 /**
+ *
  * @author jv.lee
  * @date 2022/3/11
- * @description
  */
 @Composable
 fun OfficialListPage(

@@ -7,9 +7,9 @@ import androidx.room.RoomDatabase
 import com.lee.playcompose.common.entity.SearchHistory
 
 /**
+ *
  * @author jv.lee
  * @date 2021/11/22
- * @description
  */
 @Database(entities = [SearchHistory::class], version = 1, exportSchema = false)
 abstract class SearchHistoryDatabase : RoomDatabase() {

@@ -6,10 +6,11 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 /**
+ * 网络请求操作类
  * @author jv.lee
  * @date 2020/3/25
- * @description 网络请求操作类
  */
+
 @Keep
 data class Data<T>(
     val data: T,

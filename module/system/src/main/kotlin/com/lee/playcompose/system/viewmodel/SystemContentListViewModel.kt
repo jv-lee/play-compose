@@ -16,9 +16,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 
 /**
+ * 体系内容 viewModel
  * @author jv.lee
  * @date 2022/3/8
- * @description 体系内容 viewModel
  */
 class SystemContentListViewModel(private val id: Long) : ViewModel() {
 

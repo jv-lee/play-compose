@@ -21,9 +21,9 @@ import com.lee.playcompose.search.viewmodel.SearchResultViewModel
 import com.lee.playcompose.search.viewmodel.SearchResultViewState
 
 /**
+ *
  * @author jv.lee
  * @date 2022/3/16
- * @description
  */
 @Composable
 fun SearchResultPage(

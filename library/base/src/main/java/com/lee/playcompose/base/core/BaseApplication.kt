@@ -4,9 +4,9 @@ import android.app.Application
 import androidx.multidex.MultiDexApplication
 
 /**
+ * 项目基础baseApplication类
  * @author jv.lee
  * @date 2020/3/20
- * @description
  */
 abstract class BaseApplication : MultiDexApplication() {
 

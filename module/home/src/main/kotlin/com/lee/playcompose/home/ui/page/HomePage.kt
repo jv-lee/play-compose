@@ -45,9 +45,9 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import com.lee.playcompose.common.R as CR
 
 /**
+ * 首页第一个tab 主页
  * @author jv.lee
  * @date 2022/2/24
- * @description 首页第一个tab 主页
  */
 @ExperimentalCoilApi
 @Composable

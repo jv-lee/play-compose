@@ -11,10 +11,10 @@ import okhttp3.Response
 import java.nio.charset.Charset
 
 /**
+ * 全局统一错误拦截器
+ * 处理错误码对应的逻辑
  * @author jv.lee
  * @date 2021/11/24
- * @description 全局统一错误拦截器
- * 处理错误码对应的逻辑
  */
 class FailedInterceptor : Interceptor {
 

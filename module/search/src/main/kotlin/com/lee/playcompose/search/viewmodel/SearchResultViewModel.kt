@@ -17,9 +17,9 @@ import com.lee.playcompose.search.model.api.ApiService
 import kotlinx.coroutines.flow.Flow
 
 /**
+ *
  * @author jv.lee
  * @date 2022/3/18
- * @description
  */
 class SearchResultViewModel(private val key: String) : ViewModel() {
 

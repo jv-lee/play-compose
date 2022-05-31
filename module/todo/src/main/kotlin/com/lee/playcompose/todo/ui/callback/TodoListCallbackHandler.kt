@@ -8,9 +8,9 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 
 /**
+ * todoList页面自页面通信回调
  * @author jv.lee
  * @date 2022/4/7
- * @description todoList页面自页面通信回调
  */
 interface TodoListCallback {
     fun refresh()

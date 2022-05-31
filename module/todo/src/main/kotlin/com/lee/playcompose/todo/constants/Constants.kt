@@ -1,9 +1,9 @@
 package com.lee.playcompose.todo.constants
 
 /**
+ *
  * @author jv.lee
  * @date 2022/4/6
- * @description
  */
 object Constants {
     const val SP_KEY_TODO_TYPE = "spKey:todo-type"

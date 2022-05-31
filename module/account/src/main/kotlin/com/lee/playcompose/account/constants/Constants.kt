@@ -1,9 +1,9 @@
 package com.lee.playcompose.account.constants
 
 /**
+ *
  * @author jv.lee
  * @date 2021/11/25
- * @description
  */
 object Constants {
     // 账户缓存

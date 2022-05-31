@@ -8,9 +8,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 /**
+ * 通用站位横竖线条组件
  * @author jv.lee
  * @date 2022/4/2
- * @description
  */
 @Composable
 fun VerticallySpacer(color: Color = Color(0xFFC2C2C2)) {

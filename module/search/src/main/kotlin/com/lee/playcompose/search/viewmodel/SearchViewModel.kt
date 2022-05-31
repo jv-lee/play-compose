@@ -15,9 +15,9 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 /**
+ * 搜索页面viewModel
  * @author jv.lee
  * @date 2022/3/18
- * @description 搜索页面viewModel
  */
 class SearchViewModel : ViewModel() {
 

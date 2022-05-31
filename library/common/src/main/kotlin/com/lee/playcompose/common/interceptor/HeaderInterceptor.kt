@@ -6,9 +6,9 @@ import okhttp3.Interceptor
 import okhttp3.Response
 
 /**
+ * 请求头部设置拦截器
  * @author jv.lee
  * @date 2021/11/24
- * @description 请求头部设置拦截器
  */
 class HeaderInterceptor : Interceptor {
 

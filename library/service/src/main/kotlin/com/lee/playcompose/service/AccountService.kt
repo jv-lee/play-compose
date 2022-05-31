@@ -7,9 +7,9 @@ import com.lee.playcompose.common.entity.AccountViewState
 import kotlinx.coroutines.flow.Flow
 
 /**
+ * 账户模块对外提供功能服务类
  * @author jv.lee
  * @date 2022/3/23
- * @description
  */
 interface AccountService {
 

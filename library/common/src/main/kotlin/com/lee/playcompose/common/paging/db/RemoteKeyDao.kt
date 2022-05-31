@@ -4,12 +4,12 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.lee.playcompose.common.paging.RemoteKey
+import com.lee.playcompose.common.paging.entity.RemoteKey
 
 /**
+ *
  * @author jv.lee
  * @date 2022/4/13
- * @description
  */
 @Dao
 interface RemoteKeyDao {

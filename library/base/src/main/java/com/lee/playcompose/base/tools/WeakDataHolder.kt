@@ -3,9 +3,9 @@ package com.lee.playcompose.base.tools
 import java.lang.ref.WeakReference
 
 /**
+ * 弱引用数据暂存帮助类，解除intent中无法携带过大数据时通过该帮助类中转数据
  * @author jv.lee
  * @date 2022/3/14
- * @description
  */
 class WeakDataHolder {
     companion object {
@@ -25,7 +25,7 @@ class WeakDataHolder {
 
     /**
      * 获取数据
-     * @param id
+     * @param key
      * @return data
      */
     fun <T> getData(key: String): T? {

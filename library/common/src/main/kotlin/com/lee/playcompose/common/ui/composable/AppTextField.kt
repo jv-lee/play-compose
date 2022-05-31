@@ -16,9 +16,9 @@ import com.lee.playcompose.common.ui.theme.FontSizeLarge
 import com.lee.playcompose.common.ui.theme.FontSizeMedium
 
 /**
+ * appTextField封装
  * @author jv.lee
  * @date 2022/3/21
- * @description
  */
 @Composable
 fun AppTextField(

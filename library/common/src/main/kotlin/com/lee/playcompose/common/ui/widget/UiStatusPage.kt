@@ -19,9 +19,9 @@ import com.lee.playcompose.common.R
 import com.lee.playcompose.common.ui.theme.AppTheme
 
 /**
+ *
  * @author jv.lee
  * @date 2022/3/14
- * @description
  */
 sealed class UiStatus {
     object Loading : UiStatus()

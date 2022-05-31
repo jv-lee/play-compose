@@ -16,10 +16,11 @@ import com.lee.playcompose.common.extensions.getTitle
 import com.lee.playcompose.common.ui.theme.*
 
 /**
+ * 各模块通用内容item组件
  * @author jv.lee
  * @date 2022/3/3
- * @description 各模块通用内容item组件
  */
+
 @Composable
 fun ContentItem(
     item: Content,

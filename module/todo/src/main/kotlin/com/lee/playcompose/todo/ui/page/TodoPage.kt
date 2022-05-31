@@ -32,9 +32,9 @@ import com.lee.playcompose.todo.viewmodel.TodoViewModel
 import kotlinx.coroutines.launch
 
 /**
+ * todo页面（待完成/已完成）
  * @author jv.lee
  * @date 2022/3/25
- * @description todo页面（待完成/已完成）
  */
 @Composable
 fun TodoPage(navController: NavController, viewModel: TodoViewModel = viewModel()) {

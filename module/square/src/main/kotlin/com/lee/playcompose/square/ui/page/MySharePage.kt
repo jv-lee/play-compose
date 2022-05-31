@@ -24,9 +24,9 @@ import com.lee.playcompose.square.viewmodel.MyShareViewModel
 import com.lee.playcompose.square.viewmodel.MyShareViewState
 
 /**
+ * 我的分享列表页
  * @author jv.lee
  * @date 2022/3/16
- * @description 我的分享列表页
  */
 @Composable
 fun MySharePage(navController: NavController, viewModel: MyShareViewModel = viewModel()) {

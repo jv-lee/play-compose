@@ -21,9 +21,9 @@ import com.lee.playcompose.common.ui.widget.SlidingPaneBox
 import com.lee.playcompose.common.ui.widget.SlidingPaneState
 
 /**
+ *
  * @author jv.lee
  * @date 2022/3/29
- * @description
  */
 @Composable
 fun ActionTextItem(

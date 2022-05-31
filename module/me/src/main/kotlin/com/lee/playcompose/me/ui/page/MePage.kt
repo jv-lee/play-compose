@@ -32,9 +32,9 @@ import com.lee.playcompose.router.navigateArgs
 import com.lee.playcompose.common.R as CR
 
 /**
+ * 首页第四个tab 我的页面
  * @author jv.lee
  * @date 2022/2/24
- * @description 首页第四个tab 我的页面
  */
 @Composable
 fun MePage(

@@ -15,9 +15,9 @@ import com.lee.playcompose.router.navigateArgs
 import com.lee.playcompose.system.viewmodel.SystemContentListViewModel
 
 /**
+ * 体系页第一个tab 体系内容子tabList页面
  * @author jv.lee
  * @date 2022/3/14
- * @description 体系页第一个tab 体系内容子tabList页面
  */
 @Composable
 fun SystemContentListPage(

@@ -28,9 +28,9 @@ import com.lee.playcompose.service.AccountService
 import com.lee.playcompose.service.helper.ModuleService
 
 /**
+ * 闪屏页路由组件 闪屏切换主路由ui
  * @author jv.lee
  * @date 2022/3/4
- * @description 闪屏页路由组件 闪屏切换主路由ui
  */
 @Composable
 fun SplashLauncher(viewModel: SplashViewModel = viewModel(), content: @Composable () -> Unit) {

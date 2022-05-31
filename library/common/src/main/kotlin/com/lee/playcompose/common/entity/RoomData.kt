@@ -6,9 +6,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 /**
+ * 数据库操作类
  * @author jv.lee
  * @date 2020/4/16
- * @description 数据库操作类
  */
 
 @Keep

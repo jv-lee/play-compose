@@ -9,9 +9,9 @@ import okhttp3.Response
 import java.io.IOException
 
 /**
+ *
  * @author jv.lee
  * @date 2020/3/20
- * @description
  */
 class CacheControlInterceptor :Interceptor {
 

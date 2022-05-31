@@ -17,9 +17,9 @@ import com.lee.playcompose.common.R
 import com.lee.playcompose.common.ui.theme.*
 
 /**
+ * 各种状态处理dialog
  * @author jv.lee
  * @date 2022/4/2
- * @description
  */
 @Composable
 fun LoadingDialog(isShow: Boolean) {

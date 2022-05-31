@@ -18,9 +18,9 @@ import com.lee.playcompose.system.viewmodel.SystemContentTabViewModel
 import kotlinx.coroutines.launch
 
 /**
+ * 体系页第一个tab 体系内容子tab页面
  * @author jv.lee
  * @date 2022/3/14
- * @description 体系页第一个tab 体系内容子tab页面
  */
 @Composable
 fun SystemContentTabPage(

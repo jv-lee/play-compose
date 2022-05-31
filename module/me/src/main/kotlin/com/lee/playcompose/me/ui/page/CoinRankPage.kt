@@ -28,9 +28,9 @@ import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
 
 /**
+ * 积分排行榜
  * @author jv.lee
  * @date 2022/3/25
- * @description 积分排行榜
  */
 @Composable
 fun CoinRankPage(navController: NavController, viewModel: CoinRankViewModel = viewModel()) {

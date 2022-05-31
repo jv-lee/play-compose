@@ -4,9 +4,9 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.fragment.app.FragmentActivity
 
 /**
+ * 全局compose activity引用
  * @author jv.lee
  * @date 2022/3/18
- * @description
  */
 
 val LocalActivity = staticCompositionLocalOf<FragmentActivity> {

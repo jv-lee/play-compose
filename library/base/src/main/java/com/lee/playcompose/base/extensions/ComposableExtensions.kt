@@ -18,9 +18,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 /**
+ * compose扩展函数工具类
  * @author jv.lee
  * @date 2022/3/22
- * @description compose扩展函数工具类
  */
 
 /**

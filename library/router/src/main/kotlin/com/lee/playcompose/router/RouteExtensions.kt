@@ -15,9 +15,9 @@ import com.google.accompanist.navigation.animation.composable
 import com.lee.playcompose.base.net.HttpManager
 
 /**
+ * 路由扩展函数
  * @author jv.lee
  * @date 2022/3/7
- * @description 路由扩展函数
  */
 @ExperimentalAnimationApi
 fun NavGraphBuilder.sideComposable(

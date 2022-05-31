@@ -9,9 +9,9 @@ import com.lee.playcompose.route.RouteNavigator
 import com.lee.playcompose.splash.SplashLauncher
 
 /**
+ * 程序主窗口 单Activity架构
  * @author jv.lee
  * @date 2022/2/24
- * @description 程序主窗口 单Activity架构
  */
 class MainActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

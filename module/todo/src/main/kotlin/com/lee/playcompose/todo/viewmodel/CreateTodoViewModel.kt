@@ -23,9 +23,9 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 /**
+ *
  * @author jv.lee
  * @date 2022/4/8
- * @description
  */
 class CreateTodoViewModel(private val todoData: TodoData?) : ViewModel(),
     DatePickerDialog.OnDateSetListener {

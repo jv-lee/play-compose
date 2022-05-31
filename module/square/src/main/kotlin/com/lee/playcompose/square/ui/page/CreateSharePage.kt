@@ -36,9 +36,9 @@ import com.lee.playcompose.square.viewmodel.CreateShareViewState
 import kotlinx.coroutines.flow.collect
 
 /**
+ * 创建分享内容页面
  * @author jv.lee
  * @date 2022/3/16
- * @description 创建分享内容页面
  */
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

@@ -18,9 +18,9 @@ import com.lee.playcompose.common.ui.theme.FontSizeMedium
 import com.lee.playcompose.common.ui.theme.FontSizeSmall
 
 /**
+ * 设置项itemView
  * @author jv.lee
  * @date 2022/3/9
- * @description 设置项itemView
  */
 @Composable
 fun ProfileItem(

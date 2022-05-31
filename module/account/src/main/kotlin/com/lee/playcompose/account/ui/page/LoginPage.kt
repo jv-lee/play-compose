@@ -45,9 +45,9 @@ import com.lee.playcompose.router.navigateArgs
 import kotlinx.coroutines.launch
 
 /**
+ * 用户登陆页面
  * @author jv.lee
  * @date 2022/3/23
- * @description 用户登陆页面
  */
 @OptIn(androidx.compose.ui.ExperimentalComposeUiApi::class)
 @Composable

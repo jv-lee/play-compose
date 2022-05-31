@@ -13,9 +13,9 @@ import com.lee.playcompose.common.paging.saved.singleSavedPager
 import com.lee.playcompose.system.model.api.ApiService
 
 /**
+ * 导航内容 viewModel
  * @author jv.lee
  * @date 2022/3/8
- * @description 导航内容 viewModel
  */
 class NavigationContentViewModel : ViewModel() {
 

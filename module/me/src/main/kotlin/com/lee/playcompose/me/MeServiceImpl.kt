@@ -7,9 +7,9 @@ import com.lee.playcompose.me.model.api.ApiService
 import com.lee.playcompose.service.MeService
 
 /**
+ *
  * @author jv.lee
  * @date 2022/3/30
- * @description
  */
 @AutoService(MeService::class)
 class MeServiceImpl : MeService {

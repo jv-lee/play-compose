@@ -5,9 +5,9 @@ import com.lee.playcompose.todo.R
 
 
 /**
+ * todo本地数据类
  * @author jv.lee
  * @date 2022/1/2
- * @description
  */
 data class TodoTypeData(val type: Int, val name: String) {
     companion object {

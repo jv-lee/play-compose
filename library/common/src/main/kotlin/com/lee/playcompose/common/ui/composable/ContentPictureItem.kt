@@ -21,9 +21,9 @@ import com.lee.playcompose.common.extensions.getTitle
 import com.lee.playcompose.common.ui.theme.*
 
 /**
+ *
  * @author jv.lee
  * @date 2022/3/14
- * @description
  */
 @OptIn(ExperimentalCoilApi::class)
 @Composable

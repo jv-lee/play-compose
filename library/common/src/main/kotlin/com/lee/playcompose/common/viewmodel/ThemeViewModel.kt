@@ -7,9 +7,9 @@ import androidx.lifecycle.ViewModel
 import com.lee.playcompose.base.tools.DarkModeTools
 
 /**
+ * app主题控制viewModel
  * @author jv.lee
  * @date 2022/4/20
- * @description app主题控制viewModel
  */
 class ThemeViewModel : ViewModel() {
 

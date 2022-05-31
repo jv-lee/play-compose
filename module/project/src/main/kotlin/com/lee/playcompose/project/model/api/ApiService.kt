@@ -9,9 +9,9 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 /**
+ *
  * @author jv.lee
  * @date 2021/11/8
- * @description
  */
 interface ApiService {
 

@@ -32,9 +32,9 @@ import com.lee.playcompose.system.viewmodel.SystemContentViewState
 import kotlinx.coroutines.flow.receiveAsFlow
 
 /**
+ * 体系页第一个tab 体系内容
  * @author jv.lee
  * @date 2022/3/8
- * @description 体系页第一个tab 体系内容
  */
 @Composable
 fun SystemContentPage(

@@ -27,9 +27,9 @@ import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.theme.ListStateItemHeight
 
 /**
+ * 刷新列表组件
  * @author jv.lee
  * @date 2022/2/28
- * @description 刷新列表组件
  */
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable

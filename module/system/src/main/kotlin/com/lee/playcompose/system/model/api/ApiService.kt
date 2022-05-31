@@ -6,9 +6,9 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 /**
+ * 体系模块api
  * @author jv.lee
  * @date 2021/11/8
- * @description 体系模块api
  */
 interface ApiService {
 

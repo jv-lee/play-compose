@@ -14,9 +14,9 @@ import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 /**
+ * app模块配置依赖扩展
  * @author jv.lee
  * @date 2021/10/1
- * @description app模块配置依赖扩展
  */
 @Suppress("MISSING_DEPENDENCY_SUPERCLASS", "MISSING_DEPENDENCY_CLASS")
 fun Project.appConfigure(

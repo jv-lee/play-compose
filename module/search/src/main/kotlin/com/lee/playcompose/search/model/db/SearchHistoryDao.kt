@@ -6,9 +6,9 @@ import com.lee.playcompose.base.db.base.BaseDao
 import com.lee.playcompose.common.entity.SearchHistory
 
 /**
+ *
  * @author jv.lee
  * @date 2021/11/22
- * @description
  */
 @Dao
 interface SearchHistoryDao : BaseDao<SearchHistory> {

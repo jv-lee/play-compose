@@ -13,9 +13,9 @@ import configures.core.freeCompilerArgs
 import dependencies.Version
 
 /**
+ * 基础库配置依赖扩展
  * @author jv.lee
  * @date 2021/10/1
- * @description 基础库配置依赖扩展
  */
 @Suppress("MISSING_DEPENDENCY_SUPERCLASS")
 fun Project.libraryConfigure(

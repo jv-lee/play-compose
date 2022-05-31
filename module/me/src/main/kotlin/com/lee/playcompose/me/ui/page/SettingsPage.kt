@@ -31,9 +31,9 @@ import kotlinx.coroutines.launch
 import com.lee.playcompose.common.R as CR
 
 /**
+ * 设置页面
  * @author jv.lee
  * @date 2022/3/25
- * @description 设置页面
  */
 @Composable
 fun SettingsPage(

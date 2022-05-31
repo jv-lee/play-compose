@@ -12,9 +12,9 @@ import com.lee.playcompose.common.extensions.createAppHeaderGradient
 import com.lee.playcompose.common.ui.theme.AppTheme
 
 /**
+ * 公共appbar容器组件
  * @author jv.lee
  * @date 2022/2/21
- * @description 公共appbar容器组件
  */
 @Composable
 fun AppHeaderContainer(

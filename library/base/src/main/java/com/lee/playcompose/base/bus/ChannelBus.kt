@@ -10,9 +10,9 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.ConcurrentHashMap
 
 /**
+ * compose channel事件总线
  * @author jv.lee
  * @date 2022/3/22
- * @description compose channel事件总线
  */
 class ChannelBus {
 

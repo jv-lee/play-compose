@@ -4,9 +4,9 @@ import androidx.compose.ui.graphics.Color
 import java.util.*
 
 /**
+ * 搜索热词 提供本地数据源
  * @author jv.lee
  * @date 2021/11/4
- * @description 搜索热词 提供本地数据源
  */
 data class SearchHot(
     val key: String,

@@ -5,12 +5,12 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.lee.playcompose.common.paging.RemoteContent
+import com.lee.playcompose.common.paging.entity.RemoteContent
 
 /**
+ * paging分页缓存数据 remote dataBase 存储操作dao
  * @author jv.lee
  * @date 2022/4/13
- * @description
  */
 @Dao
 interface RemoteContentDao {

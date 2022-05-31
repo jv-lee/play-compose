@@ -28,17 +28,10 @@ import com.lee.playcompose.common.ui.composable.HeaderSpacer
 import com.lee.playcompose.common.ui.theme.*
 
 /**
+ * 公共appbarView
  * @author jv.lee
  * @date 2022/2/21
- * @description 公共appbarView
  */
-
-sealed class ActionMode {
-    object Button : ActionMode()
-    object Menu : ActionMode()
-    object Default : ActionMode()
-}
-
 @Composable
 fun AppBarView(
     modifier: Modifier = Modifier,
@@ -206,4 +199,10 @@ fun MenuSpacer() {
             .fillMaxWidth()
             .background(color = AppTheme.colors.accent)
     )
+}
+
+sealed class ActionMode {
+    object Button : ActionMode()
+    object Menu : ActionMode()
+    object Default : ActionMode()
 }

@@ -6,9 +6,9 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 
 /**
+ *
  * @author jv.lee
  * @date 2022/5/18
- * @description
  */
 class SystemContentTabViewModel : ViewModel() {
 

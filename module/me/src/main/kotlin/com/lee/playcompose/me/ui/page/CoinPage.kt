@@ -43,9 +43,9 @@ import com.lee.playcompose.router.navigateArgs
 import com.lee.playcompose.common.R as CR
 
 /**
+ * 个人积分页
  * @author jv.lee
  * @date 2022/3/25
- * @description 个人积分页
  */
 @Composable
 fun CoinPage(

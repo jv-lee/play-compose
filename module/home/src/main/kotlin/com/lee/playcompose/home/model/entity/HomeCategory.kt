@@ -7,9 +7,9 @@ import com.lee.playcompose.router.RoutePage
 
 
 /**
+ * 首页分类本地数据帮助类
  * @author jv.lee
  * @date 2021/11/4
- * @description 首页分类本地数据帮助类
  */
 data class HomeCategory(
     @DrawableRes val iconResId: Int,

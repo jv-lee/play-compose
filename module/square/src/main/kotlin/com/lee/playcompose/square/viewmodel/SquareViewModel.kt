@@ -15,9 +15,9 @@ import com.lee.playcompose.service.helper.ModuleService
 import com.lee.playcompose.square.model.api.ApiService
 
 /**
+ * 广场页 viewModel
  * @author jv.lee
  * @date 2022/3/3
- * @description 广场页 viewModel
  */
 class SquareViewModel : ViewModel() {
 

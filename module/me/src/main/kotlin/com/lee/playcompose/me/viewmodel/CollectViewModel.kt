@@ -21,9 +21,9 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 /**
+ *
  * @author jv.lee
  * @date 2022/3/30
- * @description
  */
 class CollectViewModel : ViewModel() {
 

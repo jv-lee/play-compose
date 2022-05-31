@@ -5,9 +5,9 @@ import com.lee.playcompose.base.utils.TimeUtil
 import com.lee.playcompose.common.entity.*
 
 /**
+ * 公共数据转换扩展函数
  * @author jv.lee
  * @date 2022/3/2
- * @description 公共数据转换扩展函数
  */
 
 fun Content.getTitle(): String =

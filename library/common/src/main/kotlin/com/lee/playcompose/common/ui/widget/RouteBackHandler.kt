@@ -9,9 +9,9 @@ import com.lee.playcompose.common.R
 import com.lee.playcompose.common.extensions.toast
 
 /**
+ * 拦截back事件 双击回退处理
  * @author jv.lee
  * @date 2022/3/1
- * @description 拦截back事件 双击回退处理
  */
 @Composable
 fun RouteBackHandler() {

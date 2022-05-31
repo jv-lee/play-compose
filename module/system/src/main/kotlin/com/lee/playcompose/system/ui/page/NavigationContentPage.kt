@@ -38,9 +38,9 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 /**
+ * 体系页第二个tab 导航内容
  * @author jv.lee
  * @date 2022/3/8
- * @description 体系页第二个tab 导航内容
  */
 @Composable
 fun NavigationContentPage(

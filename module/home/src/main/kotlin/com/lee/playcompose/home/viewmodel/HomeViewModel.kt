@@ -21,9 +21,9 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 /**
+ * HomePage ViewModel
  * @author jv.lee
  * @date 2022/2/28
- * @description HomePage ViewModel
  */
 class HomeViewModel : ViewModel() {
 

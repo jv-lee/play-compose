@@ -7,9 +7,9 @@ import com.lee.playcompose.common.entity.PageData
 import retrofit2.http.*
 
 /**
+ * 广场模块api
  * @author jv.lee
  * @date 2021/11/2
- * @description 广场模块api
  */
 interface ApiService {
     /**

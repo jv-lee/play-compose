@@ -4,13 +4,13 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.lee.playcompose.common.paging.RemoteContent
-import com.lee.playcompose.common.paging.RemoteKey
+import com.lee.playcompose.common.paging.entity.RemoteContent
+import com.lee.playcompose.common.paging.entity.RemoteKey
 
 /**
+ *
  * @author jv.lee
  * @date 2022/4/13
- * @description
  */
 @Database(entities = [RemoteKey::class, RemoteContent::class], version = 1, exportSchema = false)
 abstract class RemoteCacheDatabase : RoomDatabase() {

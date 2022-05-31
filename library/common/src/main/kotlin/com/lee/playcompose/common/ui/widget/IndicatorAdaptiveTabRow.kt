@@ -23,9 +23,14 @@ import androidx.compose.ui.unit.dp
 import com.lee.playcompose.common.ui.theme.AppTheme
 
 /**
+ * 自适应指示器宽度TabRow
+ * @param tabs 数据源
+ * @param selectedTabIndex 默认选中tabIndex
+ * @param findTabText 对外提供查询数据源T中的tab文案高阶函数
+ * @param onTabClick tab点击事件回调
+ * @param background tabLayout背景颜色
  * @author jv.lee
  * @date 2022/3/30
- * @description 自适应指示器宽度TabRow
  */
 @Composable
 fun <T> IndicatorAdaptiveTabRow(

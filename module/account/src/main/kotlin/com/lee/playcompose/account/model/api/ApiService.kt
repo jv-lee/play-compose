@@ -9,9 +9,9 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 
 /**
+ *
  * @author jv.lee
  * @date 2021/11/25
- * @description
  */
 interface ApiService {
 

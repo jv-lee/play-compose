@@ -20,9 +20,9 @@ import com.lee.playcompose.project.viewmodel.ProjectViewModel
 import kotlinx.coroutines.launch
 
 /**
+ * 项目页面
  * @author jv.lee
  * @date 2022/3/11
- * @description
  */
 @Composable
 fun ProjectPage(navController: NavController, viewModel: ProjectViewModel = viewModel()) {

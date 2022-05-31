@@ -44,9 +44,9 @@ import com.lee.playcompose.common.ui.theme.OffsetRadiusMedium
 import kotlinx.coroutines.launch
 
 /**
+ * 用户注册页
  * @author jv.lee
  * @date 2022/3/23
- * @description 用户注册页
  */
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

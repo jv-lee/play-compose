@@ -16,9 +16,9 @@ import com.lee.playcompose.service.AccountService
 import kotlinx.coroutines.flow.Flow
 
 /**
+ *
  * @author jv.lee
  * @date 2022/3/23
- * @description
  */
 @AutoService(AccountService::class)
 class AccountServiceImpl : AccountService {

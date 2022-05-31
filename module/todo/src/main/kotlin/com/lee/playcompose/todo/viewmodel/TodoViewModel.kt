@@ -12,9 +12,9 @@ import com.lee.playcompose.todo.constants.Constants.SP_KEY_TODO_TYPE
 import com.lee.playcompose.todo.model.entity.TodoType
 
 /**
+ *
  * @author jv.lee
  * @date 2022/4/12
- * @description
  */
 class TodoViewModel : ViewModel() {
 

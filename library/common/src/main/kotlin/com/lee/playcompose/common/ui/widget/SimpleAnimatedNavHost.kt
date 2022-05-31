@@ -12,9 +12,9 @@ import androidx.navigation.createGraph
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 
 /**
+ * 公共动画NavHost
  * @author jv.lee
  * @date 2022/3/1
- * @description 公共动画NavHost
  */
 @Composable
 @ExperimentalAnimationApi

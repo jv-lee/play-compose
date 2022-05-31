@@ -24,9 +24,9 @@ import com.lee.playcompose.common.ui.theme.OffsetSmall
 import kotlinx.coroutines.delay
 
 /**
+ * banner组件
  * @author jv.lee
  * @date 2022/3/2
- * @description banner组件
  */
 @ExperimentalCoilApi
 @Composable

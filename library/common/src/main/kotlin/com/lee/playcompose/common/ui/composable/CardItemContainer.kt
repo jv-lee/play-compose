@@ -14,9 +14,9 @@ import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.theme.OffsetMedium
 
 /**
+ * 卡片item容器组件
  * @author jv.lee
  * @date 2022/3/8
- * @description 卡片item容器组件
  */
 @Composable
 fun CardItemContainer(

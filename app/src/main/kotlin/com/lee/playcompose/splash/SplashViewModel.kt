@@ -17,9 +17,9 @@ import kotlinx.coroutines.launch
 import com.lee.playcompose.common.R as CR
 
 /**
+ * 闪屏页viewModel
  * @author jv.lee
  * @date 2022/3/28
- * @description
  */
 class SplashViewModel : ViewModel() {
 

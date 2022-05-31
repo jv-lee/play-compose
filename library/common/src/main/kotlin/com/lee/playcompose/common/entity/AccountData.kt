@@ -3,10 +3,11 @@ package com.lee.playcompose.common.entity
 import androidx.annotation.Keep
 
 /**
+ * 账户实体
  * @author jv.lee
  * @date 2021/11/25
- * @description
  */
+
 @Keep
 data class AccountData(val coinInfo: CoinInfo, val userInfo: UserInfo)
 

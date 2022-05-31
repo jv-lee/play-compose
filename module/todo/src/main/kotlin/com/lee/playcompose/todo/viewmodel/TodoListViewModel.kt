@@ -22,9 +22,9 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 /**
+ *
  * @author jv.lee
  * @date 2022/4/6
- * @description
  */
 class TodoListViewModel(private val type: Int, private val status: Int) : ViewModel() {
 

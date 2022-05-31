@@ -16,9 +16,9 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import kotlin.math.abs
 
 /**
+ * 侧滑菜单Box容器
  * @author jv.lee
  * @date 2022/4/1
- * @description 侧滑菜单Box容器
  */
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

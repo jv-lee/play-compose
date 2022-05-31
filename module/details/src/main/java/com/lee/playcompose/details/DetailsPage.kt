@@ -27,9 +27,9 @@ import com.lee.playcompose.base.R as BR
 import com.lee.playcompose.common.R as CR
 
 /**
+ * 内容详情页面 （webView）
  * @author jv.lee
  * @date 2022/2/24
- * @description 内容详情页面 （webView）
  */
 @Composable
 fun Activity.DetailsPage(

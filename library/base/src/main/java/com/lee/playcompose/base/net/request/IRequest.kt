@@ -10,9 +10,9 @@ import com.lee.playcompose.base.net.request.IRequest.ConverterType.Companion.PRO
 import com.lee.playcompose.base.net.request.IRequest.ConverterType.Companion.STRING
 
 /**
+ *
  * @author jv.lee
  * @date 2020/3/20
- * @description
  */
 interface IRequest {
 

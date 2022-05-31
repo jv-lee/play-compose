@@ -38,11 +38,11 @@ import com.lee.playcompose.todo.viewmodel.TodoListViewState
 import com.lee.playcompose.common.R as CR
 
 /**
- * @author jv.lee
- * @date 2022/4/6
- * @description todo列表页
+ * todo列表页
  * @param type: 0默认 1工作 2生活 3娱乐
  * @param status: 0待完成 1已完成
+ * @author jv.lee
+ * @date 2022/4/6
  */
 @Composable
 fun TodoListPage(

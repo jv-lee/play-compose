@@ -17,9 +17,9 @@ import configures.core.freeCompilerArgs
 import dependencies.Version
 
 /**
+ * 组件模块配置依赖扩展
  * @author jv.lee
  * @date 2021/10/1
- * @description 组件模块配置依赖扩展
  */
 @Suppress("MISSING_DEPENDENCY_SUPERCLASS")
 fun Project.moduleConfigure(

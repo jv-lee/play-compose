@@ -16,9 +16,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 
 /**
+ *
  * @author jv.lee
  * @date 2022/3/11
- * @description
  */
 class ProjectListViewModel(private val id: Long) : ViewModel() {
 

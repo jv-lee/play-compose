@@ -7,16 +7,16 @@ import androidx.room.withTransaction
 import com.google.gson.reflect.TypeToken
 import com.lee.playcompose.base.net.HttpManager
 import com.lee.playcompose.common.entity.PageData
-import com.lee.playcompose.common.paging.RemoteContent
-import com.lee.playcompose.common.paging.RemoteKey
+import com.lee.playcompose.common.paging.entity.RemoteContent
+import com.lee.playcompose.common.paging.entity.RemoteKey
 import com.lee.playcompose.common.paging.db.RemoteCacheDatabase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 /**
+ * paging3分页数据加载使用room数据库做缓存处理
  * @author jv.lee
  * @date 2022/4/13
- * @description paging3分页数据加载使用room数据库做缓存处理
  */
 @OptIn(ExperimentalPagingApi::class)
 inline fun <reified T : Any> ViewModel.roomPager(
