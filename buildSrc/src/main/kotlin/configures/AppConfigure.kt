@@ -93,13 +93,15 @@ fun Project.appConfigure(
             getByName(BuildTypes.DEBUG) {
                 applicationIdSuffix = ".debug"
                 manifestPlaceholders["app_name"] = "Debug\nCompose"
-                isMinifyEnabled = BuildDebug.isMinifyEnabled //混淆模式
+                isMinifyEnabled = BuildDebug.isMinifyEnabled // 混淆模式
+                isShrinkResources = BuildDebug.isShrinkResources // 资源压缩
                 proguardFiles("proguard-android-optimize.txt", "proguard-rules.pro")
             }
 
             getByName(BuildTypes.RELEASE) {
                 manifestPlaceholders["app_name"] = "Play\nCompose"
-                isMinifyEnabled = BuildRelease.isMinifyEnabled //混淆模式
+                isMinifyEnabled = BuildRelease.isMinifyEnabled // 混淆模式
+                isShrinkResources = BuildRelease.isShrinkResources // 资源压缩
                 proguardFiles("proguard-android-optimize.txt", "proguard-rules.pro")
                 signingConfig = signingConfigs
             }
