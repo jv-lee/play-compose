@@ -17,11 +17,11 @@
         tools:targetApi="n">
         <activity
             android:name=".MainActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="true"
             android:label="${app_name}"
             android:screenOrientation="fullSensor"
-            android:theme="@style/Theme.PlayCompose"
-            android:windowSoftInputMode="adjustResize">
+            android:theme="@style/Theme.PlayCompose">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
