@@ -1,3 +1,8 @@
+/*
+ * context扩展函数帮助类
+ * @author jv.lee
+ * @date 2020/4/1
+ */
 package com.lee.playcompose.base.extensions
 
 import android.annotation.SuppressLint
@@ -12,7 +17,6 @@ import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.base.tools.StatusTools.checkHasNavigationBar
-
 
 /**
  * 状态栏高度

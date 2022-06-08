@@ -1,12 +1,11 @@
-package com.lee.playcompose.base.extensions
-
-import android.view.ViewGroup
-
-/**
+/*
  * view扩展函数类
  * @author jv.lee
  * @date 2022/3/18
  */
+package com.lee.playcompose.base.extensions
+
+import android.view.ViewGroup
 
 /**
  * 扩展容器类设置Marin方法

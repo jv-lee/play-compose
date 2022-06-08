@@ -1,3 +1,8 @@
+/*
+ * compose扩展函数工具类
+ * @author jv.lee
+ * @date 2022/3/22
+ */
 package com.lee.playcompose.base.extensions
 
 import android.annotation.SuppressLint
@@ -15,13 +20,6 @@ import androidx.lifecycle.*
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-
-/**
- * compose扩展函数工具类
- * @author jv.lee
- * @date 2022/3/22
- */
 
 /**
  * 无状态点击 （点击后没有android水波纹效果）

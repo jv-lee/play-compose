@@ -8,7 +8,6 @@ import androidx.fragment.app.FragmentActivity
  * @author jv.lee
  * @date 2022/3/18
  */
-
 val LocalActivity = staticCompositionLocalOf<FragmentActivity> {
     noLocalProvidedFor("LocalActivity")
 }

@@ -1,3 +1,8 @@
+/*
+ * compose Navigation 获取页面回传数据封装
+ * @author jv.lee
+ * @date 2022/4/11
+ */
 package com.lee.playcompose.base.extensions
 
 import android.os.Bundle
@@ -8,11 +13,6 @@ import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-/**
- * compose Navigation 获取页面回传数据封装
- * @author jv.lee
- * @date 2022/4/11
- */
 const val NAVIGATION_FRO_RESULT_VERSION = "version"
 const val NAVIGATION_FRO_RESULT_DATA = "data"
 
