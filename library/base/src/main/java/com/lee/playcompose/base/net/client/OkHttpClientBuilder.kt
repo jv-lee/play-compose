@@ -11,14 +11,14 @@ import java.util.concurrent.TimeUnit
 import javax.net.ssl.*
 
 /**
- *
+ * OkHttpClient构建器
  * @author jv.lee
  * @date 2020/3/20
  */
 class OkHttpClientBuilder {
 
     companion object {
-        private const val DEFAULT_TIME = 5L
+        private const val DEFAULT_TIMEOUT = 10L
     }
 
     private var safeClient: OkHttpClient? = null
@@ -27,9 +27,9 @@ class OkHttpClientBuilder {
     fun getSafeClient(): OkHttpClient {
         if (safeClient == null) {
             safeClient = OkHttpClient.Builder()
-                .connectTimeout(DEFAULT_TIME, TimeUnit.SECONDS)
-                .writeTimeout(DEFAULT_TIME, TimeUnit.SECONDS)
-                .readTimeout(DEFAULT_TIME, TimeUnit.SECONDS)
+                .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
+                .writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
+                .readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                 .sslSocketFactory(SSLSocketFactoryCompat())
                 .build()
 

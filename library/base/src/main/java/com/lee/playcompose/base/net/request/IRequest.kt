@@ -10,7 +10,7 @@ import com.lee.playcompose.base.net.request.IRequest.ConverterType.Companion.PRO
 import com.lee.playcompose.base.net.request.IRequest.ConverterType.Companion.STRING
 
 /**
- *
+ * 请求参数组合接口
  * @author jv.lee
  * @date 2020/3/20
  */

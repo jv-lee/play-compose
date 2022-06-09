@@ -27,7 +27,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.io.File
 
 /**
- * Retrofit库封装
+ * OkHttp + Retrofit网络请求库封装管理类
  * @author jv.lee
  * @date 2020/3/20
  */
@@ -39,7 +39,7 @@ class HttpManager private constructor() {
         private const val MAX_CACHE: Long = 10 * 1024 * 1024
         private var gson: Gson? = null
 
-        fun getGson() = gson ?: GsonBuilder()
+        fun getGson(): Gson = gson ?: GsonBuilder()
             .registerTypeAdapterFactory(GsonDefaultAdapterFactory())
             .registerTypeAdapter(Int::class.java, IntegerDefaultAdapter())
             .registerTypeAdapter(Double::class.java, DoubleDefaultAdapter())

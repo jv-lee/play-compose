@@ -9,7 +9,7 @@ import okhttp3.Response
 import java.io.IOException
 
 /**
- *
+ * 缓存控制拦截器
  * @author jv.lee
  * @date 2020/3/20
  */
