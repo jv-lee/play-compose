@@ -1,3 +1,8 @@
+/*
+ * paging3分页数据加载使用room数据库做缓存处理
+ * @author jv.lee
+ * @date 2022/4/13
+ */
 package com.lee.playcompose.common.paging.extensions
 
 import androidx.lifecycle.ViewModel
@@ -7,16 +12,18 @@ import androidx.room.withTransaction
 import com.google.gson.reflect.TypeToken
 import com.lee.playcompose.base.net.HttpManager
 import com.lee.playcompose.common.entity.PageData
+import com.lee.playcompose.common.paging.db.RemoteCacheDatabase
 import com.lee.playcompose.common.paging.entity.RemoteContent
 import com.lee.playcompose.common.paging.entity.RemoteKey
-import com.lee.playcompose.common.paging.db.RemoteCacheDatabase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 /**
- * paging3分页数据加载使用room数据库做缓存处理
- * @author jv.lee
- * @date 2022/4/13
+ * paging3结合room数据库缓存分页数据创建
+ * @param config 分页配置
+ * @param initialKey 首页请求key
+ * @param savedKey 缓存key
+ * @param requestAction 分页数据网络请求suspend函数
  */
 @OptIn(ExperimentalPagingApi::class)
 inline fun <reified T : Any> ViewModel.roomPager(
@@ -50,6 +57,12 @@ inline fun <reified T : Any> ViewModel.roomPager(
     }.cachedIn(viewModelScope)
 }
 
+/**
+ * paging3结合room数据库缓存分页数据创建 {单页面数据}
+ * @param config 分页配置
+ * @param savedKey 缓存key
+ * @param requestAction 分页数据网络请求suspend函数
+ */
 @OptIn(ExperimentalPagingApi::class)
 inline fun <reified T : Any> ViewModel.singleRoomPager(
     config: PagingConfig = PagingConfig(

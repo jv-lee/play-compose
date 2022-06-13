@@ -8,7 +8,7 @@ import androidx.room.Query
 import com.lee.playcompose.common.paging.entity.RemoteContent
 
 /**
- * paging分页缓存数据 remote dataBase 存储操作dao
+ * paging分页数据 实际数据 Dao操作类
  * @author jv.lee
  * @date 2022/4/13
  */

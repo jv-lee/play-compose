@@ -1,14 +1,13 @@
+/*
+ * 全局数据实体转换扩展函数
+ * @author jv.lee
+ * @date 2022/3/2
+ */
 package com.lee.playcompose.common.extensions
 
 import androidx.core.text.HtmlCompat
 import com.lee.playcompose.base.utils.TimeUtil
 import com.lee.playcompose.common.entity.*
-
-/**
- * 公共数据转换扩展函数
- * @author jv.lee
- * @date 2022/3/2
- */
 
 fun Content.getTitle(): String =
     HtmlCompat.fromHtml(title, HtmlCompat.FROM_HTML_MODE_LEGACY).toString()

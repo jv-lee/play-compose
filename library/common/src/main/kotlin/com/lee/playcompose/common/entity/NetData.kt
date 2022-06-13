@@ -1,15 +1,14 @@
+/*
+ * 网络请求操作类
+ * @author jv.lee
+ * @date 2020/3/25
+ */
 package com.lee.playcompose.common.entity
 
 import android.os.Parcelable
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
-
-/**
- * 网络请求操作类
- * @author jv.lee
- * @date 2020/3/25
- */
 
 @Keep
 data class Data<T>(

@@ -1,3 +1,8 @@
+/*
+ * WebView扩展函数
+ * @author jv.lee
+ * @date 2021/11/18
+ */
 package com.lee.playcompose.common.extensions
 
 import android.view.KeyEvent
@@ -9,9 +14,7 @@ import androidx.lifecycle.LifecycleOwner
 import com.just.agentweb.AgentWeb
 
 /**
- *
- * @author jv.lee
- * @date 2021/11/18
+ * AgentWebView 绑定生命周期控制生命状态
  */
 fun AgentWeb.bindLifecycle(lifecycle: Lifecycle): AgentWeb {
     lifecycle.addObserver(object : LifecycleEventObserver {

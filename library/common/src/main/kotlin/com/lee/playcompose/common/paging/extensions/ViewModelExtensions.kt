@@ -1,17 +1,21 @@
+/*
+ * 公共viewModel 功能扩展函数
+ * @author jv.lee
+ * @date 2022/2/28
+ */
 package com.lee.playcompose.common.paging.extensions
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
-import com.lee.playcompose.common.entity.Data
 import com.lee.playcompose.common.entity.PageData
-import com.lee.playcompose.common.extensions.checkData
 import kotlinx.coroutines.flow.Flow
 
 /**
- * 公共viewModel 功能扩展函数
- * @author jv.lee
- * @date 2022/2/28
+ * paging3分页数据创建
+ * @param config 分页配置
+ * @param initialKey 首页请求key
+ * @param requestAction 分页数据网络请求suspend函数
  */
 fun <T : Any> ViewModel.pager(
     config: PagingConfig = PagingConfig(20),
@@ -36,6 +40,11 @@ fun <T : Any> ViewModel.pager(
     }
 }
 
+/**
+ * paging3分页数据创建 {单页面数据}
+ * @param config 分页配置
+ * @param requestAction 分页数据网络请求suspend函数
+ */
 fun <T : Any> ViewModel.singlePager(
     config: PagingConfig = PagingConfig(100), initialKey: Int = 0,
     requestAction: suspend () -> List<T>

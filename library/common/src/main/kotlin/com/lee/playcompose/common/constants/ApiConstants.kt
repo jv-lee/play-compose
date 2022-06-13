@@ -1,7 +1,7 @@
 package com.lee.playcompose.common.constants
 
 /**
- *
+ * 全局通用api常量
  * @author jv.lee
  * @date 2021/12/3
  */

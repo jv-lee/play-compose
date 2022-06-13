@@ -1,3 +1,8 @@
+/*
+ * 数据库操作类
+ * @author jv.lee
+ * @date 2020/4/16
+ */
 package com.lee.playcompose.common.entity
 
 import androidx.annotation.Keep
@@ -6,11 +11,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 /**
- * 数据库操作类
- * @author jv.lee
- * @date 2020/4/16
+ * 搜索历史
  */
-
 @Keep
 @Entity
 data class SearchHistory(

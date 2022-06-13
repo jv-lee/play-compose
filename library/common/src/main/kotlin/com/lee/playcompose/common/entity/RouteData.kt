@@ -1,3 +1,8 @@
+/*
+ * 全局路由实体
+ * @author jv.lee
+ * @date 2022/3/8
+ */
 package com.lee.playcompose.common.entity
 
 import android.os.Parcelable
@@ -5,9 +10,11 @@ import androidx.annotation.Keep
 import kotlinx.parcelize.Parcelize
 
 /**
- *
- * @author jv.lee
- * @date 2022/3/8
+ * 内容详情数据实体
+ * @param id 文章id
+ * @param title 文章title
+ * @param link 文章是否被点赞
+ * @param isCollect 文章是否被收藏
  */
 @Parcelize
 @Keep

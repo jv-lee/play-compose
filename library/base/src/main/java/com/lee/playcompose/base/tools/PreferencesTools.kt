@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import com.lee.playcompose.base.core.ApplicationExtensions.app
 
 /**
- * @author jv.lee
  * SharedPreferences 存储工具
  * Created by jv.lee on 2016/8/31.
  */
