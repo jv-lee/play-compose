@@ -1,3 +1,8 @@
+/*
+ * app全局路由扩展函数
+ * @author jv.lee
+ * @date 2022/3/7
+ */
 package com.lee.playcompose.router
 
 import android.net.Uri
@@ -14,11 +19,6 @@ import androidx.navigation.*
 import com.google.accompanist.navigation.animation.composable
 import com.lee.playcompose.base.net.HttpManager
 
-/**
- * 路由扩展函数
- * @author jv.lee
- * @date 2022/3/7
- */
 @ExperimentalAnimationApi
 fun NavGraphBuilder.sideComposable(
     route: String,
