@@ -1,7 +1,7 @@
 package com.lee.playcompose.service.helper
 
 import android.app.Application
-import com.lee.playcompose.service.ApplicationService
+import com.lee.playcompose.service.core.ApplicationService
 
 import java.util.*
 
