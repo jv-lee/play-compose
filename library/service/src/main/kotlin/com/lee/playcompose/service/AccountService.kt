@@ -4,6 +4,7 @@ import androidx.fragment.app.FragmentActivity
 import com.lee.playcompose.common.entity.AccountData
 import com.lee.playcompose.common.entity.AccountViewEvent
 import com.lee.playcompose.common.entity.AccountViewState
+import com.lee.playcompose.service.core.IModuleService
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -11,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
  * @author jv.lee
  * @date 2022/3/23
  */
-interface AccountService {
+interface AccountService : IModuleService {
 
     /**
      * 获取账户viewState，其他模块渲染账户相关ui时根据该state控制
