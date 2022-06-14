@@ -1,7 +1,7 @@
 package com.lee.playcompose.account.constants
 
 /**
- *
+ * 账户信息存储常量
  * @author jv.lee
  * @date 2021/11/25
  */

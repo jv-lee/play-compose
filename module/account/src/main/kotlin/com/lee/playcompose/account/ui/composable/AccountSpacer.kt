@@ -8,11 +8,6 @@ import androidx.compose.ui.unit.dp
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.theme.OffsetLarge
 
-/**
- *
- * @author jv.lee
- * @date 2022/3/23
- */
 @Composable
 fun AccountSpacer() {
     Box(modifier = Modifier.padding(start = OffsetLarge, end = OffsetLarge)) {

@@ -16,12 +16,13 @@ import com.lee.playcompose.service.AccountService
 import kotlinx.coroutines.flow.Flow
 
 /**
- *
+ * 账户对外提供功能实现接口
  * @author jv.lee
  * @date 2022/3/23
  */
 @AutoService(AccountService::class)
 class AccountServiceImpl : AccountService {
+
     override fun getAccountViewStates(activity: FragmentActivity): AccountViewState {
         return activity.viewModels<AccountViewModel>().value.viewStates
     }

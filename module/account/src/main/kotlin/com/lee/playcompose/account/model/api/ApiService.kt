@@ -9,7 +9,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 
 /**
- *
+ * 账户相关api接口
  * @author jv.lee
  * @date 2021/11/25
  */

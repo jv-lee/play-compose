@@ -21,7 +21,8 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 /**
- *
+ * 文章详情页viewModel
+ * @see DetailsPage
  * @author jv.lee
  * @date 2022/3/30
  */
