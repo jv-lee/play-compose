@@ -10,7 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.lee.playcompose.common.R
@@ -21,7 +20,11 @@ import com.lee.playcompose.common.ui.widget.SlidingPaneBox
 import com.lee.playcompose.common.ui.widget.SlidingPaneState
 
 /**
- *
+ * 支持删除动作的文本item
+ * @param item [Content] 数据实体
+ * @param state slidingPane侧滑菜单状态
+ * @param onItemClick item点击事件执行函数
+ * @param onItemDelete item删除事件执行函数
  * @author jv.lee
  * @date 2022/3/29
  */

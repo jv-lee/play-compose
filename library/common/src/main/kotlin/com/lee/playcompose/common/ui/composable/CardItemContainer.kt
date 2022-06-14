@@ -15,6 +15,9 @@ import com.lee.playcompose.common.ui.theme.OffsetMedium
 
 /**
  * 卡片item容器组件
+ * @param contentPadding 内容padding值
+ * @param onClick 点击事件执行函数
+ * @param content 内部渲染compose组件
  * @author jv.lee
  * @date 2022/3/8
  */

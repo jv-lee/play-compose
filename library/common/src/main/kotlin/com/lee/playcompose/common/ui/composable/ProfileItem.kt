@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Switch
 import androidx.compose.material.SwitchDefaults
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -18,7 +18,17 @@ import com.lee.playcompose.common.ui.theme.FontSizeMedium
 import com.lee.playcompose.common.ui.theme.FontSizeSmall
 
 /**
- * 设置项itemView
+ * 项目通用设置项itemView
+ * @param modifier 样式参数
+ * @param leftDrawable 左侧icon
+ * @param rightDrawable 右侧icon
+ * @param leftText 左侧文案
+ * @param rightText 右侧文案
+ * @param rightSwitchEnable 右侧switch是否可点击
+ * @param rightSwitchVisible 右侧switch是否显示
+ * @param switchChecked switch是否选中
+ * @param onCheckedChange 选中switchChange回调
+ * @param onClick 点击item执行函数
  * @author jv.lee
  * @date 2022/3/9
  */

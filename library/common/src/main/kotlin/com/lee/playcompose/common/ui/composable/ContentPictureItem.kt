@@ -21,7 +21,9 @@ import com.lee.playcompose.common.extensions.getTitle
 import com.lee.playcompose.common.ui.theme.*
 
 /**
- *
+ * 各模块通用内容item图片样式组件
+ * @param item [Content]数据实体
+ * @param onItemClick item点击执行函数
  * @author jv.lee
  * @date 2022/3/14
  */

@@ -1,3 +1,8 @@
+/*
+ * 各种状态处理dialog
+ * @author jv.lee
+ * @date 2022/4/2
+ */
 package com.lee.playcompose.common.ui.composable
 
 import androidx.compose.foundation.background
@@ -17,9 +22,8 @@ import com.lee.playcompose.common.R
 import com.lee.playcompose.common.ui.theme.*
 
 /**
- * 各种状态处理dialog
- * @author jv.lee
- * @date 2022/4/2
+ * Loading状态Dialog组件
+ * @param isShow 是否显示
  */
 @Composable
 fun LoadingDialog(isShow: Boolean) {
@@ -42,6 +46,17 @@ fun LoadingDialog(isShow: Boolean) {
     }
 }
 
+/**
+ * 确认弹窗
+ * @param isShow 是否显示
+ * @param titleText 标题文案
+ * @param contentText 内容文案
+ * @param cancelText 取消按钮文案
+ * @param confirmText 确认按钮文案
+ * @param singleConfirm 是否为单确认按钮模式
+ * @param onConfirm 确认按钮点击执行函数
+ * @param onCancel 取消按钮点击执行函数
+ */
 @Composable
 fun ConfirmDialog(
     isShow: Boolean,

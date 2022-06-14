@@ -17,6 +17,16 @@ import com.lee.playcompose.common.ui.theme.FontSizeMedium
 
 /**
  * appTextField封装
+ * @param value 内容
+ * @param onValueChange 内容变化监听函数
+ * @param modifier 样式属性
+ * @param leadingIcon
+ * @param visualTransformation
+ * @param keyboardOptions 键盘输入类型
+ * @param keyboardActions 键盘确认类型
+ * @param singleLine 是否为单行显示
+ * @param maxLine 最大行数
+ * @param hintText 提示文案
  * @author jv.lee
  * @date 2022/3/21
  */
