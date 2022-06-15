@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.playcompose.common.entity.SearchHistory
-import com.lee.playcompose.search.model.db.SearchHistoryDatabase
+import com.lee.playcompose.search.model.db.SearchDatabase
 import com.lee.playcompose.search.model.entity.SearchHot
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
  */
 class SearchViewModel : ViewModel() {
 
-    private val searchHistoryDao = SearchHistoryDatabase.get().searchHistoryDao()
+    private val searchHistoryDao = SearchDatabase.get().searchHistoryDao()
 
     var viewStates by mutableStateOf(SearchViewState())
         private set

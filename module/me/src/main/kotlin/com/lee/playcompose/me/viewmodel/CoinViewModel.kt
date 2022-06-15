@@ -19,7 +19,7 @@ import com.lee.playcompose.service.AccountService
 import com.lee.playcompose.service.helper.ModuleService
 
 /**
- *
+ * 积分ViewModel
  * @author jv.lee
  * @date 2022/3/25
  */

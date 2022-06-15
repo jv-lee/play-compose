@@ -20,7 +20,7 @@ import com.lee.playcompose.common.ui.widget.WheelView
 import com.lee.playcompose.todo.viewmodel.SelectTodoTypeViewModel
 
 /**
- * todo页面类型选择弹窗
+ * Todo列表类型选择器弹窗
  * @author jv.lee
  * @date 2022/4/12
  */

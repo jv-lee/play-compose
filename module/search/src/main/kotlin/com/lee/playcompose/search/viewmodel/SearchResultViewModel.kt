@@ -17,7 +17,7 @@ import com.lee.playcompose.search.model.api.ApiService
 import kotlinx.coroutines.flow.Flow
 
 /**
- *
+ * 搜索结果页viewModel
  * @author jv.lee
  * @date 2022/3/18
  */

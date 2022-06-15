@@ -7,26 +7,26 @@ import androidx.room.RoomDatabase
 import com.lee.playcompose.common.entity.SearchHistory
 
 /**
- *
+ * 搜索模块数据库
  * @author jv.lee
  * @date 2021/11/22
  */
 @Database(entities = [SearchHistory::class], version = 1, exportSchema = false)
-abstract class SearchHistoryDatabase : RoomDatabase() {
+abstract class SearchDatabase : RoomDatabase() {
 
     abstract fun searchHistoryDao(): SearchHistoryDao
 
     companion object {
-        private const val DBName = "playAndroid-searchHistory.db"
+        private const val DBName = "playAndroid-search.db"
 
         @Volatile
-        private var instance: SearchHistoryDatabase? = null
+        private var instance: SearchDatabase? = null
 
         @JvmStatic
         fun getInstance(context: Context) = instance ?: synchronized(this) {
             instance ?: Room.databaseBuilder(
                 context,
-                SearchHistoryDatabase::class.java,
+                SearchDatabase::class.java,
                 DBName
             )
                 .allowMainThreadQueries()

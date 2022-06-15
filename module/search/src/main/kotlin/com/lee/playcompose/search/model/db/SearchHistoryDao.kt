@@ -6,7 +6,7 @@ import com.lee.playcompose.base.db.base.BaseDao
 import com.lee.playcompose.common.entity.SearchHistory
 
 /**
- *
+ * 搜索历史记录dao操作类
  * @author jv.lee
  * @date 2021/11/22
  */

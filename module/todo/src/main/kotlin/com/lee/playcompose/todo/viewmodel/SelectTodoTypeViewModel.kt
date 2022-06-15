@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
 /**
- *
+ * 选择todoType弹窗viewModel
  * @author jv.lee
  * @date 2022/1/2
  */

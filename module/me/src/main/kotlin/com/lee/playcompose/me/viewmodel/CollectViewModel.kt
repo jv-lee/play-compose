@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 /**
- *
+ * 收藏页面ViewModel
  * @author jv.lee
  * @date 2022/3/30
  */

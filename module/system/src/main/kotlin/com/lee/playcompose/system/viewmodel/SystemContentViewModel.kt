@@ -13,11 +13,10 @@ import com.lee.playcompose.common.paging.saved.singleSavedPager
 import com.lee.playcompose.system.model.api.ApiService
 
 /**
- * 体系内容 viewModel
+ * 体系内容列表 viewModel
  * @author jv.lee
  * @date 2022/3/8
  */
-
 class SystemContentViewModel : ViewModel() {
 
     private val api = createApi<ApiService>()

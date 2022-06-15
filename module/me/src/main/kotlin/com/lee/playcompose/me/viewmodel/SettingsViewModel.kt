@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 /**
- *
+ * 设置页viewModel
  * @author jv.lee
  * @date 2022/4/2
  */

@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 /**
- *
+ * 我的分享内容页viewModel
  * @author jv.lee
  * @date 2022/3/29
  */

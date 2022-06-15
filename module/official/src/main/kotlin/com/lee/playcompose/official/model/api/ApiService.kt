@@ -8,7 +8,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 /**
- *
+ * 公众号模块api接口
  * @author jv.lee
  * @date 2021/11/8
  */

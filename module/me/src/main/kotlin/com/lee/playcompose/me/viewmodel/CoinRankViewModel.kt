@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.Flow
 import java.util.*
 
 /**
- *
+ * 积分排行榜ViewModel
  * @author jv.lee
  * @date 2022/3/28
  */

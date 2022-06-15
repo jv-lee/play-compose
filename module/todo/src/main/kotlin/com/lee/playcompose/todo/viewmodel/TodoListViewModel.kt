@@ -14,15 +14,15 @@ import com.lee.playcompose.common.paging.saved.SavedPager
 import com.lee.playcompose.common.paging.saved.savedPager
 import com.lee.playcompose.service.AccountService
 import com.lee.playcompose.service.helper.ModuleService
-import com.lee.playcompose.todo.constants.Constants.STATUS_COMPLETE
-import com.lee.playcompose.todo.constants.Constants.STATUS_UPCOMING
 import com.lee.playcompose.todo.model.api.ApiService
+import com.lee.playcompose.todo.ui.page.STATUS_COMPLETE
+import com.lee.playcompose.todo.ui.page.STATUS_UPCOMING
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 /**
- *
+ * TodoViewModel TodoList页面使用，删改查处理
  * @author jv.lee
  * @date 2022/4/6
  */

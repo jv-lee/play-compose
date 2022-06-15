@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 
 /**
- *
+ * 体系内容子页面contentTab viewModel
  * @author jv.lee
  * @date 2022/5/18
  */

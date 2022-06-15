@@ -6,7 +6,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 /**
- * 体系模块api
+ * 体系模块api接口
  * @author jv.lee
  * @date 2021/11/8
  */

@@ -21,7 +21,7 @@ import com.lee.playcompose.search.viewmodel.SearchResultViewModel
 import com.lee.playcompose.search.viewmodel.SearchResultViewState
 
 /**
- *
+ * 搜索结果页
  * @author jv.lee
  * @date 2022/3/16
  */

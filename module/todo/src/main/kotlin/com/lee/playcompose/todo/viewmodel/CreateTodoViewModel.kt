@@ -13,7 +13,6 @@ import com.lee.playcompose.common.entity.TodoData
 import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
 import com.lee.playcompose.todo.R
-import com.lee.playcompose.todo.constants.Constants.STATUS_UPCOMING
 import com.lee.playcompose.todo.model.api.ApiService
 import com.lee.playcompose.todo.model.entity.TodoType
 import kotlinx.coroutines.channels.Channel
@@ -23,7 +22,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 /**
- *
+ * 创建todo内容页面viewModel
  * @author jv.lee
  * @date 2022/4/8
  */

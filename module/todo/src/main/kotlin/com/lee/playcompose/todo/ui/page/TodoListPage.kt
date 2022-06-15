@@ -26,7 +26,6 @@ import com.lee.playcompose.common.ui.widget.*
 import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
 import com.lee.playcompose.todo.R
-import com.lee.playcompose.todo.constants.Constants.STATUS_UPCOMING
 import com.lee.playcompose.todo.ui.callback.TodoListCallback
 import com.lee.playcompose.todo.ui.callback.TodoListCallbackHandler
 import com.lee.playcompose.todo.ui.theme.*
@@ -42,7 +41,17 @@ import com.lee.playcompose.common.R as CR
 const val REQUEST_KEY_REFRESH = "requestKey:refresh"
 
 /**
- * todo列表页
+ * 待完成TODO列表状态值
+ */
+const val STATUS_UPCOMING = 0
+
+/**
+ * 已完成TODO列表状态值
+ */
+const val STATUS_COMPLETE = 1
+
+/**
+ * todo列表数据页 (待完成/已完成)
  * @param type: 0默认 1工作 2生活 3娱乐
  * @param status: 0待完成 1已完成
  * @author jv.lee

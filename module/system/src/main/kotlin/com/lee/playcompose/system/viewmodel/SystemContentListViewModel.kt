@@ -16,7 +16,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 
 /**
- * 体系内容 viewModel
+ * 体系内容子页面contentList viewModel
  * @author jv.lee
  * @date 2022/3/8
  */

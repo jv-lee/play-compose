@@ -5,7 +5,7 @@ import com.lee.playcompose.todo.R
 
 
 /**
- * todo本地数据类
+ * todo类型选择器本地实体
  * @author jv.lee
  * @date 2022/1/2
  */

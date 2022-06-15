@@ -16,7 +16,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 
 /**
- *
+ * 公众号列表 ViewModel
  * @author jv.lee
  * @date 2022/3/11
  */

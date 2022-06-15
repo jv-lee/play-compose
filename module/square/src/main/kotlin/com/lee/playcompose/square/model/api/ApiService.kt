@@ -12,13 +12,16 @@ import retrofit2.http.*
  * @date 2021/11/2
  */
 interface ApiService {
+
     /**
+     * 广场列表
      * @param page 分页页面 取值[0-40]
      */
     @GET("/user_article/list/{page}/json")
     suspend fun getSquareDataSync(@Path("page") page: Int): Data<PageData<Content>>
 
     /**
+     * 我的分享列表
      * @param page 分页页面 取值[1-40]
      */
     @GET("/user/lg/private_articles/{page}/json")

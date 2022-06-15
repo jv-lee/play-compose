@@ -20,7 +20,7 @@ import com.lee.playcompose.official.viewmodel.OfficialViewModel
 import kotlinx.coroutines.launch
 
 /**
- *
+ * 公众号Tab页
  * @author jv.lee
  * @date 2022/3/11
  */
