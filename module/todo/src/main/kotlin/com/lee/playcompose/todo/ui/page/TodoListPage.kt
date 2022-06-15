@@ -26,7 +26,6 @@ import com.lee.playcompose.common.ui.widget.*
 import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
 import com.lee.playcompose.todo.R
-import com.lee.playcompose.todo.constants.Constants
 import com.lee.playcompose.todo.constants.Constants.STATUS_UPCOMING
 import com.lee.playcompose.todo.ui.callback.TodoListCallback
 import com.lee.playcompose.todo.ui.callback.TodoListCallbackHandler
@@ -36,6 +35,11 @@ import com.lee.playcompose.todo.viewmodel.TodoListViewEvent
 import com.lee.playcompose.todo.viewmodel.TodoListViewModel
 import com.lee.playcompose.todo.viewmodel.TodoListViewState
 import com.lee.playcompose.common.R as CR
+
+/**
+ * 创建todo页面todo创建/修改状态后页面回传key（通知todoList页面数据变更进行刷新）
+ */
+const val REQUEST_KEY_REFRESH = "requestKey:refresh"
 
 /**
  * todo列表页
@@ -60,7 +64,7 @@ fun TodoListPage(
     val slidingPaneState by rememberSlidingPaneState()
 
     // 监听创建修改成功回调
-    navController.forResult<Int>(key = Constants.REFRESH_TODO_KEY, 200) {
+    navController.forResult<Int>(key = REQUEST_KEY_REFRESH, 200) {
         it?.takeIf { it == status }?.run { contentList.refresh() }
     }
 

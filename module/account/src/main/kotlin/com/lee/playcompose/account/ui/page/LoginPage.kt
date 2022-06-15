@@ -11,6 +11,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
@@ -21,13 +22,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.lee.playcompose.account.R
-import com.lee.playcompose.account.constants.Constants.REQUEST_KEY_LOGIN
 import com.lee.playcompose.account.ui.composable.AccountSpacer
 import com.lee.playcompose.account.ui.theme.ButtonLockColor
 import com.lee.playcompose.account.ui.theme.ButtonTextColor
@@ -42,14 +41,18 @@ import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.theme.OffsetRadiusMedium
 import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
-import kotlinx.coroutines.launch
+
+/**
+ * 注册界面注册成功后回调登陆页面回传key（通知登陆页面已注册成功）
+ */
+const val REQUEST_KEY_LOGIN = "requestKey:login"
 
 /**
  * 用户登陆页面
  * @author jv.lee
  * @date 2022/3/23
  */
-@OptIn(androidx.compose.ui.ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun LoginPage(
     navController: NavController,

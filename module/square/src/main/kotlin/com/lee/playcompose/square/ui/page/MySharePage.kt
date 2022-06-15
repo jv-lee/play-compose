@@ -16,12 +16,16 @@ import com.lee.playcompose.common.ui.composable.ActionTextItem
 import com.lee.playcompose.common.ui.widget.*
 import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
-import com.lee.playcompose.square.Constants
 import com.lee.playcompose.square.R
 import com.lee.playcompose.square.viewmodel.MyShareViewAction
 import com.lee.playcompose.square.viewmodel.MyShareViewEvent
 import com.lee.playcompose.square.viewmodel.MyShareViewModel
 import com.lee.playcompose.square.viewmodel.MyShareViewState
+
+/**
+ * 创建分享内容成功后回调我的分享页面回传key （通知分享列表已变更进行数据刷新）
+ */
+const val REQUEST_KEY_SHARE_REFRESH = "requestKey:share_refresh"
 
 /**
  * 我的分享列表页
@@ -35,7 +39,7 @@ fun MySharePage(navController: NavController, viewModel: MyShareViewModel = view
     val slidingPaneState by rememberSlidingPaneState()
 
     // 监听创建分享成功事件刷新列表
-    navController.forResult<Int>(key = Constants.REQUEST_KEY_SHARE_REFRESH, delay = 500) {
+    navController.forResult<Int>(key = REQUEST_KEY_SHARE_REFRESH, delay = 500) {
         contentList.refresh()
     }
 

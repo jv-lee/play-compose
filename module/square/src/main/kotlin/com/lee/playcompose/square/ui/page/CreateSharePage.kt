@@ -27,13 +27,11 @@ import com.lee.playcompose.common.ui.composable.AppTextField
 import com.lee.playcompose.common.ui.composable.LoadingDialog
 import com.lee.playcompose.common.ui.theme.*
 import com.lee.playcompose.common.ui.widget.AppBarViewContainer
-import com.lee.playcompose.square.Constants
 import com.lee.playcompose.square.R
 import com.lee.playcompose.square.viewmodel.CreateShareViewAction
 import com.lee.playcompose.square.viewmodel.CreateShareViewEvent
 import com.lee.playcompose.square.viewmodel.CreateShareViewModel
 import com.lee.playcompose.square.viewmodel.CreateShareViewState
-import kotlinx.coroutines.flow.collect
 
 /**
  * 创建分享内容页面
@@ -53,7 +51,7 @@ fun CreateSharePage(navController: NavController, viewModel: CreateShareViewMode
             when (event) {
                 is CreateShareViewEvent.CreateSuccess -> {
                     toast(shareSuccess)
-                    navController.setResult(Constants.REQUEST_KEY_SHARE_REFRESH)
+                    navController.setResult(REQUEST_KEY_SHARE_REFRESH)
                     navController.popBackStack()
                 }
                 is CreateShareViewEvent.CreateFailed -> {

@@ -22,13 +22,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.lee.playcompose.account.R
-import com.lee.playcompose.account.constants.Constants.REQUEST_KEY_LOGIN
 import com.lee.playcompose.account.ui.composable.AccountSpacer
 import com.lee.playcompose.account.ui.theme.ButtonLockColor
 import com.lee.playcompose.account.ui.theme.ButtonTextColor
@@ -41,7 +39,6 @@ import com.lee.playcompose.common.ui.composable.LoadingDialog
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.theme.OffsetRadiusMedium
-import kotlinx.coroutines.launch
 
 /**
  * 用户注册页

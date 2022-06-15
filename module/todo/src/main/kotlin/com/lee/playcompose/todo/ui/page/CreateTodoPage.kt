@@ -40,7 +40,6 @@ import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.theme.OffsetRadiusMedium
 import com.lee.playcompose.common.ui.widget.AppBarViewContainer
 import com.lee.playcompose.todo.R
-import com.lee.playcompose.todo.constants.Constants.REFRESH_TODO_KEY
 import com.lee.playcompose.todo.ui.theme.TodoEditContentHeight
 import com.lee.playcompose.todo.ui.theme.TodoEditHeight
 import com.lee.playcompose.todo.ui.theme.TodoSaveButton
@@ -48,7 +47,6 @@ import com.lee.playcompose.todo.viewmodel.CreateTodoViewAction
 import com.lee.playcompose.todo.viewmodel.CreateTodoViewEvent
 import com.lee.playcompose.todo.viewmodel.CreateTodoViewModel
 import com.lee.playcompose.todo.viewmodel.CreateTodoViewState
-import kotlinx.coroutines.flow.collect
 import java.util.*
 import com.lee.playcompose.common.R as CR
 
@@ -77,7 +75,7 @@ fun CreateTodoPage(
         viewModel.viewEvents.collect { event ->
             when (event) {
                 is CreateTodoViewEvent.RequestSuccess -> {
-                    navController.setResult(REFRESH_TODO_KEY, event.status)
+                    navController.setResult(REQUEST_KEY_REFRESH, event.status)
                     navController.popBackStack()
                 }
                 is CreateTodoViewEvent.RequestFailed -> {
