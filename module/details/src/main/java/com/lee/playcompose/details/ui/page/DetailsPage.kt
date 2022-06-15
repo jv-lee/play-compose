@@ -1,4 +1,4 @@
-package com.lee.playcompose.details
+package com.lee.playcompose.details.ui.page
 
 import android.app.Activity
 import android.content.Context
@@ -22,7 +22,10 @@ import com.lee.playcompose.common.ui.composable.LoadingDialog
 import com.lee.playcompose.common.ui.widget.AppBarViewContainer
 import com.lee.playcompose.common.ui.widget.MenuSpacer
 import com.lee.playcompose.common.ui.widget.TextMenuItem
-import kotlinx.coroutines.flow.collect
+import com.lee.playcompose.details.R
+import com.lee.playcompose.details.viewmodel.DetailsViewAction
+import com.lee.playcompose.details.viewmodel.DetailsViewEvent
+import com.lee.playcompose.details.viewmodel.DetailsViewModel
 import com.lee.playcompose.base.R as BR
 import com.lee.playcompose.common.R as CR
 

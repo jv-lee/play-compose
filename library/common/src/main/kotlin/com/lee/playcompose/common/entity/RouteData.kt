@@ -10,7 +10,7 @@ import androidx.annotation.Keep
 import kotlinx.parcelize.Parcelize
 
 /**
- * 内容详情数据实体
+ * 内容详情页面跳转透传数据实体
  * @param id 文章id
  * @param title 文章title
  * @param link 文章是否被点赞

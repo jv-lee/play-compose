@@ -1,4 +1,4 @@
-package com.lee.playcompose.details
+package com.lee.playcompose.details.viewmodel
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -11,6 +11,7 @@ import com.lee.playcompose.base.utils.ShareUtil
 import com.lee.playcompose.common.constants.ApiConstants
 import com.lee.playcompose.common.entity.DetailsData
 import com.lee.playcompose.common.ui.widget.ActionMode
+import com.lee.playcompose.details.R
 import com.lee.playcompose.service.MeService
 import com.lee.playcompose.service.helper.ModuleService
 import kotlinx.coroutines.channels.Channel
@@ -22,7 +23,6 @@ import kotlinx.coroutines.launch
 
 /**
  * 文章详情页viewModel
- * @see DetailsPage
  * @author jv.lee
  * @date 2022/3/30
  */

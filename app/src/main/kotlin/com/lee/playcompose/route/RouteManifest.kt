@@ -13,7 +13,7 @@ import com.lee.playcompose.base.tools.WeakDataHolder
 import com.lee.playcompose.common.entity.DetailsData
 import com.lee.playcompose.common.entity.ParentTab
 import com.lee.playcompose.common.entity.TodoData
-import com.lee.playcompose.details.DetailsPage
+import com.lee.playcompose.details.ui.page.DetailsPage
 import com.lee.playcompose.home.ui.page.HomePage
 import com.lee.playcompose.me.ui.page.*
 import com.lee.playcompose.official.ui.page.OfficialPage
