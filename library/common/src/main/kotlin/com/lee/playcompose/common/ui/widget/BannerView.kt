@@ -25,16 +25,23 @@ import kotlinx.coroutines.delay
 
 /**
  * banner组件
+ * @param modifier 样式属性配置
+ * @param data 构建数据集合
+ * @param findPath 提供给外部执行[T]的path查找函数
+ * @param onItemClick 每一项点击执行函数
+ * @param timeMillis 切换banner间隔时间（毫秒）
+ * @param indicatorAlignment banner指示器位置
+ * @param clipCardEnable banner内容是否添加padding间隔
  * @author jv.lee
  * @date 2022/3/2
  */
 @ExperimentalCoilApi
 @Composable
 fun <T : Any> BannerView(
+    modifier: Modifier = Modifier,
     data: List<T>,
     findPath: ((T) -> String),
     onItemClick: ((T) -> Unit),
-    modifier: Modifier = Modifier,
     timeMillis: Long = 3000,
     indicatorAlignment: Alignment = Alignment.BottomCenter,
     clipCardEnable: Boolean = true

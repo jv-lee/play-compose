@@ -26,9 +26,24 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.statusBarsHeight
 import com.lee.playcompose.common.ui.composable.HeaderSpacer
 import com.lee.playcompose.common.ui.theme.*
+import com.lee.playcompose.common.ui.widget.ActionMode.*
 
 /**
- * 公共appbarView
+ * 公共appbarView 单独使用该view在顶部，content为appbar内部更多显示样式
+ * @param modifier 属性配置
+ * @param title appbarTitle
+ * @param navigationIcon 导航icon资源
+ * @param navigationClick 导航点击执行函数
+ * @param actionIcon 右侧行为按钮icon资源
+ * @param actionClick 右侧行为按钮点击执行函数
+ * @param backgroundColor appbarView背景颜色
+ * @param contentColor appbarView内容颜色
+ * @param elevation appbarView底部阴影
+ * @param navigationEnable 是否启用导航按钮（显示/隐藏）
+ * @param menuVisibilityState action使用menu菜单时，menu菜单显示状态控制
+ * @param actionMode action按钮模式 [ActionMode]
+ * @param menu 菜单composable组件
+ * @param content 内容composable组件
  * @author jv.lee
  * @date 2022/2/21
  */
@@ -127,6 +142,23 @@ fun AppBarView(
     }
 }
 
+/**
+ * appbarViewContainer模式， 顶部为appbar，[content] 为底部内容区域
+ * @param modifier 属性配置
+ * @param title appbarTitle
+ * @param navigationIcon 导航icon资源
+ * @param navigationClick 导航点击执行函数
+ * @param actionIcon 右侧行为按钮icon资源
+ * @param actionClick 右侧行为按钮点击执行函数
+ * @param backgroundColor appbarView背景颜色
+ * @param contentColor appbarView内容颜色
+ * @param elevation appbarView底部阴影
+ * @param navigationEnable 是否启用导航按钮（显示/隐藏）
+ * @param menuVisibilityState action使用menu菜单时，menu菜单显示状态控制
+ * @param actionMode action按钮模式 [ActionMode]
+ * @param menu 菜单composable组件
+ * @param content 内容composable组件
+ */
 @Composable
 fun AppBarViewContainer(
     modifier: Modifier = Modifier,
@@ -201,6 +233,11 @@ fun MenuSpacer() {
     )
 }
 
+/**
+ * [Button] 单icon点击事件模式
+ * [Menu] 更多点击事件模式（点击后弹出菜单）
+ * [Default] 默认什么都不显示
+ */
 sealed class ActionMode {
     object Button : ActionMode()
     object Menu : ActionMode()

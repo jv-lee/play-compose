@@ -19,11 +19,18 @@ import com.lee.playcompose.common.ui.theme.ToolBarHeight
 
 /**
  * 公共appBar顶部渐变色导航title组件
+ * @param title 文案
+ * @param navigationPainter 右侧导航按钮
+ * @param onNavigationClick 右侧导航按钮点击事件执行函数
  * @author jv.lee
  * @date 2022/3/3
  */
 @Composable
-fun AppGradientTextBar(title: String, navigationPainter: Painter, onNavigationClick: () -> Unit) {
+fun AppGradientTextBar(
+    title: String,
+    navigationPainter: Painter,
+    onNavigationClick: () -> Unit
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth()

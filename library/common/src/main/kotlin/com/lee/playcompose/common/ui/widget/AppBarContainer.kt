@@ -13,6 +13,9 @@ import com.lee.playcompose.common.ui.theme.AppTheme
 
 /**
  * 公共appbar容器组件
+ * @param modifier 属性配置
+ * @param headerBrush 背景是否使用模糊渐变效果
+ * @param content 内容content composable组件
  * @author jv.lee
  * @date 2022/2/21
  */

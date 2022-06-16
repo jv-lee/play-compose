@@ -1,6 +1,5 @@
 package com.lee.playcompose.common.ui.widget
 
-import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -28,10 +27,16 @@ import com.lee.playcompose.common.ui.theme.ListStateItemHeight
 
 /**
  * 刷新列表组件
+ * @param lazyPagingItems paging3compose列表数据
+ * @param isRefreshing 是否处于刷新状态
+ * @param swipeEnable 是否支持下拉刷新
+ * @param onRefresh 刷新回调执行函数
+ * @param indicatorPadding
+ * @param listState 数据列表状态
+ * @param itemContent 构建列表composable LazyListScope作用域
  * @author jv.lee
  * @date 2022/2/28
  */
-@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun <T : Any> RefreshList(
     lazyPagingItems: LazyPagingItems<T>,
