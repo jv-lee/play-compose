@@ -17,6 +17,12 @@ import kotlin.math.abs
 
 /**
  * 侧滑菜单Box容器
+ * @param modifier 样式属性
+ * @param slidingWidth 侧滑区域宽度
+ * @param slidingAlign 侧滑菜单位置
+ * @param state 侧滑状态
+ * @param sliding 侧滑composable元素
+ * @param content 容器composable元素
  * @author jv.lee
  * @date 2022/4/1
  */
