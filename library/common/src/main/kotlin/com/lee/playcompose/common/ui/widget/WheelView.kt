@@ -1,6 +1,5 @@
 package com.lee.playcompose.common.ui.widget
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -20,20 +19,26 @@ import com.lee.playcompose.common.ui.theme.FontSizeMedium
 
 /**
  * 多类型滑动选择器
+ * @param modifier 样式属性
+ * @param state 滑动分页状态
+ * @param data 目标数据源
+ * @param findText 目标数据源[T]查询文本显示函数 () -> T.text
+ * @param style 选中item样式
+ * [SelectItemStyle.GONE] 默认无样式
+ * [SelectItemStyle.ITEM] 选中item填充背景
+ * [SelectItemStyle.LINE] 选中item填充边框
+ * @param itemHeight 每项item高度
+ * @param itemSelectedBackground 选中item背景颜色
+ * @param selectedTextColor 选中item文本颜色
+ * @param unSelectedTextColor 默认item文本颜色
+ * @param selectedTextSize 选中item文本字体大小
+ * @param unSelectedTextSize 默认item文本字体大小
  * @author jv.lee
  * @date 2022/4/12
  */
-annotation class SelectItemStyle {
-    companion object {
-        const val GONE = 0
-        const val LINE = 1
-        const val ITEM = 2
-    }
-}
-
-@SuppressLint("ModifierParameter")
 @Composable
 fun <T : Any> WheelView(
+    modifier: Modifier = Modifier,
     state: PagerSnapState = rememberPagerSnapState(),
     data: List<T>,
     findText: ((T) -> String),
@@ -44,7 +49,6 @@ fun <T : Any> WheelView(
     unSelectedTextColor: Color = AppTheme.colors.primary,
     selectedTextSize: TextUnit = FontSizeLarge,
     unSelectedTextSize: TextUnit = FontSizeMedium,
-    modifier: Modifier = Modifier
 ) {
     Box(modifier = modifier.height(itemHeight * 3)) {
         WheelViewItemBackground(
@@ -111,5 +115,14 @@ private fun BoxScope.WheelViewItemBackground(
         }
         else -> {
         }
+    }
+}
+
+
+annotation class SelectItemStyle {
+    companion object {
+        const val GONE = 0
+        const val LINE = 1
+        const val ITEM = 2
     }
 }
