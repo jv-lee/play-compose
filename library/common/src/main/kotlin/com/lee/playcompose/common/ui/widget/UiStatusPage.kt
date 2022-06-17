@@ -19,16 +19,16 @@ import com.lee.playcompose.common.R
 import com.lee.playcompose.common.ui.theme.AppTheme
 
 /**
- *
+ * 状态控制容器
+ * @param status 当前页面状态
+ * [UiStatus.Loading] 加载状态
+ * [UiStatus.Failed] 失败状态
+ * [UiStatus.Complete] 完成状态
+ * @param retry 重试执行函数
+ * @param content 内容composable元素
  * @author jv.lee
  * @date 2022/3/14
  */
-sealed class UiStatus {
-    object Loading : UiStatus()
-    object Failed : UiStatus()
-    object Complete : UiStatus()
-}
-
 @Composable
 fun UiStatusPage(
     status: UiStatus = UiStatus.Loading,
@@ -104,4 +104,10 @@ private fun PageLoading() {
             )
         }
     }
+}
+
+sealed class UiStatus {
+    object Loading : UiStatus()
+    object Failed : UiStatus()
+    object Complete : UiStatus()
 }
