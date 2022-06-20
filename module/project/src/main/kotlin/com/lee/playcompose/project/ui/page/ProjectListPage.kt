@@ -36,7 +36,7 @@ fun ProjectListPage(
         lazyPagingItems = contentList,
         listState = listState,
     ) {
-        // build home content item
+        // build project content item
         itemsIndexed(contentList) { _, item ->
             item ?: return@itemsIndexed
             ContentPictureItem(item, onItemClick = {

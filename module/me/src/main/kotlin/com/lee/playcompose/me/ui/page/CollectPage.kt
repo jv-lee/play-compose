@@ -77,7 +77,7 @@ private fun CollectContent(
         lazyPagingItems = contentList,
         listState = listState,
     ) {
-        // build myShare content item
+        // build collect content item
         itemsIndexed(contentList) { _, item ->
             item ?: return@itemsIndexed
             ActionTextItem(

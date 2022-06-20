@@ -36,7 +36,7 @@ fun OfficialListPage(
         lazyPagingItems = contentList,
         listState = listState,
     ) {
-        // build home content item
+        // build official content item
         itemsIndexed(contentList) { _, item ->
             item ?: return@itemsIndexed
             ContentItem(item, onItemClick = {

@@ -36,7 +36,7 @@ fun SystemContentListPage(
         lazyPagingItems = contentList,
         listState = listState,
     ) {
-        // build home content item
+        // build system content list item
         itemsIndexed(contentList) { _, item ->
             item ?: return@itemsIndexed
             ContentItem(item, onItemClick = {

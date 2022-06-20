@@ -55,7 +55,7 @@ private fun SearchResultContent(
         lazyPagingItems = contentList,
         listState = listState,
     ) {
-        // build home content item
+        // build searchResult content item
         itemsIndexed(contentList) { _, item ->
             item ?: return@itemsIndexed
             if (item.envelopePic.isEmpty()) {
