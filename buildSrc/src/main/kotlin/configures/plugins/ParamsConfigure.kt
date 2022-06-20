@@ -12,7 +12,6 @@ import org.gradle.kotlin.dsl.configure
  * @author jv.lee
  * @date 2021/10/1
  */
-@Suppress("MISSING_DEPENDENCY_SUPERCLASS")
 fun Project.paramsConfigure() {
     extensions.configure<LibraryExtension> {
         buildTypes {

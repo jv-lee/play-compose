@@ -1,27 +1,26 @@
 package configures
 
+import baseService
 import build.BuildConfig
 import build.BuildPlugin
 import com.android.build.gradle.LibraryExtension
+import commonProcessors
+import commonTest
+import configures.core.freeCompilerArgs
+import dependencies.Version
+import kapt
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import kapt
-import commonProcessors
-import commonTest
-import baseService
-import configures.core.freeCompilerArgs
-import dependencies.Version
 
 /**
  * 组件模块配置依赖扩展
  * @author jv.lee
  * @date 2021/10/1
  */
-@Suppress("MISSING_DEPENDENCY_SUPERCLASS")
 fun Project.moduleConfigure(
     projectConfigure: Project.() -> Unit = {},
     androidConfigure: LibraryExtension.() -> Unit = {}

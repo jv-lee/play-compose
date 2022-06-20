@@ -3,21 +3,20 @@ package configures
 import build.BuildConfig
 import build.BuildPlugin
 import com.android.build.gradle.LibraryExtension
+import configures.core.freeCompilerArgs
+import dependencies.Version
+import kapt
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import kapt
-import configures.core.freeCompilerArgs
-import dependencies.Version
 
 /**
  * 基础库配置依赖扩展
  * @author jv.lee
  * @date 2021/10/1
  */
-@Suppress("MISSING_DEPENDENCY_SUPERCLASS")
 fun Project.libraryConfigure(
     projectConfigure: Project.() -> Unit = {},
     androidConfigure: LibraryExtension.() -> Unit = {}

@@ -18,7 +18,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
  * @author jv.lee
  * @date 2021/10/1
  */
-@Suppress("MISSING_DEPENDENCY_SUPERCLASS", "MISSING_DEPENDENCY_CLASS")
 fun Project.appConfigure(
     projectConfigure: Project.() -> Unit = {},
     androidConfigure: BaseAppModuleExtension.() -> Unit = {}
@@ -43,7 +42,7 @@ fun Project.appConfigure(
             multiDexEnabled = BuildConfig.multiDex
 
             //指定只支持中文字符
-            resConfig("zh-rCN")
+            resourceConfigurations.add("zh-rCN")
 
             testInstrumentationRunner = BuildConfig.TEST_INSTRUMENTATION_RUNNER
 
