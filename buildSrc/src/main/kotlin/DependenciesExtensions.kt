@@ -50,7 +50,6 @@ fun DependencyHandlerScope.commonTest() {
     androidTestImplementation(TestDependencies.composeUiTest)
     debugImplementation(TestDependencies.composeUiTooling)
     debugImplementation(TestDependencies.leakcanaryDebug)
-    implementation(TestDependencies.blockCanary)
 }
 
 //基础依赖配置
