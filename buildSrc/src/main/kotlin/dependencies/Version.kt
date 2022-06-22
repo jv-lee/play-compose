@@ -24,8 +24,8 @@ object Version {
     const val protobuf = "3.10.0"
     const val autoService = "1.0"
 
-    // compose 0.24.7-alpha14 -> kotlin-gradle-plugin:1.6.20 / composeCompiler 1.2.0-alpha08
-    const val composeCompiler = "1.2.0-alpha07"
+    // compose 0.24.7-alpha14 -> kotlin-gradle-plugin:1.6.20 / compose 1.2.0-alpha08
+    const val compose = "1.2.0-alpha07"
     const val accompanist = "0.24.1-alpha"
     const val paging = "3.1.0"
     const val pagingCompose = "1.0.0-alpha14"
@@ -36,6 +36,6 @@ object Version {
     const val junit = "4.13.2"
     const val junitAndroid = "1.1.2"
     const val espressoAndroid = "3.3.0"
-    const val leakcanary = "2.3"
+    const val leakcanary = "2.9.1"
     const val blockCanary = "1.5.0"
 }

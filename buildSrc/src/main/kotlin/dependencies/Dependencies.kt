@@ -39,11 +39,11 @@ object Dependencies {
     // compose
     const val composeActivity = "androidx.activity:activity-compose:${Version.activity}"
     const val composeConstraint = "androidx.constraintlayout:constraintlayout-compose:1.0.0"
-    const val composeUi = "androidx.compose.ui:ui:${Version.composeCompiler}"
-    const val composeMaterial = "androidx.compose.material:material:${Version.composeCompiler}"
-    const val composePreview = "androidx.compose.ui:ui-tooling-preview:${Version.composeCompiler}"
+    const val composeUi = "androidx.compose.ui:ui:${Version.compose}"
+    const val composeMaterial = "androidx.compose.material:material:${Version.compose}"
+    const val composePreview = "androidx.compose.ui:ui-tooling-preview:${Version.compose}"
     const val composeUtil = "androidx.compose.ui:ui-util:1.1.1"
-    const val composeLivedata = "androidx.compose.runtime:runtime-livedata:${Version.composeCompiler}"
+    const val composeLivedata = "androidx.compose.runtime:runtime-livedata:${Version.compose}"
 
     // compose accompanist
     const val composeCoin = "com.google.accompanist:accompanist-coil:0.15.0"
