@@ -22,9 +22,7 @@ import com.lee.playcompose.square.viewmodel.MyShareViewEvent
 import com.lee.playcompose.square.viewmodel.MyShareViewModel
 import com.lee.playcompose.square.viewmodel.MyShareViewState
 
-/**
- * 创建分享内容成功后回调我的分享页面回传key （通知分享列表已变更进行数据刷新）
- */
+/** 创建分享内容成功后回调我的分享页面回传key （通知分享列表已变更进行数据刷新） */
 const val REQUEST_KEY_SHARE_REFRESH = "requestKey:share_refresh"
 
 /**

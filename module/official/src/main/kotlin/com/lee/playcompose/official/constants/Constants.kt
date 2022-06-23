@@ -7,8 +7,6 @@ package com.lee.playcompose.official.constants
  */
 object Constants  {
 
-    /**
-     * 公众号页面tab数据缓存key
-     */
+    /** 公众号页面tab数据缓存key */
     const val CACHE_KEY_OFFICIAL_TAB = "cacheKey:official-tab"
 }

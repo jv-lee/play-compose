@@ -7,8 +7,6 @@ package com.lee.playcompose.home.constants
  */
 object Constants {
 
-    /**
-     * contentList数据列表首页缓存key
-     */
+    /** contentList数据列表首页缓存key */
     const val CACHE_KEY_HOME_CONTENT = "cacheKey:home-content"
 }

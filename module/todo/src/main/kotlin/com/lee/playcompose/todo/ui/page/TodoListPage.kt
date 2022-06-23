@@ -35,19 +35,13 @@ import com.lee.playcompose.todo.viewmodel.TodoListViewModel
 import com.lee.playcompose.todo.viewmodel.TodoListViewState
 import com.lee.playcompose.common.R as CR
 
-/**
- * 创建todo页面todo创建/修改状态后页面回传key（通知todoList页面数据变更进行刷新）
- */
+/** 创建todo页面todo创建/修改状态后页面回传key（通知todoList页面数据变更进行刷新）*/
 const val REQUEST_KEY_REFRESH = "requestKey:refresh"
 
-/**
- * 待完成TODO列表状态值
- */
+/** 待完成TODO列表状态值 */
 const val STATUS_UPCOMING = 0
 
-/**
- * 已完成TODO列表状态值
- */
+/** 已完成TODO列表状态值 */
 const val STATUS_COMPLETE = 1
 
 /**

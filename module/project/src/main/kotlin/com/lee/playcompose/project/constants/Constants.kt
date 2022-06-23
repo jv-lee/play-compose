@@ -7,8 +7,6 @@ package com.lee.playcompose.project.constants
  */
 object Constants {
 
-    /**
-     * 项目页面tab数据缓存key
-     */
+    /** 项目页面tab数据缓存key */
     const val CACHE_KEY_PROJECT_TAB = "cacheKey:project-tab"
 }

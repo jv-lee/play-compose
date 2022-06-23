@@ -42,9 +42,7 @@ import com.lee.playcompose.common.ui.theme.OffsetRadiusMedium
 import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
 
-/**
- * 注册界面注册成功后回调登陆页面回传key（通知登陆页面已注册成功）
- */
+/** 注册界面注册成功后回调登陆页面回传key（通知登陆页面已注册成功） */
 const val REQUEST_KEY_LOGIN = "requestKey:login"
 
 /**
