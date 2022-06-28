@@ -44,7 +44,8 @@ fun <T : Any> BannerView(
     onItemClick: ((T) -> Unit),
     timeMillis: Long = 3000,
     indicatorAlignment: Alignment = Alignment.BottomCenter,
-    clipCardEnable: Boolean = true
+    clipCardEnable: Boolean = true,
+    loopEnable: Boolean = true,
 ) {
     //无限翻页最大倍数 count * filed
     val looperCountFactor = 500
@@ -55,8 +56,8 @@ fun <T : Any> BannerView(
     var currentPageIndex = 0
 
     // auto scroll
-    LaunchedEffect(pagerState.currentPage, executeChangePage) {
-        if (pagerState.pageCount > 0) {
+    LaunchedEffect(pagerState.currentPage, executeChangePage, loopEnable) {
+        if (pagerState.pageCount > 0 && loopEnable) {
             delay(timeMillis = timeMillis)
             var itemIndex = pagerState.currentPage
             if (itemIndex == looperCountFactor * 3 - 1) {

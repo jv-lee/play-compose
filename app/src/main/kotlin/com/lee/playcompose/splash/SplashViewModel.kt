@@ -6,10 +6,12 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.playcompose.R
+import com.lee.playcompose.base.bus.ChannelBus
+import com.lee.playcompose.base.bus.ChannelBus.Companion.post
 import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.base.tools.DarkModeTools
+import com.lee.playcompose.common.entity.ContentVisibleEvent
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
@@ -63,6 +65,9 @@ class SplashViewModel : ViewModel() {
 
     private fun hideSplash() {
         viewStates = viewStates.copy(splashVisible = false)
+
+        // splash隐藏后发送全局事件 主页内容显示通知提供给ui显示后一些处理
+        ChannelBus.getChannel<ContentVisibleEvent>()?.post(ContentVisibleEvent())
     }
 
     private fun initSplashInfo() {

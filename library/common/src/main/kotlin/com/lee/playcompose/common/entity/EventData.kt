@@ -19,3 +19,9 @@ data class NavigationSelectEvent(val route: String)
  */
 @Keep
 class LoginEvent
+
+/**
+ * 主页显示事件
+ */
+@Keep
+class ContentVisibleEvent

@@ -37,8 +37,11 @@ import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.lee.playcompose.BuildConfig
 import com.lee.playcompose.R
+import com.lee.playcompose.common.R as CR
+import com.lee.playcompose.home.R as HR
 import com.lee.playcompose.base.bus.ChannelBus
 import com.lee.playcompose.base.bus.ChannelBus.Companion.post
+import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.base.extensions.LocalActivity
 import com.lee.playcompose.common.entity.LoginEvent
 import com.lee.playcompose.common.entity.NavigationSelectEvent
@@ -196,9 +199,9 @@ private fun FloatingView() {
                     .align(alignment = Alignment.BottomEnd)
             ) {
                 Image(
-                    painter = painterResource(id = com.lee.playcompose.common.R.mipmap.ic_launcher_round),
+                    painter = painterResource(id = CR.mipmap.ic_launcher_round),
                     contentDescription = null,
-                    modifier = Modifier.clickable { toast("Welcome to Play Compose.") }
+                    modifier = Modifier.clickable { toast(app.getString(HR.string.home_header_text)) }
                 )
             }
         }

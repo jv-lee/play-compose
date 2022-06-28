@@ -17,7 +17,8 @@ import com.lee.playcompose.common.paging.saved.savedPager
 import com.lee.playcompose.home.constants.Constants.CACHE_KEY_HOME_CONTENT
 import com.lee.playcompose.home.model.api.ApiService
 import com.lee.playcompose.home.model.entity.HomeCategory
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 /**
@@ -32,7 +33,7 @@ class HomeViewModel : ViewModel() {
 
     private val pager by lazy {
         savedPager { page ->
-            if (page == 0) dispatch(HomeViewAction.RequestData)
+            if (page == 0) requestData()
             api.getContentDataAsync(page).checkData()
         }
     }
@@ -42,37 +43,41 @@ class HomeViewModel : ViewModel() {
 
     fun dispatch(action: HomeViewAction) {
         when (action) {
-            is HomeViewAction.RequestData -> requestData()
+            is HomeViewAction.RequestLoopBanner -> requestLoopBanner()
         }
     }
 
     private fun requestData() {
-        val bannerFlow =
-            cacheManager.cacheFlow(CACHE_KEY_HOME_CONTENT) { api.getBannerDataAsync().data }
-        val categoryFlow = flow { emit(HomeCategory.getHomeCategory()) }
-
         viewModelScope.launch {
-            bannerFlow.zip(categoryFlow) { banners, category ->
-                viewStates =
-                    viewStates.copy(banners = banners, category = category, isRefreshing = false)
+            cacheManager.cacheFlow(CACHE_KEY_HOME_CONTENT) {
+                api.getBannerDataAsync().data
             }.onStart {
                 viewStates = viewStates.copy(isRefreshing = true)
             }.catch {
                 viewStates = viewStates.copy(isRefreshing = false)
-            }.collect()
+            }.collect { data ->
+                val categoryList = HomeCategory.getHomeCategory()
+                viewStates =
+                    viewStates.copy(banners = data, category = categoryList, isRefreshing = false)
+            }
         }
+    }
+
+    private fun requestLoopBanner() {
+        viewStates = viewStates.copy(isLoop = true)
     }
 
 }
 
 data class HomeViewState(
-    val savedPager: SavedPager<Content>,
     val isRefreshing: Boolean = false,
+    val isLoop: Boolean = false,
+    val savedPager: SavedPager<Content>,
     val banners: List<Banner> = emptyList(),
     val category: List<HomeCategory> = emptyList(),
     val listState: LazyListState = LazyListState()
 )
 
 sealed class HomeViewAction {
-    object RequestData : HomeViewAction()
+    object RequestLoopBanner : HomeViewAction()
 }

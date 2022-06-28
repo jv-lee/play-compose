@@ -25,6 +25,7 @@ import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.lee.playcompose.base.bus.ChannelBus
 import com.lee.playcompose.common.entity.Banner
 import com.lee.playcompose.common.entity.Content
+import com.lee.playcompose.common.entity.ContentVisibleEvent
 import com.lee.playcompose.common.entity.NavigationSelectEvent
 import com.lee.playcompose.common.extensions.transformDetails
 import com.lee.playcompose.common.ui.composable.ContentItem
@@ -67,6 +68,13 @@ fun HomePage(
         }
     }
 
+    LaunchedEffect(Unit) {
+        // 监听内容显示事件
+        ChannelBus.getChannel<ContentVisibleEvent>()?.receiveAsFlow()?.collect {
+            viewModel.dispatch(HomeViewAction.RequestLoopBanner)
+        }
+    }
+
     // double click close app.
     RouteBackHandler()
 
@@ -74,7 +82,6 @@ fun HomePage(
         // content
         HomeContentList(
             viewState = viewState,
-            onRefresh = { viewModel.dispatch(HomeViewAction.RequestData) },
             onBannerItemClick = {
                 navController.navigateArgs(RoutePage.Details.route, it.transformDetails())
             },
@@ -103,7 +110,6 @@ fun HomePage(
 @Composable
 private fun HomeContentList(
     viewState: HomeViewState,
-    onRefresh: () -> Unit,
     onBannerItemClick: (Banner) -> Unit,
     onCategoryItemClick: (HomeCategory) -> Unit,
     onContentItemClick: (Content) -> Unit,
@@ -117,7 +123,6 @@ private fun HomeContentList(
     RefreshList(
         lazyPagingItems = contentList,
         isRefreshing = isRefreshing,
-        onRefresh = { onRefresh() },
         listState = listState,
         indicatorPadding = rememberInsetsPaddingValues(
             insets = LocalWindowInsets.current.statusBars,
@@ -136,6 +141,7 @@ private fun HomeContentList(
                     data = bannerList,
                     onItemClick = onBannerItemClick,
                     findPath = { item -> item.imagePath },
+                    loopEnable = viewState.isLoop,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(180.dp)
