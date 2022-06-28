@@ -126,7 +126,7 @@ fun AppBarView(
                                         color = AppTheme.colors.item,
                                         shape = RoundedCornerShape(OffsetRadiusSmall)
                                     )
-                                    .widthIn(min = 80.dp)
+                                    .widthIn(min = 70.dp)
                             )
                         }
                         else -> {
@@ -211,11 +211,13 @@ fun AppBarViewContainer(
 fun TextMenuItem(text: String, onClick: () -> Unit) {
     Text(
         text = text,
+        fontSize = FontSizeMedium,
         color = AppTheme.colors.accent,
         textAlign = TextAlign.Center,
         modifier = Modifier
             .fillMaxWidth()
             .clickable { onClick() }
+            .padding(start = OffsetMedium, end = OffsetMedium)
     )
 }
 
