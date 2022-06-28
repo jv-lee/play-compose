@@ -121,11 +121,12 @@ fun AppBarView(
                                 expanded = menuVisibilityState.value,
                                 onDismissRequest = { menuVisibilityState.value = false },
                                 content = menu,
-                                modifier = Modifier.background(
-                                    color = AppTheme.colors.item, shape = RoundedCornerShape(
-                                        OffsetRadiusSmall
+                                modifier = Modifier
+                                    .background(
+                                        color = AppTheme.colors.item,
+                                        shape = RoundedCornerShape(OffsetRadiusSmall)
                                     )
-                                )
+                                    .widthIn(min = 80.dp)
                             )
                         }
                         else -> {
@@ -213,13 +214,8 @@ fun TextMenuItem(text: String, onClick: () -> Unit) {
         color = AppTheme.colors.accent,
         textAlign = TextAlign.Center,
         modifier = Modifier
+            .fillMaxWidth()
             .clickable { onClick() }
-            .padding(
-                start = OffsetLarge,
-                end = OffsetLarge,
-                top = OffsetSmall,
-                bottom = OffsetSmall
-            )
     )
 }
 
@@ -227,6 +223,7 @@ fun TextMenuItem(text: String, onClick: () -> Unit) {
 fun MenuSpacer() {
     Spacer(
         modifier = Modifier
+            .padding(top = OffsetSmall, bottom = OffsetSmall)
             .height(1.dp)
             .fillMaxWidth()
             .background(color = AppTheme.colors.accent)
