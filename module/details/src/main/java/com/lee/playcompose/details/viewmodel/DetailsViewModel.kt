@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.lee.playcompose.base.core.ApplicationExtensions.app
+import com.lee.playcompose.base.extensions.LocalActivity
 import com.lee.playcompose.base.utils.ShareUtil
 import com.lee.playcompose.common.constants.ApiConstants
 import com.lee.playcompose.common.entity.DetailsData
@@ -86,7 +87,9 @@ class DetailsViewModel(private val details: DetailsData) : ViewModel() {
     }
 
     private fun shareDetails() {
-        ShareUtil.shareText(app, "${details.title}:${details.link}")
+        viewModelScope.launch {
+            _viewEvents.send(DetailsViewEvent.ShareEvent("${details.title}:${details.link}"))
+        }
     }
 
     class CreateFactory(private val details: DetailsData) : ViewModelProvider.Factory {
@@ -104,6 +107,7 @@ data class DetailsViewState(
 
 sealed class DetailsViewEvent {
     data class CollectEvent(val message: String?) : DetailsViewEvent()
+    data class ShareEvent(val shareText: String) : DetailsViewEvent()
 }
 
 sealed class DetailsViewAction {

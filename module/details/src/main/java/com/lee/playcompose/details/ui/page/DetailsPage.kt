@@ -14,6 +14,8 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.just.agentweb.AgentWeb
+import com.lee.playcompose.base.extensions.LocalActivity
+import com.lee.playcompose.base.utils.ShareUtil
 import com.lee.playcompose.common.entity.DetailsData
 import com.lee.playcompose.common.extensions.bindLifecycle
 import com.lee.playcompose.common.extensions.setWebBackEvent
@@ -44,12 +46,16 @@ fun Activity.DetailsPage(
 ) {
     val viewState = viewModel.viewStates
     val menuVisibilityState = remember { mutableStateOf(false) }
+    val activity = LocalActivity.current
 
     LaunchedEffect(Unit) {
         viewModel.viewEvents.collect { event ->
             when (event) {
                 is DetailsViewEvent.CollectEvent -> {
                     toast(event.message)
+                }
+                is DetailsViewEvent.ShareEvent -> {
+                    ShareUtil.shareText(activity, "${details.title}:${details.link}")
                 }
             }
         }
