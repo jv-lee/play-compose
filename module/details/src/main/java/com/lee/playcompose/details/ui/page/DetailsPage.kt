@@ -55,7 +55,7 @@ fun Activity.DetailsPage(
                     toast(event.message)
                 }
                 is DetailsViewEvent.ShareEvent -> {
-                    ShareUtil.shareText(activity, "${details.title}:${details.link}")
+                    ShareUtil.shareText(activity, event.shareText)
                 }
             }
         }
