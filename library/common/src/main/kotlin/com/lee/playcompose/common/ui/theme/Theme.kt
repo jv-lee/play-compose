@@ -146,7 +146,6 @@ fun FragmentActivity.PlayComposeTheme(
     )
 
     AppActivityProvider {
-        AppDensityProvider {
             CompositionLocalProvider(LocalAppColors provides appColors) {
                 ProvideWindowInsets {
                     MaterialTheme(
@@ -156,6 +155,5 @@ fun FragmentActivity.PlayComposeTheme(
                     )
                 }
             }
-        }
     }
 }
