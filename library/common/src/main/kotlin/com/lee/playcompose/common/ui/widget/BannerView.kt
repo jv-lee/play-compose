@@ -74,7 +74,7 @@ fun <T : Any> BannerView(
         HorizontalPager(
             count = looperCountFactor * 3,
             state = pagerState,
-            contentPadding = PaddingValues(horizontal = if (clipCardEnable) 32.dp else 0.dp),
+            contentPadding = PaddingValues(horizontal = if (clipCardEnable) 16.dp else 0.dp),
             modifier = Modifier
                 .clickable { }
                 .fillMaxSize()

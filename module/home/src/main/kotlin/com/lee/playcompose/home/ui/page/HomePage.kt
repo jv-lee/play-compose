@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -183,13 +182,10 @@ private fun HomeCategoryChildItem(
     category: HomeCategory,
     onItemClick: (HomeCategory) -> Unit
 ) {
-    val configuration = LocalConfiguration.current
-    val screenWidth = configuration.screenWidthDp.dp
-    val viewWidth = screenWidth / 2
     Card(
         backgroundColor = AppTheme.colors.item,
         modifier = Modifier
-            .width(viewWidth)
+            .width(180.dp)
             .padding(OffsetMedium)
     ) {
         Column(

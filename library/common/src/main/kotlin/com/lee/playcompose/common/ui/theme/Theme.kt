@@ -13,6 +13,8 @@ import androidx.compose.ui.unit.sp
 import androidx.fragment.app.FragmentActivity
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.lee.playcompose.base.extensions.AppActivityProvider
+import com.lee.playcompose.base.extensions.AppDensityProvider
 import com.lee.playcompose.base.extensions.LocalActivity
 import com.lee.playcompose.base.extensions.activityViewModel
 import com.lee.playcompose.common.viewmodel.ThemeViewModel
@@ -143,16 +145,17 @@ fun FragmentActivity.PlayComposeTheme(
         )
     )
 
-    CompositionLocalProvider(
-        LocalAppColors provides appColors,
-        LocalActivity provides this
-    ) {
-        ProvideWindowInsets {
-            MaterialTheme(
-                typography = typography,
-                shapes = Shapes,
-                content = content
-            )
+    AppActivityProvider {
+        AppDensityProvider {
+            CompositionLocalProvider(LocalAppColors provides appColors) {
+                ProvideWindowInsets {
+                    MaterialTheme(
+                        typography = typography,
+                        shapes = Shapes,
+                        content = content
+                    )
+                }
+            }
         }
     }
 }
