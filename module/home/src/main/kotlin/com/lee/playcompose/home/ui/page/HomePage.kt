@@ -12,6 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -182,10 +184,12 @@ private fun HomeCategoryChildItem(
     category: HomeCategory,
     onItemClick: (HomeCategory) -> Unit
 ) {
+    val widthPixels = LocalContext.current.resources.displayMetrics.widthPixels
+    val viewWidth = (widthPixels / LocalDensity.current.density) / 2
     Card(
         backgroundColor = AppTheme.colors.item,
         modifier = Modifier
-            .width(180.dp)
+            .width(viewWidth.dp)
             .padding(OffsetMedium)
     ) {
         Column(
