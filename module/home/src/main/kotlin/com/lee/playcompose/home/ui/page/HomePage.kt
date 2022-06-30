@@ -12,10 +12,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -24,6 +23,7 @@ import coil.annotation.ExperimentalCoilApi
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.lee.playcompose.base.bus.ChannelBus
+import com.lee.playcompose.base.extensions.ScreenSizeChange
 import com.lee.playcompose.common.entity.Banner
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.entity.ContentVisibleEvent
@@ -170,10 +170,14 @@ private fun HomeCategoryItem(
     categoryList: List<HomeCategory>,
     onItemClick: (HomeCategory) -> Unit
 ) {
-    LazyRow(modifier = Modifier.fillMaxWidth()) {
-        items(categoryList) { item ->
-            HomeCategoryChildItem(category = item) {
-                onItemClick(it)
+    ScreenSizeChange { width, _ ->
+        // 屏幕宽度的一半
+        val viewWidth = (width / 2).dp
+        LazyRow(modifier = Modifier.fillMaxWidth()) {
+            items(categoryList) { item ->
+                HomeCategoryChildItem(viewWidth, category = item) {
+                    onItemClick(it)
+                }
             }
         }
     }
@@ -181,15 +185,14 @@ private fun HomeCategoryItem(
 
 @Composable
 private fun HomeCategoryChildItem(
+    viewWidth: Dp,
     category: HomeCategory,
     onItemClick: (HomeCategory) -> Unit
 ) {
-    val widthPixels = LocalContext.current.resources.displayMetrics.widthPixels
-    val viewWidth = (widthPixels / LocalDensity.current.density) / 2
     Card(
         backgroundColor = AppTheme.colors.item,
         modifier = Modifier
-            .width(viewWidth.dp)
+            .width(viewWidth)
             .padding(OffsetMedium)
     ) {
         Column(

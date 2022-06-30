@@ -13,6 +13,9 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
@@ -130,4 +133,21 @@ fun OnLifecycleEvent(onEvent: (event: Lifecycle.Event) -> Unit) {
 
         onDispose { lifecycle.removeObserver(observer) }
     }
+}
+
+/**
+ * 监听屏幕宽高compose组件
+ * @param content width:像素值 height:像素值
+ */
+@Composable
+fun ScreenSizeChange(content: @Composable (width: Float, height: Float) -> Unit) {
+    val configuration = LocalConfiguration.current
+    remember(configuration) { configuration.orientation }
+
+    val context = LocalContext.current
+    val density = LocalDensity.current
+    val viewWidth = context.resources.displayMetrics.widthPixels / density.density
+    val viewHeight = context.resources.displayMetrics.heightPixels / density.density
+
+    content(viewWidth, viewHeight)
 }
