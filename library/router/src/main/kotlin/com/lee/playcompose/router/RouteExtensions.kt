@@ -7,17 +7,28 @@ package com.lee.playcompose.router
 
 import android.net.Uri
 import android.os.Parcelable
-import androidx.compose.animation.AnimatedVisibilityScope
-import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.*
 import androidx.compose.animation.core.VisibilityThreshold
 import androidx.compose.animation.core.spring
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.IntOffset
 import androidx.navigation.*
 import com.google.accompanist.navigation.animation.composable
 import com.lee.playcompose.base.net.HttpManager
+
+@ExperimentalAnimationApi
+fun NavGraphBuilder.tabComposable(
+    route: String,
+    arguments: List<NamedNavArgument> = emptyList(),
+    deepLinks: List<NavDeepLink> = emptyList(),
+    content: @Composable AnimatedVisibilityScope.(NavBackStackEntry) -> Unit
+) {
+    composable(
+        route = route, arguments, deepLinks, content = content,
+        // 打开页面退出动画
+        exitTransition = { fadeOut(targetAlpha = 1f) },
+    )
+}
 
 @ExperimentalAnimationApi
 fun NavGraphBuilder.sideComposable(

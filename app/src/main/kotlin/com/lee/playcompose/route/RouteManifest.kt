@@ -1,7 +1,12 @@
 package com.lee.playcompose.route
 
 import android.app.Activity
+import androidx.compose.animation.core.VisibilityThreshold
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.ui.unit.IntOffset
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import coil.annotation.ExperimentalCoilApi
@@ -44,14 +49,14 @@ fun Activity.appRouteManifest(
 
         // module:home
         RoutePage.Home.run {
-            composable(RoutePage.Home.route) {
+            tabComposable(RoutePage.Home.route) {
                 HomePage(navController = navController, paddingValues)
             }
         }
 
         // module:square
         RoutePage.Square.run {
-            composable(RoutePage.Square.route) {
+            tabComposable(RoutePage.Square.route) {
                 SquarePage(navController = navController, paddingValues)
             }
             sideComposable(RoutePage.Square.MyShare.route) {
@@ -64,7 +69,7 @@ fun Activity.appRouteManifest(
 
         // module:system
         RoutePage.System.run {
-            composable(RoutePage.System.route) {
+            tabComposable(RoutePage.System.route) {
                 SystemPage(navController = navController, paddingValues)
             }
             sideComposable(RoutePage.System.SystemContentTab.route) {
@@ -76,7 +81,7 @@ fun Activity.appRouteManifest(
 
         // module:me
         RoutePage.Me.run {
-            composable(RoutePage.Me.route) {
+            tabComposable(RoutePage.Me.route) {
                 MePage(navController = navController, paddingValues)
             }
             sideComposable(RoutePage.Me.Coin.route) {
