@@ -188,10 +188,10 @@ private fun HomeCategoryChildItem(
     category: HomeCategory,
     onItemClick: (HomeCategory) -> Unit
 ) {
-    CardItemContainer(onClick = { onItemClick(category) }) {
+    CardItemContainer(modifier = Modifier.width(viewWidth), onClick = { onItemClick(category) }) {
         Column(
             modifier = Modifier
-                .width(viewWidth - (OffsetMedium * 2) - (OffsetLarge * 2))
+                .fillMaxWidth()
                 .wrapContentSize(align = Alignment.Center)
         ) {
             Image(

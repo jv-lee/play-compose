@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -210,13 +211,11 @@ private fun ColumnScope.SearchHistoryEmptyLayout(viewState: SearchViewState) {
 
 @Composable
 private fun SearchHotItem(item: SearchHot, onSearchClick: (String) -> Unit) {
-    Box(
-        modifier = Modifier
-            .padding(end = OffsetSmall, bottom = OffsetSmall)
-            .background(
-                color = AppTheme.colors.label,
-                shape = RoundedCornerShape(OffsetRadiusMedium)
-            )
+    Card(
+        elevation = 0.dp,
+        backgroundColor = AppTheme.colors.label,
+        shape = RoundedCornerShape(OffsetRadiusMedium),
+        modifier = Modifier.padding(end = OffsetSmall, bottom = OffsetSmall)
     ) {
         Text(
             text = item.key,

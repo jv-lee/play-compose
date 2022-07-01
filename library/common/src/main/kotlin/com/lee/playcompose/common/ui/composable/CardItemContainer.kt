@@ -24,6 +24,7 @@ import com.lee.playcompose.common.ui.theme.OffsetSmall
  */
 @Composable
 fun CardItemContainer(
+    modifier: Modifier = Modifier,
     contentPadding: Dp = OffsetLarge,
     onClick: () -> Unit = {},
     content: @Composable BoxScope.() -> Unit
@@ -31,7 +32,7 @@ fun CardItemContainer(
 
     Card(
         backgroundColor = AppTheme.colors.item,
-        modifier = Modifier.padding(
+        modifier = modifier.padding(
             start = OffsetMedium,
             end = OffsetMedium,
             top = OffsetMedium,
