@@ -13,6 +13,7 @@ val OffsetRadiusMedium = 16.dp
 val OffsetRadiusSmall = 8.dp
 
 // 全局通用样式 （统一全局margin padding radius值）
+val OffsetLargeMax = 32.dp
 val OffsetLarge = 16.dp
 val OffsetMedium = 8.dp
 val OffsetSmall = 4.dp

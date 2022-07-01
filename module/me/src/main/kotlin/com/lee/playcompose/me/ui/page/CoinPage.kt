@@ -204,7 +204,7 @@ private fun CoinRecordHeader(accountViewState: AccountViewState, coinRankClick: 
                 ) {
                     Text(
                         text = stringResource(id = R.string.coin_to_rank_text),
-                        fontSize = FontSizeLarge,
+                        fontSize = FontSizeMedium,
                         color = AppTheme.colors.accent,
                         modifier = Modifier
                             .align(Alignment.CenterStart)

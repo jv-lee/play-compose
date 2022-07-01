@@ -194,7 +194,7 @@ private fun FloatingView() {
                 type = ReindexType.REINDEX_X,
                 shape = CircleShape,
                 modifier = Modifier
-                    .size(68.dp)
+                    .size(56.dp)
                     .background(color = Color.Transparent, shape = RoundedCornerShape(26.dp))
                     .align(alignment = Alignment.BottomEnd)
             ) {

@@ -8,13 +8,14 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
+import androidx.compose.material.Card
+import androidx.compose.material.Icon
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -170,7 +171,7 @@ private fun ColumnScope.SearchHistoryContent(
             fontSize = FontSizeMedium,
             color = AppTheme.colors.accent,
             modifier = Modifier
-                .padding(OffsetLarge)
+                .padding(start = OffsetLarge, end = OffsetLarge, top = OffsetMedium)
                 .align(Alignment.CenterStart)
         )
         Text(
@@ -214,7 +215,7 @@ private fun SearchHotItem(item: SearchHot, onSearchClick: (String) -> Unit) {
         elevation = 0.dp,
         backgroundColor = AppTheme.colors.label,
         shape = RoundedCornerShape(OffsetRadiusMedium),
-        modifier = Modifier.padding(OffsetSmall)
+        modifier = Modifier.padding(end = OffsetSmall, bottom = OffsetSmall)
     ) {
         Text(
             text = item.key,
@@ -236,7 +237,7 @@ private fun SearchHistoryItem(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(OffsetMedium)
+            .padding(top = OffsetMedium, bottom = OffsetMedium)
     ) {
         Text(
             text = item.key,

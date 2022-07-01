@@ -19,6 +19,7 @@ import coil.compose.rememberImagePainter
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
+import com.lee.playcompose.common.ui.theme.OffsetLargeMax
 import com.lee.playcompose.common.ui.theme.OffsetMedium
 import com.lee.playcompose.common.ui.theme.OffsetSmall
 import kotlinx.coroutines.delay
@@ -74,7 +75,7 @@ fun <T : Any> BannerView(
         HorizontalPager(
             count = looperCountFactor * 3,
             state = pagerState,
-            contentPadding = PaddingValues(horizontal = if (clipCardEnable) 16.dp else 0.dp),
+            contentPadding = PaddingValues(horizontal = if (clipCardEnable) OffsetLargeMax else 0.dp),
             modifier = Modifier
                 .clickable { }
                 .fillMaxSize()

@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.Dp
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.theme.OffsetMedium
+import com.lee.playcompose.common.ui.theme.OffsetSmall
 
 /**
  * 卡片item容器组件
@@ -28,7 +29,10 @@ fun CardItemContainer(
     content: @Composable BoxScope.() -> Unit
 ) {
 
-    Card(backgroundColor = AppTheme.colors.item, modifier = Modifier.padding(OffsetMedium)) {
+    Card(
+        backgroundColor = AppTheme.colors.item,
+        modifier = Modifier.padding(start = OffsetMedium, end = OffsetMedium, top = OffsetMedium)
+    ) {
         Box(modifier = Modifier
             .fillMaxSize()
             .clickable { onClick() }

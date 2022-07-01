@@ -193,7 +193,7 @@ private fun HomeCategoryChildItem(
         backgroundColor = AppTheme.colors.item,
         modifier = Modifier
             .width(viewWidth)
-            .padding(OffsetMedium)
+            .padding(start = OffsetMedium, end = OffsetMedium, top = OffsetMedium)
     ) {
         Column(
             modifier = Modifier
