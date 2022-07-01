@@ -1,12 +1,10 @@
 package com.lee.playcompose.home.ui.page
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -29,6 +27,7 @@ import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.entity.ContentVisibleEvent
 import com.lee.playcompose.common.entity.NavigationSelectEvent
 import com.lee.playcompose.common.extensions.transformDetails
+import com.lee.playcompose.common.ui.composable.CardItemContainer
 import com.lee.playcompose.common.ui.composable.ContentItem
 import com.lee.playcompose.common.ui.composable.HeaderSpacer
 import com.lee.playcompose.common.ui.theme.AppTheme
@@ -189,18 +188,11 @@ private fun HomeCategoryChildItem(
     category: HomeCategory,
     onItemClick: (HomeCategory) -> Unit
 ) {
-    Card(
-        backgroundColor = AppTheme.colors.item,
-        modifier = Modifier
-            .width(viewWidth)
-            .padding(start = OffsetMedium, end = OffsetMedium, top = OffsetMedium)
-    ) {
+    CardItemContainer(onClick = { onItemClick(category) }) {
         Column(
             modifier = Modifier
-                .clickable { onItemClick(category) }
-                .fillMaxWidth()
+                .width(viewWidth - (OffsetMedium * 2) - (OffsetLarge * 2))
                 .wrapContentSize(align = Alignment.Center)
-                .padding(OffsetLarge)
         ) {
             Image(
                 painter = painterResource(id = category.iconResId),

@@ -31,7 +31,12 @@ fun CardItemContainer(
 
     Card(
         backgroundColor = AppTheme.colors.item,
-        modifier = Modifier.padding(start = OffsetMedium, end = OffsetMedium, top = OffsetMedium)
+        modifier = Modifier.padding(
+            start = OffsetMedium,
+            end = OffsetMedium,
+            top = OffsetMedium,
+            bottom = OffsetSmall
+        )
     ) {
         Box(modifier = Modifier
             .fillMaxSize()

@@ -124,7 +124,7 @@ fun AppBarView(
                                 modifier = Modifier
                                     .background(
                                         color = AppTheme.colors.item,
-                                        shape = RoundedCornerShape(OffsetRadiusSmall)
+                                        shape = RoundedCornerShape(OffsetRadiusMedium)
                                     )
                                     .widthIn(min = 70.dp)
                             )
