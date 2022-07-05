@@ -70,7 +70,7 @@ private fun NavigationContent(
 ) {
     val statusInsets =
         rememberInsetsPaddingValues(insets = LocalWindowInsets.current.statusBars)
-    val scrollOffset = (-(statusInsets.calculateTopPadding().value + ToolBarHeight.value)).toInt()
+    val toolbarOffset = (statusInsets.calculateTopPadding() + ToolBarHeight)
 
     val contentList = viewState.savedPager.getLazyPagingItems()
     val listState = if (contentList.itemCount > 0) viewState.listState else LazyListState()
@@ -83,7 +83,7 @@ private fun NavigationContent(
     LaunchedEffect(listState.firstVisibleItemIndex) {
         if (upsetIndex.value) {
             val index = listState.firstVisibleItemIndex
-            tabState.scrollToItem(index, scrollOffset)
+            tabState.scrollToItem(index)
             currentIndex.value = index
         } else {
             upsetIndex.value = true
@@ -91,23 +91,23 @@ private fun NavigationContent(
     }
 
     UiStatusListPage(loadState = contentList.loadState, retry = { contentList.retry() }) {
-        Row(Modifier.fillMaxSize()) {
+        Row(
+            Modifier
+                .fillMaxSize()
+                .padding(top = toolbarOffset)
+        ) {
             LazyColumn(modifier = Modifier.weight(0.32f), tabState, content = {
-                item { HeaderSpacer() }
-
                 itemsIndexed(contentList) { index, item ->
                     item ?: return@itemsIndexed
                     NavigationTabItem(currentIndex.value == index, item = item, tabClick = {
                         currentIndex.value = index
                         upsetIndex.value = false
-                        coroutine.launch { listState.scrollToItem(index, scrollOffset) }
+                        coroutine.launch { listState.scrollToItem(index) }
                     })
                 }
             })
 
             LazyColumn(modifier = Modifier.weight(0.68f), listState, content = {
-                item { HeaderSpacer() }
-
                 itemsIndexed(contentList) { _, item ->
                     item ?: return@itemsIndexed
                     NavigationContentItem(item = item, itemClick = itemClick)
