@@ -3,8 +3,12 @@
  * @author jv.lee
  * @date 2022/3/18
  */
+@file:OptIn(ExperimentalFoundationApi::class)
+
 package com.lee.playcompose.base.extensions
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.gestures.LocalOverScrollConfiguration
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
@@ -23,14 +27,21 @@ private fun noLocalProvidedFor(name: String): Nothing {
 }
 
 @Composable
-fun FragmentActivity.AppActivityProvider(content: @Composable () -> Unit) {
+fun FragmentActivity.ProviderActivity(content: @Composable () -> Unit) {
     CompositionLocalProvider(LocalActivity provides this) {
         content()
     }
 }
 
 @Composable
-fun AppDensityProvider(width: Float = 360f, content: @Composable () -> Unit) {
+fun ProviderOverScroll(content: @Composable () -> Unit) {
+    CompositionLocalProvider(LocalOverScrollConfiguration provides null) {
+        content()
+    }
+}
+
+@Composable
+fun ProviderDensity(width: Float = 360f, content: @Composable () -> Unit) {
     val fontScale = LocalDensity.current.fontScale
     val displayMetrics = LocalContext.current.resources.displayMetrics
     val widthPixels = displayMetrics.widthPixels
