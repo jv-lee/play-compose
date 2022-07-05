@@ -26,7 +26,7 @@ fun NavGraphBuilder.tabComposable(
     composable(
         route = route, arguments, deepLinks, content = content,
         // 打开页面退出动画
-        exitTransition = { fadeOut(targetAlpha = 1f) },
+//        exitTransition = { fadeOut(targetAlpha = 1f) },
     )
 }
 
