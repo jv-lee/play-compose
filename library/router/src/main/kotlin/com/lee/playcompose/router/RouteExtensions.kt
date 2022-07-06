@@ -10,6 +10,7 @@ import android.os.Parcelable
 import androidx.compose.animation.*
 import androidx.compose.animation.core.VisibilityThreshold
 import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.IntOffset
 import androidx.navigation.*
@@ -25,8 +26,34 @@ fun NavGraphBuilder.tabComposable(
 ) {
     composable(
         route = route, arguments, deepLinks, content = content,
-        // 打开页面退出动画
-//        exitTransition = { fadeOut(targetAlpha = 1f) },
+//        // 打开页面进入动画
+//        enterTransition = {
+//            slideInHorizontally(
+//                initialOffsetX = { fullWidth -> fullWidth },
+//                animationSpec = tween(300)
+//            )
+//        },
+//        // 打开页面退出动画
+//        exitTransition = {
+//            slideOutHorizontally(
+//                targetOffsetX = { fullWidth -> -fullWidth },
+//                animationSpec = tween(300)
+//            )
+//        },
+//        // 关闭页面进入动画
+//        popEnterTransition = {
+//            slideInHorizontally(
+//                initialOffsetX = { fullWidth -> -fullWidth },
+//                animationSpec = tween(300)
+//            )
+//        },
+//        // 关闭页面退出动画
+//        popExitTransition = {
+//            slideOutHorizontally(
+//                targetOffsetX = { fullWidth -> fullWidth },
+//                animationSpec = tween(300)
+//            )
+//        },
     )
 }
 
@@ -37,31 +64,36 @@ fun NavGraphBuilder.sideComposable(
     deepLinks: List<NavDeepLink> = emptyList(),
     content: @Composable AnimatedVisibilityScope.(NavBackStackEntry) -> Unit
 ) {
-    composable(route = route, arguments, deepLinks, content = content,
+    composable(
+        route = route, arguments, deepLinks, content = content,
         // 打开页面进入动画
         enterTransition = {
-            slideInHorizontally(initialOffsetX = { it * 2 })
+            slideInHorizontally(
+                initialOffsetX = { fullWidth -> fullWidth },
+                animationSpec = tween(300)
+            )
         },
         // 打开页面退出动画
         exitTransition = {
             slideOutHorizontally(
-                spring(
-                    stiffness = 25F,
-                    visibilityThreshold = IntOffset.VisibilityThreshold
-                ), targetOffsetX = { -it })
+                targetOffsetX = { fullWidth -> -fullWidth },
+                animationSpec = tween(300)
+            )
         },
         // 关闭页面进入动画
         popEnterTransition = {
-            slideInHorizontally(initialOffsetX = { -it })
+            slideInHorizontally(
+                initialOffsetX = { fullWidth -> -fullWidth },
+                animationSpec = tween(300)
+            )
         },
         // 关闭页面退出动画
         popExitTransition = {
             slideOutHorizontally(
-                spring(
-                    stiffness = 50f,
-                    visibilityThreshold = IntOffset.VisibilityThreshold
-                ), targetOffsetX = { it * 2 })
-        }
+                targetOffsetX = { fullWidth -> fullWidth },
+                animationSpec = tween(300)
+            )
+        },
     )
 }
 
