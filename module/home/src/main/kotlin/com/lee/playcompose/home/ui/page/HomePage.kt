@@ -17,10 +17,10 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.paging.compose.itemsIndexed
-import coil.annotation.ExperimentalCoilApi
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.lee.playcompose.base.bus.ChannelBus
+import com.lee.playcompose.base.extensions.LocalNavController
 import com.lee.playcompose.base.extensions.ScreenSizeChange
 import com.lee.playcompose.common.entity.Banner
 import com.lee.playcompose.common.entity.Content
@@ -49,10 +49,9 @@ import com.lee.playcompose.common.R as CR
  * @author jv.lee
  * @date 2022/2/24
  */
-@ExperimentalCoilApi
 @Composable
 fun HomePage(
-    navController: NavController,
+    navController: NavController = LocalNavController.current,
     viewModel: HomeViewModel = viewModel()
 ) {
     val viewState = viewModel.viewStates
@@ -104,7 +103,6 @@ fun HomePage(
     }
 }
 
-@ExperimentalCoilApi
 @Composable
 private fun HomeContentList(
     viewState: HomeViewState,

@@ -1,16 +1,6 @@
 package com.lee.playcompose.route
 
-import android.app.Activity
-import androidx.compose.animation.core.VisibilityThreshold
-import androidx.compose.animation.core.spring
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.ui.unit.IntOffset
-import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import coil.annotation.ExperimentalCoilApi
-import com.google.accompanist.navigation.animation.composable
 import com.lee.playcompose.account.ui.page.LoginPage
 import com.lee.playcompose.account.ui.page.RegisterPage
 import com.lee.playcompose.base.net.HttpManager
@@ -39,128 +29,125 @@ import com.lee.playcompose.todo.ui.page.TodoPage
  * @author jv.lee
  * @date 2022/3/16
  */
-@OptIn(ExperimentalCoilApi::class)
-fun Activity.appRouteManifest(navGraphBuilder: NavGraphBuilder, navController: NavController) {
-    navGraphBuilder.apply {
 
-        // module:home
-        RoutePage.Home.run {
-            tabComposable(RoutePage.Home.route) {
-                HomePage(navController = navController)
-            }
+fun NavGraphBuilder.appRouteManifest() {
+    // module:home
+    RoutePage.Home.run {
+        tabComposable(RoutePage.Home.route) {
+            HomePage()
         }
+    }
 
-        // module:square
-        RoutePage.Square.run {
-            tabComposable(RoutePage.Square.route) {
-                SquarePage(navController = navController)
-            }
-            sideComposable(RoutePage.Square.MyShare.route) {
-                MySharePage(navController = navController)
-            }
-            sideComposable(RoutePage.Square.CreateShare.route) {
-                CreateSharePage(navController = navController)
-            }
+    // module:square
+    RoutePage.Square.run {
+        tabComposable(RoutePage.Square.route) {
+            SquarePage()
         }
-
-        // module:system
-        RoutePage.System.run {
-            tabComposable(RoutePage.System.route) {
-                SystemPage(navController = navController)
-            }
-            sideComposable(RoutePage.System.SystemContentTab.route) {
-                val parentTab =
-                    WeakDataHolder.instance.getData<ParentTab>(RouteParamsKey.tabDataKey)
-                SystemContentTabPage(navController = navController, parentTab)
-            }
+        sideComposable(RoutePage.Square.MyShare.route) {
+            MySharePage()
         }
-
-        // module:me
-        RoutePage.Me.run {
-            tabComposable(RoutePage.Me.route) {
-                MePage(navController = navController)
-            }
-            sideComposable(RoutePage.Me.Coin.route) {
-                CoinPage(navController = navController)
-            }
-            sideComposable(RoutePage.Me.CoinRank.route) {
-                CoinRankPage(navController = navController)
-            }
-            sideComposable(RoutePage.Me.Collect.route) {
-                CollectPage(navController = navController)
-            }
-            sideComposable(RoutePage.Me.Settings.route) {
-                SettingsPage(navController = navController)
-            }
+        sideComposable(RoutePage.Square.CreateShare.route) {
+            CreateSharePage()
         }
+    }
 
-        // module:todoModel
-        RoutePage.Todo.run {
-            sideComposable(RoutePage.Todo.route) {
-                TodoPage(navController = navController)
-            }
-            sideComposable(RoutePage.Todo.CreateTodo.route) {
-                CreateTodoPage(navController = navController)
-            }
-            sideComposable(
-                RoutePage.Todo.CreateTodo.parseRoute(),
-                arguments = RoutePage.Todo.CreateTodo.parseArguments()
-            ) { entry ->
-                val detailsJson = entry.arguments?.getString(RouteParamsKey.todoDataKey)
-                val todoData = HttpManager.getGson().fromJson(detailsJson, TodoData::class.java)
-                CreateTodoPage(navController = navController, todoData = todoData)
-            }
+    // module:system
+    RoutePage.System.run {
+        tabComposable(RoutePage.System.route) {
+            SystemPage()
         }
-
-        // module:official
-        RoutePage.Official.run {
-            sideComposable(RoutePage.Official.route) {
-                OfficialPage(navController = navController)
-            }
+        sideComposable(RoutePage.System.SystemContentTab.route) {
+            val parentTab =
+                WeakDataHolder.instance.getData<ParentTab>(RouteParamsKey.tabDataKey)
+            SystemContentTabPage(parentTab)
         }
+    }
 
-        // module:project
-        RoutePage.Project.run {
-            sideComposable(RoutePage.Project.route) {
-                ProjectPage(navController = navController)
-            }
+    // module:me
+    RoutePage.Me.run {
+        tabComposable(RoutePage.Me.route) {
+            MePage()
         }
-
-        // module:search
-        RoutePage.Search.run {
-            sideComposable(RoutePage.Search.route) {
-                SearchPage(navController = navController)
-            }
-            sideComposable(
-                route = RoutePage.Search.SearchResult.parseRoute(),
-                arguments = RoutePage.Search.SearchResult.parseArguments()
-            ) { entry ->
-                val searchKey = entry.arguments?.getString(RouteParamsKey.searchKey)
-                SearchResultPage(navController = navController, searchKey = searchKey ?: "")
-            }
+        sideComposable(RoutePage.Me.Coin.route) {
+            CoinPage()
         }
-
-        // module:details
-        RoutePage.Details.run {
-            sideComposable(
-                route = RoutePage.Details.parseRoute(),
-                arguments = RoutePage.Details.parseArguments()
-            ) { entry ->
-                val detailsJson = entry.arguments?.getString(RouteParamsKey.detailsDataKey)
-                val details =
-                    HttpManager.getGson().fromJson(detailsJson, DetailsData::class.java)
-                DetailsPage(navController = navController, details)
-            }
+        sideComposable(RoutePage.Me.CoinRank.route) {
+            CoinRankPage()
         }
+        sideComposable(RoutePage.Me.Collect.route) {
+            CollectPage()
+        }
+        sideComposable(RoutePage.Me.Settings.route) {
+            SettingsPage()
+        }
+    }
 
-        // module:account
-        RoutePage.Account.run {
-            sideComposable(route = RoutePage.Account.Login.route) {
-                LoginPage(navController = navController)
-            }
-            sideComposable(route = RoutePage.Account.Register.route) {
-                RegisterPage(navController = navController)
-            }
+    // module:todoModel
+    RoutePage.Todo.run {
+        sideComposable(RoutePage.Todo.route) {
+            TodoPage()
+        }
+        sideComposable(RoutePage.Todo.CreateTodo.route) {
+            CreateTodoPage()
+        }
+        sideComposable(
+            RoutePage.Todo.CreateTodo.parseRoute(),
+            arguments = RoutePage.Todo.CreateTodo.parseArguments()
+        ) { entry ->
+            val detailsJson = entry.arguments?.getString(RouteParamsKey.todoDataKey)
+            val todoData = HttpManager.getGson().fromJson(detailsJson, TodoData::class.java)
+            CreateTodoPage(todoData = todoData)
+        }
+    }
+
+    // module:official
+    RoutePage.Official.run {
+        sideComposable(RoutePage.Official.route) {
+            OfficialPage()
+        }
+    }
+
+    // module:project
+    RoutePage.Project.run {
+        sideComposable(RoutePage.Project.route) {
+            ProjectPage()
+        }
+    }
+
+    // module:search
+    RoutePage.Search.run {
+        sideComposable(RoutePage.Search.route) {
+            SearchPage()
+        }
+        sideComposable(
+            route = RoutePage.Search.SearchResult.parseRoute(),
+            arguments = RoutePage.Search.SearchResult.parseArguments()
+        ) { entry ->
+            val searchKey = entry.arguments?.getString(RouteParamsKey.searchKey)
+            SearchResultPage(searchKey = searchKey ?: "")
+        }
+    }
+
+    // module:details
+    RoutePage.Details.run {
+        sideComposable(
+            route = RoutePage.Details.parseRoute(),
+            arguments = RoutePage.Details.parseArguments()
+        ) { entry ->
+            val detailsJson = entry.arguments?.getString(RouteParamsKey.detailsDataKey)
+            val details =
+                HttpManager.getGson().fromJson(detailsJson, DetailsData::class.java)
+            DetailsPage(details)
+        }
+    }
+
+    // module:account
+    RoutePage.Account.run {
+        sideComposable(route = RoutePage.Account.Login.route) {
+            LoginPage()
+        }
+        sideComposable(route = RoutePage.Account.Register.route) {
+            RegisterPage()
         }
     }
 }

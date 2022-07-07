@@ -1,6 +1,5 @@
 package com.lee.playcompose.details.ui.page
 
-import android.app.Activity
 import android.content.Context
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -15,6 +14,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.just.agentweb.AgentWeb
 import com.lee.playcompose.base.extensions.LocalActivity
+import com.lee.playcompose.base.extensions.LocalNavController
 import com.lee.playcompose.base.utils.ShareUtil
 import com.lee.playcompose.common.entity.DetailsData
 import com.lee.playcompose.common.extensions.bindLifecycle
@@ -37,9 +37,9 @@ import com.lee.playcompose.common.R as CR
  * @date 2022/2/24
  */
 @Composable
-fun Activity.DetailsPage(
-    navController: NavController,
+fun DetailsPage(
     details: DetailsData,
+    navController: NavController = LocalNavController.current,
     viewModel: DetailsViewModel = viewModel(
         factory = DetailsViewModel.CreateFactory(details)
     )
@@ -85,7 +85,8 @@ fun Activity.DetailsPage(
 }
 
 @Composable
-private fun Activity.WebView(details: DetailsData) {
+private fun WebView(details: DetailsData) {
+    val activity = LocalActivity.current
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     AndroidView(factory = { context: Context ->
         FrameLayout(context).apply {
@@ -94,7 +95,7 @@ private fun Activity.WebView(details: DetailsData) {
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
             post {
-                AgentWeb.with(this@WebView)
+                AgentWeb.with(activity)
                     .setAgentWebParent(this, FrameLayout.LayoutParams(-1, -1))
                     .useDefaultIndicator(CR.color.colorThemeAccent)
                     .createAgentWeb()

@@ -10,6 +10,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
+import com.lee.playcompose.base.extensions.LocalNavController
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.widget.AppBarViewContainer
 import com.lee.playcompose.common.ui.widget.IndicatorAdaptiveTabRow
@@ -25,7 +26,10 @@ import kotlinx.coroutines.launch
  * @date 2022/3/11
  */
 @Composable
-fun OfficialPage(navController: NavController, viewModel: OfficialViewModel = viewModel()) {
+fun OfficialPage(
+    navController: NavController = LocalNavController.current,
+    viewModel: OfficialViewModel = viewModel()
+) {
     val coroutine = rememberCoroutineScope()
     val pagerState = rememberPagerState()
 

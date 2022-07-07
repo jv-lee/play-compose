@@ -25,10 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.lee.playcompose.base.extensions.LocalActivity
-import com.lee.playcompose.base.extensions.onTap
-import com.lee.playcompose.base.extensions.rememberImePaddingValue
-import com.lee.playcompose.base.extensions.setResult
+import com.lee.playcompose.base.extensions.*
 import com.lee.playcompose.common.entity.TodoData
 import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.ui.composable.AppTextField
@@ -58,8 +55,8 @@ import com.lee.playcompose.common.R as CR
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun CreateTodoPage(
-    navController: NavController,
     todoData: TodoData? = null,
+    navController: NavController = LocalNavController.current,
     viewModel: CreateTodoViewModel = viewModel(factory = CreateTodoViewModel.CreateFactory(todoData))
 ) {
     val imePadding = rememberImePaddingValue()

@@ -53,7 +53,7 @@ const val REQUEST_KEY_LOGIN = "requestKey:login"
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun LoginPage(
-    navController: NavController,
+    navController: NavController = LocalNavController.current,
     viewModel: LoginViewModel = viewModel(),
     accountViewModel: AccountViewModel = activityViewModel()
 ) {

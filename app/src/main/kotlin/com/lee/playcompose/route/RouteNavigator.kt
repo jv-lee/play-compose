@@ -2,7 +2,6 @@ package com.lee.playcompose.route
 
 import android.app.Activity
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.FastOutLinearInEasing
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
@@ -30,16 +29,15 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
-import coil.annotation.ExperimentalCoilApi
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
-import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.lee.playcompose.BuildConfig
 import com.lee.playcompose.R
 import com.lee.playcompose.base.bus.ChannelBus
 import com.lee.playcompose.base.bus.ChannelBus.Companion.post
 import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.base.extensions.LocalActivity
+import com.lee.playcompose.base.extensions.LocalNavController
 import com.lee.playcompose.common.entity.LoginEvent
 import com.lee.playcompose.common.entity.NavigationSelectEvent
 import com.lee.playcompose.common.extensions.toast
@@ -61,13 +59,11 @@ import com.lee.playcompose.home.R as HR
  * @author jv.lee
  * @date 2022/2/24
  */
-@OptIn(ExperimentalCoilApi::class)
-@ExperimentalAnimationApi
 @Composable
 fun Activity.RouteNavigator() {
     val activity = LocalActivity.current
     val lifecycle = LocalLifecycleOwner.current.lifecycle
-    val navController = rememberAnimatedNavController()
+    val navController = LocalNavController.current
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
@@ -90,12 +86,13 @@ fun Activity.RouteNavigator() {
             .padding(rememberInsetsPaddingValues(insets = LocalWindowInsets.current.navigationBars))
             .background(AppTheme.colors.background)
     ) {
+        // 内容路由
         SimpleAnimatedNavHost(
             navController = navController,
-            startDestination = MainTab.Home.route
-        ) {
-            appRouteManifest(this, navController)
-        }
+            startDestination = MainTab.Home.route,
+            builder = { appRouteManifest() })
+
+        // 首页导航navigationBar
         CheckNavigation(currentDestination?.route) { hasClick ->
             BottomNavigation(backgroundColor = AppTheme.colors.item, elevation = 3.dp) {
                 tabItems.forEachIndexed { _, item ->

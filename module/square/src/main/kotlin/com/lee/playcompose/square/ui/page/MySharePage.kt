@@ -8,6 +8,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.paging.compose.itemsIndexed
+import com.lee.playcompose.base.extensions.LocalNavController
 import com.lee.playcompose.base.extensions.forResult
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.extensions.toast
@@ -31,7 +32,10 @@ const val REQUEST_KEY_SHARE_REFRESH = "requestKey:share_refresh"
  * @date 2022/3/16
  */
 @Composable
-fun MySharePage(navController: NavController, viewModel: MyShareViewModel = viewModel()) {
+fun MySharePage(
+    navController: NavController = LocalNavController.current,
+    viewModel: MyShareViewModel = viewModel()
+) {
     val viewState = viewModel.viewStates
     val contentList = viewState.savedPager.getLazyPagingItems()
     val slidingPaneState by rememberSlidingPaneState()

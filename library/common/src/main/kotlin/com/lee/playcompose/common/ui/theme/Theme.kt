@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentActivity
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.lee.playcompose.base.extensions.ProviderActivity
+import com.lee.playcompose.base.extensions.ProviderNavController
 import com.lee.playcompose.base.extensions.ProviderOverScroll
 import com.lee.playcompose.base.extensions.activityViewModel
 import com.lee.playcompose.common.viewmodel.ThemeViewModel
@@ -146,13 +147,15 @@ fun FragmentActivity.PlayComposeTheme(
 
     CompositionLocalProvider(LocalAppColors provides appColors) {
         ProviderActivity {
-            ProviderOverScroll {
-                ProvideWindowInsets {
-                    MaterialTheme(
-                        typography = typography,
-                        shapes = Shapes,
-                        content = content
-                    )
+            ProviderNavController {
+                ProviderOverScroll {
+                    ProvideWindowInsets {
+                        MaterialTheme(
+                            typography = typography,
+                            shapes = Shapes,
+                            content = content
+                        )
+                    }
                 }
             }
         }

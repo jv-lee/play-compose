@@ -19,6 +19,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.base.extensions.LocalActivity
+import com.lee.playcompose.base.extensions.LocalNavController
 import com.lee.playcompose.common.entity.AccountViewState
 import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.ui.composable.ProfileItem
@@ -38,7 +39,7 @@ import com.lee.playcompose.common.R as CR
  */
 @Composable
 fun MePage(
-    navController: NavController,
+    navController: NavController = LocalNavController.current,
     viewModel: MeViewModel = viewModel()
 ) {
     val accountViewState = viewModel.accountService.getAccountViewStates(LocalActivity.current)

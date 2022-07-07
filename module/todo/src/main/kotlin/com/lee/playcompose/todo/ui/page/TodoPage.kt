@@ -17,6 +17,7 @@ import androidx.navigation.NavController
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
+import com.lee.playcompose.base.extensions.LocalNavController
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.widget.ActionMode
@@ -37,7 +38,10 @@ import kotlinx.coroutines.launch
  * @date 2022/3/25
  */
 @Composable
-fun TodoPage(navController: NavController, viewModel: TodoViewModel = viewModel()) {
+fun TodoPage(
+    navController: NavController = LocalNavController.current,
+    viewModel: TodoViewModel = viewModel()
+) {
     val coroutine = rememberCoroutineScope()
     val pagerState = rememberPagerState()
     val callbackHandler by rememberCallbackHandler(lifecycle = LocalLifecycleOwner.current.lifecycle)

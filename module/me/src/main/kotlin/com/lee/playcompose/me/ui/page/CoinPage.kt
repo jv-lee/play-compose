@@ -26,6 +26,7 @@ import androidx.paging.compose.itemsIndexed
 import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.lee.playcompose.base.extensions.LocalActivity
+import com.lee.playcompose.base.extensions.LocalNavController
 import com.lee.playcompose.base.extensions.OnLifecycleEvent
 import com.lee.playcompose.base.extensions.activityViewModel
 import com.lee.playcompose.common.entity.AccountViewState
@@ -49,7 +50,7 @@ import com.lee.playcompose.common.R as CR
  */
 @Composable
 fun CoinPage(
-    navController: NavController,
+    navController: NavController = LocalNavController.current,
     viewModel: CoinViewModel = viewModel(),
     themeViewModel: ThemeViewModel = activityViewModel(),
     systemUiController: SystemUiController = rememberSystemUiController()

@@ -16,6 +16,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
+import com.lee.playcompose.base.extensions.LocalNavController
 import com.lee.playcompose.common.entity.CoinRank
 import com.lee.playcompose.common.ui.theme.*
 import com.lee.playcompose.common.ui.widget.ActionMode
@@ -33,7 +34,10 @@ import com.lee.playcompose.router.navigateArgs
  * @date 2022/3/25
  */
 @Composable
-fun CoinRankPage(navController: NavController, viewModel: CoinRankViewModel = viewModel()) {
+fun CoinRankPage(
+    navController: NavController = LocalNavController.current,
+    viewModel: CoinRankViewModel = viewModel()
+) {
     val viewState = viewModel.viewStates
 
     AppBarViewContainer(title = stringResource(id = R.string.coin_rank_title),

@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.lee.playcompose.base.extensions.LocalActivity
+import com.lee.playcompose.base.extensions.LocalNavController
 import com.lee.playcompose.base.extensions.activityViewModel
 import com.lee.playcompose.common.entity.AccountViewEvent
 import com.lee.playcompose.common.extensions.toast
@@ -37,7 +38,7 @@ import com.lee.playcompose.common.R as CR
  */
 @Composable
 fun SettingsPage(
-    navController: NavController,
+    navController: NavController = LocalNavController.current,
     viewModel: SettingsViewModel = viewModel(),
     themeViewModel: ThemeViewModel = activityViewModel()
 ) {

@@ -8,6 +8,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
+import com.lee.playcompose.base.extensions.LocalNavController
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.extensions.transformDetails
 import com.lee.playcompose.common.ui.composable.ContentItem
@@ -27,8 +28,8 @@ import com.lee.playcompose.search.viewmodel.SearchResultViewState
  */
 @Composable
 fun SearchResultPage(
-    navController: NavController,
     searchKey: String,
+    navController: NavController  = LocalNavController.current,
     viewModel: SearchResultViewModel = viewModel(
         factory = SearchResultViewModel.CreateFactory(searchKey)
     )

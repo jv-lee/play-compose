@@ -9,6 +9,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.paging.compose.itemsIndexed
+import com.lee.playcompose.base.extensions.LocalNavController
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.extensions.transformDetails
@@ -31,7 +32,10 @@ import com.lee.playcompose.router.navigateArgs
  * @date 2022/3/25
  */
 @Composable
-fun CollectPage(navController: NavController, viewModel: CollectViewModel = viewModel()) {
+fun CollectPage(
+    navController: NavController = LocalNavController.current,
+    viewModel: CollectViewModel = viewModel()
+) {
     val viewState = viewModel.viewStates
     val slidingPaneState by rememberSlidingPaneState()
 

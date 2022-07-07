@@ -13,6 +13,7 @@ import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.lee.playcompose.base.bus.ChannelBus
 import com.lee.playcompose.base.extensions.LocalActivity
+import com.lee.playcompose.base.extensions.LocalNavController
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.entity.NavigationSelectEvent
 import com.lee.playcompose.common.extensions.transformDetails
@@ -37,7 +38,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
  */
 @Composable
 fun SquarePage(
-    navController: NavController,
+    navController: NavController = LocalNavController.current,
     viewModel: SquareViewModel = viewModel()
 ) {
     val viewState = viewModel.viewStates

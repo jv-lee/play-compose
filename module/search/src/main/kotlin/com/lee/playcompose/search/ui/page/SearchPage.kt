@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.google.accompanist.flowlayout.FlowRow
+import com.lee.playcompose.base.extensions.LocalNavController
 import com.lee.playcompose.base.extensions.onTap
 import com.lee.playcompose.common.entity.SearchHistory
 import com.lee.playcompose.common.ui.composable.AppTextField
@@ -47,7 +48,7 @@ import com.lee.playcompose.search.viewmodel.SearchViewState
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SearchPage(
-    navController: NavController,
+    navController: NavController = LocalNavController.current,
     viewModel: SearchViewModel = viewModel()
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current

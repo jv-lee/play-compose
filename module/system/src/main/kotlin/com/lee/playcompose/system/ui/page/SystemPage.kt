@@ -14,6 +14,7 @@ import androidx.navigation.NavController
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
+import com.lee.playcompose.base.extensions.LocalNavController
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.theme.FontSizeMedium
 import com.lee.playcompose.common.ui.theme.OffsetLarge
@@ -32,7 +33,7 @@ import kotlinx.coroutines.launch
  * @date 2022/2/24
  */
 @Composable
-fun SystemPage(navController: NavController) {
+fun SystemPage(navController: NavController = LocalNavController.current) {
     val pagerState = rememberPagerState()
 
     // double click close app.

@@ -48,7 +48,7 @@ import com.lee.playcompose.common.ui.theme.OffsetRadiusMedium
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun RegisterPage(
-    navController: NavController,
+    navController: NavController = LocalNavController.current,
     viewModel: RegisterViewModel = viewModel(),
     accountViewModel: AccountViewModel = activityViewModel()
 ) {

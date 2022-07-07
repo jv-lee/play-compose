@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.lee.playcompose.base.extensions.LocalNavController
 import com.lee.playcompose.base.extensions.onTap
 import com.lee.playcompose.base.extensions.setResult
 import com.lee.playcompose.common.extensions.toast
@@ -40,7 +41,10 @@ import com.lee.playcompose.square.viewmodel.CreateShareViewState
  */
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun CreateSharePage(navController: NavController, viewModel: CreateShareViewModel = viewModel()) {
+fun CreateSharePage(
+    navController: NavController = LocalNavController.current,
+    viewModel: CreateShareViewModel = viewModel()
+) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val viewState = viewModel.viewStates
     val shareSuccess = stringResource(id = R.string.share_success)

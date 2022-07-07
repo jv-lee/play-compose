@@ -16,19 +16,32 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
 import androidx.fragment.app.FragmentActivity
-
-
-val LocalActivity = staticCompositionLocalOf<FragmentActivity> {
-    noLocalProvidedFor("LocalActivity")
-}
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 
 private fun noLocalProvidedFor(name: String): Nothing {
     error("CompositionLocal $name not present")
 }
 
+val LocalActivity = staticCompositionLocalOf<FragmentActivity> {
+    noLocalProvidedFor("LocalActivity")
+}
+
+val LocalNavController = staticCompositionLocalOf<NavHostController> {
+    noLocalProvidedFor("LocalNavController")
+}
+
 @Composable
 fun FragmentActivity.ProviderActivity(content: @Composable () -> Unit) {
     CompositionLocalProvider(LocalActivity provides this) {
+        content()
+    }
+}
+
+@Composable
+fun ProviderNavController(content: @Composable () -> Unit) {
+    CompositionLocalProvider(LocalNavController provides rememberAnimatedNavController()) {
         content()
     }
 }

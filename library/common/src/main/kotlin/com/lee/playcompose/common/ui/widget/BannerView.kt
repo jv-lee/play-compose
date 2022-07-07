@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalCoilApi::class)
+
 package com.lee.playcompose.common.ui.widget
 
 import androidx.compose.foundation.Image
@@ -36,7 +38,6 @@ import kotlinx.coroutines.delay
  * @author jv.lee
  * @date 2022/3/2
  */
-@ExperimentalCoilApi
 @Composable
 fun <T : Any> BannerView(
     modifier: Modifier = Modifier,
