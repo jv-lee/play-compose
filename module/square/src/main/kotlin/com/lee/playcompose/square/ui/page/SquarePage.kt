@@ -1,12 +1,9 @@
 package com.lee.playcompose.square.ui.page
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -41,7 +38,6 @@ import kotlinx.coroutines.flow.receiveAsFlow
 @Composable
 fun SquarePage(
     navController: NavController,
-    paddingValues: PaddingValues,
     viewModel: SquareViewModel = viewModel()
 ) {
     val viewState = viewModel.viewStates
@@ -59,7 +55,7 @@ fun SquarePage(
     // double click close app.
     RouteBackHandler()
 
-    Box(modifier = Modifier.padding(paddingValues)) {
+    Box {
         // content
         SquareContentList(viewState = viewState, onContentItemClick = {
             navController.navigateArgs(RoutePage.Details.route, it.transformDetails())
@@ -94,6 +90,7 @@ private fun SquareContentList(
     RefreshList(
         lazyPagingItems = contentList,
         listState = listState,
+        navigationPadding = true,
         indicatorPadding = rememberInsetsPaddingValues(
             insets = LocalWindowInsets.current.statusBars,
             applyTop = true,

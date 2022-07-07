@@ -17,7 +17,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
-import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -37,8 +36,6 @@ import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.lee.playcompose.BuildConfig
 import com.lee.playcompose.R
-import com.lee.playcompose.common.R as CR
-import com.lee.playcompose.home.R as HR
 import com.lee.playcompose.base.bus.ChannelBus
 import com.lee.playcompose.base.bus.ChannelBus.Companion.post
 import com.lee.playcompose.base.core.ApplicationExtensions.app
@@ -56,6 +53,8 @@ import com.lee.playcompose.service.AccountService
 import com.lee.playcompose.service.helper.ModuleService
 import com.lee.playcompose.system.ui.theme.NavigationTabHeight
 import kotlinx.coroutines.flow.receiveAsFlow
+import com.lee.playcompose.common.R as CR
+import com.lee.playcompose.home.R as HR
 
 /**
  * app路由管理
@@ -86,36 +85,35 @@ fun Activity.RouteNavigator() {
         }
     }
 
-    Scaffold(
-        modifier = Modifier.padding(rememberInsetsPaddingValues(insets = LocalWindowInsets.current.navigationBars)),
-        backgroundColor = AppTheme.colors.background,
-        bottomBar = {
-            CheckNavigation(currentDestination?.route) { hasClick ->
-                BottomNavigation(backgroundColor = AppTheme.colors.item, elevation = 3.dp) {
-                    tabItems.forEachIndexed { _, item ->
-                        val isSelect =
-                            currentDestination?.hierarchy?.any { it.route == item.route } == true
+    Box(
+        modifier = Modifier
+            .padding(rememberInsetsPaddingValues(insets = LocalWindowInsets.current.navigationBars))
+            .background(AppTheme.colors.background)
+    ) {
+        SimpleAnimatedNavHost(
+            navController = navController,
+            startDestination = MainTab.Home.route
+        ) {
+            appRouteManifest(this, navController)
+        }
+        CheckNavigation(currentDestination?.route) { hasClick ->
+            BottomNavigation(backgroundColor = AppTheme.colors.item, elevation = 3.dp) {
+                tabItems.forEachIndexed { _, item ->
+                    val isSelect =
+                        currentDestination?.hierarchy?.any { it.route == item.route } == true
 
-                        BottomNavigationItem(selected = isSelect, icon = {
-                            NavigationIcon(isSelected = isSelect, item = item)
-                        }, onClick = {
-                            bottomItemNavigation(hasClick, item.route, navController)
-                            ChannelBus.getChannel<NavigationSelectEvent>()?.post(
-                                NavigationSelectEvent(item.route)
-                            )
-                        })
-                    }
+                    BottomNavigationItem(selected = isSelect, icon = {
+                        NavigationIcon(isSelected = isSelect, item = item)
+                    }, onClick = {
+                        bottomItemNavigation(hasClick, item.route, navController)
+                        ChannelBus.getChannel<NavigationSelectEvent>()?.post(
+                            NavigationSelectEvent(item.route)
+                        )
+                    })
                 }
             }
-        },
-        content = { paddingValues ->
-            SimpleAnimatedNavHost(
-                navController = navController,
-                startDestination = MainTab.Home.route
-            ) {
-                appRouteManifest(this, navController, paddingValues)
-            }
-        })
+        }
+    }
 
     // 添加全局FloatingView
     FloatingView()
@@ -129,7 +127,10 @@ private fun NavigationIcon(isSelected: Boolean, item: MainTab) {
 }
 
 @Composable
-private fun CheckNavigation(route: String? = null, content: @Composable (Boolean) -> Unit = {}) {
+private fun BoxScope.CheckNavigation(
+    route: String? = null,
+    content: @Composable (Boolean) -> Unit = {}
+) {
     val visible = when (route) {
         RoutePage.Home.route, RoutePage.Square.route, RoutePage.System.route, RoutePage.Me.route -> {
             true
@@ -137,6 +138,7 @@ private fun CheckNavigation(route: String? = null, content: @Composable (Boolean
         else -> false
     }
     AnimatedVisibility(
+        modifier = Modifier.align(Alignment.BottomCenter),
         visible = visible,
         enter = slideInVertically(
             initialOffsetY = { fullHeight -> fullHeight },
@@ -149,8 +151,6 @@ private fun CheckNavigation(route: String? = null, content: @Composable (Boolean
     ) {
         content(visible)
     }
-    // 设置占位容器防止离开主页时bottomNavigation平移后内容空间多出间距拉伸滑动导致底部显示移动
-    if (!visible) Box(modifier = Modifier.height(NavigationTabHeight))
 }
 
 /**

@@ -5,6 +5,7 @@ import androidx.compose.ui.unit.sp
 
 // 全局通用组件数值
 val ToolBarHeight = 56.dp
+val NavigationBarHeight = 56.dp
 val ListStateItemHeight = 60.dp
 
 // 全局通用radius值

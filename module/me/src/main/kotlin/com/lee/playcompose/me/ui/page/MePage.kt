@@ -39,7 +39,6 @@ import com.lee.playcompose.common.R as CR
 @Composable
 fun MePage(
     navController: NavController,
-    paddingValues: PaddingValues,
     viewModel: MeViewModel = viewModel()
 ) {
     val accountViewState = viewModel.accountService.getAccountViewStates(LocalActivity.current)
@@ -48,9 +47,7 @@ fun MePage(
     RouteBackHandler()
 
     Column(
-        modifier = Modifier
-            .padding(paddingValues)
-            .fillMaxSize()
+        modifier = Modifier.fillMaxSize()
     ) {
         MeHeader(accountViewState = accountViewState, notLoginClick = {
             navController.navigateArgs(RoutePage.Account.Login.route)

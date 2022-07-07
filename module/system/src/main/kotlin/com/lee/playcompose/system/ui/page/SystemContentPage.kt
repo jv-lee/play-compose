@@ -70,6 +70,7 @@ private fun SystemContentList(
     RefreshList(
         lazyPagingItems = contentList,
         listState = listState,
+        navigationPadding = true,
         swipeEnable = false,
     ) {
         // header spacer

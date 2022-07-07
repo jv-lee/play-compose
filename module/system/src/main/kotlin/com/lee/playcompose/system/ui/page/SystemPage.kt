@@ -32,13 +32,13 @@ import kotlinx.coroutines.launch
  * @date 2022/2/24
  */
 @Composable
-fun SystemPage(navController: NavController, paddingValues: PaddingValues) {
+fun SystemPage(navController: NavController) {
     val pagerState = rememberPagerState()
 
     // double click close app.
     RouteBackHandler()
 
-    Box(modifier = Modifier.padding(paddingValues)) {
+    Box {
         // pageContent
         HorizontalPager(count = 2, state = pagerState) { page ->
             when (page) {

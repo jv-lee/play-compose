@@ -25,7 +25,6 @@ import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.entity.NavigationItem
 import com.lee.playcompose.common.entity.NavigationSelectEvent
 import com.lee.playcompose.common.extensions.transformDetails
-import com.lee.playcompose.common.ui.composable.HeaderSpacer
 import com.lee.playcompose.common.ui.theme.*
 import com.lee.playcompose.common.ui.widget.UiStatusListPage
 import com.lee.playcompose.router.RoutePage
@@ -94,7 +93,7 @@ private fun NavigationContent(
         Row(
             Modifier
                 .fillMaxSize()
-                .padding(top = toolbarOffset)
+                .padding(top = toolbarOffset, bottom = NavigationBarHeight)
         ) {
             LazyColumn(modifier = Modifier.weight(0.32f), tabState, content = {
                 itemsIndexed(contentList) { index, item ->

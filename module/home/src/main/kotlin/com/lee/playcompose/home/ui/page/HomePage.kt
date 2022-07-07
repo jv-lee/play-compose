@@ -31,7 +31,6 @@ import com.lee.playcompose.common.ui.composable.CardItemContainer
 import com.lee.playcompose.common.ui.composable.ContentItem
 import com.lee.playcompose.common.ui.composable.HeaderSpacer
 import com.lee.playcompose.common.ui.theme.AppTheme
-import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.theme.OffsetMedium
 import com.lee.playcompose.common.ui.theme.ToolBarHeight
 import com.lee.playcompose.common.ui.widget.*
@@ -54,7 +53,6 @@ import com.lee.playcompose.common.R as CR
 @Composable
 fun HomePage(
     navController: NavController,
-    paddingValues: PaddingValues,
     viewModel: HomeViewModel = viewModel()
 ) {
     val viewState = viewModel.viewStates
@@ -78,7 +76,7 @@ fun HomePage(
     // double click close app.
     RouteBackHandler()
 
-    Box(modifier = Modifier.padding(paddingValues)) {
+    Box {
         // content
         HomeContentList(
             viewState = viewState,
@@ -124,6 +122,7 @@ private fun HomeContentList(
         lazyPagingItems = contentList,
         isRefreshing = isRefreshing,
         listState = listState,
+        navigationPadding = true,
         indicatorPadding = rememberInsetsPaddingValues(
             insets = LocalWindowInsets.current.statusBars,
             applyTop = true,

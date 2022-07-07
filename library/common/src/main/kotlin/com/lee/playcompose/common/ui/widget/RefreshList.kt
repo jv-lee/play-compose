@@ -22,6 +22,7 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.lee.playcompose.base.extensions.delayState
 import com.lee.playcompose.common.R
+import com.lee.playcompose.common.ui.composable.FooterSpacer
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.theme.ListStateItemHeight
 
@@ -42,6 +43,7 @@ fun <T : Any> RefreshList(
     lazyPagingItems: LazyPagingItems<T>,
     isRefreshing: Boolean = false,
     swipeEnable: Boolean = true,
+    navigationPadding: Boolean = false,
     onRefresh: (() -> Unit) = {},
     indicatorPadding: PaddingValues = PaddingValues(0.dp),
     listState: LazyListState = rememberLazyListState(),
@@ -111,6 +113,9 @@ fun <T : Any> RefreshList(
                             }
                         }
                     }
+                }
+                if (navigationPadding) {
+                    item { FooterSpacer() }
                 }
             }
         }

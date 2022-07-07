@@ -40,24 +40,20 @@ import com.lee.playcompose.todo.ui.page.TodoPage
  * @date 2022/3/16
  */
 @OptIn(ExperimentalCoilApi::class)
-fun Activity.appRouteManifest(
-    navGraphBuilder: NavGraphBuilder,
-    navController: NavController,
-    paddingValues: PaddingValues
-) {
+fun Activity.appRouteManifest(navGraphBuilder: NavGraphBuilder, navController: NavController) {
     navGraphBuilder.apply {
 
         // module:home
         RoutePage.Home.run {
             tabComposable(RoutePage.Home.route) {
-                HomePage(navController = navController, paddingValues)
+                HomePage(navController = navController)
             }
         }
 
         // module:square
         RoutePage.Square.run {
             tabComposable(RoutePage.Square.route) {
-                SquarePage(navController = navController, paddingValues)
+                SquarePage(navController = navController)
             }
             sideComposable(RoutePage.Square.MyShare.route) {
                 MySharePage(navController = navController)
@@ -70,7 +66,7 @@ fun Activity.appRouteManifest(
         // module:system
         RoutePage.System.run {
             tabComposable(RoutePage.System.route) {
-                SystemPage(navController = navController, paddingValues)
+                SystemPage(navController = navController)
             }
             sideComposable(RoutePage.System.SystemContentTab.route) {
                 val parentTab =
@@ -82,7 +78,7 @@ fun Activity.appRouteManifest(
         // module:me
         RoutePage.Me.run {
             tabComposable(RoutePage.Me.route) {
-                MePage(navController = navController, paddingValues)
+                MePage(navController = navController)
             }
             sideComposable(RoutePage.Me.Coin.route) {
                 CoinPage(navController = navController)

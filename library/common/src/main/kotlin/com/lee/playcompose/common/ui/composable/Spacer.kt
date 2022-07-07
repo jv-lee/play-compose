@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.statusBarsPadding
+import com.lee.playcompose.common.ui.theme.NavigationBarHeight
 import com.lee.playcompose.common.ui.theme.ToolBarHeight
 
 /**
@@ -24,6 +25,14 @@ fun HeaderSpacer() {
             .statusBarsPadding()
             .height(ToolBarHeight)
     )
+}
+
+/**
+ * 通用主页底部占位组件
+ */
+@Composable
+fun FooterSpacer() {
+    Spacer(modifier = Modifier.height(NavigationBarHeight))
 }
 
 /**
