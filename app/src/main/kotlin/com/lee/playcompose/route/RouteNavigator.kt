@@ -67,11 +67,6 @@ fun Activity.RouteNavigator() {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
-    // 绑定导航选中事件:通知选中页面数据列表移动至顶部
-    LaunchedEffect(Unit) {
-        ChannelBus.bindChannel<NavigationSelectEvent>(lifecycle)
-    }
-
     // 绑定登陆事件:导航至登陆页
     LaunchedEffect(Unit) {
         ChannelBus.bindChannel<LoginEvent>(lifecycle)?.receiveAsFlow()?.collect {

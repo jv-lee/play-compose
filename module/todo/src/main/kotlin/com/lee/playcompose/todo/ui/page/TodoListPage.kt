@@ -17,9 +17,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.lee.playcompose.base.extensions.LocalNavController
 import com.lee.playcompose.base.extensions.forResult
 import com.lee.playcompose.common.entity.TodoData
 import com.lee.playcompose.common.extensions.toast
+import com.lee.playcompose.common.ui.callback.PageCallbackHandler
 import com.lee.playcompose.common.ui.composable.HorizontallySpacer
 import com.lee.playcompose.common.ui.theme.*
 import com.lee.playcompose.common.ui.widget.*
@@ -27,7 +29,6 @@ import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
 import com.lee.playcompose.todo.R
 import com.lee.playcompose.todo.ui.callback.TodoListCallback
-import com.lee.playcompose.todo.ui.callback.TodoListCallbackHandler
 import com.lee.playcompose.todo.ui.theme.*
 import com.lee.playcompose.todo.viewmodel.TodoListViewAction
 import com.lee.playcompose.todo.viewmodel.TodoListViewEvent
@@ -53,10 +54,10 @@ const val STATUS_COMPLETE = 1
  */
 @Composable
 fun TodoListPage(
-    navController: NavController,
+    navController: NavController = LocalNavController.current,
     type: Int,
     status: Int,
-    callbackHandler: TodoListCallbackHandler,
+    handler: PageCallbackHandler<TodoListCallback>,
     viewModel: TodoListViewModel = viewModel(
         key = type.toString() + status.toString(),
         factory = TodoListViewModel.CreateFactory(type, status)
@@ -72,13 +73,11 @@ fun TodoListPage(
     }
 
     // 监听多页面状态修改移除刷新联动回调
-    LaunchedEffect(Unit) {
-        callbackHandler.addCallback(object : TodoListCallback {
-            override fun refresh() {
-                contentList.refresh()
-            }
-        })
-    }
+    handler.addCallback(status.toString(), object : TodoListCallback {
+        override fun refresh() {
+            contentList.refresh()
+        }
+    })
 
     // 监听页面type变化重新加载数据
     LaunchedEffect(type) {
@@ -90,7 +89,7 @@ fun TodoListPage(
         viewModel.viewEvents.collect { event ->
             when (event) {
                 is TodoListViewEvent.RefreshTodoData -> {
-                    callbackHandler.dispatchCallback()
+                    handler.notifyAt(event.statusKey) { it.refresh() }
                 }
                 is TodoListViewEvent.RequestFailed -> {
                     slidingPaneState.closeAction()
@@ -98,7 +97,6 @@ fun TodoListPage(
                 }
                 is TodoListViewEvent.ResetSlidingState -> {
                     slidingPaneState.closeAction()
-                    event.removeCall()
                 }
             }
         }

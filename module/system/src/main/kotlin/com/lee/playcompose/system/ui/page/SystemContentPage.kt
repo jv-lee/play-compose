@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -14,11 +14,11 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.paging.compose.itemsIndexed
-import com.lee.playcompose.base.bus.ChannelBus
+import com.lee.playcompose.base.extensions.LocalNavController
 import com.lee.playcompose.base.tools.WeakDataHolder
-import com.lee.playcompose.common.entity.NavigationSelectEvent
 import com.lee.playcompose.common.entity.ParentTab
 import com.lee.playcompose.common.extensions.formHtmlLabels
+import com.lee.playcompose.common.ui.callback.PageCallbackHandler
 import com.lee.playcompose.common.ui.composable.CardItemContainer
 import com.lee.playcompose.common.ui.composable.HeaderSpacer
 import com.lee.playcompose.common.ui.theme.*
@@ -27,9 +27,12 @@ import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.RouteParamsKey
 import com.lee.playcompose.router.navigateArgs
 import com.lee.playcompose.system.R
+import com.lee.playcompose.system.ui.callback.SystemCallback
 import com.lee.playcompose.system.viewmodel.SystemContentViewModel
 import com.lee.playcompose.system.viewmodel.SystemContentViewState
-import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.launch
+
+const val systemCallbackKey = "systemCallbackKey"
 
 /**
  * 体系页第一个tab 体系内容
@@ -38,19 +41,18 @@ import kotlinx.coroutines.flow.receiveAsFlow
  */
 @Composable
 fun SystemContentPage(
-    navController: NavController,
+    handler: PageCallbackHandler<SystemCallback>,
+    navController: NavController = LocalNavController.current,
     viewModel: SystemContentViewModel = viewModel()
 ) {
+    val coroutine = rememberCoroutineScope()
     val viewState = viewModel.viewStates
 
-    LaunchedEffect(Unit) {
-        // 监听channel全局事件NavigationSelectEvent:导航点击列表移动回顶部
-        ChannelBus.getChannel<NavigationSelectEvent>()?.receiveAsFlow()?.collect { event ->
-            if (event.route == RoutePage.System.route) {
-                viewState.listState.animateScrollToItem(0)
-            }
+    handler.addCallback(systemCallbackKey, object : SystemCallback {
+        override fun tabChange() {
+            coroutine.launch { viewState.listState.animateScrollToItem(0) }
         }
-    }
+    })
 
     SystemContentList(viewState = viewState, onItemClick = {
         // tabData跳转数据暂存 to SystemContentTabPage

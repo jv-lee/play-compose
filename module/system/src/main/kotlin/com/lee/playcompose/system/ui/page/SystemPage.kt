@@ -6,25 +6,32 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavController
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
-import com.lee.playcompose.base.extensions.LocalNavController
+import com.lee.playcompose.base.bus.ChannelBus
+import com.lee.playcompose.common.entity.NavigationSelectEvent
+import com.lee.playcompose.common.ui.callback.rememberPageCallbackHandler
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.theme.FontSizeMedium
 import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.theme.ToolBarHeight
 import com.lee.playcompose.common.ui.widget.AppHeaderContainer
 import com.lee.playcompose.common.ui.widget.RouteBackHandler
+import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.system.R
+import com.lee.playcompose.system.ui.callback.SystemCallback
 import com.lee.playcompose.system.ui.theme.SystemTabHeight
 import com.lee.playcompose.system.ui.theme.SystemTabRadius
 import com.lee.playcompose.system.ui.theme.SystemTabWidth
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 /**
@@ -33,8 +40,20 @@ import kotlinx.coroutines.launch
  * @date 2022/2/24
  */
 @Composable
-fun SystemPage(navController: NavController = LocalNavController.current) {
+fun SystemPage() {
     val pagerState = rememberPagerState()
+    val handler by rememberPageCallbackHandler<SystemCallback>(LocalLifecycleOwner.current)
+
+    LaunchedEffect(Unit) {
+        // 监听channel全局事件NavigationSelectEvent:导航点击列表移动回顶部
+        ChannelBus.getChannel<NavigationSelectEvent>()?.receiveAsFlow()?.collect { event ->
+            if (event.route == RoutePage.System.route) {
+                val key = if (pagerState.currentPage == 0)
+                    systemCallbackKey else navigationCallbackKey
+                handler.notifyAt(key) { it.tabChange() }
+            }
+        }
+    }
 
     // double click close app.
     RouteBackHandler()
@@ -43,8 +62,8 @@ fun SystemPage(navController: NavController = LocalNavController.current) {
         // pageContent
         HorizontalPager(count = 2, state = pagerState) { page ->
             when (page) {
-                0 -> SystemContentPage(navController)
-                1 -> NavigationContentPage(navController)
+                0 -> SystemContentPage(handler)
+                1 -> NavigationContentPage(handler)
             }
         }
 

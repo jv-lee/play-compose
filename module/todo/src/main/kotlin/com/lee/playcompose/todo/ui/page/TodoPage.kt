@@ -5,7 +5,9 @@ import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -18,6 +20,8 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
 import com.lee.playcompose.base.extensions.LocalNavController
+import com.lee.playcompose.common.ui.callback.PageCallbackHandler
+import com.lee.playcompose.common.ui.callback.rememberPageCallbackHandler
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.widget.ActionMode
@@ -26,8 +30,7 @@ import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
 import com.lee.playcompose.todo.R
 import com.lee.playcompose.todo.model.entity.TodoType
-import com.lee.playcompose.todo.ui.callback.TodoListCallbackHandler
-import com.lee.playcompose.todo.ui.callback.rememberCallbackHandler
+import com.lee.playcompose.todo.ui.callback.TodoListCallback
 import com.lee.playcompose.todo.viewmodel.TodoViewAction
 import com.lee.playcompose.todo.viewmodel.TodoViewModel
 import kotlinx.coroutines.launch
@@ -42,9 +45,9 @@ fun TodoPage(
     navController: NavController = LocalNavController.current,
     viewModel: TodoViewModel = viewModel()
 ) {
+    val handler by rememberPageCallbackHandler<TodoListCallback>(lifecycle = LocalLifecycleOwner.current)
     val coroutine = rememberCoroutineScope()
     val pagerState = rememberPagerState()
-    val callbackHandler by rememberCallbackHandler(lifecycle = LocalLifecycleOwner.current.lifecycle)
     val viewState = viewModel.viewStates
 
     SelectTodoTypeDialog(
@@ -65,10 +68,9 @@ fun TodoPage(
         }) {
         Column(modifier = Modifier.fillMaxSize()) {
             TodoContent(
-                navController = navController,
                 type = viewState.type,
                 pagerState = pagerState,
-                callbackHandler = callbackHandler,
+                handler = handler,
                 onCreateClick = {
                     navController.navigateArgs(RoutePage.Todo.CreateTodo.route)
                 }
@@ -90,10 +92,9 @@ fun TodoPage(
 
 @Composable
 private fun ColumnScope.TodoContent(
-    navController: NavController,
     @TodoType type: Int,
     pagerState: PagerState,
-    callbackHandler: TodoListCallbackHandler,
+    handler: PageCallbackHandler<TodoListCallback>,
     onCreateClick: () -> Unit,
 ) {
     Box(
@@ -107,10 +108,9 @@ private fun ColumnScope.TodoContent(
             userScrollEnabled = false
         ) { page ->
             TodoListPage(
-                navController = navController,
                 type = type,
                 status = page,
-                callbackHandler = callbackHandler
+                handler = handler
             )
         }
 

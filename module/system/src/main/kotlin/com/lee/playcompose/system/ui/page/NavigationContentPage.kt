@@ -20,21 +20,23 @@ import androidx.paging.compose.itemsIndexed
 import com.google.accompanist.flowlayout.FlowRow
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
-import com.lee.playcompose.base.bus.ChannelBus
+import com.lee.playcompose.base.extensions.LocalNavController
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.entity.NavigationItem
-import com.lee.playcompose.common.entity.NavigationSelectEvent
 import com.lee.playcompose.common.extensions.transformDetails
+import com.lee.playcompose.common.ui.callback.PageCallbackHandler
 import com.lee.playcompose.common.ui.theme.*
 import com.lee.playcompose.common.ui.widget.UiStatusListPage
 import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
+import com.lee.playcompose.system.ui.callback.SystemCallback
 import com.lee.playcompose.system.ui.theme.NavigationTabHeight
 import com.lee.playcompose.system.ui.theme.SystemTabRadius
 import com.lee.playcompose.system.viewmodel.NavigationContentViewModel
 import com.lee.playcompose.system.viewmodel.NavigationContentViewState
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+
+const val navigationCallbackKey = "navigationCallbackKey"
 
 /**
  * 体系页第二个tab 导航内容
@@ -43,19 +45,18 @@ import kotlinx.coroutines.launch
  */
 @Composable
 fun NavigationContentPage(
-    navController: NavController,
+    handler: PageCallbackHandler<SystemCallback>,
+    navController: NavController = LocalNavController.current,
     viewModel: NavigationContentViewModel = viewModel()
 ) {
+    val coroutine = rememberCoroutineScope()
     val viewState = viewModel.viewStates
 
-    LaunchedEffect(Unit) {
-        // 监听channel全局事件NavigationSelectEvent:导航点击列表移动回顶部
-        ChannelBus.getChannel<NavigationSelectEvent>()?.receiveAsFlow()?.collect { event ->
-            if (event.route == RoutePage.System.route) {
-                viewState.listState.animateScrollToItem(0)
-            }
+    handler.addCallback(navigationCallbackKey, object : SystemCallback {
+        override fun tabChange() {
+            coroutine.launch { viewState.listState.animateScrollToItem(0) }
         }
-    }
+    })
 
     NavigationContent(viewState = viewState, itemClick = {
         navController.navigateArgs(RoutePage.Details.route, it.transformDetails())
