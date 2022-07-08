@@ -16,6 +16,7 @@ import com.lee.playcompose.splash.SplashLauncher
  */
 class MainActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        // 沉浸式状态栏 @set ProvideWindowInsets 包裹composable (PlayComposableTheme内部已使用)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
         setContent {
