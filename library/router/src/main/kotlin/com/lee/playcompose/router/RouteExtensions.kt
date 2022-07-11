@@ -9,33 +9,10 @@ import android.net.Uri
 import android.os.Parcelable
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
 import androidx.navigation.*
 import com.google.accompanist.navigation.animation.composable
 import com.lee.playcompose.base.net.HttpManager
-
-private fun enterSlide() = slideInHorizontally(
-    initialOffsetX = { fullWidth -> fullWidth },
-    animationSpec = tween(300)
-)
-
-private fun exitSlide() = slideOutHorizontally(
-    targetOffsetX = { fullWidth -> -fullWidth },
-    animationSpec = tween(300)
-)
-
-private fun popEnterSlide() = slideInHorizontally(
-    initialOffsetX = { fullWidth -> -fullWidth },
-    animationSpec = tween(300)
-)
-
-private fun popExitSlide() = slideOutHorizontally(
-    targetOffsetX = { fullWidth -> fullWidth },
-    animationSpec = tween(300)
-)
 
 @ExperimentalAnimationApi
 fun NavGraphBuilder.tabComposable(
@@ -52,7 +29,7 @@ fun NavGraphBuilder.tabComposable(
             if (tabRoutes.contains(this.targetState.destination.route)) {
                 null
             } else {
-                exitSlide()
+                exitSlideIn()
             }
         },
         // 关闭页面进入动画
@@ -60,7 +37,7 @@ fun NavGraphBuilder.tabComposable(
             if (tabRoutes.contains(this.initialState.destination.route)) {
                 null
             } else {
-                popEnterSlide()
+                popEnterSlideIn()
             }
         }
     )
@@ -76,13 +53,13 @@ fun NavGraphBuilder.sideComposable(
     composable(
         route = route, arguments, deepLinks, content = content,
         // 打开页面进入动画
-        enterTransition = { enterSlide() },
+        enterTransition = { enterSlideIn() },
         // 打开页面退出动画
-        exitTransition = { exitSlide() },
+        exitTransition = { exitSlideIn() },
         // 关闭页面进入动画
-        popEnterTransition = { popEnterSlide() },
+        popEnterTransition = { popEnterSlideIn() },
         // 关闭页面退出动画
-        popExitTransition = { popExitSlide() },
+        popExitTransition = { popExitSlideIn() },
     )
 }
 
