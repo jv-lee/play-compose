@@ -17,6 +17,26 @@ import androidx.navigation.*
 import com.google.accompanist.navigation.animation.composable
 import com.lee.playcompose.base.net.HttpManager
 
+private fun enterSlide() = slideInHorizontally(
+    initialOffsetX = { fullWidth -> fullWidth },
+    animationSpec = tween(300)
+)
+
+private fun exitSlide() = slideOutHorizontally(
+    targetOffsetX = { fullWidth -> -fullWidth },
+    animationSpec = tween(300)
+)
+
+private fun popEnterSlide() = slideInHorizontally(
+    initialOffsetX = { fullWidth -> -fullWidth },
+    animationSpec = tween(300)
+)
+
+private fun popExitSlide() = slideOutHorizontally(
+    targetOffsetX = { fullWidth -> fullWidth },
+    animationSpec = tween(300)
+)
+
 @ExperimentalAnimationApi
 fun NavGraphBuilder.tabComposable(
     route: String,
@@ -32,10 +52,7 @@ fun NavGraphBuilder.tabComposable(
             if (tabRoutes.contains(this.targetState.destination.route)) {
                 null
             } else {
-                slideOutHorizontally(
-                    targetOffsetX = { fullWidth -> -fullWidth },
-                    animationSpec = tween(300)
-                )
+                exitSlide()
             }
         },
         // 关闭页面进入动画
@@ -43,10 +60,7 @@ fun NavGraphBuilder.tabComposable(
             if (tabRoutes.contains(this.initialState.destination.route)) {
                 null
             } else {
-                slideInHorizontally(
-                    initialOffsetX = { fullWidth -> -fullWidth },
-                    animationSpec = tween(300)
-                )
+                popEnterSlide()
             }
         }
     )
@@ -62,33 +76,13 @@ fun NavGraphBuilder.sideComposable(
     composable(
         route = route, arguments, deepLinks, content = content,
         // 打开页面进入动画
-        enterTransition = {
-            slideInHorizontally(
-                initialOffsetX = { fullWidth -> fullWidth },
-                animationSpec = tween(300)
-            )
-        },
+        enterTransition = { enterSlide() },
         // 打开页面退出动画
-        exitTransition = {
-            slideOutHorizontally(
-                targetOffsetX = { fullWidth -> -fullWidth },
-                animationSpec = tween(300)
-            )
-        },
+        exitTransition = { exitSlide() },
         // 关闭页面进入动画
-        popEnterTransition = {
-            slideInHorizontally(
-                initialOffsetX = { fullWidth -> -fullWidth },
-                animationSpec = tween(300)
-            )
-        },
+        popEnterTransition = { popEnterSlide() },
         // 关闭页面退出动画
-        popExitTransition = {
-            slideOutHorizontally(
-                targetOffsetX = { fullWidth -> fullWidth },
-                animationSpec = tween(300)
-            )
-        },
+        popExitTransition = { popExitSlide() },
     )
 }
 
