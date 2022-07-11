@@ -42,6 +42,7 @@ private val tabZoomRoutes = arrayListOf(
     RoutePage.Search.route,
     RoutePage.Official.route,
     RoutePage.Project.route,
+    RoutePage.Square.CreateShare.route,
     RoutePage.System.SystemContentTab.route,
     RoutePage.Todo.route
 )
@@ -62,7 +63,9 @@ fun NavGraphBuilder.appRouteManifest() {
         themeComposable(RoutePage.Square.MyShare.route) {
             MySharePage()
         }
-        themeComposable(RoutePage.Square.CreateShare.route) {
+        themeComposable(RoutePage.Square.CreateShare.route,
+            enterTransition = { enterZoom() },
+            popExitTransition = { popExitAlphaHide() }) {
             CreateSharePage()
         }
     }
