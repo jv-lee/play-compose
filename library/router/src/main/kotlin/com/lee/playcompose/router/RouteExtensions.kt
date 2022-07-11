@@ -20,40 +20,35 @@ import com.lee.playcompose.base.net.HttpManager
 @ExperimentalAnimationApi
 fun NavGraphBuilder.tabComposable(
     route: String,
+    tabRoutes: List<String> = emptyList(),
     arguments: List<NamedNavArgument> = emptyList(),
     deepLinks: List<NavDeepLink> = emptyList(),
     content: @Composable AnimatedVisibilityScope.(NavBackStackEntry) -> Unit
 ) {
     composable(
         route = route, arguments, deepLinks, content = content,
-//        // 打开页面进入动画
-//        enterTransition = {
-//            slideInHorizontally(
-//                initialOffsetX = { fullWidth -> fullWidth },
-//                animationSpec = tween(300)
-//            )
-//        },
-//        // 打开页面退出动画
-//        exitTransition = {
-//            slideOutHorizontally(
-//                targetOffsetX = { fullWidth -> -fullWidth },
-//                animationSpec = tween(300)
-//            )
-//        },
-//        // 关闭页面进入动画
-//        popEnterTransition = {
-//            slideInHorizontally(
-//                initialOffsetX = { fullWidth -> -fullWidth },
-//                animationSpec = tween(300)
-//            )
-//        },
-//        // 关闭页面退出动画
-//        popExitTransition = {
-//            slideOutHorizontally(
-//                targetOffsetX = { fullWidth -> fullWidth },
-//                animationSpec = tween(300)
-//            )
-//        },
+        // 打开页面退出动画
+        exitTransition = {
+            if (tabRoutes.contains(this.targetState.destination.route)) {
+                null
+            } else {
+                slideOutHorizontally(
+                    targetOffsetX = { fullWidth -> -fullWidth },
+                    animationSpec = tween(300)
+                )
+            }
+        },
+        // 关闭页面进入动画
+        popEnterTransition = {
+            if (tabRoutes.contains(this.initialState.destination.route)) {
+                null
+            } else {
+                slideInHorizontally(
+                    initialOffsetX = { fullWidth -> -fullWidth },
+                    animationSpec = tween(300)
+                )
+            }
+        }
     )
 }
 

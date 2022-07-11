@@ -1,3 +1,8 @@
+/*
+ * app路由配置 (页面路由注册)
+ * @author jv.lee
+ * @date 2022/3/16
+ */
 package com.lee.playcompose.route
 
 import androidx.navigation.NavGraphBuilder
@@ -24,23 +29,24 @@ import com.lee.playcompose.system.ui.page.SystemPage
 import com.lee.playcompose.todo.ui.page.CreateTodoPage
 import com.lee.playcompose.todo.ui.page.TodoPage
 
-/**
- * app路由配置 (页面路由注册)
- * @author jv.lee
- * @date 2022/3/16
- */
+private val mainTabRoutes = arrayListOf(
+    RoutePage.Home.route,
+    RoutePage.Square.route,
+    RoutePage.System.route,
+    RoutePage.Me.route
+)
 
 fun NavGraphBuilder.appRouteManifest() {
     // module:home
     RoutePage.Home.run {
-        tabComposable(RoutePage.Home.route) {
+        tabComposable(RoutePage.Home.route, mainTabRoutes) {
             HomePage()
         }
     }
 
     // module:square
     RoutePage.Square.run {
-        tabComposable(RoutePage.Square.route) {
+        tabComposable(RoutePage.Square.route, mainTabRoutes) {
             SquarePage()
         }
         sideComposable(RoutePage.Square.MyShare.route) {
@@ -53,7 +59,7 @@ fun NavGraphBuilder.appRouteManifest() {
 
     // module:system
     RoutePage.System.run {
-        tabComposable(RoutePage.System.route) {
+        tabComposable(RoutePage.System.route, mainTabRoutes) {
             SystemPage()
         }
         sideComposable(RoutePage.System.SystemContentTab.route) {
@@ -65,7 +71,7 @@ fun NavGraphBuilder.appRouteManifest() {
 
     // module:me
     RoutePage.Me.run {
-        tabComposable(RoutePage.Me.route) {
+        tabComposable(RoutePage.Me.route, mainTabRoutes) {
             MePage()
         }
         sideComposable(RoutePage.Me.Coin.route) {
