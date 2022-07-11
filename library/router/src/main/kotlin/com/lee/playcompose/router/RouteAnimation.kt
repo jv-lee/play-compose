@@ -9,32 +9,34 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 
+private const val animationDuration = 300
+
 fun enterSlideIn() = slideInHorizontally(
     initialOffsetX = { fullWidth -> fullWidth },
-    animationSpec = tween(300)
+    animationSpec = tween(animationDuration)
 )
 
 fun exitSlideIn() = slideOutHorizontally(
     targetOffsetX = { fullWidth -> -fullWidth },
-    animationSpec = tween(300)
+    animationSpec = tween(animationDuration)
 )
 
 fun popEnterSlideIn() = slideInHorizontally(
     initialOffsetX = { fullWidth -> -fullWidth },
-    animationSpec = tween(300)
+    animationSpec = tween(animationDuration)
 )
 
 fun popExitSlideIn() = slideOutHorizontally(
     targetOffsetX = { fullWidth -> fullWidth },
-    animationSpec = tween(300)
+    animationSpec = tween(animationDuration)
 )
 
 fun exitSlideInOut() = slideOutHorizontally(
     targetOffsetX = { fullWidth -> (-(fullWidth * 0.1)).toInt() },
-    animationSpec = tween(300)
+    animationSpec = tween(animationDuration)
 )
 
 fun popEnterSlideInOut() = slideInHorizontally(
     initialOffsetX = { fullWidth -> (-(fullWidth * 0.1)).toInt() },
-    animationSpec = tween(300)
+    animationSpec = tween(animationDuration)
 )
