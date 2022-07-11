@@ -76,7 +76,10 @@ fun TodoPage(
                 }
             )
 
-            BottomNavigation(backgroundColor = AppTheme.colors.item) {
+            BottomNavigation(
+                elevation = viewState.navigationElevation,
+                backgroundColor = AppTheme.colors.item
+            ) {
                 tabItems.forEachIndexed { index, item ->
                     val isSelect = pagerState.currentPage == index
                     BottomNavigationItem(selected = isSelect, icon = {

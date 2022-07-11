@@ -1,15 +1,21 @@
 package com.lee.playcompose.todo.viewmodel
 
+import androidx.compose.material.BottomNavigationDefaults
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.lee.playcompose.base.tools.PreferencesTools
 import com.lee.playcompose.service.AccountService
 import com.lee.playcompose.service.helper.ModuleService
 import com.lee.playcompose.todo.R
 import com.lee.playcompose.todo.constants.Constants.SP_KEY_TODO_TYPE
 import com.lee.playcompose.todo.model.entity.TodoType
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /**
  * todo页面 viewModel
@@ -27,6 +33,7 @@ class TodoViewModel : ViewModel() {
 
     init {
         changePageData()
+        navigationVisible()
     }
 
     fun dispatch(action: TodoViewAction) {
@@ -59,12 +66,20 @@ class TodoViewModel : ViewModel() {
         changePageData(type)
     }
 
+    private fun navigationVisible() {
+        viewModelScope.launch {
+            delay(300)
+            viewStates = viewStates.copy(navigationElevation = BottomNavigationDefaults.Elevation)
+        }
+    }
+
 }
 
 data class TodoViewState(
     val isShowTypeDialog: Boolean = false,
     val type: Int = TodoType.DEFAULT,
-    val todoTitleRes: Int = R.string.todo_title_default
+    val todoTitleRes: Int = R.string.todo_title_default,
+    val navigationElevation: Dp = 0.dp,
 )
 
 sealed class TodoViewAction {
