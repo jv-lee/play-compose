@@ -7,11 +7,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.playcompose.base.tools.PreferencesTools
 import com.lee.playcompose.common.ui.widget.PagerSnapState
+import com.lee.playcompose.service.AccountService
+import com.lee.playcompose.service.helper.ModuleService
 import com.lee.playcompose.todo.constants.Constants.SP_KEY_TODO_TYPE
 import com.lee.playcompose.todo.model.entity.TodoType
 import com.lee.playcompose.todo.model.entity.TodoTypeData
 import com.lee.playcompose.todo.model.entity.TodoTypeWheelData
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
@@ -21,6 +22,10 @@ import kotlinx.coroutines.launch
  * @date 2022/1/2
  */
 class SelectTodoTypeViewModel : ViewModel() {
+
+    private val accountService: AccountService = ModuleService.find()
+
+    private val typeSavedKey = SP_KEY_TODO_TYPE.plus(accountService.getUserId())
 
     var viewStates by mutableStateOf(SelectTodoTypeViewState())
         private set
@@ -32,7 +37,7 @@ class SelectTodoTypeViewModel : ViewModel() {
     private fun requestTodoTypes() {
         viewModelScope.launch {
             flow {
-                val type = PreferencesTools.get(SP_KEY_TODO_TYPE, TodoType.DEFAULT)
+                val type = PreferencesTools.get(typeSavedKey, TodoType.DEFAULT)
                 val data = TodoTypeData.getTodoTypes()
                 emit(TodoTypeWheelData(type, data))
             }.collect {
