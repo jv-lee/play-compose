@@ -29,40 +29,52 @@ import com.lee.playcompose.system.ui.page.SystemPage
 import com.lee.playcompose.todo.ui.page.CreateTodoPage
 import com.lee.playcompose.todo.ui.page.TodoPage
 
-private val mainTabRoutes = arrayListOf(
+// 主页tab默认动画路由集合处理路由动画特殊处理
+private val tabDefaultRoutes = arrayListOf(
     RoutePage.Home.route,
     RoutePage.Square.route,
     RoutePage.System.route,
     RoutePage.Me.route
 )
 
+// 主页tab缩放动画路由集合处理路由动画特殊处理
+private val tabZoomRoutes = arrayListOf(
+    RoutePage.Search.route,
+    RoutePage.Official.route,
+    RoutePage.Project.route,
+    RoutePage.System.SystemContentTab.route,
+    RoutePage.Todo.route
+)
+
 fun NavGraphBuilder.appRouteManifest() {
     // module:home
     RoutePage.Home.run {
-        tabComposable(RoutePage.Home.route, mainTabRoutes) {
+        tabComposable(RoutePage.Home.route, tabDefaultRoutes, tabZoomRoutes) {
             HomePage()
         }
     }
 
     // module:square
     RoutePage.Square.run {
-        tabComposable(RoutePage.Square.route, mainTabRoutes) {
+        tabComposable(RoutePage.Square.route, tabDefaultRoutes, tabZoomRoutes) {
             SquarePage()
         }
-        sideComposable(RoutePage.Square.MyShare.route) {
+        themeComposable(RoutePage.Square.MyShare.route) {
             MySharePage()
         }
-        sideComposable(RoutePage.Square.CreateShare.route) {
+        themeComposable(RoutePage.Square.CreateShare.route) {
             CreateSharePage()
         }
     }
 
     // module:system
     RoutePage.System.run {
-        tabComposable(RoutePage.System.route, mainTabRoutes) {
+        tabComposable(RoutePage.System.route, tabDefaultRoutes, tabZoomRoutes) {
             SystemPage()
         }
-        sideComposable(RoutePage.System.SystemContentTab.route) {
+        themeComposable(RoutePage.System.SystemContentTab.route,
+            enterTransition = { enterZoom() },
+            popExitTransition = { popExitAlphaHide() }) {
             val parentTab =
                 WeakDataHolder.instance.getData<ParentTab>(RouteParamsKey.tabDataKey)
             SystemContentTabPage(parentTab)
@@ -71,32 +83,34 @@ fun NavGraphBuilder.appRouteManifest() {
 
     // module:me
     RoutePage.Me.run {
-        tabComposable(RoutePage.Me.route, mainTabRoutes) {
+        tabComposable(RoutePage.Me.route, tabDefaultRoutes, tabZoomRoutes) {
             MePage()
         }
-        sideComposable(RoutePage.Me.Coin.route) {
+        themeComposable(RoutePage.Me.Coin.route) {
             CoinPage()
         }
-        sideComposable(RoutePage.Me.CoinRank.route) {
+        themeComposable(RoutePage.Me.CoinRank.route) {
             CoinRankPage()
         }
-        sideComposable(RoutePage.Me.Collect.route) {
+        themeComposable(RoutePage.Me.Collect.route) {
             CollectPage()
         }
-        sideComposable(RoutePage.Me.Settings.route) {
+        themeComposable(RoutePage.Me.Settings.route) {
             SettingsPage()
         }
     }
 
     // module:todoModel
     RoutePage.Todo.run {
-        sideComposable(RoutePage.Todo.route) {
+        themeComposable(RoutePage.Todo.route,
+            enterTransition = { enterZoom() },
+            popExitTransition = { popExitAlphaHide() }) {
             TodoPage()
         }
-        sideComposable(RoutePage.Todo.CreateTodo.route) {
+        themeComposable(RoutePage.Todo.CreateTodo.route) {
             CreateTodoPage()
         }
-        sideComposable(
+        themeComposable(
             RoutePage.Todo.CreateTodo.parseRoute(),
             arguments = RoutePage.Todo.CreateTodo.parseArguments()
         ) { entry ->
@@ -108,24 +122,30 @@ fun NavGraphBuilder.appRouteManifest() {
 
     // module:official
     RoutePage.Official.run {
-        sideComposable(RoutePage.Official.route) {
+        themeComposable(RoutePage.Official.route,
+            enterTransition = { enterZoom() },
+            popExitTransition = { popExitAlphaHide() }) {
             OfficialPage()
         }
     }
 
     // module:project
     RoutePage.Project.run {
-        sideComposable(RoutePage.Project.route) {
+        themeComposable(RoutePage.Project.route,
+            enterTransition = { enterZoom() },
+            popExitTransition = { popExitAlphaHide() }) {
             ProjectPage()
         }
     }
 
     // module:search
     RoutePage.Search.run {
-        sideComposable(RoutePage.Search.route) {
+        themeComposable(RoutePage.Search.route,
+            enterTransition = { enterZoom() },
+            popExitTransition = { popExitAlphaHide() }) {
             SearchPage()
         }
-        sideComposable(
+        themeComposable(
             route = RoutePage.Search.SearchResult.parseRoute(),
             arguments = RoutePage.Search.SearchResult.parseArguments()
         ) { entry ->
@@ -136,7 +156,7 @@ fun NavGraphBuilder.appRouteManifest() {
 
     // module:details
     RoutePage.Details.run {
-        sideComposable(
+        themeComposable(
             route = RoutePage.Details.parseRoute(),
             arguments = RoutePage.Details.parseArguments()
         ) { entry ->
@@ -149,10 +169,10 @@ fun NavGraphBuilder.appRouteManifest() {
 
     // module:account
     RoutePage.Account.run {
-        sideComposable(route = RoutePage.Account.Login.route) {
+        themeComposable(route = RoutePage.Account.Login.route) {
             LoginPage()
         }
-        sideComposable(route = RoutePage.Account.Register.route) {
+        themeComposable(route = RoutePage.Account.Register.route) {
             RegisterPage()
         }
     }

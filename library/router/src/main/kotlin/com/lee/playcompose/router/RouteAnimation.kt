@@ -5,9 +5,8 @@
  */
 package com.lee.playcompose.router
 
+import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
 
 private const val animationDuration = 300
 
@@ -40,3 +39,11 @@ fun popEnterSlideInOut() = slideInHorizontally(
     initialOffsetX = { fullWidth -> (-(fullWidth * 0.1)).toInt() },
     animationSpec = tween(animationDuration)
 )
+
+fun enterZoom() = scaleIn(initialScale = 0.95f, animationSpec = tween(animationDuration))
+
+fun exitZoom() = scaleOut(targetScale = 1.05f, animationSpec = tween(animationDuration))
+
+fun popEnterZoom() = scaleIn(initialScale = 1.05f, animationSpec = tween(animationDuration))
+
+fun popExitAlphaHide() = fadeOut(targetAlpha = 1f, animationSpec = tween(animationDuration))

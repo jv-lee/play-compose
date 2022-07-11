@@ -7,8 +7,7 @@ package com.lee.playcompose.router
 
 import android.net.Uri
 import android.os.Parcelable
-import androidx.compose.animation.AnimatedVisibilityScope
-import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.*
 import androidx.compose.runtime.Composable
 import androidx.navigation.*
 import com.google.accompanist.navigation.animation.composable
@@ -17,7 +16,8 @@ import com.lee.playcompose.base.net.HttpManager
 @ExperimentalAnimationApi
 fun NavGraphBuilder.tabComposable(
     route: String,
-    tabRoutes: List<String> = emptyList(),
+    tabDefaultRoutes: List<String> = emptyList(),
+    tabZoomRoutes: List<String> = emptyList(),
     arguments: List<NamedNavArgument> = emptyList(),
     deepLinks: List<NavDeepLink> = emptyList(),
     content: @Composable AnimatedVisibilityScope.(NavBackStackEntry) -> Unit
@@ -26,16 +26,20 @@ fun NavGraphBuilder.tabComposable(
         route = route, arguments, deepLinks, content = content,
         // 打开页面退出动画
         exitTransition = {
-            if (tabRoutes.contains(this.targetState.destination.route)) {
+            if (tabDefaultRoutes.contains(this.targetState.destination.route)) {
                 null
+            } else if (tabZoomRoutes.contains(this.targetState.destination.route)) {
+                exitZoom()
             } else {
                 exitSlideIn()
             }
         },
         // 关闭页面进入动画
         popEnterTransition = {
-            if (tabRoutes.contains(this.initialState.destination.route)) {
+            if (tabDefaultRoutes.contains(this.initialState.destination.route)) {
                 null
+            } else if (tabZoomRoutes.contains(this.initialState.destination.route)) {
+                popEnterZoom()
             } else {
                 popEnterSlideIn()
             }
@@ -44,22 +48,26 @@ fun NavGraphBuilder.tabComposable(
 }
 
 @ExperimentalAnimationApi
-fun NavGraphBuilder.sideComposable(
+fun NavGraphBuilder.themeComposable(
     route: String,
     arguments: List<NamedNavArgument> = emptyList(),
     deepLinks: List<NavDeepLink> = emptyList(),
+    enterTransition: (AnimatedContentScope<NavBackStackEntry>.() -> EnterTransition?)? = { enterSlideIn() },
+    exitTransition: (AnimatedContentScope<NavBackStackEntry>.() -> ExitTransition?)? = { exitSlideIn() },
+    popEnterTransition: (AnimatedContentScope<NavBackStackEntry>.() -> EnterTransition?)? = { popEnterSlideIn() },
+    popExitTransition: (AnimatedContentScope<NavBackStackEntry>.() -> ExitTransition?)? = { popExitSlideIn() },
     content: @Composable AnimatedVisibilityScope.(NavBackStackEntry) -> Unit
 ) {
     composable(
         route = route, arguments, deepLinks, content = content,
         // 打开页面进入动画
-        enterTransition = { enterSlideIn() },
+        enterTransition = enterTransition,
         // 打开页面退出动画
-        exitTransition = { exitSlideIn() },
+        exitTransition = exitTransition,
         // 关闭页面进入动画
-        popEnterTransition = { popEnterSlideIn() },
+        popEnterTransition = popEnterTransition,
         // 关闭页面退出动画
-        popExitTransition = { popExitSlideIn() },
+        popExitTransition = popExitTransition,
     )
 }
 
