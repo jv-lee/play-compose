@@ -25,3 +25,9 @@ class LoginEvent
  */
 @Keep
 class ContentVisibleEvent
+
+/**
+ * 网络异常事件通知
+ */
+@Keep
+class NetworkErrorEvent

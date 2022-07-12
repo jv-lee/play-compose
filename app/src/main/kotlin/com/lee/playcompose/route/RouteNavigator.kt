@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -40,7 +41,9 @@ import com.lee.playcompose.base.extensions.LocalActivity
 import com.lee.playcompose.base.extensions.LocalNavController
 import com.lee.playcompose.common.entity.LoginEvent
 import com.lee.playcompose.common.entity.NavigationSelectEvent
+import com.lee.playcompose.common.entity.NetworkErrorEvent
 import com.lee.playcompose.common.extensions.toast
+import com.lee.playcompose.common.ui.composable.NetworkErrorAlert
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.widget.FloatingBox
 import com.lee.playcompose.common.ui.widget.ReindexType
@@ -60,7 +63,7 @@ import com.lee.playcompose.home.R as HR
  * @date 2022/2/24
  */
 @Composable
-fun Activity.RouteNavigator() {
+fun Activity.RouteNavigator(viewModel: RouteNavigatorViewModel = viewModel()) {
     val activity = LocalActivity.current
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     val navController = LocalNavController.current
@@ -73,6 +76,13 @@ fun Activity.RouteNavigator() {
             toast(resources.getString(R.string.login_token_failed))
             ModuleService.find<AccountService>().requestLogout(activity)
             navController.navigateArgs(RoutePage.Account.Login.route)
+        }
+    }
+
+    // 绑定网络错误事件:显示网络错误提示
+    LaunchedEffect(Unit) {
+        ChannelBus.bindChannel<NetworkErrorEvent>(lifecycle)?.receiveAsFlow()?.collect {
+            viewModel.dispatch(RouteNavigationViewAction.NetworkErrorAction)
         }
     }
 
@@ -107,8 +117,9 @@ fun Activity.RouteNavigator() {
         }
     }
 
-    // 添加全局FloatingView
+    // 添加全局View
     FloatingView()
+    NetworkErrorAlert(viewModel.viewStates.networkVisible)
 }
 
 @Composable
@@ -174,7 +185,7 @@ private sealed class MainTab(val route: String, val icon: Int, val selectIcon: I
 }
 
 @Composable
-private fun FloatingView() {
+private fun FloatingView(click: () -> Unit = {}) {
     if (BuildConfig.DEBUG) {
         Box(
             modifier = Modifier
@@ -193,7 +204,10 @@ private fun FloatingView() {
                 Image(
                     painter = painterResource(id = CR.mipmap.ic_launcher_round),
                     contentDescription = null,
-                    modifier = Modifier.clickable { toast(app.getString(HR.string.home_header_text)) }
+                    modifier = Modifier.clickable {
+                        toast(app.getString(HR.string.home_header_text))
+                        click()
+                    }
                 )
             }
         }

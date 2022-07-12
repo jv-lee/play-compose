@@ -9,10 +9,7 @@ import com.lee.playcompose.base.net.HttpManager
 import com.lee.playcompose.base.net.request.IRequest
 import com.lee.playcompose.base.net.request.Request
 import com.lee.playcompose.common.BuildConfig
-import com.lee.playcompose.common.interceptor.FailedInterceptor
-import com.lee.playcompose.common.interceptor.HeaderInterceptor
-import com.lee.playcompose.common.interceptor.ParameterInterceptor
-import com.lee.playcompose.common.interceptor.SaveCookieInterceptor
+import com.lee.playcompose.common.interceptor.*
 import okhttp3.logging.HttpLoggingInterceptor
 
 /**
@@ -29,6 +26,7 @@ fun HttpManager.setCommonInterceptor() {
     putInterceptor(ParameterInterceptor())
     putInterceptor(HeaderInterceptor())
     putInterceptor(SaveCookieInterceptor())
+    putInterceptor(NetworkErrorInterceptor())
 }
 
 /**
