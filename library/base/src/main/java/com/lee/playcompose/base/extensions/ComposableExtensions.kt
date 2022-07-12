@@ -7,6 +7,7 @@ package com.lee.playcompose.base.extensions
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.*
+import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.TweenSpec
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.PaddingValues
@@ -48,14 +49,46 @@ fun PaddingValues.hasBottomExpend(expend: () -> Unit, close: () -> Unit) {
  */
 @Composable
 fun FadeAnimatedVisibility(
-    visible: Boolean,
     modifier: Modifier = Modifier,
+    visible: Boolean? = null,
+    visibleState: MutableTransitionState<Boolean>? = null,
     enter: EnterTransition = fadeIn(animationSpec = TweenSpec(600)),
     exit: ExitTransition = fadeOut(animationSpec = TweenSpec(600)),
     label: String = "FadeAnimatedVisibility",
     content: @Composable() AnimatedVisibilityScope.() -> Unit
 ) {
-    AnimatedVisibility(visible, modifier, enter, exit, label, content)
+    visible?.run {
+        AnimatedVisibility(visible, modifier, enter, exit, label, content)
+    }
+
+    visibleState?.run {
+        AnimatedVisibility(visibleState, modifier, enter, exit, label, content)
+    }
+}
+
+@Composable
+fun BottomSlideAnimatedVisible(
+    modifier: Modifier = Modifier,
+    visible: Boolean? = null,
+    visibleState: MutableTransitionState<Boolean>? = null,
+    enter: EnterTransition = slideInVertically(
+        initialOffsetY = { fullHeight -> fullHeight },
+        animationSpec = TweenSpec(600)
+    ),
+    exit: ExitTransition = slideOutVertically(
+        targetOffsetY = { fullHeight -> fullHeight * 2 },
+        animationSpec = TweenSpec(600)
+    ),
+    label: String = "BottomSlideAnimatedVisibility",
+    content: @Composable() AnimatedVisibilityScope.() -> Unit
+) {
+    visible?.run {
+        AnimatedVisibility(visible, modifier, enter, exit, label, content)
+    }
+
+    visibleState?.run {
+        AnimatedVisibility(visibleState, modifier, enter, exit, label, content)
+    }
 }
 
 /**
