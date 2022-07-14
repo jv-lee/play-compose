@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.lee.playcompose.route.model.entity.MainTab
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -36,7 +37,8 @@ class RouteNavigatorViewModel : ViewModel() {
 }
 
 data class RouteNavigationViewState(
-    val networkVisible: Boolean = false
+    val networkVisible: Boolean = false,
+    val tabItems: List<MainTab> = MainTab.getMainTabs()
 )
 
 sealed class RouteNavigationViewAction {

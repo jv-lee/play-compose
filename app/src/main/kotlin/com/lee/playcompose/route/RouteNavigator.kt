@@ -48,6 +48,7 @@ import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.widget.FloatingBox
 import com.lee.playcompose.common.ui.widget.ReindexType
 import com.lee.playcompose.common.ui.widget.SimpleAnimatedNavHost
+import com.lee.playcompose.route.model.entity.MainTab
 import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
 import com.lee.playcompose.service.AccountService
@@ -100,7 +101,7 @@ fun Activity.RouteNavigator(viewModel: RouteNavigatorViewModel = viewModel()) {
         // 首页导航navigationBar
         CheckNavigation(currentDestination?.route) { hasClick ->
             BottomNavigation(backgroundColor = AppTheme.colors.item, elevation = 3.dp) {
-                tabItems.forEachIndexed { _, item ->
+                viewModel.viewStates.tabItems.forEachIndexed { _, item ->
                     val isSelect =
                         currentDestination?.hierarchy?.any { it.route == item.route } == true
 
@@ -169,19 +170,6 @@ private fun bottomItemNavigation(hasClick: Boolean, route: String, navController
             restoreState = true
         }
     }
-}
-
-private val tabItems = listOf(MainTab.Home, MainTab.Square, MainTab.System, MainTab.Me)
-
-private sealed class MainTab(val route: String, val icon: Int, val selectIcon: Int) {
-    object Home : MainTab(RoutePage.Home.route, R.drawable.vector_home, R.drawable.vector_home_fill)
-    object Square :
-        MainTab(RoutePage.Square.route, R.drawable.vector_square, R.drawable.vector_square_fill)
-
-    object System :
-        MainTab(RoutePage.System.route, R.drawable.vector_system, R.drawable.vector_system_fill)
-
-    object Me : MainTab(RoutePage.Me.route, R.drawable.vector_me, R.drawable.vector_me_fill)
 }
 
 @Composable
