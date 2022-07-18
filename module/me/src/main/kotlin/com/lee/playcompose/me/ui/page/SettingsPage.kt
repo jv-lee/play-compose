@@ -20,14 +20,13 @@ import com.lee.playcompose.common.ui.composable.ConfirmDialog
 import com.lee.playcompose.common.ui.composable.LoadingDialog
 import com.lee.playcompose.common.ui.composable.ProfileItem
 import com.lee.playcompose.common.ui.theme.OffsetMedium
-import com.lee.playcompose.common.ui.widget.AppBarViewContainer
+import com.lee.playcompose.common.ui.widget.header.AppBarViewContainer
 import com.lee.playcompose.common.viewmodel.ThemeViewAction
 import com.lee.playcompose.common.viewmodel.ThemeViewModel
 import com.lee.playcompose.me.R
 import com.lee.playcompose.me.viewmodel.SettingsViewAction
 import com.lee.playcompose.me.viewmodel.SettingsViewEvent
 import com.lee.playcompose.me.viewmodel.SettingsViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import com.lee.playcompose.common.R as CR
 

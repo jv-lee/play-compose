@@ -7,11 +7,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.lee.playcompose.base.core.ApplicationExtensions.app
-import com.lee.playcompose.base.extensions.LocalActivity
-import com.lee.playcompose.base.utils.ShareUtil
 import com.lee.playcompose.common.constants.ApiConstants
 import com.lee.playcompose.common.entity.DetailsData
-import com.lee.playcompose.common.ui.widget.ActionMode
+import com.lee.playcompose.common.ui.widget.header.ActionMode
 import com.lee.playcompose.details.R
 import com.lee.playcompose.service.MeService
 import com.lee.playcompose.service.helper.ModuleService

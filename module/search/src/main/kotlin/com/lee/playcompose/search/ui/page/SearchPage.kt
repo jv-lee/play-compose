@@ -29,7 +29,7 @@ import com.lee.playcompose.base.extensions.onTap
 import com.lee.playcompose.common.entity.SearchHistory
 import com.lee.playcompose.common.ui.composable.AppTextField
 import com.lee.playcompose.common.ui.theme.*
-import com.lee.playcompose.common.ui.widget.AppBarViewContainer
+import com.lee.playcompose.common.ui.widget.header.AppBarViewContainer
 import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
 import com.lee.playcompose.search.R

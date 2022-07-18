@@ -32,8 +32,8 @@ import com.lee.playcompose.base.extensions.activityViewModel
 import com.lee.playcompose.common.entity.AccountViewState
 import com.lee.playcompose.common.entity.CoinRecord
 import com.lee.playcompose.common.ui.theme.*
-import com.lee.playcompose.common.ui.widget.ActionMode
-import com.lee.playcompose.common.ui.widget.AppBarViewContainer
+import com.lee.playcompose.common.ui.widget.header.ActionMode
+import com.lee.playcompose.common.ui.widget.header.AppBarViewContainer
 import com.lee.playcompose.common.ui.widget.RefreshList
 import com.lee.playcompose.common.viewmodel.ThemeViewModel
 import com.lee.playcompose.me.R

@@ -1,4 +1,4 @@
-package com.lee.playcompose.common.ui.widget
+package com.lee.playcompose.common.ui.widget.header
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.statusBarsHeight
 import com.lee.playcompose.common.ui.composable.HeaderSpacer
 import com.lee.playcompose.common.ui.theme.*
-import com.lee.playcompose.common.ui.widget.ActionMode.*
+import com.lee.playcompose.common.ui.widget.header.ActionMode.*
 
 /**
  * 公共appbarView 单独使用该view在顶部，content为appbar内部更多显示样式

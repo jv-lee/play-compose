@@ -1,4 +1,4 @@
-package com.lee.playcompose.common.ui.widget
+package com.lee.playcompose.common.ui.widget.header
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column

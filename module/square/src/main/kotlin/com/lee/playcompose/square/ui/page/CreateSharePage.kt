@@ -27,7 +27,7 @@ import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.ui.composable.AppTextField
 import com.lee.playcompose.common.ui.composable.LoadingDialog
 import com.lee.playcompose.common.ui.theme.*
-import com.lee.playcompose.common.ui.widget.AppBarViewContainer
+import com.lee.playcompose.common.ui.widget.header.AppBarViewContainer
 import com.lee.playcompose.square.R
 import com.lee.playcompose.square.viewmodel.CreateShareViewAction
 import com.lee.playcompose.square.viewmodel.CreateShareViewEvent

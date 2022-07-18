@@ -14,7 +14,7 @@ import com.lee.playcompose.common.extensions.transformDetails
 import com.lee.playcompose.common.ui.composable.ContentItem
 import com.lee.playcompose.common.ui.composable.ContentPictureItem
 import com.lee.playcompose.common.ui.theme.AppTheme
-import com.lee.playcompose.common.ui.widget.AppBarViewContainer
+import com.lee.playcompose.common.ui.widget.header.AppBarViewContainer
 import com.lee.playcompose.common.ui.widget.RefreshList
 import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs

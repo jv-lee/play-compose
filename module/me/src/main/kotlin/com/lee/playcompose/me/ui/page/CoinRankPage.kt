@@ -19,8 +19,8 @@ import androidx.paging.compose.itemsIndexed
 import com.lee.playcompose.base.extensions.LocalNavController
 import com.lee.playcompose.common.entity.CoinRank
 import com.lee.playcompose.common.ui.theme.*
-import com.lee.playcompose.common.ui.widget.ActionMode
-import com.lee.playcompose.common.ui.widget.AppBarViewContainer
+import com.lee.playcompose.common.ui.widget.header.ActionMode
+import com.lee.playcompose.common.ui.widget.header.AppBarViewContainer
 import com.lee.playcompose.common.ui.widget.RefreshList
 import com.lee.playcompose.me.R
 import com.lee.playcompose.me.viewmodel.CoinRankViewModel

@@ -14,7 +14,7 @@ import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.extensions.transformDetails
 import com.lee.playcompose.common.ui.composable.ActionTextItem
-import com.lee.playcompose.common.ui.widget.AppBarViewContainer
+import com.lee.playcompose.common.ui.widget.header.AppBarViewContainer
 import com.lee.playcompose.common.ui.widget.RefreshList
 import com.lee.playcompose.common.ui.widget.SlidingPaneState
 import com.lee.playcompose.common.ui.widget.rememberSlidingPaneState

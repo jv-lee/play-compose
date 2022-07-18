@@ -20,8 +20,8 @@ import com.lee.playcompose.common.extensions.transformDetails
 import com.lee.playcompose.common.ui.composable.ContentItem
 import com.lee.playcompose.common.ui.composable.HeaderSpacer
 import com.lee.playcompose.common.ui.theme.ToolBarHeight
-import com.lee.playcompose.common.ui.widget.AppGradientTextBar
-import com.lee.playcompose.common.ui.widget.AppHeaderContainer
+import com.lee.playcompose.common.ui.widget.header.AppGradientTextBar
+import com.lee.playcompose.common.ui.widget.header.AppHeaderContainer
 import com.lee.playcompose.common.ui.widget.RefreshList
 import com.lee.playcompose.common.ui.widget.RouteBackHandler
 import com.lee.playcompose.router.RoutePage

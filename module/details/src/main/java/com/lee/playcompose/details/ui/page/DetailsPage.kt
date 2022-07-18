@@ -21,9 +21,9 @@ import com.lee.playcompose.common.extensions.bindLifecycle
 import com.lee.playcompose.common.extensions.setWebBackEvent
 import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.ui.composable.LoadingDialog
-import com.lee.playcompose.common.ui.widget.AppBarViewContainer
-import com.lee.playcompose.common.ui.widget.MenuSpacer
-import com.lee.playcompose.common.ui.widget.TextMenuItem
+import com.lee.playcompose.common.ui.widget.header.AppBarViewContainer
+import com.lee.playcompose.common.ui.widget.header.MenuSpacer
+import com.lee.playcompose.common.ui.widget.header.TextMenuItem
 import com.lee.playcompose.details.R
 import com.lee.playcompose.details.viewmodel.DetailsViewAction
 import com.lee.playcompose.details.viewmodel.DetailsViewEvent
