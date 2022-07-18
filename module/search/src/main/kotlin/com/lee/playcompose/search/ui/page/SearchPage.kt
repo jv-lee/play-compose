@@ -1,6 +1,5 @@
 package com.lee.playcompose.search.ui.page
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -30,7 +29,7 @@ import com.lee.playcompose.base.extensions.onTap
 import com.lee.playcompose.common.entity.SearchHistory
 import com.lee.playcompose.common.ui.composable.AppTextField
 import com.lee.playcompose.common.ui.theme.*
-import com.lee.playcompose.common.ui.widget.AppBarView
+import com.lee.playcompose.common.ui.widget.AppBarViewContainer
 import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
 import com.lee.playcompose.search.R
@@ -67,17 +66,17 @@ fun SearchPage(
         }
     }
 
-    Column(modifier = Modifier.background(AppTheme.colors.background)) {
-        SearchAppBar(
-            viewState = viewState,
-            navigationClick = {
-                keyboardController?.hide()
-                navController.popBackStack()
-            }, onSearchClick = { searchKey ->
-                viewModel.dispatch(SearchViewAction.NavigationSearchKey(searchKey))
-            }, onValueChange = { searchKey ->
-                viewModel.dispatch(SearchViewAction.ChangeSearchKey(searchKey))
-            })
+    SearchAppBarContainer(
+        viewState = viewState,
+        navigationClick = {
+            keyboardController?.hide()
+            navController.popBackStack()
+        }, onSearchClick = { searchKey ->
+            viewModel.dispatch(SearchViewAction.NavigationSearchKey(searchKey))
+        }, onValueChange = { searchKey ->
+            viewModel.dispatch(SearchViewAction.ChangeSearchKey(searchKey))
+        }
+    ) {
         SearchContent(
             viewState = viewState,
             contentClick = {
@@ -92,30 +91,33 @@ fun SearchPage(
     }
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
-private fun SearchAppBar(
+private fun SearchAppBarContainer(
     viewState: SearchViewState,
     navigationClick: () -> Unit,
     onSearchClick: (String) -> Unit,
     onValueChange: (String) -> Unit,
+    content: @Composable () -> Unit,
 ) {
-    AppBarView(navigationClick = navigationClick) {
-        AppTextField(
-            value = viewState.searchKey,
-            onValueChange = { onValueChange(it) },
-            keyboardActions = KeyboardActions(onSearch = { onSearchClick(viewState.searchKey) }),
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Text,
-                imeAction = ImeAction.Search
-            ),
-            hintText = stringResource(id = R.string.search_hint),
-            modifier = Modifier
-                .align(Alignment.Center)
-                .fillMaxWidth()
-                .padding(start = 56.dp, end = 56.dp),
-        )
-    }
+    AppBarViewContainer(
+        backgroundColor = AppTheme.colors.background,
+        navigationClick = navigationClick, appBarContent = {
+            AppTextField(
+                value = viewState.searchKey,
+                onValueChange = { onValueChange(it) },
+                keyboardActions = KeyboardActions(onSearch = { onSearchClick(viewState.searchKey) }),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Text,
+                    imeAction = ImeAction.Search
+                ),
+                hintText = stringResource(id = R.string.search_hint),
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .fillMaxWidth()
+                    .padding(start = 56.dp, end = 56.dp),
+            )
+        }, content = content
+    )
 }
 
 @OptIn(ExperimentalComposeUiApi::class)
