@@ -18,18 +18,18 @@ import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.theme.ToolBarHeight
 
 /**
- * 公共appBar顶部渐变色导航title组件
+ * 项目公共appBar顶部title + action 组件
  * @param title 文案
- * @param navigationPainter 右侧导航按钮
- * @param onNavigationClick 右侧导航按钮点击事件执行函数
+ * @param actionPainter 右侧动作按钮
+ * @param onActionClick 右侧动作按钮点击事件执行函数
  * @author jv.lee
  * @date 2022/3/3
  */
 @Composable
-fun AppGradientTextBar(
+fun AppTextActionBar(
     title: String,
-    navigationPainter: Painter,
-    onNavigationClick: () -> Unit
+    actionPainter: Painter,
+    onActionClick: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -52,11 +52,11 @@ fun AppGradientTextBar(
                 .background(shape = CircleShape, color = AppTheme.colors.focus)
         ) {
             Image(
-                painter = navigationPainter,
+                painter = actionPainter,
                 contentDescription = null,
                 modifier = Modifier
                     .align(Alignment.Center)
-                    .clickable { onNavigationClick() }
+                    .clickable { onActionClick() }
             )
         }
     }

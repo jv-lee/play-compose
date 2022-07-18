@@ -34,7 +34,7 @@ import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.theme.OffsetMedium
 import com.lee.playcompose.common.ui.theme.ToolBarHeight
 import com.lee.playcompose.common.ui.widget.*
-import com.lee.playcompose.common.ui.widget.header.AppGradientTextBar
+import com.lee.playcompose.common.ui.widget.header.AppTextActionBar
 import com.lee.playcompose.common.ui.widget.header.AppHeaderContainer
 import com.lee.playcompose.home.R
 import com.lee.playcompose.home.model.entity.HomeCategory
@@ -94,10 +94,10 @@ fun HomePage(
 
         // header
         AppHeaderContainer {
-            AppGradientTextBar(
+            AppTextActionBar(
                 title = stringResource(id = R.string.home_header_text),
-                navigationPainter = painterResource(id = CR.drawable.vector_search),
-                onNavigationClick = {
+                actionPainter = painterResource(id = CR.drawable.vector_search),
+                onActionClick = {
                     navController.navigateArgs(RoutePage.Search.route)
                 }
             )
