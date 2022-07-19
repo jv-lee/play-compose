@@ -136,8 +136,8 @@ private fun SearchContent(
         SearchHistoryContent(
             viewState = viewState,
             onSearchClick = onSearchClick,
-            onClearClick = onClearClick,
-            onDeleteHistoryClick = onDeleteHistoryClick
+            onDeleteHistoryClick = onDeleteHistoryClick,
+            onClearClick = onClearClick
         )
         SearchHistoryEmptyLayout(viewState = viewState)
     }
@@ -162,19 +162,27 @@ private fun ColumnScope.SearchHotContent(
 }
 
 @Composable
-private fun ColumnScope.SearchHistoryContent(
+private fun SearchHistoryContent(
     viewState: SearchViewState,
     onSearchClick: (String) -> Unit,
     onDeleteHistoryClick: (String) -> Unit,
     onClearClick: () -> Unit
 ) {
-    Box(modifier = Modifier.fillMaxWidth()) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(
+                start = OffsetLarge,
+                end = OffsetLarge,
+                top = OffsetLarge,
+                bottom = OffsetMedium
+            )
+    ) {
         Text(
             text = stringResource(id = R.string.search_history_label),
             fontSize = FontSizeMedium,
             color = AppTheme.colors.accent,
             modifier = Modifier
-                .padding(start = OffsetLarge, end = OffsetLarge, top = OffsetMedium)
                 .align(Alignment.CenterStart)
         )
         Text(
@@ -182,7 +190,6 @@ private fun ColumnScope.SearchHistoryContent(
             fontSize = FontSizeMedium,
             color = AppTheme.colors.primary,
             modifier = Modifier
-                .padding(OffsetLarge)
                 .align(Alignment.CenterEnd)
                 .clickable { onClearClick() }
         )
@@ -240,6 +247,7 @@ private fun SearchHistoryItem(
     Box(
         modifier = Modifier
             .fillMaxWidth()
+            .clickable { onSearchClick(item.key) }
             .padding(top = OffsetMedium, bottom = OffsetMedium)
     ) {
         Text(
@@ -248,11 +256,11 @@ private fun SearchHistoryItem(
             color = AppTheme.colors.primary,
             modifier = Modifier
                 .align(alignment = Alignment.CenterStart)
-                .clickable { onSearchClick(item.key) }
         )
         Icon(
             painter = painterResource(id = R.drawable.vector_close),
             contentDescription = null,
+            tint = AppTheme.colors.accent,
             modifier = Modifier
                 .size(16.dp)
                 .align(alignment = Alignment.CenterEnd)
