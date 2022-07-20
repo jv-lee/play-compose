@@ -44,7 +44,8 @@ private val tabZoomRoutes = arrayListOf(
     RoutePage.Project.route,
     RoutePage.Square.CreateShare.route,
     RoutePage.System.SystemContentTab.route,
-    RoutePage.Todo.route
+    RoutePage.Todo.route,
+    RoutePage.Account.Login.route
 )
 
 fun NavGraphBuilder.appRouteManifest() {
@@ -172,7 +173,9 @@ fun NavGraphBuilder.appRouteManifest() {
 
     // module:account
     RoutePage.Account.run {
-        themeComposable(route = RoutePage.Account.Login.route) {
+        themeComposable(route = RoutePage.Account.Login.route,
+            enterTransition = { enterZoom() },
+            popExitTransition = { popExitAlphaHide() }) {
             LoginPage()
         }
         themeComposable(route = RoutePage.Account.Register.route) {

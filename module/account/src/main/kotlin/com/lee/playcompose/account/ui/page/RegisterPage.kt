@@ -81,10 +81,10 @@ fun RegisterPage(
 
     Column(
         modifier = Modifier
+            .background(AppTheme.colors.background)
             .fillMaxSize()
             .padding(bottom = imePadding.dp)
             .wrapContentSize(Alignment.Center)
-            .background(AppTheme.colors.background)
             .onTap { keyboardController?.hide() })
     {
         RegisterTitle()
