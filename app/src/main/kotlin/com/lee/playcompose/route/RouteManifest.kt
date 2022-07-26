@@ -64,9 +64,11 @@ fun NavGraphBuilder.appRouteManifest() {
         themeComposable(RoutePage.Square.MyShare.route) {
             MySharePage()
         }
-        themeComposable(RoutePage.Square.CreateShare.route,
-            enterTransition = { enterZoom() },
-            popExitTransition = { popExitAlphaHide() }) {
+        themeComposable(
+            RoutePage.Square.CreateShare.route,
+            enterTransition = enterZoom(),
+            popExitTransition = popExitAlphaHide()
+        ) {
             CreateSharePage()
         }
     }
@@ -76,9 +78,11 @@ fun NavGraphBuilder.appRouteManifest() {
         tabComposable(RoutePage.System.route, tabDefaultRoutes, tabZoomRoutes) {
             SystemPage()
         }
-        themeComposable(RoutePage.System.SystemContentTab.route,
-            enterTransition = { enterZoom() },
-            popExitTransition = { popExitAlphaHide() }) {
+        themeComposable(
+            RoutePage.System.SystemContentTab.route,
+            enterTransition = enterZoom(),
+            popExitTransition = popExitAlphaHide()
+        ) {
             val parentTab =
                 WeakDataHolder.instance.getData<ParentTab>(RouteParamsKey.tabDataKey)
             SystemContentTabPage(parentTab)
@@ -106,17 +110,26 @@ fun NavGraphBuilder.appRouteManifest() {
 
     // module:todoModel
     RoutePage.Todo.run {
-        themeComposable(RoutePage.Todo.route,
-            enterTransition = { enterZoom() },
-            popExitTransition = { popExitAlphaHide() }) {
+        themeComposable(
+            RoutePage.Todo.route,
+            enterTransition = enterZoom(),
+            popExitTransition = popExitAlphaHide(),
+            tabZoomRoutes = listOf(RoutePage.Todo.CreateTodo.route)
+        ) {
             TodoPage()
         }
-        themeComposable(RoutePage.Todo.CreateTodo.route) {
+        themeComposable(
+            RoutePage.Todo.CreateTodo.route,
+            enterTransition = enterZoom(),
+            popExitTransition = popExitAlphaHide()
+        ) {
             CreateTodoPage()
         }
         themeComposable(
             RoutePage.Todo.CreateTodo.parseRoute(),
-            arguments = RoutePage.Todo.CreateTodo.parseArguments()
+            arguments = RoutePage.Todo.CreateTodo.parseArguments(),
+            enterTransition = enterZoom(),
+            popExitTransition = popExitAlphaHide()
         ) { entry ->
             val detailsJson = entry.arguments?.getString(RouteParamsKey.todoDataKey)
             val todoData = HttpManager.getGson().fromJson(detailsJson, TodoData::class.java)
@@ -126,27 +139,33 @@ fun NavGraphBuilder.appRouteManifest() {
 
     // module:official
     RoutePage.Official.run {
-        themeComposable(RoutePage.Official.route,
-            enterTransition = { enterZoom() },
-            popExitTransition = { popExitAlphaHide() }) {
+        themeComposable(
+            RoutePage.Official.route,
+            enterTransition = enterZoom(),
+            popExitTransition = popExitAlphaHide()
+        ) {
             OfficialPage()
         }
     }
 
     // module:project
     RoutePage.Project.run {
-        themeComposable(RoutePage.Project.route,
-            enterTransition = { enterZoom() },
-            popExitTransition = { popExitAlphaHide() }) {
+        themeComposable(
+            RoutePage.Project.route,
+            enterTransition = enterZoom(),
+            popExitTransition = popExitAlphaHide()
+        ) {
             ProjectPage()
         }
     }
 
     // module:search
     RoutePage.Search.run {
-        themeComposable(RoutePage.Search.route,
-            enterTransition = { enterZoom() },
-            popExitTransition = { popExitAlphaHide() }) {
+        themeComposable(
+            RoutePage.Search.route,
+            enterTransition = enterZoom(),
+            popExitTransition = popExitAlphaHide()
+        ) {
             SearchPage()
         }
         themeComposable(
@@ -173,9 +192,11 @@ fun NavGraphBuilder.appRouteManifest() {
 
     // module:account
     RoutePage.Account.run {
-        themeComposable(route = RoutePage.Account.Login.route,
-            enterTransition = { enterZoom() },
-            popExitTransition = { popExitAlphaHide() }) {
+        themeComposable(
+            route = RoutePage.Account.Login.route,
+            enterTransition = enterZoom(),
+            popExitTransition = popExitAlphaHide()
+        ) {
             LoginPage()
         }
         themeComposable(route = RoutePage.Account.Register.route) {

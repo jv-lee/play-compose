@@ -7,7 +7,10 @@ package com.lee.playcompose.router
 
 import android.net.Uri
 import android.os.Parcelable
-import androidx.compose.animation.*
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.*
 import com.google.accompanist.navigation.animation.composable
@@ -26,9 +29,9 @@ fun NavGraphBuilder.tabComposable(
         route = route, arguments, deepLinks, content = content,
         // 打开页面退出动画
         exitTransition = {
-            if (tabDefaultRoutes.contains(this.targetState.destination.route)) {
+            if (tabDefaultRoutes.contains(this.targetState.destination.route())) {
                 null
-            } else if (tabZoomRoutes.contains(this.targetState.destination.route)) {
+            } else if (tabZoomRoutes.contains(this.targetState.destination.route())) {
                 exitZoom()
             } else {
                 exitSlideIn()
@@ -36,9 +39,9 @@ fun NavGraphBuilder.tabComposable(
         },
         // 关闭页面进入动画
         popEnterTransition = {
-            if (tabDefaultRoutes.contains(this.initialState.destination.route)) {
+            if (tabDefaultRoutes.contains(this.initialState.destination.route())) {
                 null
-            } else if (tabZoomRoutes.contains(this.initialState.destination.route)) {
+            } else if (tabZoomRoutes.contains(this.initialState.destination.route())) {
                 popEnterZoom()
             } else {
                 popEnterSlideIn()
@@ -50,24 +53,38 @@ fun NavGraphBuilder.tabComposable(
 @ExperimentalAnimationApi
 fun NavGraphBuilder.themeComposable(
     route: String,
+    tabZoomRoutes: List<String> = emptyList(),
     arguments: List<NamedNavArgument> = emptyList(),
     deepLinks: List<NavDeepLink> = emptyList(),
-    enterTransition: (AnimatedContentScope<NavBackStackEntry>.() -> EnterTransition?)? = { enterSlideIn() },
-    exitTransition: (AnimatedContentScope<NavBackStackEntry>.() -> ExitTransition?)? = { exitSlideIn() },
-    popEnterTransition: (AnimatedContentScope<NavBackStackEntry>.() -> EnterTransition?)? = { popEnterSlideIn() },
-    popExitTransition: (AnimatedContentScope<NavBackStackEntry>.() -> ExitTransition?)? = { popExitSlideIn() },
+    enterTransition: EnterTransition = enterSlideIn(),
+    exitTransition: ExitTransition = exitSlideIn(),
+    popEnterTransition: EnterTransition = popEnterSlideIn(),
+    popExitTransition: ExitTransition = popExitSlideIn(),
     content: @Composable AnimatedVisibilityScope.(NavBackStackEntry) -> Unit
 ) {
     composable(
         route = route, arguments, deepLinks, content = content,
         // 打开页面进入动画
-        enterTransition = enterTransition,
-        // 打开页面退出动画
-        exitTransition = exitTransition,
-        // 关闭页面进入动画
-        popEnterTransition = popEnterTransition,
+        enterTransition = { enterTransition },
         // 关闭页面退出动画
-        popExitTransition = popExitTransition,
+        popExitTransition = { popExitTransition },
+
+        // 打开页面退出动画
+        exitTransition = {
+            if (tabZoomRoutes.contains(this.targetState.destination.route())) {
+                exitZoom()
+            } else {
+                exitTransition
+            }
+        },
+        // 关闭页面进入动画
+        popEnterTransition = {
+            if (tabZoomRoutes.contains(this.initialState.destination.route())) {
+                popEnterZoom()
+            } else {
+                popEnterTransition
+            }
+        }
     )
 }
 
@@ -146,4 +163,14 @@ private fun checkTypeFormat(arg: Any): String {
         }
         else -> String.format("/%s", arg)
     }
+}
+
+private fun NavDestination.route(): String? {
+    val index = route?.indexOf("/") ?: -1
+    return if (index == -1) {
+        route
+    } else {
+        route?.substring(0, index)
+    }
+
 }
