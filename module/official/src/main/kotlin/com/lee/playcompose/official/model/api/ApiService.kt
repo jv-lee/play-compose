@@ -19,7 +19,7 @@ interface ApiService {
 
     /**
      * @param id 公众号id 由tab接口获取
-     * @param page 分页页面 取值[0-40]
+     * @param page 分页页面 取值[1-40]
      */
     @GET("wxarticle/list/{id}/{page}/json")
     suspend fun getOfficialDataAsync(
