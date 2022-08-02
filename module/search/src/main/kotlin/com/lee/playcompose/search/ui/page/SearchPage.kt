@@ -100,7 +100,6 @@ private fun SearchAppBarContainer(
     content: @Composable () -> Unit,
 ) {
     AppBarViewContainer(
-        backgroundColor = AppTheme.colors.background,
         navigationClick = navigationClick, appBarContent = {
             AppTextField(
                 value = viewState.searchKey,
