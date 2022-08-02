@@ -37,6 +37,7 @@ import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.ui.composable.AppTextField
 import com.lee.playcompose.common.ui.composable.LoadingDialog
 import com.lee.playcompose.common.ui.theme.AppTheme
+import com.lee.playcompose.common.ui.theme.FontSizeMedium
 import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.theme.OffsetRadiusMedium
 
@@ -119,7 +120,6 @@ private fun RegisterTitle() {
         color = AppTheme.colors.accent,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(OffsetLarge)
             .wrapContentWidth(align = Alignment.CenterHorizontally)
     )
 }
@@ -202,12 +202,14 @@ private fun RegisterFooter(
 ) {
     Box(
         modifier = Modifier
+            .padding(horizontal = OffsetLarge)
             .fillMaxWidth()
-            .padding(OffsetLarge)
+            .padding(horizontal = OffsetLarge)
     ) {
         Text(
             text = stringResource(id = R.string.account_go_to_login_text),
             color = AppTheme.colors.focus,
+            fontSize = FontSizeMedium,
             modifier = Modifier
                 .align(Alignment.CenterStart)
                 .clickable {
