@@ -14,7 +14,6 @@ import com.lee.playcompose.base.extensions.clearCache
 import com.lee.playcompose.base.extensions.getCache
 import com.lee.playcompose.base.extensions.putCache
 import com.lee.playcompose.base.tools.PreferencesTools
-import com.lee.playcompose.common.BuildConfig
 import com.lee.playcompose.common.constants.ApiConstants
 import com.lee.playcompose.common.entity.AccountData
 import com.lee.playcompose.common.entity.AccountViewAction
@@ -111,7 +110,6 @@ class AccountViewModel : ViewModel() {
         } else {
             cacheManager.clearCache(Constants.CACHE_KEY_ACCOUNT_DATA)
             PreferencesTools.put(Constants.SP_KEY_IS_LOGIN, false)
-            PreferencesTools.put(BuildConfig.BASE_URI, "")
             viewStates.copy(accountData = accountData, isLogin = isLogin)
         }
     }
