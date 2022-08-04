@@ -1,7 +1,7 @@
 package com.lee.playcompose.common.interceptor
 
 import com.lee.playcompose.base.tools.PreferencesTools
-import com.lee.playcompose.common.BuildConfig
+import com.lee.playcompose.common.constants.ApiConstants
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -13,37 +13,42 @@ import okhttp3.Response
 class SaveCookieInterceptor : Interceptor {
 
     companion object {
-        private const val SET_COOKIE_KEY = "set-cookie"
+        private const val HEADER_COOKIE_KEY = "Cookie" // 请求头设置cookie键名
+        private const val SET_COOKIE_KEY = "set-cookie" // 包含cookie的response取值键名
+        private const val CONTAINER_COOKIE_URI = "lg/" // 链接中包含lg则需要设置cookie
+        private const val SAVE_TOKEN_KEY = "save-token" // 保存cookie 键名
 
-        private const val SAVE_USER_LOGIN_KEY = "user/login"
-        private const val SAVE_USER_REGISTER_KEY = "user/register"
-        private const val REMOVE_USER_LOGOUT_KEY = "user/logout"
+        private const val CONTAINER_LOGIN_URI = "user/login"
+        private const val CONTAINER_REGISTER_URI = "user/register"
+        private const val CONTAINER_LOGOUT_URI = "user/logout"
     }
 
-    var cookie: String = PreferencesTools.get(BuildConfig.BASE_URI)
+    var cookie: String = ""
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
         val builder = request.newBuilder()
         val url = request.url().toString()
 
+
         // request请求设置cookie
-        if (url.contains(BuildConfig.BASE_URI)) {
-            if (cookie.isNotEmpty()) {
-                builder.addHeader("Cookie", cookie)
+        if (url.contains(ApiConstants.BASE_URI) && url.contains(CONTAINER_COOKIE_URI)) {
+            if (cookie.isEmpty()) {
+                cookie = PreferencesTools.get(SAVE_TOKEN_KEY)
             }
+            builder.addHeader(HEADER_COOKIE_KEY, cookie)
         }
 
         val response = chain.proceed(builder.build())
 
         //登陆注册时保存登陆 cookie作为token校验接口header参数
-        if ((url.contains(SAVE_USER_LOGIN_KEY) || url.contains(SAVE_USER_REGISTER_KEY))
+        if ((url.contains(CONTAINER_LOGIN_URI) || url.contains(CONTAINER_REGISTER_URI))
             && response.headers(SET_COOKIE_KEY).isNotEmpty()
         ) {
             val cookies = response.headers(SET_COOKIE_KEY)
             val cookie = encodeCookie(cookies)
             saveCookie(cookie)
-        } else if (url.contains(REMOVE_USER_LOGOUT_KEY)) {
+        } else if (url.contains(CONTAINER_LOGOUT_URI)) {
             clearCookie()
         }
 
@@ -74,12 +79,12 @@ class SaveCookieInterceptor : Interceptor {
 
     private fun saveCookie(cookie: String) {
         this.cookie = cookie
-        PreferencesTools.put(BuildConfig.BASE_URI, cookie)
+        PreferencesTools.put(SAVE_TOKEN_KEY, cookie)
     }
 
     private fun clearCookie() {
         this.cookie = ""
-        PreferencesTools.remove(BuildConfig.BASE_URI)
+        PreferencesTools.remove(SAVE_TOKEN_KEY)
     }
 
 }

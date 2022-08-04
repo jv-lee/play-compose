@@ -9,6 +9,7 @@ import com.lee.playcompose.base.net.HttpManager
 import com.lee.playcompose.base.net.request.IRequest
 import com.lee.playcompose.base.net.request.Request
 import com.lee.playcompose.common.BuildConfig
+import com.lee.playcompose.common.constants.ApiConstants
 import com.lee.playcompose.common.interceptor.*
 import okhttp3.logging.HttpLoggingInterceptor
 
@@ -33,7 +34,7 @@ fun HttpManager.setCommonInterceptor() {
  * 创建RetrofitApi接口
  */
 inline fun <reified T> createApi(
-    baseUri: String = BuildConfig.BASE_URI,
+    baseUri: String = ApiConstants.BASE_URI,
     request: Request = Request(
         baseUri,
         IRequest.ConverterType.JSON,
