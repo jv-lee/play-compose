@@ -30,8 +30,7 @@ class SaveCookieInterceptor : Interceptor {
         val builder = request.newBuilder()
         val url = request.url().toString()
 
-
-        // request请求设置cookie
+        // 当前请求为baseUri 且包含校验cookie的链接时获取缓存cookie设置header
         if (url.contains(ApiConstants.BASE_URI) && url.contains(CONTAINER_COOKIE_URI)) {
             if (cookie.isEmpty()) {
                 cookie = PreferencesTools.get(SAVE_TOKEN_KEY)
@@ -41,13 +40,14 @@ class SaveCookieInterceptor : Interceptor {
 
         val response = chain.proceed(builder.build())
 
-        //登陆注册时保存登陆 cookie作为token校验接口header参数
+        // 登陆注册时保存登陆 cookie作为token校验接口header参数
         if ((url.contains(CONTAINER_LOGIN_URI) || url.contains(CONTAINER_REGISTER_URI))
             && response.headers(SET_COOKIE_KEY).isNotEmpty()
         ) {
             val cookies = response.headers(SET_COOKIE_KEY)
             val cookie = encodeCookie(cookies)
             saveCookie(cookie)
+            // 登出时清除登陆cookie等信息
         } else if (url.contains(CONTAINER_LOGOUT_URI)) {
             clearCookie()
         }
