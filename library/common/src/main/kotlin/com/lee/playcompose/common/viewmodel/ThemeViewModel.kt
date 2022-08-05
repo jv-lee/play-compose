@@ -37,7 +37,7 @@ class ThemeViewModel : ViewModel() {
     }
 
     private fun updateDark(enable: Boolean) {
-        darkModeTools.updateNightTheme(enable = enable)
+        darkModeTools.updateDarkTheme(enable = enable)
         initDarkTheme()
     }
 
