@@ -39,6 +39,7 @@ import com.lee.playcompose.base.bus.ChannelBus.Companion.post
 import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.base.extensions.LocalActivity
 import com.lee.playcompose.base.extensions.LocalNavController
+import com.lee.playcompose.common.entity.AccountViewEvent
 import com.lee.playcompose.common.entity.LoginEvent
 import com.lee.playcompose.common.entity.NavigationSelectEvent
 import com.lee.playcompose.common.entity.NetworkErrorEvent
@@ -71,12 +72,25 @@ fun Activity.RouteNavigator(viewModel: RouteNavigatorViewModel = viewModel()) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
+    // 监听退出登陆成功事件
+    LaunchedEffect(Unit) {
+        ModuleService.find<AccountService>().getAccountViewEvents(activity).collect { event ->
+            when (event) {
+                is AccountViewEvent.LogoutSuccess -> {
+                    navController.navigateArgs(RoutePage.Account.Login.route)
+                }
+                is AccountViewEvent.LogoutFailed -> {
+                    toast(event.message)
+                }
+            }
+        }
+    }
+
     // 绑定登陆事件:导航至登陆页
     LaunchedEffect(Unit) {
         ChannelBus.bindChannel<LoginEvent>(lifecycle)?.receiveAsFlow()?.collect {
             toast(resources.getString(R.string.login_token_failed))
             ModuleService.find<AccountService>().requestLogout(activity)
-            navController.navigateArgs(RoutePage.Account.Login.route)
         }
     }
 
