@@ -65,7 +65,10 @@ import com.lee.playcompose.home.R as HR
  * @date 2022/2/24
  */
 @Composable
-fun Activity.RouteNavigator(viewModel: RouteNavigatorViewModel = viewModel()) {
+fun Activity.RouteNavigator(
+    viewModel: RouteNavigatorViewModel = viewModel(),
+    accountService: AccountService = ModuleService.find()
+) {
     val activity = LocalActivity.current
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     val navController = LocalNavController.current
@@ -74,7 +77,7 @@ fun Activity.RouteNavigator(viewModel: RouteNavigatorViewModel = viewModel()) {
 
     // 监听退出登陆成功事件
     LaunchedEffect(Unit) {
-        ModuleService.find<AccountService>().getAccountViewEvents(activity).collect { event ->
+        accountService.getAccountViewEvents(activity).collect { event ->
             when (event) {
                 is AccountViewEvent.LogoutSuccess -> {
                     navController.navigateArgs(RoutePage.Account.Login.route)
@@ -90,7 +93,7 @@ fun Activity.RouteNavigator(viewModel: RouteNavigatorViewModel = viewModel()) {
     LaunchedEffect(Unit) {
         ChannelBus.bindChannel<LoginEvent>(lifecycle)?.receiveAsFlow()?.collect {
             toast(resources.getString(R.string.login_token_failed))
-            ModuleService.find<AccountService>().requestLogout(activity)
+            accountService.requestLogout(activity)
         }
     }
 
