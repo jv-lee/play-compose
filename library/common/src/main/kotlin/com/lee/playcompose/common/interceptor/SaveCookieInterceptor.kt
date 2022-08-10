@@ -15,7 +15,7 @@ class SaveCookieInterceptor : Interceptor {
     companion object {
         private const val HEADER_COOKIE_KEY = "Cookie" // 请求头设置cookie键名
         private const val SET_COOKIE_KEY = "set-cookie" // 包含cookie的response取值键名
-        private const val CONTAINER_COOKIE_URI = "lg/" // 链接中包含lg则需要设置cookie
+        private const val CONTAINER_COOKIE_URI = "/lg/" // 链接中包含lg则需要设置cookie
         private const val SAVE_TOKEN_KEY = "save-token" // 保存cookie 键名
 
         private const val CONTAINER_LOGIN_URI = "user/login"
@@ -30,29 +30,31 @@ class SaveCookieInterceptor : Interceptor {
         val builder = request.newBuilder()
         val url = request.url().toString()
 
-        // 当前请求为baseUri 且包含校验cookie的链接时获取缓存cookie设置header
-        if (url.contains(ApiConstants.BASE_URI) && url.contains(CONTAINER_COOKIE_URI)) {
-            if (cookie.isEmpty()) {
-                cookie = PreferencesTools.get(SAVE_TOKEN_KEY)
+        // 当前请求为baseUri
+        if(url.contains(ApiConstants.BASE_URI)) {
+            // 包含校验cookie的链接时获取缓存cookie设置header
+            if (url.contains(CONTAINER_COOKIE_URI)) {
+                if (cookie.isEmpty()) cookie = PreferencesTools.get(SAVE_TOKEN_KEY)
+                builder.addHeader(HEADER_COOKIE_KEY, cookie)
             }
-            builder.addHeader(HEADER_COOKIE_KEY, cookie)
+
+            val response = chain.proceed(builder.build())
+            // 登陆注册时保存登陆 cookie作为token校验接口header参数
+            if ((url.contains(CONTAINER_LOGIN_URI) || url.contains(CONTAINER_REGISTER_URI))
+                && response.headers(SET_COOKIE_KEY).isNotEmpty()
+            ) {
+                val cookies = response.headers(SET_COOKIE_KEY)
+                val cookie = encodeCookie(cookies)
+                saveCookie(cookie)
+                // 登出时清除登陆cookie等信息
+            } else if (url.contains(CONTAINER_LOGOUT_URI)) {
+                clearCookie()
+            }
+
+            return response
         }
 
-        val response = chain.proceed(builder.build())
-
-        // 登陆注册时保存登陆 cookie作为token校验接口header参数
-        if ((url.contains(CONTAINER_LOGIN_URI) || url.contains(CONTAINER_REGISTER_URI))
-            && response.headers(SET_COOKIE_KEY).isNotEmpty()
-        ) {
-            val cookies = response.headers(SET_COOKIE_KEY)
-            val cookie = encodeCookie(cookies)
-            saveCookie(cookie)
-            // 登出时清除登陆cookie等信息
-        } else if (url.contains(CONTAINER_LOGOUT_URI)) {
-            clearCookie()
-        }
-
-        return response
+        return chain.proceed(builder.build())
     }
 
     private fun encodeCookie(cookies: List<String>): String {
