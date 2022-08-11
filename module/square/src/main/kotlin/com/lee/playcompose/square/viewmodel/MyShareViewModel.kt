@@ -65,10 +65,14 @@ class MyShareViewModel : ViewModel() {
             viewModelScope.launch {
                 flow {
                     emit(api.postDeleteShareAsync(content.id).checkData())
+                }.onStart {
+                    _viewEvents.send(MyShareViewEvent.ResetSlidingState)
+                    viewStates = viewStates.copy(isLoading = true)
                 }.catch { error ->
                     _viewEvents.send(MyShareViewEvent.DeleteShareEvent(error.message))
                 }.onCompletion {
                     deleteLock.set(false)
+                    viewStates = viewStates.copy(isLoading = false)
                 }.collect {
                     itemsDelete(content)
                     _viewEvents.send(MyShareViewEvent.DeleteShareEvent(app.getString(R.string.share_delete_success)))
@@ -90,11 +94,13 @@ class MyShareViewModel : ViewModel() {
 }
 
 data class MyShareViewState(
+    val isLoading:Boolean = false,
     val savedPager: SavedPager<Content>,
     val listState: LazyListState = LazyListState()
 )
 
 sealed class MyShareViewEvent {
+    object ResetSlidingState : MyShareViewEvent()
     data class DeleteShareEvent(val message: String?) : MyShareViewEvent()
 }
 

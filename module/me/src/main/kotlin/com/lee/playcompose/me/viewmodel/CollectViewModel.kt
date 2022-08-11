@@ -63,10 +63,14 @@ class CollectViewModel : ViewModel() {
             viewModelScope.launch {
                 flow {
                     emit(api.postUnCollectAsync(content.id, content.originId).checkData())
+                }.onStart {
+                    _viewEvents.send(CollectViewEvent.ResetSlidingState)
+                    viewStates = viewStates.copy(isLoading = true)
                 }.catch { error ->
                     _viewEvents.send(CollectViewEvent.UnCollectEvent(error.message))
                 }.onCompletion {
                     deleteLock.set(false)
+                    viewStates = viewStates.copy(isLoading = false)
                 }.collect {
                     itemsDelete(content)
                     _viewEvents.send(CollectViewEvent.UnCollectEvent(app.getString(R.string.collect_remove_item_success)))
@@ -88,11 +92,13 @@ class CollectViewModel : ViewModel() {
 }
 
 data class CollectViewState(
+    val isLoading: Boolean = false,
     val savedPager: SavedPager<Content>,
     val listState: LazyListState = LazyListState()
 )
 
 sealed class CollectViewEvent {
+    object ResetSlidingState : CollectViewEvent()
     data class UnCollectEvent(val message: String?) : CollectViewEvent()
 }
 

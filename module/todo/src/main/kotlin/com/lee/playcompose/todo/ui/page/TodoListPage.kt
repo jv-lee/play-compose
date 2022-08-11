@@ -92,7 +92,6 @@ fun TodoListPage(
                     handler.notifyAt(event.statusKey) { it.refresh() }
                 }
                 is TodoListViewEvent.RequestFailed -> {
-                    slidingPaneState.closeAction()
                     toast(event.message)
                 }
                 is TodoListViewEvent.ResetSlidingState -> {

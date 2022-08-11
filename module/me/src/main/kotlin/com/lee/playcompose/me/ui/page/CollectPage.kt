@@ -14,9 +14,10 @@ import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.extensions.transformDetails
 import com.lee.playcompose.common.ui.composable.ActionTextItem
-import com.lee.playcompose.common.ui.widget.header.AppBarViewContainer
+import com.lee.playcompose.common.ui.composable.LoadingDialog
 import com.lee.playcompose.common.ui.widget.RefreshList
 import com.lee.playcompose.common.ui.widget.SlidingPaneState
+import com.lee.playcompose.common.ui.widget.header.AppBarViewContainer
 import com.lee.playcompose.common.ui.widget.rememberSlidingPaneState
 import com.lee.playcompose.me.R
 import com.lee.playcompose.me.viewmodel.CollectViewAction
@@ -45,11 +46,15 @@ fun CollectPage(
             when (event) {
                 is CollectViewEvent.UnCollectEvent -> {
                     toast(event.message)
+                }
+                is CollectViewEvent.ResetSlidingState -> {
                     slidingPaneState.closeAction()
                 }
             }
         }
     }
+
+    LoadingDialog(isShow = viewState.isLoading)
 
     AppBarViewContainer(
         title = stringResource(id = R.string.me_item_collect),
