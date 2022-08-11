@@ -19,6 +19,7 @@ import com.lee.playcompose.square.model.api.ApiService
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.util.concurrent.atomic.AtomicBoolean
 
 /**
  * 我的分享内容页viewModel
@@ -33,6 +34,8 @@ class MyShareViewModel : ViewModel() {
     // paging3 移除数据过滤项
     private var _removedItemsFlow = MutableStateFlow(mutableListOf<Content>())
     private val removedItemsFlow: Flow<MutableList<Content>> get() = _removedItemsFlow
+
+    private val deleteLock = AtomicBoolean(false)
 
     private val pager by lazy {
         savedPager(
@@ -58,14 +61,18 @@ class MyShareViewModel : ViewModel() {
     }
 
     private fun deleteShare(content: Content) {
-        viewModelScope.launch {
-            flow {
-                emit(api.postDeleteShareAsync(content.id).checkData())
-            }.catch { error ->
-                _viewEvents.send(MyShareViewEvent.DeleteShareEvent(error.message))
-            }.collect {
-                itemsDelete(content)
-                _viewEvents.send(MyShareViewEvent.DeleteShareEvent(app.getString(R.string.share_delete_success)))
+        if (deleteLock.compareAndSet(false, true)) {
+            viewModelScope.launch {
+                flow {
+                    emit(api.postDeleteShareAsync(content.id).checkData())
+                }.catch { error ->
+                    _viewEvents.send(MyShareViewEvent.DeleteShareEvent(error.message))
+                }.onCompletion {
+                    deleteLock.set(false)
+                }.collect {
+                    itemsDelete(content)
+                    _viewEvents.send(MyShareViewEvent.DeleteShareEvent(app.getString(R.string.share_delete_success)))
+                }
             }
         }
     }

@@ -25,6 +25,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.util.concurrent.atomic.AtomicBoolean
 
 /**
  * TodoViewModel TodoList页面使用，删改查处理
@@ -43,6 +44,9 @@ class TodoListViewModel(private val type: Int, private val status: Int) : ViewMo
     // paging3 移除数据过滤项
     private var _removedItemsFlow = MutableStateFlow(mutableListOf<TodoData>())
     private val removedItemsFlow: Flow<MutableList<TodoData>> get() = _removedItemsFlow
+
+    private val deleteLock = AtomicBoolean(false)
+    private val updateLock = AtomicBoolean(false)
 
     private val pager by lazy {
         savedPager(
@@ -73,39 +77,49 @@ class TodoListViewModel(private val type: Int, private val status: Int) : ViewMo
     }
 
     private fun requestDeleteTodo(todoData: TodoData) {
-        viewModelScope.launch {
-            flow {
-                emit(api.postDeleteTodoAsync(todoData.id).checkData())
-            }.onStart {
-                _viewEvents.send(TodoListViewEvent.ResetSlidingState)
-                itemsDelete(todoData)
-            }.catch { error ->
-                itemsInsert(todoData)
-                _viewEvents.send(TodoListViewEvent.RequestFailed(error.message))
-            }.collect {
-                // 刷新非当前状态页面数据（本页面数据本地操作）
-                val statusKey = if (status == STATUS_UPCOMING) STATUS_COMPLETE else STATUS_UPCOMING
-                _viewEvents.send(TodoListViewEvent.RefreshTodoData(statusKey.toString()))
+        if (deleteLock.compareAndSet(false, true)) {
+            viewModelScope.launch {
+                flow {
+                    emit(api.postDeleteTodoAsync(todoData.id).checkData())
+                }.onStart {
+                    _viewEvents.send(TodoListViewEvent.ResetSlidingState)
+                    itemsDelete(todoData)
+                }.catch { error ->
+                    itemsInsert(todoData)
+                    _viewEvents.send(TodoListViewEvent.RequestFailed(error.message))
+                }.onCompletion {
+                    deleteLock.set(false)
+                }.collect {
+                    // 刷新非当前状态页面数据（本页面数据本地操作）
+                    val statusKey =
+                        if (status == STATUS_UPCOMING) STATUS_COMPLETE else STATUS_UPCOMING
+                    _viewEvents.send(TodoListViewEvent.RefreshTodoData(statusKey.toString()))
+                }
             }
         }
     }
 
     private fun requestUpdateTodoStatus(todoData: TodoData) {
-        viewModelScope.launch {
-            flow {
-                val newItem =
-                    todoData.copy(status = if (status == STATUS_UPCOMING) STATUS_COMPLETE else STATUS_UPCOMING)
-                emit(api.postUpdateTodoStatusAsync(newItem.id, newItem.status).checkData())
-            }.onStart {
-                _viewEvents.send(TodoListViewEvent.ResetSlidingState)
-                itemsDelete(todoData)
-            }.catch { error ->
-                itemsInsert(todoData)
-                _viewEvents.send(TodoListViewEvent.RequestFailed(error.message))
-            }.collect {
-                // 刷新非当前状态页面数据（本页面数据本地操作）
-                val statusKey = if (status == STATUS_UPCOMING) STATUS_COMPLETE else STATUS_UPCOMING
-                _viewEvents.send(TodoListViewEvent.RefreshTodoData(statusKey.toString()))
+        if (updateLock.compareAndSet(false, true)) {
+            viewModelScope.launch {
+                flow {
+                    val newItem =
+                        todoData.copy(status = if (status == STATUS_UPCOMING) STATUS_COMPLETE else STATUS_UPCOMING)
+                    emit(api.postUpdateTodoStatusAsync(newItem.id, newItem.status).checkData())
+                }.onStart {
+                    _viewEvents.send(TodoListViewEvent.ResetSlidingState)
+                    itemsDelete(todoData)
+                }.catch { error ->
+                    itemsInsert(todoData)
+                    _viewEvents.send(TodoListViewEvent.RequestFailed(error.message))
+                }.onCompletion {
+                    updateLock.set(false)
+                }.collect {
+                    // 刷新非当前状态页面数据（本页面数据本地操作）
+                    val statusKey =
+                        if (status == STATUS_UPCOMING) STATUS_COMPLETE else STATUS_UPCOMING
+                    _viewEvents.send(TodoListViewEvent.RefreshTodoData(statusKey.toString()))
+                }
             }
         }
     }

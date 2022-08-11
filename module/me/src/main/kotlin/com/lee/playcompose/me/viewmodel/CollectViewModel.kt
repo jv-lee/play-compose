@@ -19,6 +19,7 @@ import com.lee.playcompose.service.helper.ModuleService
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.util.concurrent.atomic.AtomicBoolean
 
 /**
  * 收藏页面ViewModel
@@ -33,6 +34,8 @@ class CollectViewModel : ViewModel() {
     // paging3 移除数据过滤项
     private var _removedItemsFlow = MutableStateFlow(mutableListOf<Content>())
     private val removedItemsFlow: Flow<MutableList<Content>> get() = _removedItemsFlow
+
+    private val deleteLock = AtomicBoolean(false)
 
     private val pager by lazy {
         savedPager(
@@ -56,14 +59,18 @@ class CollectViewModel : ViewModel() {
     }
 
     private fun deleteCollect(content: Content) {
-        viewModelScope.launch {
-            flow {
-                emit(api.postUnCollectAsync(content.id, content.originId).checkData())
-            }.catch { error ->
-                _viewEvents.send(CollectViewEvent.UnCollectEvent(error.message))
-            }.collect {
-                itemsDelete(content)
-                _viewEvents.send(CollectViewEvent.UnCollectEvent(app.getString(R.string.collect_remove_item_success)))
+        if (deleteLock.compareAndSet(false, true)) {
+            viewModelScope.launch {
+                flow {
+                    emit(api.postUnCollectAsync(content.id, content.originId).checkData())
+                }.catch { error ->
+                    _viewEvents.send(CollectViewEvent.UnCollectEvent(error.message))
+                }.onCompletion {
+                    deleteLock.set(false)
+                }.collect {
+                    itemsDelete(content)
+                    _viewEvents.send(CollectViewEvent.UnCollectEvent(app.getString(R.string.collect_remove_item_success)))
+                }
             }
         }
     }
