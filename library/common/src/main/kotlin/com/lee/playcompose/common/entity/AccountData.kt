@@ -78,6 +78,7 @@ sealed class AccountViewEvent {
 }
 
 sealed class AccountViewAction {
+    object ClearLoginState : AccountViewAction()
     object RequestAccountData : AccountViewAction()
     object RequestLogout : AccountViewAction()
     data class UpdateAccountStatus(val accountData: AccountData, val isLogin: Boolean) :

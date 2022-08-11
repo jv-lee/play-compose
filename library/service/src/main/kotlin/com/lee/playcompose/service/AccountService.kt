@@ -38,6 +38,12 @@ interface AccountService : IModuleService {
     suspend fun requestLogout(activity: FragmentActivity)
 
     /**
+     * 清除本地登陆状态
+     * @param activity
+     */
+    suspend fun clearLoginState(activity: FragmentActivity)
+
+    /**
      * 获取当前登陆的账户信息
      */
     fun getAccountInfo(): AccountData?

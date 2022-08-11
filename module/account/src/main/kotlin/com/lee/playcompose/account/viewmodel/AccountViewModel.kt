@@ -56,7 +56,9 @@ class AccountViewModel : ViewModel() {
             is AccountViewAction.UpdateAccountStatus -> {
                 updateAccountStatus(action.accountData, action.isLogin)
             }
-
+            is AccountViewAction.ClearLoginState -> {
+                updateAccountStatus(null, false)
+            }
         }
     }
 

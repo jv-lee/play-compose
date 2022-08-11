@@ -39,6 +39,10 @@ class AccountServiceImpl : AccountService {
         activity.viewModels<AccountViewModel>().value.dispatch(AccountViewAction.RequestLogout)
     }
 
+    override suspend fun clearLoginState(activity: FragmentActivity) {
+        activity.viewModels<AccountViewModel>().value.dispatch(AccountViewAction.ClearLoginState)
+    }
+
     override fun getAccountInfo(): AccountData? {
         return CacheManager.getDefault().getCache(Constants.CACHE_KEY_ACCOUNT_DATA)
     }
