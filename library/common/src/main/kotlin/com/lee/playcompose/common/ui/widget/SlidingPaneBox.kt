@@ -39,7 +39,10 @@ fun SlidingPaneBox(
     var offsetX by remember { mutableStateOf(0.dp) }
     val offsetXAnimate by animateDpAsState(targetValue = offsetX)
 
-    val closeAction = { offsetX = 0.dp }
+    val closeAction = {
+        state.expand = false
+        offsetX = 0.dp
+    }
     val openAction = {
         offsetX = if (slidingAlign == Alignment.CenterStart) slidingWidth else -slidingWidth
         state.expand = true
