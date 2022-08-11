@@ -7,6 +7,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.playcompose.base.core.ApplicationExtensions.app
+import com.lee.playcompose.base.extensions.lowestTime
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
@@ -73,7 +74,7 @@ class MyShareViewModel : ViewModel() {
                 }.onCompletion {
                     deleteLock.set(false)
                     viewStates = viewStates.copy(isLoading = false)
-                }.collect {
+                }.lowestTime().collect {
                     itemsDelete(content)
                     _viewEvents.send(MyShareViewEvent.DeleteShareEvent(app.getString(R.string.share_delete_success)))
                 }

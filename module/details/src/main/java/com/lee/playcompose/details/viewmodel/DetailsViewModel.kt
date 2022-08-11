@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.lee.playcompose.base.core.ApplicationExtensions.app
+import com.lee.playcompose.base.extensions.delay
+import com.lee.playcompose.base.extensions.lowestTime
 import com.lee.playcompose.common.constants.ApiConstants
 import com.lee.playcompose.common.entity.DetailsData
 import com.lee.playcompose.common.ui.widget.header.ActionMode
@@ -77,7 +79,7 @@ class DetailsViewModel(private val details: DetailsData) : ViewModel() {
             }.catch { error ->
                 viewStates = viewStates.copy(isLoading = false)
                 _viewEvents.send(DetailsViewEvent.CollectEvent(error.message))
-            }.collect {
+            }.lowestTime().collect {
                 viewStates = viewStates.copy(isLoading = false)
                 _viewEvents.send(DetailsViewEvent.CollectEvent(app.getString(R.string.menu_collect_complete)))
             }
