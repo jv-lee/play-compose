@@ -8,6 +8,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.lee.playcompose.base.extensions.lowestTime
 import com.lee.playcompose.base.utils.TimeUtil
 import com.lee.playcompose.common.entity.TodoData
 import com.lee.playcompose.common.extensions.checkData
@@ -110,10 +111,10 @@ class CreateTodoViewModel(private val todoData: TodoData?) : ViewModel(),
             }.onStart {
                 viewStates = viewStates.copy(isLoading = true)
             }.catch { error ->
-                viewStates = viewStates.copy(isLoading = false)
                 _viewEvents.send(CreateTodoViewEvent.RequestFailed(error.message))
-            }.collect {
+            }.onCompletion {
                 viewStates = viewStates.copy(isLoading = false)
+            }.lowestTime().collect {
                 _viewEvents.send(CreateTodoViewEvent.RequestSuccess(STATUS_UPCOMING))
             }
         }
@@ -135,10 +136,10 @@ class CreateTodoViewModel(private val todoData: TodoData?) : ViewModel(),
             }.onStart {
                 viewStates = viewStates.copy(isLoading = true)
             }.catch { error ->
-                viewStates = viewStates.copy(isLoading = false)
                 _viewEvents.send(CreateTodoViewEvent.RequestFailed(error.message))
-            }.collect {
+            }.onCompletion {
                 viewStates = viewStates.copy(isLoading = false)
+            }.lowestTime().collect {
                 _viewEvents.send(
                     CreateTodoViewEvent.RequestSuccess(
                         todoData?.status ?: STATUS_UPCOMING

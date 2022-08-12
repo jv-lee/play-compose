@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.playcompose.account.model.api.ApiService
+import com.lee.playcompose.base.extensions.lowestTime
 import com.lee.playcompose.common.entity.AccountData
 import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
@@ -76,7 +77,6 @@ class RegisterViewModel : ViewModel() {
         viewModelScope.launch {
             delay(300) // 延迟隐藏软键盘
             flow {
-                delay(200) // 延时让loading显示更平滑
                 // 校验输入格式
                 if (viewStates.username.isEmpty() ||
                     viewStates.password.isEmpty() ||
@@ -98,7 +98,7 @@ class RegisterViewModel : ViewModel() {
             }.catch { error ->
                 viewStates = viewStates.copy(isLoading = false)
                 _viewEvents.send(RegisterViewEvent.RegisterFailed(error.message))
-            }.collect {
+            }.lowestTime().collect {
                 viewStates = viewStates.copy(isLoading = false)
                 _viewEvents.send(RegisterViewEvent.RegisterSuccess(it))
             }

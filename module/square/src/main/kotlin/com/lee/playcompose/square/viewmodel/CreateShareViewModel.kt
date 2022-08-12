@@ -6,12 +6,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.lee.playcompose.base.extensions.lowestTime
 import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
 import com.lee.playcompose.square.model.api.ApiService
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 /**
@@ -55,13 +58,12 @@ class CreateShareViewModel : ViewModel() {
 
     private fun requestShare() {
         viewModelScope.launch {
+            // 校验输入格式
+            if (TextUtils.isEmpty(viewStates.shareTitle) || TextUtils.isEmpty(viewStates.shareContent)) {
+                _viewEvents.send(CreateShareViewEvent.CreateFailed("title || content is empty."))
+                return@launch
+            }
             flow {
-                delay(500)
-                // 校验输入格式
-                if (TextUtils.isEmpty(viewStates.shareTitle) || TextUtils.isEmpty(viewStates.shareContent)) {
-                    throw IllegalArgumentException("title || content is empty.")
-                }
-
                 val response = api.postShareDataSync(viewStates.shareTitle, viewStates.shareContent)
                 emit(response.checkData())
             }.onStart {
@@ -69,7 +71,7 @@ class CreateShareViewModel : ViewModel() {
             }.catch { error ->
                 viewStates = viewStates.copy(isLoading = false)
                 _viewEvents.send(CreateShareViewEvent.CreateFailed(error.message ?: ""))
-            }.collect {
+            }.lowestTime().collect {
                 viewStates = viewStates.copy(isLoading = false)
                 _viewEvents.send(CreateShareViewEvent.CreateSuccess)
             }
