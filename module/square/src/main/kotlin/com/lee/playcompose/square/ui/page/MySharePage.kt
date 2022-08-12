@@ -57,9 +57,6 @@ fun MySharePage(
                 is MyShareViewEvent.DeleteShareEvent -> {
                     toast(event.message)
                 }
-                is MyShareViewEvent.ResetSlidingState -> {
-                    slidingPaneState.closeAction()
-                }
             }
         }
     }

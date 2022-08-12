@@ -47,7 +47,10 @@ fun ActionTextItem(
                 color = Color.White,
                 modifier = Modifier
                     .fillMaxSize()
-                    .clickable { onItemDelete(item) }
+                    .clickable {
+                        state.closeAction()
+                        onItemDelete(item)
+                    }
                     .background(Color.Red)
                     .wrapContentSize(Alignment.Center)
             )

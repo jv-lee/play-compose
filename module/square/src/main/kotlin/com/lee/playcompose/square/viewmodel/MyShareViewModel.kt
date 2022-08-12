@@ -67,7 +67,6 @@ class MyShareViewModel : ViewModel() {
                 flow {
                     emit(api.postDeleteShareAsync(content.id).checkData())
                 }.onStart {
-                    _viewEvents.send(MyShareViewEvent.ResetSlidingState)
                     viewStates = viewStates.copy(isLoading = true)
                 }.catch { error ->
                     _viewEvents.send(MyShareViewEvent.DeleteShareEvent(error.message))
@@ -101,7 +100,6 @@ data class MyShareViewState(
 )
 
 sealed class MyShareViewEvent {
-    object ResetSlidingState : MyShareViewEvent()
     data class DeleteShareEvent(val message: String?) : MyShareViewEvent()
 }
 

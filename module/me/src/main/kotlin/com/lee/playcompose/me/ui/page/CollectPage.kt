@@ -47,9 +47,6 @@ fun CollectPage(
                 is CollectViewEvent.UnCollectEvent -> {
                     toast(event.message)
                 }
-                is CollectViewEvent.ResetSlidingState -> {
-                    slidingPaneState.closeAction()
-                }
             }
         }
     }

@@ -7,7 +7,6 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.playcompose.base.core.ApplicationExtensions.app
-import com.lee.playcompose.base.extensions.delay
 import com.lee.playcompose.base.extensions.lowestTime
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.extensions.checkData
@@ -66,7 +65,6 @@ class CollectViewModel : ViewModel() {
                 flow {
                     emit(api.postUnCollectAsync(content.id, content.originId).checkData())
                 }.onStart {
-                    _viewEvents.send(CollectViewEvent.ResetSlidingState)
                     viewStates = viewStates.copy(isLoading = true)
                 }.catch { error ->
                     _viewEvents.send(CollectViewEvent.UnCollectEvent(error.message))
@@ -100,7 +98,6 @@ data class CollectViewState(
 )
 
 sealed class CollectViewEvent {
-    object ResetSlidingState : CollectViewEvent()
     data class UnCollectEvent(val message: String?) : CollectViewEvent()
 }
 
