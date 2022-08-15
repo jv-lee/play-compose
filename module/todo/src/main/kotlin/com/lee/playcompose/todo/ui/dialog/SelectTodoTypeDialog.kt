@@ -1,4 +1,4 @@
-package com.lee.playcompose.todo.ui.page
+package com.lee.playcompose.todo.ui.dialog
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
