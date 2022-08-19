@@ -237,6 +237,8 @@ private fun TodoListItem(
                 modifier = Modifier
                     .padding(start = OffsetLarge, bottom = OffsetMedium, end = OffsetLarge)
             )
+        }
+        Box(modifier = Modifier.wrapContentHeight(align = Alignment.Bottom)) {
             HorizontallySpacer(color = AppTheme.colors.background)
         }
     }
