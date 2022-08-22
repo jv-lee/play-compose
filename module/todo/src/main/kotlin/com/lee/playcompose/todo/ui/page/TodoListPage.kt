@@ -1,5 +1,6 @@
 package com.lee.playcompose.todo.ui.page
 
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -11,10 +12,15 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.lee.playcompose.base.extensions.LocalNavController
@@ -238,10 +244,37 @@ private fun TodoListItem(
                     .padding(start = OffsetLarge, bottom = OffsetMedium, end = OffsetLarge)
             )
         }
+
+        // 重要标签构建角标
+        if (todoData.priority == TodoData.PRIORITY_HIGH) ItemSubscript()
+
+        // item line
         Box(modifier = Modifier.wrapContentHeight(align = Alignment.Bottom)) {
             HorizontallySpacer(color = AppTheme.colors.background)
         }
     }
+}
+
+@Composable
+private fun ItemSubscript() {
+    Canvas(modifier = Modifier.size(25.dp)) {
+        val path = Path().apply {
+            lineTo(0f, size.height)
+            lineTo(size.width, 0f)
+            lineTo(0f, 0f)
+        }
+        drawPath(path = path, color = Color.Red, style = Fill)
+    }
+
+    Text(
+        text = stringResource(id = R.string.todo_item_level_height),
+        fontSize = 8.sp,
+        color = Color.White,
+        modifier = Modifier
+            .rotate(-45f)
+            .offset(x = 3.dp, y = 2.dp)
+            .size(width = 25.dp, height = 25.dp)
+    )
 }
 
 /**
