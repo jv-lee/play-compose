@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.extensions.getAuthor
 import com.lee.playcompose.common.extensions.getCategory
@@ -50,7 +51,7 @@ fun ContentItem(
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 2,
                 modifier = Modifier
-                    .padding(top = OffsetMedium)
+                    .padding(top = OffsetMedium, bottom = OffsetMedium)
                     .constrainAs(title) {
                         start.linkTo(parent.start)
                         top.linkTo(author.bottom)
@@ -61,11 +62,14 @@ fun ContentItem(
                 text = item.getCategory(),
                 color = AppTheme.colors.focus,
                 fontSize = FontSizeSmallX,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1,
                 modifier = Modifier
-                    .padding(top = OffsetMedium)
                     .constrainAs(category) {
                         start.linkTo(parent.start)
+                        end.linkTo(time.start, OffsetMedium)
                         top.linkTo(title.bottom)
+                        width = Dimension.fillToConstraints
                     })
 
             Text(
@@ -79,5 +83,6 @@ fun ContentItem(
                         bottom.linkTo(category.bottom)
                     })
         }
+
     }
 }
