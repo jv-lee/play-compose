@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
     <!-- Base application theme. -->
     <style name="Theme.PlayCompose" parent="Theme.MaterialComponents.DayNight.NoActionBar">
@@ -17,10 +17,19 @@
         <item name="windowNoTitle">true</item>
         <item name="android:windowBackground">@drawable/splash_bg</item>
         <item name="android:overScrollMode">never</item>
-        <item name="android:statusBarColor" tools:targetApi="l">@android:color/transparent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
     <style name="Theme.ComposeApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.ComposeApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="ThemeDatePickerDialog" parent="android:Theme.Material.Light.Dialog">
+        <item name="android:colorAccent">#4100AB</item>
+    </style>
+
+    <style name="ThemeNightDatePickerDialog" parent="android:Theme.Material.Dialog">
+        <item name="android:colorAccent">@color/colorThemeFocus</item>
+        <item name="android:colorBackground">@color/colorThemeItem</item>
+    </style>
 </resources>

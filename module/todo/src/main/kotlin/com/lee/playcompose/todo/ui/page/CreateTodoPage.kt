@@ -36,6 +36,7 @@ import com.lee.playcompose.common.ui.theme.FontSizeMedium
 import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.theme.OffsetRadiusMedium
 import com.lee.playcompose.common.ui.widget.header.AppBarViewContainer
+import com.lee.playcompose.common.viewmodel.ThemeViewModel
 import com.lee.playcompose.todo.R
 import com.lee.playcompose.todo.ui.theme.TodoEditContentHeight
 import com.lee.playcompose.todo.ui.theme.TodoEditHeight
@@ -267,9 +268,15 @@ private fun rememberDatePickerDialog(
     calendar: Calendar,
     onDateSetListener: DatePickerDialog.OnDateSetListener?
 ): DatePickerDialog {
+    val viewModel: ThemeViewModel = activityViewModel(LocalActivity.current)
+    val theme =
+        if (viewModel.viewStates.isDark) CR.style.ThemeNightDatePickerDialog else CR.style.ThemeDatePickerDialog
     val datePicker = remember {
         DatePickerDialog(
-            activity, onDateSetListener, calendar.get(Calendar.YEAR),
+            activity,
+            theme,
+            onDateSetListener,
+            calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH),
             calendar.get(Calendar.DAY_OF_MONTH)
         )
