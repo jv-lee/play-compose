@@ -144,7 +144,11 @@ private fun BannerItemContainer(
 
     Box(modifier = Modifier.padding(boxPadding)) {
         if (clipCardEnable) {
-            Card(modifier = Modifier.fillMaxWidth()) { content() }
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                backgroundColor = Color.Transparent,
+                contentColor = Color.Transparent
+            ) { content() }
         } else {
             content()
         }
