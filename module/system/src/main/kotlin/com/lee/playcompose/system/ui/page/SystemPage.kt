@@ -58,7 +58,7 @@ fun SystemPage() {
     // double click close app.
     RouteBackHandler()
 
-    Box {
+    Box(Modifier.background(AppTheme.colors.background)) {
         // pageContent
         HorizontalPager(count = 2, state = pagerState) { page ->
             when (page) {

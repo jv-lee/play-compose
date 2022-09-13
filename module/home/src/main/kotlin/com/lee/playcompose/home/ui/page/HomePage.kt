@@ -1,6 +1,7 @@
 package com.lee.playcompose.home.ui.page
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
@@ -33,9 +34,11 @@ import com.lee.playcompose.common.ui.composable.HeaderSpacer
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.theme.OffsetMedium
 import com.lee.playcompose.common.ui.theme.ToolBarHeight
-import com.lee.playcompose.common.ui.widget.*
-import com.lee.playcompose.common.ui.widget.header.AppTextActionBar
+import com.lee.playcompose.common.ui.widget.BannerView
+import com.lee.playcompose.common.ui.widget.RefreshList
+import com.lee.playcompose.common.ui.widget.RouteBackHandler
 import com.lee.playcompose.common.ui.widget.header.AppHeaderContainer
+import com.lee.playcompose.common.ui.widget.header.AppTextActionBar
 import com.lee.playcompose.home.R
 import com.lee.playcompose.home.model.entity.HomeCategory
 import com.lee.playcompose.home.viewmodel.HomeViewAction
@@ -77,7 +80,7 @@ fun HomePage(
     // double click close app.
     RouteBackHandler()
 
-    Box {
+    Box(Modifier.background(AppTheme.colors.background)) {
         // content
         HomeContentList(
             viewState = viewState,

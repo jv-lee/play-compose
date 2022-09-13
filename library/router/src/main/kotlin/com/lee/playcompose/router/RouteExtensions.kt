@@ -34,7 +34,7 @@ fun NavGraphBuilder.tabComposable(
             } else if (tabZoomRoutes.contains(this.targetState.destination.route())) {
                 exitZoom()
             } else {
-                exitSlideIn()
+                exitSlideInOut()
             }
         },
         // 关闭页面进入动画
@@ -44,7 +44,7 @@ fun NavGraphBuilder.tabComposable(
             } else if (tabZoomRoutes.contains(this.initialState.destination.route())) {
                 popEnterZoom()
             } else {
-                popEnterSlideIn()
+                popEnterSlideInOut()
             }
         }
     )
@@ -56,8 +56,8 @@ fun NavGraphBuilder.themeComposable(
     arguments: List<NamedNavArgument> = emptyList(),
     deepLinks: List<NavDeepLink> = emptyList(),
     enterTransition: EnterTransition = enterSlideIn(),
-    exitTransition: ExitTransition = exitSlideIn(),
-    popEnterTransition: EnterTransition = popEnterSlideIn(),
+    exitTransition: ExitTransition = exitSlideInOut(),
+    popEnterTransition: EnterTransition = popEnterSlideInOut(),
     popExitTransition: ExitTransition = popExitSlideIn(),
     content: @Composable AnimatedVisibilityScope.(NavBackStackEntry) -> Unit
 ) {

@@ -1,9 +1,11 @@
 package com.lee.playcompose.square.ui.page
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -19,11 +21,12 @@ import com.lee.playcompose.common.entity.NavigationSelectEvent
 import com.lee.playcompose.common.extensions.transformDetails
 import com.lee.playcompose.common.ui.composable.ContentItem
 import com.lee.playcompose.common.ui.composable.HeaderSpacer
+import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.theme.ToolBarHeight
-import com.lee.playcompose.common.ui.widget.header.AppTextActionBar
-import com.lee.playcompose.common.ui.widget.header.AppHeaderContainer
 import com.lee.playcompose.common.ui.widget.RefreshList
 import com.lee.playcompose.common.ui.widget.RouteBackHandler
+import com.lee.playcompose.common.ui.widget.header.AppHeaderContainer
+import com.lee.playcompose.common.ui.widget.header.AppTextActionBar
 import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
 import com.lee.playcompose.square.R
@@ -56,7 +59,7 @@ fun SquarePage(
     // double click close app.
     RouteBackHandler()
 
-    Box {
+    Box(Modifier.background(AppTheme.colors.background)) {
         // content
         SquareContentList(viewState = viewState, onContentItemClick = {
             navController.navigateArgs(RoutePage.Details.route, it.transformDetails())

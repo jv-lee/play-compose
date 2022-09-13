@@ -49,7 +49,9 @@ fun MePage(
     RouteBackHandler()
 
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .background(AppTheme.colors.background)
     ) {
         MeHeader(accountViewState = accountViewState, notLoginClick = {
             navController.navigateArgs(RoutePage.Account.Login.route)
