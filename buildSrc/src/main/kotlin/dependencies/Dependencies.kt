@@ -56,9 +56,10 @@ object Dependencies {
         "com.google.accompanist:accompanist-systemuicontroller:${Version.accompanist}"
     const val composeSwiperRefresh =
         "com.google.accompanist:accompanist-swiperefresh:${Version.accompanist}"
-    const val composePager = "com.google.accompanist:accompanist-pager:${Version.accompanist}"
+    // pager后续版本有bug
+    const val composePager = "com.google.accompanist:accompanist-pager:0.24.1-alpha"
     const val composePagerIndicators =
-        "com.google.accompanist:accompanist-pager-indicators:${Version.accompanist}"
+        "com.google.accompanist:accompanist-pager-indicators:0.24.1-alpha"
     const val composeFlowlayout =
         "com.google.accompanist:accompanist-flowlayout:${Version.accompanist}"
     const val composeWebView =

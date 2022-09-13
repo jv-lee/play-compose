@@ -98,8 +98,6 @@ fun <T : Any> BannerView(
                             }
                             // up 忽略已被消费事件
                             dragEvent.changedToUpIgnoreConsumed() -> {
-                                // 当前页面没有任何滚动/动画的时候pagerState.targetPage为null，处理单机事件
-                                if (pagerState.targetPage == null) return@awaitPointerEventScope
                                 // 当pageCount大于1，且手指抬起时如果页面没有改变，就手动触发动画
                                 if (currentPageIndex == pagerState.currentPage && pagerState.pageCount > 1) {
                                     executeChangePage = !executeChangePage
