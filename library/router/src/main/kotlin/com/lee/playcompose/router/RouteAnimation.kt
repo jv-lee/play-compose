@@ -40,10 +40,14 @@ fun popEnterSlideInOut() = slideInHorizontally(
     animationSpec = tween(animationDuration)
 )
 
+@OptIn(ExperimentalAnimationApi::class)
 fun enterZoom() = scaleIn(initialScale = 0.95f, animationSpec = tween(animationDuration))
 
+@OptIn(ExperimentalAnimationApi::class)
 fun exitZoom() = scaleOut(targetScale = 1.05f, animationSpec = tween(animationDuration))
 
+@OptIn(ExperimentalAnimationApi::class)
 fun popEnterZoom() = scaleIn(initialScale = 1.05f, animationSpec = tween(animationDuration))
 
+@OptIn(ExperimentalAnimationApi::class)
 fun popExitAlphaHide() = fadeOut(targetAlpha = 1f, animationSpec = tween(animationDuration))

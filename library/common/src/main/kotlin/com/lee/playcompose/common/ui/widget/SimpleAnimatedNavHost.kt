@@ -17,7 +17,7 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
  * @date 2022/3/1
  */
 @Composable
-@ExperimentalAnimationApi
+@OptIn(ExperimentalAnimationApi::class)
 fun SimpleAnimatedNavHost(
     navController: NavHostController,
     startDestination: String,

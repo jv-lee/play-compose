@@ -2,6 +2,7 @@ package com.lee.playcompose.route
 
 import android.app.Activity
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.FastOutLinearInEasing
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
@@ -64,6 +65,7 @@ import com.lee.playcompose.home.R as HR
  * @date 2022/2/24
  */
 @Composable
+@OptIn(ExperimentalAnimationApi::class)
 fun Activity.RouteNavigator(
     viewModel: RouteNavigatorViewModel = viewModel(),
     accountService: AccountService = ModuleService.find()

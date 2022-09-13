@@ -7,8 +7,9 @@
 
 package com.lee.playcompose.base.extensions
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.gestures.LocalOverScrollConfiguration
+import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
@@ -53,6 +54,7 @@ fun FragmentActivity.ProviderActivity(content: @Composable () -> Unit) {
  * @param content 组件内容
  */
 @Composable
+@OptIn(ExperimentalAnimationApi::class)
 fun ProviderNavController(content: @Composable () -> Unit) {
     CompositionLocalProvider(LocalNavController provides rememberAnimatedNavController()) {
         content()
@@ -65,7 +67,7 @@ fun ProviderNavController(content: @Composable () -> Unit) {
  */
 @Composable
 fun ProviderOverScroll(content: @Composable () -> Unit) {
-    CompositionLocalProvider(LocalOverScrollConfiguration provides null) {
+    CompositionLocalProvider(LocalOverscrollConfiguration provides null) {
         content()
     }
 }

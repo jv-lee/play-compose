@@ -10,7 +10,7 @@ import androidx.compose.animation.*
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.TweenSpec
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
@@ -96,8 +96,8 @@ fun BottomSlideAnimatedVisible(
  */
 @Composable
 fun rememberImePaddingValue(
-    imeInsets: PaddingValues = rememberInsetsPaddingValues(insets = LocalWindowInsets.current.ime),
-    navigationInserts: PaddingValues = rememberInsetsPaddingValues(insets = LocalWindowInsets.current.navigationBars)
+    imeInsets: PaddingValues = WindowInsets.ime.asPaddingValues(),
+    navigationInserts: PaddingValues = WindowInsets.navigationBars.asPaddingValues()
 ): Float {
     var paddingValue by remember { mutableStateOf(0f) }
     val imeBottom = imeInsets.calculateBottomPadding()

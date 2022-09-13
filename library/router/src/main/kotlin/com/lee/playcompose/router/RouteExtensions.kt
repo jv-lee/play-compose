@@ -16,7 +16,7 @@ import androidx.navigation.*
 import com.google.accompanist.navigation.animation.composable
 import com.lee.playcompose.base.net.HttpManager
 
-@ExperimentalAnimationApi
+@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.tabComposable(
     route: String,
     tabDefaultRoutes: List<String> = emptyList(),
@@ -50,7 +50,7 @@ fun NavGraphBuilder.tabComposable(
     )
 }
 
-@ExperimentalAnimationApi
+@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.themeComposable(
     route: String,
     tabZoomRoutes: List<String> = emptyList(),
