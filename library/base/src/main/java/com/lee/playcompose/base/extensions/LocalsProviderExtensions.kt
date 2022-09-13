@@ -3,7 +3,7 @@
  * @author jv.lee
  * @date 2022/3/18
  */
-@file:OptIn(ExperimentalFoundationApi::class)
+@file:OptIn(ExperimentalFoundationApi::class, ExperimentalAnimationApi::class)
 
 package com.lee.playcompose.base.extensions
 
@@ -54,7 +54,6 @@ fun FragmentActivity.ProviderActivity(content: @Composable () -> Unit) {
  * @param content 组件内容
  */
 @Composable
-@OptIn(ExperimentalAnimationApi::class)
 fun ProviderNavController(content: @Composable () -> Unit) {
     CompositionLocalProvider(LocalNavController provides rememberAnimatedNavController()) {
         content()

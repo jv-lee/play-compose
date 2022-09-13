@@ -1,3 +1,4 @@
+@file:OptIn(ExperimentalAnimationApi::class)
 package com.lee.playcompose.route
 
 import android.app.Activity
@@ -65,7 +66,6 @@ import com.lee.playcompose.home.R as HR
  * @date 2022/2/24
  */
 @Composable
-@OptIn(ExperimentalAnimationApi::class)
 fun Activity.RouteNavigator(
     viewModel: RouteNavigatorViewModel = viewModel(),
     accountService: AccountService = ModuleService.find()

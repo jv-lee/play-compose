@@ -1,3 +1,4 @@
+@file:OptIn(ExperimentalAnimationApi::class)
 /*
  * app全局路由扩展函数
  * @author jv.lee
@@ -16,7 +17,6 @@ import androidx.navigation.*
 import com.google.accompanist.navigation.animation.composable
 import com.lee.playcompose.base.net.HttpManager
 
-@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.tabComposable(
     route: String,
     tabDefaultRoutes: List<String> = emptyList(),
@@ -50,7 +50,6 @@ fun NavGraphBuilder.tabComposable(
     )
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.themeComposable(
     route: String,
     tabZoomRoutes: List<String> = emptyList(),
