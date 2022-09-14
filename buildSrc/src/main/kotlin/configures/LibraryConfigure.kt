@@ -5,7 +5,6 @@ import build.BuildPlugin
 import com.android.build.gradle.LibraryExtension
 import configures.core.freeCompilerArgs
 import dependencies.Version
-import kapt
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -72,10 +71,6 @@ fun Project.libraryConfigure(
                     srcDir("src/main/assets")
                 }
             }
-        }
-
-        kapt {
-            generateStubs = true
         }
 
         androidConfigure()

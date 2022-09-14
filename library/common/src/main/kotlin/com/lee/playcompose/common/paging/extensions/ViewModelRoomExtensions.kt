@@ -3,6 +3,8 @@
  * @author jv.lee
  * @date 2022/4/13
  */
+@file:OptIn(ExperimentalPagingApi::class)
+
 package com.lee.playcompose.common.paging.extensions
 
 import androidx.lifecycle.ViewModel
@@ -25,7 +27,6 @@ import kotlinx.coroutines.flow.map
  * @param savedKey 缓存key
  * @param requestAction 分页数据网络请求suspend函数
  */
-@OptIn(ExperimentalPagingApi::class)
 inline fun <reified T : Any> ViewModel.roomPager(
     config: PagingConfig = PagingConfig(
         pageSize = 20,
@@ -63,7 +64,6 @@ inline fun <reified T : Any> ViewModel.roomPager(
  * @param savedKey 缓存key
  * @param requestAction 分页数据网络请求suspend函数
  */
-@OptIn(ExperimentalPagingApi::class)
 inline fun <reified T : Any> ViewModel.singleRoomPager(
     config: PagingConfig = PagingConfig(
         pageSize = 20,
@@ -96,7 +96,6 @@ inline fun <reified T : Any> ViewModel.singleRoomPager(
     }.cachedIn(viewModelScope)
 }
 
-@OptIn(ExperimentalPagingApi::class)
 class RemoteRoomMediator<T>(
     private val savedKey: String,
     private val initialKey: Int,

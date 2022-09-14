@@ -5,7 +5,6 @@ import build.*
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import configures.core.freeCompilerArgs
 import dependencies.Version
-import kapt
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -75,10 +74,6 @@ fun Project.appConfigure(
             dataBinding = true
             viewBinding = true
             compose = true
-        }
-
-        kapt {
-            generateStubs = true
         }
 
         val signingConfigs = signingConfigs.create(BuildTypes.RELEASE).apply {

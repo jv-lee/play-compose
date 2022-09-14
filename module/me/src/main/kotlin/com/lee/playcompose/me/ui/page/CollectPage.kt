@@ -4,7 +4,6 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -68,7 +67,6 @@ fun CollectPage(
     }
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 private fun CollectContent(
     viewState: CollectViewState,

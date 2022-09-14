@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalComposeUiApi::class)
+
 package com.lee.playcompose.account.ui.page
 
 import androidx.compose.foundation.background
@@ -48,7 +50,6 @@ const val REQUEST_KEY_LOGIN = "requestKey:login"
  * @author jv.lee
  * @date 2022/3/23
  */
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun LoginPage(
     navController: NavController = LocalNavController.current,

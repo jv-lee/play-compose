@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalCoilApi::class)
+
 package com.lee.playcompose.common.ui.composable
 
 import androidx.compose.foundation.Image
@@ -27,7 +29,6 @@ import com.lee.playcompose.common.ui.theme.*
  * @author jv.lee
  * @date 2022/3/14
  */
-@OptIn(ExperimentalCoilApi::class)
 @Composable
 fun ContentPictureItem(
     item: Content,

@@ -1,3 +1,4 @@
+@file:OptIn(ExperimentalComposeUiApi::class)
 package com.lee.playcompose.common.ui.widget
 
 import android.view.MotionEvent
@@ -12,7 +13,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.pager.ExperimentalPagerApi
 import kotlin.math.abs
 
 /**
@@ -26,7 +26,6 @@ import kotlin.math.abs
  * @author jv.lee
  * @date 2022/4/1
  */
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SlidingPaneBox(
     modifier: Modifier = Modifier,
@@ -117,15 +116,12 @@ fun SlidingPaneBox(
 
 data class SlidingPaneState(var expand: Boolean = false, var closeAction: () -> Unit = {})
 
-@ExperimentalPagerApi
 @Composable
 fun rememberSlidingPaneState(): MutableState<SlidingPaneState> = remember {
     mutableStateOf(SlidingPaneState())
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Stable
-@Suppress("ModifierSlidingPaneState")
 fun Modifier.slidingPaneState(state: SlidingPaneState) =
     this.then(pointerInteropFilter { event ->
         if (event.action == MotionEvent.ACTION_DOWN) {

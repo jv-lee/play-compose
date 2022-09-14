@@ -1,3 +1,4 @@
+@file:OptIn(ExperimentalComposeUiApi::class)
 package com.lee.playcompose.square.ui.page
 
 import androidx.compose.foundation.layout.fillMaxSize
@@ -39,7 +40,6 @@ import com.lee.playcompose.square.viewmodel.CreateShareViewState
  * @author jv.lee
  * @date 2022/3/16
  */
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun CreateSharePage(
     navController: NavController = LocalNavController.current,
@@ -88,7 +88,6 @@ fun CreateSharePage(
     }
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 private fun CreateShareContent(
     viewState: CreateShareViewState,

@@ -1,3 +1,4 @@
+@file:OptIn(ExperimentalComposeUiApi::class)
 package com.lee.playcompose.search.ui.page
 
 import androidx.compose.foundation.clickable
@@ -44,7 +45,6 @@ import com.lee.playcompose.search.viewmodel.SearchViewState
  * @author jv.lee
  * @date 2022/3/16
  */
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SearchPage(
     navController: NavController = LocalNavController.current,
@@ -119,7 +119,6 @@ private fun SearchAppBarContainer(
     )
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 private fun SearchContent(
     viewState: SearchViewState,
@@ -143,7 +142,7 @@ private fun SearchContent(
 }
 
 @Composable
-private fun ColumnScope.SearchHotContent(
+private fun SearchHotContent(
     viewState: SearchViewState,
     onSearchClick: (String) -> Unit
 ) {

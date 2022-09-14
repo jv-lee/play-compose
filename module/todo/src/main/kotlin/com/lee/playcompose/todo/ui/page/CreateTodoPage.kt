@@ -1,3 +1,4 @@
+@file:OptIn(ExperimentalComposeUiApi::class)
 package com.lee.playcompose.todo.ui.page
 
 import android.app.DatePickerDialog
@@ -53,7 +54,6 @@ import com.lee.playcompose.common.R as CR
  * @author jv.lee
  * @date 2022/4/7
  */
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun CreateTodoPage(
     todoData: TodoData? = null,

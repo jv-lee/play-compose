@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalFoundationApi::class)
+
 package com.lee.playcompose.todo.ui.page
 
 import androidx.compose.foundation.Canvas
@@ -119,7 +121,6 @@ fun TodoListPage(
         })
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun TodoListContent(
     viewState: TodoListViewState,

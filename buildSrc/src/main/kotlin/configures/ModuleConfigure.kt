@@ -8,7 +8,6 @@ import commonProcessors
 import commonTest
 import configures.core.freeCompilerArgs
 import dependencies.Version
-import kapt
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -67,10 +66,6 @@ fun Project.moduleConfigure(
             dataBinding = true
             viewBinding = true
             compose = true
-        }
-
-        kapt {
-            generateStubs = true
         }
 
         androidConfigure()

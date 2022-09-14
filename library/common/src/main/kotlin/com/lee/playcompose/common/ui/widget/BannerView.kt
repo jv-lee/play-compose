@@ -1,4 +1,7 @@
-@file:OptIn(ExperimentalCoilApi::class, ExperimentalComposeUiApi::class)
+@file:OptIn(
+    ExperimentalCoilApi::class,
+    ExperimentalComposeUiApi::class,
+)
 
 package com.lee.playcompose.common.ui.widget
 
