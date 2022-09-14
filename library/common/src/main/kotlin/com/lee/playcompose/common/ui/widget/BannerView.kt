@@ -165,18 +165,11 @@ private fun <T : Any> BannerIndicator(
                 val color = if (index == page) Color.White else Color.Gray
                 Box(
                     modifier = Modifier
+                        .padding(OffsetSmall)
                         .clip(CircleShape)
                         .background(color)
                         .size(5.dp)
                 )
-                //指示点间的间隔
-                if (index != data.lastIndex) {
-                    Spacer(
-                        modifier = Modifier
-                            .height(0.dp)
-                            .width(4.dp)
-                    )
-                }
             }
         }
     }
