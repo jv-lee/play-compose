@@ -18,8 +18,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.paging.compose.itemsIndexed
-import com.google.accompanist.insets.LocalWindowInsets
-import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.lee.playcompose.base.bus.ChannelBus
 import com.lee.playcompose.base.extensions.LocalNavController
 import com.lee.playcompose.base.extensions.ScreenSizeChange
@@ -126,11 +124,9 @@ private fun HomeContentList(
         isRefreshing = isRefreshing,
         listState = listState,
         navigationPadding = true,
-        indicatorPadding = rememberInsetsPaddingValues(
-            insets = LocalWindowInsets.current.statusBars,
-            applyTop = true,
-            additionalTop = ToolBarHeight
-        )
+        indicatorPadding = WindowInsets(
+            top = ToolBarHeight + WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
+        ).asPaddingValues()
     ) {
 
         // header spacer

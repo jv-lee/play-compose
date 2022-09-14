@@ -1,5 +1,6 @@
 package com.lee.playcompose.system.ui.page
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -18,8 +19,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.paging.compose.itemsIndexed
 import com.google.accompanist.flowlayout.FlowRow
-import com.google.accompanist.insets.LocalWindowInsets
-import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.lee.playcompose.base.extensions.LocalNavController
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.entity.NavigationItem
@@ -63,13 +62,13 @@ fun NavigationContentPage(
     })
 }
 
+@SuppressLint("FrequentlyChangedStateReadInComposition")
 @Composable
 private fun NavigationContent(
     viewState: NavigationContentViewState,
     itemClick: (Content) -> Unit,
 ) {
-    val statusInsets =
-        rememberInsetsPaddingValues(insets = LocalWindowInsets.current.statusBars)
+    val statusInsets = WindowInsets.statusBars.asPaddingValues()
     val toolbarOffset = (statusInsets.calculateTopPadding() + ToolBarHeight)
 
     val contentList = viewState.savedPager.getLazyPagingItems()

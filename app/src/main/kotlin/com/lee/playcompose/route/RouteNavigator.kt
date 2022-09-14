@@ -1,4 +1,5 @@
 @file:OptIn(ExperimentalAnimationApi::class)
+
 package com.lee.playcompose.route
 
 import android.app.Activity
@@ -32,8 +33,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.google.accompanist.insets.LocalWindowInsets
-import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.lee.playcompose.BuildConfig
 import com.lee.playcompose.R
 import com.lee.playcompose.base.bus.ChannelBus
@@ -92,11 +91,7 @@ fun Activity.RouteNavigator(
         }
     }
 
-    Box(
-        modifier = Modifier
-            .padding(rememberInsetsPaddingValues(insets = LocalWindowInsets.current.navigationBars))
-            .background(AppTheme.colors.background)
-    ) {
+    Box(modifier = Modifier.background(AppTheme.colors.background)) {
         // 内容路由
         SimpleAnimatedNavHost(
             navController = navController,
@@ -183,7 +178,7 @@ private fun FloatingView(click: () -> Unit = {}) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(rememberInsetsPaddingValues(insets = LocalWindowInsets.current.navigationBars))
+                .navigationBarsPadding()
                 .padding(bottom = NavigationTabHeight),
         ) {
             FloatingBox(

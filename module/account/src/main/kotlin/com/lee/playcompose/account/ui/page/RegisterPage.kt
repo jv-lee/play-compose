@@ -20,12 +20,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.google.accompanist.insets.LocalWindowInsets
-import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.lee.playcompose.account.R
 import com.lee.playcompose.account.ui.composable.AccountSpacer
 import com.lee.playcompose.account.ui.theme.ButtonLockColor
@@ -53,8 +50,7 @@ fun RegisterPage(
     viewModel: RegisterViewModel = viewModel(),
     accountViewModel: AccountViewModel = activityViewModel()
 ) {
-    val imeInsets = rememberInsetsPaddingValues(insets = LocalWindowInsets.current.ime)
-    val imePadding = rememberImePaddingValue(imeInsets = imeInsets)
+    val imeInsets = WindowInsets.ime.asPaddingValues()
     val keyboardController = LocalSoftwareKeyboardController.current
     val viewState = viewModel.viewStates
 
@@ -83,11 +79,11 @@ fun RegisterPage(
     Column(
         modifier = Modifier
             .background(AppTheme.colors.background)
+            .onTap { keyboardController?.hide() }
             .fillMaxSize()
-            .padding(bottom = imePadding.dp)
+            .imePadding()
             .wrapContentSize(Alignment.Center)
-            .onTap { keyboardController?.hide() })
-    {
+    ) {
         RegisterTitle()
         RegisterInputContent(viewState = viewState, usernameChange = {
             viewModel.dispatch(RegisterViewAction.ChangeUsername(it))

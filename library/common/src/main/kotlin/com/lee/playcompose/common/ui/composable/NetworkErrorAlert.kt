@@ -2,7 +2,7 @@ package com.lee.playcompose.common.ui.composable
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Snackbar
@@ -12,8 +12,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.insets.LocalWindowInsets
-import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.base.extensions.BottomSlideAnimatedVisible
 import com.lee.playcompose.common.R
@@ -31,7 +29,7 @@ fun NetworkErrorAlert(visible: Boolean) {
             modifier = Modifier
                 .fillMaxSize()
                 .wrapContentSize(align = Alignment.BottomCenter)
-                .padding(rememberInsetsPaddingValues(insets = LocalWindowInsets.current.navigationBars))
+                .navigationBarsPadding()
         ) {
             Snackbar(backgroundColor = AppTheme.colors.item, shape = RoundedCornerShape(0.dp)) {
                 Text(

@@ -2,6 +2,9 @@ package com.lee.playcompose.square.ui.page
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -11,8 +14,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.paging.compose.itemsIndexed
-import com.google.accompanist.insets.LocalWindowInsets
-import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.lee.playcompose.base.bus.ChannelBus
 import com.lee.playcompose.base.extensions.LocalActivity
 import com.lee.playcompose.base.extensions.LocalNavController
@@ -95,11 +96,9 @@ private fun SquareContentList(
         lazyPagingItems = contentList,
         listState = listState,
         navigationPadding = true,
-        indicatorPadding = rememberInsetsPaddingValues(
-            insets = LocalWindowInsets.current.statusBars,
-            applyTop = true,
-            additionalTop = ToolBarHeight
-        )
+        indicatorPadding = WindowInsets(
+            top = ToolBarHeight + WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
+        ).asPaddingValues()
     ) {
         // header spacer
         item { HeaderSpacer() }
