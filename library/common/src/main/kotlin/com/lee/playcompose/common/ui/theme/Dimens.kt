@@ -7,6 +7,7 @@ import androidx.compose.ui.unit.sp
 val ToolBarHeight = 56.dp
 val NavigationBarHeight = 56.dp
 val ListStateItemHeight = 60.dp
+val TabBarHeight = 36.dp
 
 // 全局通用radius值
 val OffsetRadiusLarge = 32.dp

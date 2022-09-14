@@ -79,7 +79,7 @@ fun CoinPage(
         actionClick = { navController.navigateArgs(RoutePage.Details.route, viewState.detailsData) }
     ) {
         Box {
-            Box(modifier = Modifier.padding(top = 182.dp)) {
+            Box(modifier = Modifier.padding(top = 170.dp)) {
                 CoinRecordContent(viewState = viewState)
             }
             CoinRecordHeader(accountViewState = accountViewState, coinRankClick = {
@@ -148,7 +148,6 @@ private fun CoinRecordHeader(accountViewState: AccountViewState, coinRankClick: 
                 .fillMaxWidth()
                 .wrapContentHeight()
                 .padding(
-                    top = OffsetMedium,
                     start = OffsetLarge,
                     end = OffsetLarge
                 )

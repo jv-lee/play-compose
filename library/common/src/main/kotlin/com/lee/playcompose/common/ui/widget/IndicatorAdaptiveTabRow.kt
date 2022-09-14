@@ -3,10 +3,7 @@ package com.lee.playcompose.common.ui.widget
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -21,6 +18,7 @@ import androidx.compose.ui.platform.debugInspectorInfo
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.lee.playcompose.common.ui.theme.AppTheme
+import com.lee.playcompose.common.ui.theme.TabBarHeight
 
 /**
  * 自适应指示器宽度TabRow
@@ -47,7 +45,9 @@ fun <T> IndicatorAdaptiveTabRow(
 
     ScrollableTabRow(
         selectedTabIndex = selectedTabIndex,
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(TabBarHeight),
         backgroundColor = background,
         edgePadding = 0.dp,
         indicator = { tabPositions ->
