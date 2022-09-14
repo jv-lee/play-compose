@@ -26,10 +26,7 @@ import coil.compose.rememberImagePainter
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
-import com.lee.playcompose.common.ui.theme.OffsetLargeMax
-import com.lee.playcompose.common.ui.theme.OffsetMedium
-import com.lee.playcompose.common.ui.theme.OffsetRadiusMedium
-import com.lee.playcompose.common.ui.theme.OffsetSmall
+import com.lee.playcompose.common.ui.theme.*
 import kotlinx.coroutines.delay
 
 /**
@@ -146,7 +143,7 @@ private fun BannerItemContainer(
                 .padding(OffsetSmall)
                 .fillMaxSize(),
             shape = RoundedCornerShape(OffsetRadiusMedium),
-            color = Color.Transparent,
+            color = AppTheme.colors.background,
             elevation = OffsetSmall,
             content = content
         )
