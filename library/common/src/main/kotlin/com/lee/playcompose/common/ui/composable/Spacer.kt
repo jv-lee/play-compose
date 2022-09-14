@@ -11,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.insets.statusBarsPadding
 import com.lee.playcompose.common.ui.theme.NavigationBarHeight
 import com.lee.playcompose.common.ui.theme.ToolBarHeight
 
@@ -22,8 +21,7 @@ import com.lee.playcompose.common.ui.theme.ToolBarHeight
 fun HeaderSpacer() {
     Spacer(
         modifier = Modifier
-            .statusBarsPadding()
-            .height(ToolBarHeight)
+            .height(ToolBarHeight + WindowInsets.statusBars.asPaddingValues().calculateTopPadding())
     )
 }
 

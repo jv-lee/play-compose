@@ -16,7 +16,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.google.accompanist.insets.statusBarsPadding
 import com.lee.playcompose.R
 import com.lee.playcompose.base.extensions.FadeAnimatedVisibility
 import com.lee.playcompose.base.extensions.LocalActivity
@@ -103,8 +102,8 @@ private fun SplashAdView(viewState: SplashViewState, onNextClick: () -> Unit) {
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color(0x1a000000)),
                 modifier = Modifier
                     .align(Alignment.TopEnd)
-                    .statusBarsPadding()
                     .padding(top = OffsetSmall, end = OffsetLarge)
+                    .statusBarsPadding()
             ) {
                 Text(text = viewState.timeText, color = Color.White)
             }

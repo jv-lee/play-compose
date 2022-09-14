@@ -91,7 +91,11 @@ fun Activity.RouteNavigator(
         }
     }
 
-    Box(modifier = Modifier.background(AppTheme.colors.background)) {
+    Box(
+        modifier = Modifier
+            .background(AppTheme.colors.background)
+            .navigationBarsPadding()
+    ) {
         // 内容路由
         SimpleAnimatedNavHost(
             navController = navController,

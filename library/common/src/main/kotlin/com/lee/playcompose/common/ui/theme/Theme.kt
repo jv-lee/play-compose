@@ -11,7 +11,6 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.FragmentActivity
-import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.lee.playcompose.base.extensions.ProviderActivity
 import com.lee.playcompose.base.extensions.ProviderNavController
@@ -149,13 +148,11 @@ fun FragmentActivity.PlayComposeTheme(
         ProviderActivity {
             ProviderNavController {
                 ProviderOverScroll {
-                    ProvideWindowInsets {
-                        MaterialTheme(
-                            typography = typography,
-                            shapes = Shapes,
-                            content = content
-                        )
-                    }
+                    MaterialTheme(
+                        typography = typography,
+                        shapes = Shapes,
+                        content = content
+                    )
                 }
             }
         }

@@ -23,7 +23,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.insets.statusBarsHeight
 import com.lee.playcompose.common.ui.composable.HeaderSpacer
 import com.lee.playcompose.common.ui.theme.*
 import com.lee.playcompose.common.ui.widget.header.ActionMode.*
@@ -69,8 +68,8 @@ fun AppBarView(
         Spacer(
             modifier = Modifier
                 .fillMaxWidth()
-                .statusBarsHeight()
                 .background(backgroundColor)
+                .windowInsetsTopHeight(WindowInsets.statusBars)
         )
         Box {
             TopAppBar(
