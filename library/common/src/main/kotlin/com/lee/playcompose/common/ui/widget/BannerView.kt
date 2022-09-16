@@ -1,7 +1,4 @@
-@file:OptIn(
-    ExperimentalCoilApi::class,
-    ExperimentalComposeUiApi::class,
-)
+@file:OptIn(ExperimentalCoilApi::class)
 
 package com.lee.playcompose.common.ui.widget
 
@@ -15,7 +12,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -55,10 +51,7 @@ fun <T : Any> BannerView(
     clipCardEnable: Boolean = true,
     loopEnable: Boolean = true,
 ) {
-    //无限翻页最大倍数 count * filed
-    val looperCountFactor = 500
-    val pagerState =
-        rememberPagerState(initialPage = getStartSelectItem(data.size, looperCountFactor))
+    val pagerState = rememberPagerState(initialPage = getStartSelectItem(data.size))
 
     var executeChangePage by remember { mutableStateOf(false) }
     var currentPageIndex = 0
@@ -68,9 +61,9 @@ fun <T : Any> BannerView(
         if (pagerState.pageCount > 0 && loopEnable) {
             delay(timeMillis = timeMillis)
             var itemIndex = pagerState.currentPage
-            if (itemIndex == looperCountFactor * 3 - 1) {
-                val startIndex = getStartSelectItem(data.size, looperCountFactor)
-                pagerState.animateScrollToPage(startIndex)
+            if (itemIndex == getRealCount() - 1) {
+                val startIndex = getStartSelectItem(data.size)
+                pagerState.scrollToPage(startIndex)
             } else {
                 ++itemIndex
                 pagerState.animateScrollToPage(itemIndex)
@@ -80,7 +73,7 @@ fun <T : Any> BannerView(
 
     Box(modifier = modifier) {
         HorizontalPager(
-            count = looperCountFactor * 3,
+            count = getRealCount(),
             state = pagerState,
             contentPadding = PaddingValues(horizontal = if (clipCardEnable) OffsetLargeMax else 0.dp),
             modifier = Modifier
@@ -178,20 +171,19 @@ private fun <T : Any> BannerIndicator(
     }
 }
 
-private fun getRealIndex(position: Int, size: Int): Int {
-    return position % size
-}
+private const val looperCountFactor = 500
 
-private fun getStartSelectItem(size: Int, looperCount: Int): Int {
+private fun getRealIndex(position: Int, size: Int) = position % size
+
+private fun getRealCount() = looperCountFactor * 3
+
+private fun getStartSelectItem(size: Int): Int {
     // 我们设置当前选中的位置为Integer.MAX_VALUE / 2,这样开始就能往左滑动
     // 但是要保证这个值与getRealPosition 的 余数为0，因为要从第一页开始显示
-    var currentItem: Int = size * looperCount / 2
-    val realIndex = getRealIndex(currentItem, size)
-    if (realIndex == 0) {
-        return currentItem
-    }
+    var currentItem: Int = size * looperCountFactor / 2
+
     // 直到找到从0开始的位置
-    while (realIndex != 0) {
+    while (getRealIndex(currentItem, size) != 0) {
         currentItem++
     }
     return currentItem
