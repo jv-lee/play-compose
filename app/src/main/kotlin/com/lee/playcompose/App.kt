@@ -1,7 +1,6 @@
 package com.lee.playcompose
 
 import android.app.Activity
-import android.os.Bundle
 import com.lee.playcompose.base.cache.CacheManager
 import com.lee.playcompose.base.core.BaseApplication
 import com.lee.playcompose.base.interadp.SimpleActivityLifecycleCallbacks
@@ -26,10 +25,10 @@ class App : BaseApplication() {
 
     private val activityLifecycleCallbacks = object : SimpleActivityLifecycleCallbacks() {
 
-        override fun onActivityCreated(activity: Activity, bundle: Bundle?) {
+        override fun onActivityResumed(activity: Activity) {
             // 应用内夜间模式主题适配
             activity.runInternalBlock { activity.appThemeSet() }
-            super.onActivityCreated(activity, bundle)
+            super.onActivityResumed(activity)
         }
 
     }
