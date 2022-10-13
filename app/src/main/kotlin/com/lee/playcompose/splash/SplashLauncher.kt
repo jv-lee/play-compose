@@ -66,7 +66,6 @@ private fun SplashPage(viewModel: SplashViewModel) {
         modifier = Modifier
             .fillMaxSize()
             .background(color = AppTheme.colors.window)
-            .padding(bottom = 86.dp)
     ) {
         Image(
             painter = painterResource(id = viewState.splashLogoRes),
@@ -76,7 +75,9 @@ private fun SplashPage(viewModel: SplashViewModel) {
         Image(
             painter = painterResource(id = viewState.splashInfoRes),
             contentDescription = null,
-            modifier = Modifier.align(alignment = Alignment.BottomCenter)
+            modifier = Modifier
+                .align(alignment = Alignment.BottomCenter)
+                .padding(bottom = 86.dp)
         )
         SplashAdView(viewState = viewState, onNextClick = {
             viewModel.dispatch(SplashViewAction.HideSplash)
