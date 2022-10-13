@@ -10,7 +10,6 @@ import android.graphics.Color
 import com.lee.playcompose.base.tools.DarkModeTools
 import com.lee.playcompose.base.tools.StatusTools.setDarkStatusIcon
 import com.lee.playcompose.base.tools.StatusTools.setLightStatusIcon
-import com.lee.playcompose.base.tools.StatusTools.setNavigationBarColor
 
 /**
  * activity主题根据深色模式适配
@@ -18,11 +17,11 @@ import com.lee.playcompose.base.tools.StatusTools.setNavigationBarColor
 fun Activity.appThemeSet() {
     // 主题icon适配
     if (DarkModeTools.get().isDarkTheme()) {
-        setNavigationBarColor(Color.BLACK)
-        setLightStatusIcon()
+        window.navigationBarColor = Color.BLACK
+        window.setLightStatusIcon()
     } else {
-        setNavigationBarColor(Color.WHITE)
-        setDarkStatusIcon()
+        window.navigationBarColor = Color.WHITE
+        window.setDarkStatusIcon()
     }
 }
 
