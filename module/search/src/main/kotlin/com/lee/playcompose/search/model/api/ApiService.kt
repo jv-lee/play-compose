@@ -3,8 +3,10 @@ package com.lee.playcompose.search.model.api
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.entity.Data
 import com.lee.playcompose.common.entity.PageData
+import com.lee.playcompose.common.entity.SearchHot
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
 
@@ -21,5 +23,8 @@ interface ApiService {
         @Path("page") page: Int,
         @Field("k") key: String
     ): Data<PageData<Content>>
+
+    @GET("hotkey/json")
+    suspend fun getSearchHotAsync(): Data<List<SearchHot>>
 
 }

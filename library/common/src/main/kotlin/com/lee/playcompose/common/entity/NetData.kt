@@ -113,7 +113,7 @@ data class ParentTab(
     val userControlSetTop: Boolean,
     val visible: Int,
     val children: List<Tab>
-) :Parcelable
+) : Parcelable
 
 @Keep
 data class NavigationItem(
@@ -171,3 +171,13 @@ data class TodoData(
         const val PRIORITY_HIGH = 1
     }
 }
+
+@Parcelize
+@Keep
+data class SearchHot(
+    val id: Long,
+    val link: String,
+    val name: String,
+    val order: Int,
+    val visible: Int
+) : Parcelable

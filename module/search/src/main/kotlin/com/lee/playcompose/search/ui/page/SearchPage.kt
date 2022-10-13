@@ -1,4 +1,5 @@
 @file:OptIn(ExperimentalComposeUiApi::class)
+
 package com.lee.playcompose.search.ui.page
 
 import androidx.compose.foundation.clickable
@@ -28,13 +29,14 @@ import com.google.accompanist.flowlayout.FlowRow
 import com.lee.playcompose.base.extensions.LocalNavController
 import com.lee.playcompose.base.extensions.onTap
 import com.lee.playcompose.common.entity.SearchHistory
+import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.ui.composable.AppTextField
 import com.lee.playcompose.common.ui.theme.*
 import com.lee.playcompose.common.ui.widget.header.AppBarViewContainer
 import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
 import com.lee.playcompose.search.R
-import com.lee.playcompose.search.model.entity.SearchHot
+import com.lee.playcompose.search.model.entity.SearchHotUI
 import com.lee.playcompose.search.viewmodel.SearchViewAction
 import com.lee.playcompose.search.viewmodel.SearchViewEvent
 import com.lee.playcompose.search.viewmodel.SearchViewModel
@@ -61,6 +63,10 @@ fun SearchPage(
                 is SearchViewEvent.NavigationSearch -> {
                     keyboardController?.hide()
                     navController.navigateArgs(RoutePage.Search.SearchResult.route, event.key)
+                }
+                // 页面错误toast提示
+                is SearchViewEvent.FailedEvent -> {
+                    toast(event.error.message)
                 }
             }
         }
@@ -218,7 +224,7 @@ private fun ColumnScope.SearchHistoryEmptyLayout(viewState: SearchViewState) {
 }
 
 @Composable
-private fun SearchHotItem(item: SearchHot, onSearchClick: (String) -> Unit) {
+private fun SearchHotItem(item: SearchHotUI, onSearchClick: (String) -> Unit) {
     Card(
         elevation = 0.dp,
         backgroundColor = AppTheme.colors.label,

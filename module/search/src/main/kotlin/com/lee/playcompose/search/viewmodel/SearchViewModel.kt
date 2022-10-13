@@ -5,12 +5,20 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.lee.playcompose.base.cache.CacheManager
+import com.lee.playcompose.base.extensions.cacheFlow
 import com.lee.playcompose.common.entity.SearchHistory
+import com.lee.playcompose.common.extensions.checkData
+import com.lee.playcompose.common.extensions.createApi
+import com.lee.playcompose.search.constants.Constants
+import com.lee.playcompose.search.model.api.ApiService
 import com.lee.playcompose.search.model.db.SearchDatabase
-import com.lee.playcompose.search.model.entity.SearchHot
+import com.lee.playcompose.search.model.entity.SearchHotUI
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
@@ -21,7 +29,9 @@ import kotlinx.coroutines.launch
  */
 class SearchViewModel : ViewModel() {
 
+    private val api = createApi<ApiService>()
     private val searchHistoryDao = SearchDatabase.get().searchHistoryDao()
+    private val cacheManager = CacheManager.getDefault()
 
     var viewStates by mutableStateOf(SearchViewState())
         private set
@@ -56,8 +66,12 @@ class SearchViewModel : ViewModel() {
      */
     private fun requestSearchHotData() {
         viewModelScope.launch {
-            flow {
-                emit(SearchHot.getHotCategory())
+            cacheManager.cacheFlow(Constants.CACHE_KEY_SEARCH_HOT) {
+                api.getSearchHotAsync().checkData()
+            }.map { list ->
+                list.map { SearchHotUI(it.name) }
+            }.catch { error ->
+                _viewEvents.send(SearchViewEvent.FailedEvent(error = error))
             }.collect {
                 viewStates = viewStates.copy(searchHot = it)
             }
@@ -143,12 +157,13 @@ class SearchViewModel : ViewModel() {
 
 data class SearchViewState(
     val searchKey: String = "",
-    val searchHot: List<SearchHot> = emptyList(),
+    val searchHot: List<SearchHotUI> = emptyList(),
     val searchHistory: List<SearchHistory> = emptyList()
 )
 
 sealed class SearchViewEvent {
     data class NavigationSearch(val key: String) : SearchViewEvent()
+    data class FailedEvent(val error: Throwable) : SearchViewEvent()
 }
 
 sealed class SearchViewAction {

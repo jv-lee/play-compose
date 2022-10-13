@@ -8,7 +8,7 @@ import java.util.*
  * @author jv.lee
  * @date 2021/11/4
  */
-data class SearchHot(
+data class SearchHotUI(
     val key: String,
     val color: Color = randomColor()
 ) {
@@ -17,18 +17,18 @@ data class SearchHot(
          * 提供热门搜索词条
          */
         fun getHotCategory() = arrayListOf(
-            SearchHot("MVVM"),
-            SearchHot("面试"),
-            SearchHot("gradle"),
-            SearchHot("动画"),
-            SearchHot("CameraX"),
-            SearchHot("自定义View"),
-            SearchHot("性能优化"),
-            SearchHot("Jetpack"),
-            SearchHot("Kotlin"),
-            SearchHot("Flutter"),
-            SearchHot("OpenGL"),
-            SearchHot("FFmpeg")
+            SearchHotUI("MVVM"),
+            SearchHotUI("面试"),
+            SearchHotUI("gradle"),
+            SearchHotUI("动画"),
+            SearchHotUI("CameraX"),
+            SearchHotUI("自定义View"),
+            SearchHotUI("性能优化"),
+            SearchHotUI("Jetpack"),
+            SearchHotUI("Kotlin"),
+            SearchHotUI("Flutter"),
+            SearchHotUI("OpenGL"),
+            SearchHotUI("FFmpeg")
         )
     }
 }
