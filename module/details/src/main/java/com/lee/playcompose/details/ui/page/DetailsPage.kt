@@ -15,10 +15,12 @@ import androidx.navigation.NavController
 import com.just.agentweb.AgentWeb
 import com.lee.playcompose.base.extensions.LocalActivity
 import com.lee.playcompose.base.extensions.LocalNavController
+import com.lee.playcompose.base.tools.DarkModeTools
 import com.lee.playcompose.base.utils.ShareUtil
 import com.lee.playcompose.common.entity.DetailsData
 import com.lee.playcompose.common.extensions.bindLifecycle
 import com.lee.playcompose.common.extensions.setWebBackEvent
+import com.lee.playcompose.common.extensions.supportDarkMode
 import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.ui.composable.LoadingDialog
 import com.lee.playcompose.common.ui.widget.header.AppBarViewContainer
@@ -104,6 +106,8 @@ private fun WebView(details: DetailsData) {
                     .bindLifecycle(lifecycle)
                     .apply {
                         webCreator.webView.setWebBackEvent()
+                        DarkModeTools.get().setWebDarkCompat()
+                        supportDarkMode()
                     }
             }
         }

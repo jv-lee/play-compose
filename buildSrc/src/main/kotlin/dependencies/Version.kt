@@ -12,6 +12,7 @@ object Version {
     const val constraintLayout = "2.1.1"
     const val viewpager2 = "1.0.0"
     const val swipeRefreshLayout = "1.1.0"
+    const val webkit = "1.5.0"
     const val activity = "1.5.1"
     const val fragment = "1.5.1"
     const val navigation = "2.5.1"

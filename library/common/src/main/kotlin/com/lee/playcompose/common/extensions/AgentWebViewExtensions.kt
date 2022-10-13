@@ -11,7 +11,10 @@ import android.webkit.WebView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
+import androidx.webkit.WebSettingsCompat
+import androidx.webkit.WebViewFeature
 import com.just.agentweb.AgentWeb
+import com.lee.playcompose.base.tools.DarkModeTools
 
 /**
  * AgentWebView 绑定生命周期控制生命状态
@@ -27,7 +30,7 @@ fun AgentWeb.bindLifecycle(lifecycle: Lifecycle): AgentWeb {
                     webLifeCycle.onPause()
                 }
                 Lifecycle.Event.ON_RESUME -> {
-                    if(activeEvent == Lifecycle.Event.ON_RESUME) return
+                    if (activeEvent == Lifecycle.Event.ON_RESUME) return
                     activeEvent = event
                     webLifeCycle.onResume()
                 }
@@ -61,4 +64,20 @@ fun WebView.setWebBackEvent() {
         }
 
     })
+}
+
+/**
+ * webView适配深色模式
+ */
+fun AgentWeb.supportDarkMode(): AgentWeb {
+    val settings = this.agentWebSettings.webSettings
+
+    if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
+        if (DarkModeTools.get().isDark) {
+            WebSettingsCompat.setForceDark(settings, WebSettingsCompat.FORCE_DARK_ON)
+        } else {
+            WebSettingsCompat.setForceDark(settings, WebSettingsCompat.FORCE_DARK_OFF)
+        }
+    }
+    return this
 }
