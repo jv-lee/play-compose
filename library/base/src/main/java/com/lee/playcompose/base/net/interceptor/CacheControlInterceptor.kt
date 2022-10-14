@@ -1,6 +1,5 @@
 package com.lee.playcompose.base.net.interceptor
 
-import androidx.annotation.NonNull
 import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.base.utils.NetworkUtil
 import okhttp3.CacheControl
@@ -16,7 +15,7 @@ import java.io.IOException
 class CacheControlInterceptor :Interceptor {
 
     @Throws(IOException::class)
-    override fun intercept(@NonNull chain: Interceptor.Chain): Response {
+    override fun intercept(chain: Interceptor.Chain): Response {
         var request = chain.request()
         if (!NetworkUtil.isNetworkConnected(app)) {
             request = request.newBuilder()

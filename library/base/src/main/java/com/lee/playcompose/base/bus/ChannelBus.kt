@@ -1,3 +1,4 @@
+@file:Suppress("UNCHECKED_CAST")
 package com.lee.playcompose.base.bus
 
 import androidx.lifecycle.Lifecycle
