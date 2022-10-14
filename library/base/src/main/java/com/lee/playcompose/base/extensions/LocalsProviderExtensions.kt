@@ -7,6 +7,7 @@
 
 package com.lee.playcompose.base.extensions
 
+import android.content.res.Configuration
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.LocalOverscrollConfiguration
@@ -80,10 +81,12 @@ fun ProviderOverScroll(content: @Composable () -> Unit) {
 fun ProviderDensity(width: Float = 360f, content: @Composable () -> Unit) {
     val fontScale = LocalDensity.current.fontScale
     val displayMetrics = LocalContext.current.resources.displayMetrics
-    val widthPixels = displayMetrics.widthPixels
+    val sizePixels =
+        if (LocalContext.current.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
+            displayMetrics.widthPixels else displayMetrics.heightPixels
 
     CompositionLocalProvider(
-        LocalDensity provides Density(density = widthPixels / width, fontScale = fontScale)
+        LocalDensity provides Density(density = sizePixels / width, fontScale = fontScale)
     ) {
         content()
     }
