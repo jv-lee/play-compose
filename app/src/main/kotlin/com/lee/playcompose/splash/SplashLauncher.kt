@@ -1,5 +1,6 @@
 package com.lee.playcompose.splash
 
+import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -13,7 +14,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.lee.playcompose.R
@@ -87,6 +90,11 @@ private fun SplashPage(viewModel: SplashViewModel) {
 
 @Composable
 private fun SplashAdView(viewState: SplashViewState, onNextClick: () -> Unit) {
+    // 添加横屏时NavigationPadding值获取
+    val navigationInsets: PaddingValues = WindowInsets.navigationBars.asPaddingValues()
+    val paddingEnd =
+        if (LocalContext.current.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
+            0.dp else navigationInsets.calculateRightPadding(LayoutDirection.Ltr)
     FadeAnimatedVisibility(visible = viewState.splashAdVisible) {
         Box {
             Image(
@@ -103,7 +111,7 @@ private fun SplashAdView(viewState: SplashViewState, onNextClick: () -> Unit) {
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color(0x1a000000)),
                 modifier = Modifier
                     .align(Alignment.TopEnd)
-                    .padding(top = OffsetSmall, end = OffsetLarge)
+                    .padding(top = OffsetSmall, end = OffsetLarge + paddingEnd)
                     .statusBarsPadding()
             ) {
                 Text(text = viewState.timeText, color = Color.White)
