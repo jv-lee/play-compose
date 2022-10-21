@@ -109,7 +109,7 @@ private fun SearchAppBarContainer(
         navigationClick = navigationClick, appBarContent = {
             AppTextField(
                 value = viewState.searchKey,
-                onValueChange = { onValueChange(it) },
+                onValueChange = onValueChange,
                 keyboardActions = KeyboardActions(onSearch = { onSearchClick(viewState.searchKey) }),
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Text,
