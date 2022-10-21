@@ -1,13 +1,9 @@
 package com.lee.playcompose
 
-import android.app.Activity
 import com.lee.playcompose.base.cache.CacheManager
 import com.lee.playcompose.base.core.BaseApplication
-import com.lee.playcompose.base.interadp.SimpleActivityLifecycleCallbacks
 import com.lee.playcompose.base.net.HttpManager
 import com.lee.playcompose.base.tools.DarkModeTools
-import com.lee.playcompose.common.extensions.appThemeSet
-import com.lee.playcompose.common.extensions.runInternalBlock
 import com.lee.playcompose.common.extensions.setCommonInterceptor
 import com.lee.playcompose.common.paging.db.RemoteCacheDatabase
 import com.lee.playcompose.service.helper.ApplicationModuleService
@@ -23,16 +19,6 @@ import kotlinx.coroutines.launch
  */
 class App : BaseApplication() {
 
-    private val activityLifecycleCallbacks = object : SimpleActivityLifecycleCallbacks() {
-
-        override fun onActivityResumed(activity: Activity) {
-            // 应用内夜间模式主题适配
-            activity.runInternalBlock { activity.appThemeSet() }
-            super.onActivityResumed(activity)
-        }
-
-    }
-
     override fun init() {
         CoroutineScope(Dispatchers.IO).launch {
             // 初始化深色模式工具
@@ -45,13 +31,8 @@ class App : BaseApplication() {
             RemoteCacheDatabase.getInstance(applicationContext)
             // 子模块统一初始化
             ApplicationModuleService.init(this@App)
-
-            // 注册Activity生命周期监听
-            registerActivityLifecycleCallbacks(activityLifecycleCallbacks)
         }
     }
 
-    override fun unInit() {
-        unregisterActivityLifecycleCallbacks(activityLifecycleCallbacks)
-    }
+    override fun unInit() {}
 }

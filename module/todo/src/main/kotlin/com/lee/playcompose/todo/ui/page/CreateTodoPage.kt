@@ -1,4 +1,5 @@
 @file:OptIn(ExperimentalComposeUiApi::class)
+
 package com.lee.playcompose.todo.ui.page
 
 import android.app.DatePickerDialog
@@ -60,7 +61,6 @@ fun CreateTodoPage(
     navController: NavController = LocalNavController.current,
     viewModel: CreateTodoViewModel = viewModel(factory = CreateTodoViewModel.CreateFactory(todoData))
 ) {
-    val imePadding = rememberImePaddingValue()
     val keyboardController = LocalSoftwareKeyboardController.current
     val viewState = viewModel.viewStates
     val datePickerDialog = rememberDatePickerDialog(
@@ -93,7 +93,7 @@ fun CreateTodoPage(
         }) {
         Column(modifier = Modifier
             .fillMaxSize()
-            .padding(bottom = imePadding.dp)
+            .imePadding()
             .onTap { keyboardController?.hide() }) {
             CreateTodoContent(
                 viewState = viewState,

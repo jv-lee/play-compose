@@ -116,6 +116,7 @@ fun FragmentActivity.PlayComposeTheme(
     val placeholder = animateColorAsState(colors.placeholder, TweenSpec(600))
     val label = animateColorAsState(colors.label, TweenSpec(600))
 
+    // 动态设置 statusBar/navigationBar color.
     systemUiController.statusBarDarkContentEnabled = viewState.statusBarDarkContentEnabled
     systemUiController.setNavigationBarColor(window.value)
 
