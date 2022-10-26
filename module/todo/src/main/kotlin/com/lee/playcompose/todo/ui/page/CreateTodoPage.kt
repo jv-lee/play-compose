@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalComposeUiApi::class)
-
 package com.lee.playcompose.todo.ui.page
 
 import android.app.DatePickerDialog
@@ -16,10 +14,9 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -61,7 +58,7 @@ fun CreateTodoPage(
     navController: NavController = LocalNavController.current,
     viewModel: CreateTodoViewModel = viewModel(factory = CreateTodoViewModel.CreateFactory(todoData))
 ) {
-    val keyboardController = LocalSoftwareKeyboardController.current
+    val focusManager = LocalFocusManager.current
     val viewState = viewModel.viewStates
     val datePickerDialog = rememberDatePickerDialog(
         activity = LocalActivity.current,
@@ -88,13 +85,13 @@ fun CreateTodoPage(
     AppBarViewContainer(
         title = stringResource(id = viewState.appTitleRes),
         navigationClick = {
-            keyboardController?.hide()
+            focusManager.clearFocus()
             navController.popBackStack()
         }) {
         Column(modifier = Modifier
             .fillMaxSize()
             .imePadding()
-            .onTap { keyboardController?.hide() }) {
+            .onTap { focusManager.clearFocus() }) {
             CreateTodoContent(
                 viewState = viewState,
                 changeTitle = { viewModel.dispatch(CreateTodoViewAction.ChangeTitle(it)) },
@@ -102,7 +99,7 @@ fun CreateTodoPage(
                 changePriority = { viewModel.dispatch(CreateTodoViewAction.ChangePriority(it)) },
                 dateClick = { datePickerDialog.show() })
             CreateTodoBottomButton(saveClick = {
-                keyboardController?.hide()
+                focusManager.clearFocus()
                 viewModel.dispatch(CreateTodoViewAction.RequestPostTodo)
             })
         }

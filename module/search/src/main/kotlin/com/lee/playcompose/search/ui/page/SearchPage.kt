@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalComposeUiApi::class)
-
 package com.lee.playcompose.search.ui.page
 
 import androidx.compose.foundation.clickable
@@ -15,9 +13,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -52,7 +49,7 @@ fun SearchPage(
     navController: NavController = LocalNavController.current,
     viewModel: SearchViewModel = viewModel()
 ) {
-    val keyboardController = LocalSoftwareKeyboardController.current
+    val focusManager = LocalFocusManager.current
     val viewState = viewModel.viewStates
 
     // 监听单发事件
@@ -61,7 +58,7 @@ fun SearchPage(
             when (event) {
                 // 导航到搜索结果页
                 is SearchViewEvent.NavigationSearch -> {
-                    keyboardController?.hide()
+                    focusManager.clearFocus()
                     navController.navigateArgs(RoutePage.Search.SearchResult.route, event.key)
                 }
                 // 页面错误toast提示
@@ -75,7 +72,7 @@ fun SearchPage(
     SearchAppBarContainer(
         viewState = viewState,
         navigationClick = {
-            keyboardController?.hide()
+            focusManager.clearFocus()
             navController.popBackStack()
         }, onSearchClick = { searchKey ->
             viewModel.dispatch(SearchViewAction.NavigationSearchKey(searchKey))
@@ -86,7 +83,7 @@ fun SearchPage(
         SearchContent(
             viewState = viewState,
             contentClick = {
-                keyboardController?.hide()
+                focusManager.clearFocus()
             }, onSearchClick = { searchKey ->
                 viewModel.dispatch(SearchViewAction.NavigationSearchKey(searchKey))
             }, onDeleteHistoryClick = { searchKey ->

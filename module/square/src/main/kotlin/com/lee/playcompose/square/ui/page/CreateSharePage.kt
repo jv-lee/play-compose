@@ -1,4 +1,3 @@
-@file:OptIn(ExperimentalComposeUiApi::class)
 package com.lee.playcompose.square.ui.page
 
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,10 +9,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.platform.SoftwareKeyboardController
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -45,7 +42,7 @@ fun CreateSharePage(
     navController: NavController = LocalNavController.current,
     viewModel: CreateShareViewModel = viewModel()
 ) {
-    val keyboardController = LocalSoftwareKeyboardController.current
+    val focusManager = LocalFocusManager.current
     val viewState = viewModel.viewStates
     val shareSuccess = stringResource(id = R.string.share_success)
 
@@ -70,12 +67,12 @@ fun CreateSharePage(
     AppBarViewContainer(
         title = stringResource(id = R.string.square_create_share_title),
         navigationClick = {
-            keyboardController?.hide()
+            focusManager.clearFocus()
             navController.popBackStack()
         }) {
         CreateShareContent(
             viewState = viewState,
-            keyboardController = keyboardController,
+            clearFocus = { focusManager.clearFocus() },
             onChangeTitle = {
                 viewModel.dispatch(CreateShareViewAction.ChangeShareTitle(it))
             },
@@ -91,14 +88,14 @@ fun CreateSharePage(
 @Composable
 private fun CreateShareContent(
     viewState: CreateShareViewState,
-    keyboardController: SoftwareKeyboardController?,
+    clearFocus: () -> Unit,
     onChangeTitle: (String) -> Unit,
     onChangeContent: (String) -> Unit,
     onActionShare: () -> Unit
 ) {
     ConstraintLayout(
         modifier = Modifier
-            .onTap { keyboardController?.hide() }
+            .onTap { clearFocus() }
             .fillMaxSize()
     ) {
         val (tvTitle, editTitle, tvContent, editContent, tvDescription) = createRefs()

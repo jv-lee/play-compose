@@ -1,4 +1,3 @@
-@file:OptIn(ExperimentalComposeUiApi::class)
 package com.lee.playcompose.account.ui.page
 
 import androidx.compose.foundation.background
@@ -12,9 +11,8 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -51,7 +49,7 @@ fun RegisterPage(
     accountViewModel: AccountViewModel = activityViewModel()
 ) {
     val imeInsets = WindowInsets.ime.asPaddingValues()
-    val keyboardController = LocalSoftwareKeyboardController.current
+    val focusManager = LocalFocusManager.current
     val viewState = viewModel.viewStates
 
     // 页面单向事件监听
@@ -62,7 +60,7 @@ fun RegisterPage(
                     accountViewModel.dispatch(
                         AccountViewAction.UpdateAccountStatus(event.accountData, true)
                     )
-                    keyboardController?.hide()
+                    focusManager.clearFocus()
                     // 通知login页面注册成功销毁页面
                     navController.setResult(REQUEST_KEY_LOGIN)
                     navController.popBackStack()
@@ -79,7 +77,7 @@ fun RegisterPage(
     Column(
         modifier = Modifier
             .background(AppTheme.colors.background)
-            .onTap { keyboardController?.hide() }
+            .onTap { focusManager.clearFocus() }
             .fillMaxSize()
             .imePadding()
             .wrapContentSize(Alignment.Center)
@@ -92,16 +90,16 @@ fun RegisterPage(
         }, rePasswordChange = {
             viewModel.dispatch(RegisterViewAction.ChangeRePassword(it))
         }, doneChange = {
-            keyboardController?.hide()
+            focusManager.clearFocus()
             viewModel.dispatch(RegisterViewAction.RequestRegister)
         })
 
         RegisterFooter(viewState = viewState, gotoLoginClick = {
-            imeInsets.hasBottomExpend({ keyboardController?.hide() }, {
+            imeInsets.hasBottomExpend({ focusManager.clearFocus() }, {
                 navController.popBackStack()
             })
         }, registerClick = {
-            keyboardController?.hide()
+            focusManager.clearFocus()
             viewModel.dispatch(RegisterViewAction.RequestRegister)
         })
     }
