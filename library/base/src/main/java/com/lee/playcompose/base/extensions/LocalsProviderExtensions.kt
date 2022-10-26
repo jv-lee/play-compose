@@ -1,10 +1,9 @@
+@file:OptIn(ExperimentalFoundationApi::class, ExperimentalAnimationApi::class)
 /*
  * 全局 CompositionLocalProvider 扩展函数
  * @author jv.lee
  * @date 2022/3/18
  */
-@file:OptIn(ExperimentalFoundationApi::class, ExperimentalAnimationApi::class)
-
 package com.lee.playcompose.base.extensions
 
 import android.content.res.Configuration
