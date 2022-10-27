@@ -13,8 +13,8 @@ import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-const val NAVIGATION_FRO_RESULT_VERSION = "version"
-const val NAVIGATION_FRO_RESULT_DATA = "data"
+const val NAVIGATION_FOR_RESULT_VERSION = "version"
+const val NAVIGATION_FOR_RESULT_DATA = "data"
 
 @Composable
 inline fun <reified T> NavController.forResult(
@@ -27,8 +27,8 @@ inline fun <reified T> NavController.forResult(
 
     currentBackStackEntry?.savedStateHandle?.getLiveData<Bundle>(key)
         ?.observeAsState()?.value?.let {
-            val version = it.getLong(NAVIGATION_FRO_RESULT_VERSION)
-            val data = it.getValueOrNull<T>(NAVIGATION_FRO_RESULT_DATA)
+            val version = it.getLong(NAVIGATION_FOR_RESULT_VERSION)
+            val data = it.getValueOrNull<T>(NAVIGATION_FOR_RESULT_DATA)
             if (forResultVersion != version) {
                 forResultVersion = version
                 coroutine.launch {
@@ -41,9 +41,39 @@ inline fun <reified T> NavController.forResult(
 
 fun <T> NavController.setResult(key: String, data: T) {
     val bundle = Bundle()
-    bundle.putLong(NAVIGATION_FRO_RESULT_VERSION, System.currentTimeMillis())
-    bundle.put(NAVIGATION_FRO_RESULT_DATA, data)
+    bundle.putLong(NAVIGATION_FOR_RESULT_VERSION, System.currentTimeMillis())
+    bundle.put(NAVIGATION_FOR_RESULT_DATA, data)
     previousBackStackEntry?.savedStateHandle?.set(key, bundle)
+}
+
+@Composable
+inline fun NavController.forResultBundle(
+    key: String,
+    delay: Long = 0,
+    crossinline callback: (Bundle?) -> Unit
+) {
+    val coroutine = rememberCoroutineScope()
+    var forResultVersion by remember { mutableStateOf(System.currentTimeMillis()) }
+
+    currentBackStackEntry?.savedStateHandle?.getLiveData<Bundle>(key)
+        ?.observeAsState()?.value?.let {
+            val version = it.getLong(NAVIGATION_FOR_RESULT_VERSION)
+            val data = it.getBundle(NAVIGATION_FOR_RESULT_DATA)
+            if (forResultVersion != version) {
+                forResultVersion = version
+                coroutine.launch {
+                    delay(delay)
+                    callback(data)
+                }
+            }
+        }
+}
+
+fun NavController.setBundleResult(key: String, bundle: Bundle) {
+    val savedBundle = Bundle()
+    savedBundle.putLong(NAVIGATION_FOR_RESULT_VERSION, System.currentTimeMillis())
+    savedBundle.putAll(bundle)
+    previousBackStackEntry?.savedStateHandle?.set(key, savedBundle)
 }
 
 fun NavController.setResult(key: String) {
@@ -84,10 +114,10 @@ inline fun <reified T> Bundle.getValueOrNull(key: String): T? {
         else -> {
             when {
                 T::class.java.interfaces.contains(java.io.Serializable::class.java) -> {
-                    getSerializable(key) as T?
+                    getSerializable(key) as? T
                 }
                 T::class.java.interfaces.contains(android.os.Parcelable::class.java) -> {
-                    getParcelable(key) as T?
+                    getParcelable(key) as? T
                 }
                 else -> {
                     null
