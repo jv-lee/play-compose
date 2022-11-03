@@ -78,7 +78,9 @@ class LoginViewModel : ViewModel() {
 
     private fun changeLoginEnable() {
         viewStates =
-            viewStates.copy(isLoginEnable = viewStates.username.isNotEmpty() && viewStates.password.isNotEmpty())
+            viewStates.copy(
+                isLoginEnable = viewStates.username.isNotEmpty() && viewStates.password.isNotEmpty()
+            )
     }
 
     private fun requestLogin() {
@@ -86,7 +88,9 @@ class LoginViewModel : ViewModel() {
             delay(300) // 延迟隐藏软键盘
             flow {
                 // 校验输入格式
-                if (TextUtils.isEmpty(viewStates.username) || TextUtils.isEmpty(viewStates.password)) {
+                if (TextUtils.isEmpty(viewStates.username) ||
+                    TextUtils.isEmpty(viewStates.password)
+                ) {
                     throw IllegalArgumentException("username || password is empty.")
                 }
 
@@ -112,7 +116,7 @@ data class LoginViewState(
     val username: String = "",
     val password: String = "",
     val isLoading: Boolean = false,
-    val isLoginEnable: Boolean = false,
+    val isLoginEnable: Boolean = false
 )
 
 sealed class LoginViewEvent {

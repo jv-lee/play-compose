@@ -2,7 +2,6 @@ package com.lee.playcompose.common.ui.composable
 
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
@@ -41,7 +40,7 @@ fun AppTextField(
     keyboardActions: KeyboardActions = KeyboardActions(),
     singleLine: Boolean = true,
     maxLine: Int = 1,
-    hintText: String = "",
+    hintText: String = ""
 ) {
     TextField(
         value = value,
@@ -58,7 +57,7 @@ fun AppTextField(
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             cursorColor = AppTheme.colors.accent,
-            textColor = AppTheme.colors.accent,
+            textColor = AppTheme.colors.accent
         ),
         placeholder = {
             Text(
@@ -67,6 +66,6 @@ fun AppTextField(
                 fontSize = FontSizeLarge
             )
         },
-        modifier = modifier,
+        modifier = modifier
     )
 }

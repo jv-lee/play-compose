@@ -81,7 +81,8 @@ fun DetailsPage(
                 menuVisibilityState.value = false
                 viewModel.dispatch(DetailsViewAction.ShareDetails)
             }
-        }) {
+        }
+    ) {
         WebView(details = details)
     }
 }

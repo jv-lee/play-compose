@@ -29,7 +29,7 @@ import com.lee.playcompose.search.viewmodel.SearchResultViewState
 @Composable
 fun SearchResultPage(
     searchKey: String,
-    navController: NavController  = LocalNavController.current,
+    navController: NavController = LocalNavController.current,
     viewModel: SearchResultViewModel = viewModel(
         factory = SearchResultViewModel.CreateFactory(searchKey)
     )
@@ -37,7 +37,8 @@ fun SearchResultPage(
     AppBarViewContainer(
         title = searchKey,
         modifier = Modifier.background(AppTheme.colors.background),
-        navigationClick = { navController.popBackStack() }) {
+        navigationClick = { navController.popBackStack() }
+    ) {
         SearchResultContent(viewModel.viewStates, onContentItemClick = {
             navController.navigateArgs(RoutePage.Details.route, it.transformDetails())
         })
@@ -54,7 +55,7 @@ private fun SearchResultContent(
 
     RefreshList(
         lazyPagingItems = contentList,
-        listState = listState,
+        listState = listState
     ) {
         // build searchResult content item
         itemsIndexed(contentList) { _, item ->

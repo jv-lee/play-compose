@@ -62,7 +62,6 @@ fun WebView.setWebBackEvent() {
             }
             return false
         }
-
     })
 }
 

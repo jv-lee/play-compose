@@ -48,11 +48,14 @@ fun SystemContentPage(
     val coroutine = rememberCoroutineScope()
     val viewState = viewModel.viewStates
 
-    handler.addCallback(systemCallbackKey, object : SystemCallback {
-        override fun tabChange() {
-            coroutine.launch { viewState.listState.animateScrollToItem(0) }
+    handler.addCallback(
+        systemCallbackKey,
+        object : SystemCallback {
+            override fun tabChange() {
+                coroutine.launch { viewState.listState.animateScrollToItem(0) }
+            }
         }
-    })
+    )
 
     SystemContentList(viewState = viewState, onItemClick = {
         // tabData跳转数据暂存 to SystemContentTabPage
@@ -73,7 +76,7 @@ private fun SystemContentList(
         lazyPagingItems = contentList,
         listState = listState,
         navigationPadding = true,
-        swipeEnable = false,
+        swipeEnable = false
     ) {
         // header spacer
         item { HeaderSpacer() }
@@ -94,7 +97,7 @@ private fun SystemContentItem(item: ParentTab, onItemClick: (ParentTab) -> Unit)
                 text = item.name,
                 color = AppTheme.colors.accent,
                 fontSize = FontSizeMedium,
-                fontWeight = FontWeight.Bold,
+                fontWeight = FontWeight.Bold
             )
             Spacer(
                 modifier = Modifier
@@ -106,7 +109,7 @@ private fun SystemContentItem(item: ParentTab, onItemClick: (ParentTab) -> Unit)
             Text(
                 text = item.formHtmlLabels(),
                 color = AppTheme.colors.primary,
-                fontSize = FontSizeSmall,
+                fontSize = FontSizeSmall
             )
             Spacer(
                 modifier = Modifier
@@ -127,4 +130,3 @@ private fun SystemContentItem(item: ParentTab, onItemClick: (ParentTab) -> Unit)
         }
     }
 }
-

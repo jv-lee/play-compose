@@ -35,5 +35,4 @@ interface ApiService {
 
     @GET("user/logout/json")
     suspend fun getLogoutAsync(): Data<Any>
-
 }

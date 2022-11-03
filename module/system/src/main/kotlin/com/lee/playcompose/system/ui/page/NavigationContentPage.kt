@@ -51,11 +51,14 @@ fun NavigationContentPage(
     val coroutine = rememberCoroutineScope()
     val viewState = viewModel.viewStates
 
-    handler.addCallback(navigationCallbackKey, object : SystemCallback {
-        override fun tabChange() {
-            coroutine.launch { viewState.listState.animateScrollToItem(0) }
+    handler.addCallback(
+        navigationCallbackKey,
+        object : SystemCallback {
+            override fun tabChange() {
+                coroutine.launch { viewState.listState.animateScrollToItem(0) }
+            }
         }
-    })
+    )
 
     NavigationContent(viewState = viewState, itemClick = {
         navController.navigateArgs(RoutePage.Details.route, it.transformDetails())
@@ -66,7 +69,7 @@ fun NavigationContentPage(
 @Composable
 private fun NavigationContent(
     viewState: NavigationContentViewState,
-    itemClick: (Content) -> Unit,
+    itemClick: (Content) -> Unit
 ) {
     val statusInsets = WindowInsets.statusBars.asPaddingValues()
     val toolbarOffset = (statusInsets.calculateTopPadding() + ToolBarHeight)
@@ -141,7 +144,7 @@ private fun NavigationTabItem(
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier
                 .clickable { tabClick(item) }
-                .padding(OffsetMedium),
+                .padding(OffsetMedium)
         )
     }
 }

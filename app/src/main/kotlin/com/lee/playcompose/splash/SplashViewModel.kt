@@ -71,11 +71,11 @@ class SplashViewModel : ViewModel() {
     }
 
     private fun initSplashInfo() {
-        val splashInfoRes = if (DarkModeTools.get().isDarkTheme())
-            CR.mipmap.ic_splash_info_night else CR.mipmap.ic_splash_info
+        val splashInfoRes = if (DarkModeTools.get().isDarkTheme()) {
+            CR.mipmap.ic_splash_info_night
+        } else CR.mipmap.ic_splash_info
         viewStates = viewStates.copy(splashInfoRes = splashInfoRes)
     }
-
 }
 
 data class SplashViewState(

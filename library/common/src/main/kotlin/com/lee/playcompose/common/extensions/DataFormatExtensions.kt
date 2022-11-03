@@ -21,7 +21,8 @@ fun Content.getDateFormat(): String = TimeUtil.getChineseTimeMill(publishTime)
 
 fun Content.getCategory(): String {
     return when {
-        superChapterName.isNotEmpty() and chapterName.isNotEmpty() -> "$superChapterName / $chapterName"
+        superChapterName.isNotEmpty() and chapterName.isNotEmpty()
+        -> "$superChapterName / $chapterName"
         superChapterName.isNotEmpty() -> superChapterName
         chapterName.isNotEmpty() -> chapterName
         else -> ""

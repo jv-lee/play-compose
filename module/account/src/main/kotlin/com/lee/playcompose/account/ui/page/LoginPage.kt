@@ -91,22 +91,27 @@ fun LoginPage(
             .wrapContentSize(Alignment.Center)
     ) {
         LoginTitle()
-        LoginInputContent(viewState = viewState, usernameChange = {
-            viewModel.dispatch(LoginViewAction.ChangeUsername(it))
-        }, passwordChange = {
-            viewModel.dispatch(LoginViewAction.ChangePassword(it))
-        }, doneChange = {
-            focusManager.clearFocus()
-            viewModel.dispatch(LoginViewAction.RequestLogin)
-        })
+        LoginInputContent(
+            viewState = viewState,
+            usernameChange = {
+                viewModel.dispatch(LoginViewAction.ChangeUsername(it))
+            },
+            passwordChange = {
+                viewModel.dispatch(LoginViewAction.ChangePassword(it))
+            },
+            doneChange = {
+                focusManager.clearFocus()
+                viewModel.dispatch(LoginViewAction.RequestLogin)
+            }
+        )
         LoginFooter(viewState = viewState, gotoRegisterClick = {
             imeInsets.hasBottomExpend({ focusManager.clearFocus() }, {
                 navController.navigateArgs(RoutePage.Account.Register.route)
             })
         }, loginClick = {
-            focusManager.clearFocus()
-            viewModel.dispatch(LoginViewAction.RequestLogin)
-        })
+                focusManager.clearFocus()
+                viewModel.dispatch(LoginViewAction.RequestLogin)
+            })
     }
 }
 
@@ -128,7 +133,7 @@ private fun LoginInputContent(
     viewState: LoginViewState,
     usernameChange: (String) -> Unit,
     passwordChange: (String) -> Unit,
-    doneChange: KeyboardActionScope.() -> Unit,
+    doneChange: KeyboardActionScope.() -> Unit
 ) {
     Card(
         backgroundColor = AppTheme.colors.item,
@@ -171,7 +176,8 @@ private fun LoginInputContent(
                         contentDescription = null,
                         tint = ButtonLockColor
                     )
-                })
+                }
+            )
         }
     }
 }
@@ -206,7 +212,7 @@ private fun LoginFooter(
             colors = ButtonDefaults.buttonColors(
                 backgroundColor =
                 if (viewState.isLoginEnable) AppTheme.colors.focus else ButtonLockColor
-            ),
+            )
         ) {
             Text(
                 text = stringResource(id = R.string.account_login_button),

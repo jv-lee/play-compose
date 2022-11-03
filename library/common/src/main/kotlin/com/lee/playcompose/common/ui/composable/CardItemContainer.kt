@@ -29,7 +29,6 @@ fun CardItemContainer(
     onClick: () -> Unit = {},
     content: @Composable BoxScope.() -> Unit
 ) {
-
     Card(
         backgroundColor = AppTheme.colors.item,
         modifier = modifier.padding(
@@ -39,10 +38,11 @@ fun CardItemContainer(
             bottom = OffsetSmall
         )
     ) {
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .clickable { onClick() }
-            .padding(contentPadding)
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .clickable { onClick() }
+                .padding(contentPadding)
         ) {
             content()
         }

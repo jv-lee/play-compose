@@ -96,7 +96,8 @@ fun ContentPictureItem(
                     .constrainAs(category) {
                         start.linkTo(picture.end, OffsetMedium)
                         bottom.linkTo(parent.bottom, OffsetMedium)
-                    })
+                    }
+            )
 
             Text(
                 text = item.getDateFormat(),
@@ -106,7 +107,8 @@ fun ContentPictureItem(
                     .constrainAs(time) {
                         end.linkTo(parent.end, OffsetMedium)
                         bottom.linkTo(parent.bottom, OffsetMedium)
-                    })
+                    }
+            )
         }
     }
 }

@@ -74,21 +74,22 @@ class SettingsViewModel : ViewModel() {
                 viewStates = viewStates.copy(isLoading = false)
             }.collect {
                 val message =
-                    app.getString(if (it) R.string.settings_clear_success else R.string.settings_clear_failed)
+                    app.getString(
+                        if (it) R.string.settings_clear_success else R.string.settings_clear_failed
+                    )
                 _viewEvents.send(SettingsViewEvent.ClearCacheResult(message = message))
                 viewStates = viewStates.copy(isLoading = false, isCacheConfirm = false)
                 initCacheSize()
             }
         }
     }
-
 }
 
 data class SettingsViewState(
     val isLoading: Boolean = false,
     val isCacheConfirm: Boolean = false,
     val isLogoutConfirm: Boolean = false,
-    val totalCacheSize: String = "",
+    val totalCacheSize: String = ""
 )
 
 sealed class SettingsViewEvent {

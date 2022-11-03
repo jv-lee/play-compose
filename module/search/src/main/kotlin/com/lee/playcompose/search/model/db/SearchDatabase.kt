@@ -35,6 +35,5 @@ abstract class SearchDatabase : RoomDatabase() {
 
         fun get() =
             instance ?: throw Exception("请先调用SearchHistoryDatabase.getInstance(context) 初始化.")
-
     }
 }

@@ -100,7 +100,8 @@ fun Activity.RouteNavigator(
         SimpleAnimatedNavHost(
             navController = navController,
             startDestination = MainTab.Home.route,
-            builder = { appRouteManifest() })
+            builder = { appRouteManifest() }
+        )
 
         // 首页导航navigationBar
         CheckNavigation(currentDestination?.route) { hasClick ->
@@ -109,14 +110,18 @@ fun Activity.RouteNavigator(
                     val isSelect =
                         currentDestination?.hierarchy?.any { it.route == item.route } == true
 
-                    BottomNavigationItem(selected = isSelect, icon = {
-                        NavigationIcon(isSelected = isSelect, item = item)
-                    }, onClick = {
-                        bottomItemNavigation(hasClick, item.route, navController)
-                        ChannelBus.getChannel<NavigationSelectEvent>()?.post(
-                            NavigationSelectEvent(item.route)
-                        )
-                    })
+                    BottomNavigationItem(
+                        selected = isSelect,
+                        icon = {
+                            NavigationIcon(isSelected = isSelect, item = item)
+                        },
+                        onClick = {
+                            bottomItemNavigation(hasClick, item.route, navController)
+                            ChannelBus.getChannel<NavigationSelectEvent>()?.post(
+                                NavigationSelectEvent(item.route)
+                            )
+                        }
+                    )
                 }
             }
         }
@@ -140,7 +145,10 @@ private fun BoxScope.CheckNavigation(
     content: @Composable (Boolean) -> Unit = {}
 ) {
     val visible = when (route) {
-        RoutePage.Home.route, RoutePage.Square.route, RoutePage.System.route, RoutePage.Me.route -> {
+        RoutePage.Home.route,
+        RoutePage.Square.route,
+        RoutePage.System.route,
+        RoutePage.Me.route -> {
             true
         }
         else -> false
@@ -183,7 +191,7 @@ private fun FloatingView(click: () -> Unit = {}) {
             modifier = Modifier
                 .fillMaxSize()
                 .navigationBarsPadding()
-                .padding(bottom = NavigationTabHeight),
+                .padding(bottom = NavigationTabHeight)
         ) {
             FloatingBox(
                 type = ReindexType.REINDEX_X,

@@ -12,8 +12,8 @@ import com.google.accompanist.pager.rememberPagerState
 import com.lee.playcompose.base.extensions.LocalNavController
 import com.lee.playcompose.common.entity.ParentTab
 import com.lee.playcompose.common.ui.theme.AppTheme
-import com.lee.playcompose.common.ui.widget.header.AppBarViewContainer
 import com.lee.playcompose.common.ui.widget.IndicatorAdaptiveTabRow
+import com.lee.playcompose.common.ui.widget.header.AppBarViewContainer
 import com.lee.playcompose.system.viewmodel.SystemContentTabViewAction
 import com.lee.playcompose.system.viewmodel.SystemContentTabViewModel
 import kotlinx.coroutines.launch
@@ -41,7 +41,10 @@ fun SystemContentTabPage(
     AppBarViewContainer(
         title = parentTab.name,
         elevation = 0.dp,
-        navigationClick = { navController.popBackStack() }) {
+        navigationClick = {
+            navController.popBackStack()
+        }
+    ) {
         Column {
             if (parentTab.children.isNotEmpty()) {
                 IndicatorAdaptiveTabRow(
@@ -52,7 +55,7 @@ fun SystemContentTabPage(
                     onTabClick = { tabIndex ->
                         viewModel.dispatch(SystemContentTabViewAction.SelectedTabIndex(tabIndex))
                         coroutine.launch { pagerState.animateScrollToPage(tabIndex) }
-                    },
+                    }
                 )
                 HorizontalPager(count = parentTab.children.size, state = pagerState) { page ->
                     val item = parentTab.children[page]

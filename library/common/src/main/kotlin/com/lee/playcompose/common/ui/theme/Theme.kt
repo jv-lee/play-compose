@@ -18,7 +18,6 @@ import com.lee.playcompose.base.extensions.ProviderOverScroll
 import com.lee.playcompose.base.extensions.activityViewModel
 import com.lee.playcompose.common.viewmodel.ThemeViewModel
 
-
 private val DarkColorPalette = AppColors(
     primary = Color(0xFFD3D3D3),
     primaryDark = Color(0xFF6E6E6E),
@@ -65,7 +64,7 @@ class AppColors(
     item: Color,
     shadow: Color,
     placeholder: Color,
-    label: Color,
+    label: Color
 ) {
     var primary: Color by mutableStateOf(primary)
     var primaryDark: Color by mutableStateOf(primaryDark)

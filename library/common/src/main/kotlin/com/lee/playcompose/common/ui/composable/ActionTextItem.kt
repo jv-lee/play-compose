@@ -33,12 +33,13 @@ fun ActionTextItem(
     item: Content,
     state: SlidingPaneState = SlidingPaneState(),
     onItemClick: (Content) -> Unit,
-    onItemDelete: (Content) -> Unit,
+    onItemDelete: (Content) -> Unit
 ) {
-    SlidingPaneBox(modifier = Modifier
-        .height(76.dp)
-        .fillMaxWidth()
-        .padding(bottom = OffsetMedium), // margin
+    SlidingPaneBox(
+        modifier = Modifier
+            .height(76.dp)
+            .fillMaxWidth()
+            .padding(bottom = OffsetMedium), // margin
         state = state,
         sliding = {
             Text(
@@ -54,7 +55,8 @@ fun ActionTextItem(
                     .background(Color.Red)
                     .wrapContentSize(Alignment.Center)
             )
-        }) {
+        }
+    ) {
         Box(
             modifier = Modifier
                 .fillMaxSize()

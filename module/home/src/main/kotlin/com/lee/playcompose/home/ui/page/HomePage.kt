@@ -111,7 +111,7 @@ private fun HomeContentList(
     viewState: HomeViewState,
     onBannerItemClick: (Banner) -> Unit,
     onCategoryItemClick: (HomeCategory) -> Unit,
-    onContentItemClick: (Content) -> Unit,
+    onContentItemClick: (Content) -> Unit
 ) {
     val contentList = viewState.savedPager.getLazyPagingItems()
     val bannerList = viewState.banners
@@ -128,7 +128,6 @@ private fun HomeContentList(
             top = ToolBarHeight + WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
         ).asPaddingValues()
     ) {
-
         // header spacer
         item { HeaderSpacer() }
 

@@ -56,7 +56,9 @@ import com.lee.playcompose.common.R as CR
 fun CreateTodoPage(
     todoData: TodoData? = null,
     navController: NavController = LocalNavController.current,
-    viewModel: CreateTodoViewModel = viewModel(factory = CreateTodoViewModel.CreateFactory(todoData))
+    viewModel: CreateTodoViewModel = viewModel(
+        factory = CreateTodoViewModel.CreateFactory(todoData)
+    )
 ) {
     val focusManager = LocalFocusManager.current
     val viewState = viewModel.viewStates
@@ -87,17 +89,21 @@ fun CreateTodoPage(
         navigationClick = {
             focusManager.clearFocus()
             navController.popBackStack()
-        }) {
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .imePadding()
-            .onTap { focusManager.clearFocus() }) {
+        }
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .imePadding()
+                .onTap { focusManager.clearFocus() }
+        ) {
             CreateTodoContent(
                 viewState = viewState,
                 changeTitle = { viewModel.dispatch(CreateTodoViewAction.ChangeTitle(it)) },
                 changeContent = { viewModel.dispatch(CreateTodoViewAction.ChangeContent(it)) },
                 changePriority = { viewModel.dispatch(CreateTodoViewAction.ChangePriority(it)) },
-                dateClick = { datePickerDialog.show() })
+                dateClick = { datePickerDialog.show() }
+            )
             CreateTodoBottomButton(saveClick = {
                 focusManager.clearFocus()
                 viewModel.dispatch(CreateTodoViewAction.RequestPostTodo)
@@ -112,7 +118,7 @@ private fun ColumnScope.CreateTodoContent(
     changeTitle: (String) -> Unit,
     changeContent: (String) -> Unit,
     changePriority: (Int) -> Unit,
-    dateClick: () -> Unit,
+    dateClick: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -223,7 +229,7 @@ private fun ColumnScope.CreateTodoContent(
             Text(
                 text = stringResource(id = R.string.todo_create_date_label),
                 fontSize = FontSizeMedium,
-                color = AppTheme.colors.accent,
+                color = AppTheme.colors.accent
             )
             Text(
                 text = viewState.date,
@@ -233,7 +239,7 @@ private fun ColumnScope.CreateTodoContent(
             )
             Icon(
                 painter = painterResource(id = CR.drawable.vector_arrow),
-                contentDescription = null,
+                contentDescription = null
             )
         }
         HorizontallySpacer(AppTheme.colors.onFocus)
@@ -267,7 +273,8 @@ private fun rememberDatePickerDialog(
 ): DatePickerDialog {
     val viewModel: ThemeViewModel = activityViewModel(LocalActivity.current)
     val theme =
-        if (viewModel.viewStates.isDark) CR.style.ThemeNightDatePickerDialog else CR.style.ThemeDatePickerDialog
+        if (viewModel.viewStates.isDark) CR.style.ThemeNightDatePickerDialog
+        else CR.style.ThemeDatePickerDialog
     val datePicker = remember {
         DatePickerDialog(
             activity,

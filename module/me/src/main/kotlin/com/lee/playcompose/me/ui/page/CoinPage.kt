@@ -97,7 +97,7 @@ private fun CoinRecordContent(viewState: CoinViewState) {
     RefreshList(
         swipeEnable = false,
         lazyPagingItems = contentList,
-        listState = listState,
+        listState = listState
     ) {
         // build coinRecord content item
         itemsIndexed(contentList) { _, item ->
@@ -127,7 +127,6 @@ private fun CoinRecordItem(item: CoinRecord) {
 @Composable
 private fun CoinRecordHeader(accountViewState: AccountViewState, coinRankClick: () -> Unit) {
     Box(modifier = Modifier.fillMaxWidth()) {
-
         Box(
             modifier = Modifier
                 .height(120.dp)

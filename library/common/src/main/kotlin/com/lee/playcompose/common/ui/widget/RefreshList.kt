@@ -52,19 +52,21 @@ fun <T : Any> RefreshList(
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = false)
 
     // loadPage Load.
-    if ((lazyPagingItems.loadState.refresh is LoadState.Loading
-                || lazyPagingItems.loadState.refresh is LoadState.NotLoading)
-        && !lazyPagingItems.loadState.append.endOfPaginationReached
-        && lazyPagingItems.itemCount == 0
+    if ((
+        lazyPagingItems.loadState.refresh is LoadState.Loading ||
+            lazyPagingItems.loadState.refresh is LoadState.NotLoading
+        ) &&
+        !lazyPagingItems.loadState.append.endOfPaginationReached &&
+        lazyPagingItems.itemCount == 0
     ) {
         PageLoading()
         return
     }
 
     // loadPage Empty.
-    if (lazyPagingItems.loadState.append is LoadState.NotLoading
-        && lazyPagingItems.loadState.append.endOfPaginationReached
-        && lazyPagingItems.itemCount == 0
+    if (lazyPagingItems.loadState.append is LoadState.NotLoading &&
+        lazyPagingItems.loadState.append.endOfPaginationReached &&
+        lazyPagingItems.itemCount == 0
     ) {
         PageEmpty()
         return
@@ -84,9 +86,11 @@ fun <T : Any> RefreshList(
         onRefresh = {
             onRefresh()
             lazyPagingItems.refresh()
-        }) {
+        }
+    ) {
         swipeRefreshState.isRefreshing =
-            ((lazyPagingItems.loadState.refresh is LoadState.Loading) || isRefreshing) && swipeEnable
+            ((lazyPagingItems.loadState.refresh is LoadState.Loading) || isRefreshing) &&
+            swipeEnable
 
         // build list
         LazyColumn(
@@ -202,7 +206,8 @@ private fun ItemError(retry: () -> Unit) {
             color = AppTheme.colors.accent,
             modifier = Modifier.clickable {
                 retry()
-            })
+            }
+        )
     }
 }
 

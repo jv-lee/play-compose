@@ -63,7 +63,7 @@ data class UserInfo(
     val admin: Boolean,
     val chapterTops: List<String>,
     val coinCount: Int,
-    val collectIds: List<String>,
+    val collectIds: List<String>
 )
 
 data class AccountViewState(

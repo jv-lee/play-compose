@@ -68,8 +68,8 @@ class RegisterViewModel : ViewModel() {
     private fun changeRegisterEnable() {
         viewStates = viewStates.copy(
             isRegisterEnable = viewStates.username.isNotEmpty() &&
-                    viewStates.password.isNotEmpty() &&
-                    viewStates.rePassword.isNotEmpty()
+                viewStates.password.isNotEmpty() &&
+                viewStates.rePassword.isNotEmpty()
         )
     }
 
@@ -111,7 +111,7 @@ data class RegisterViewState(
     val password: String = "",
     val rePassword: String = "",
     val isLoading: Boolean = false,
-    val isRegisterEnable: Boolean = false,
+    val isRegisterEnable: Boolean = false
 )
 
 sealed class RegisterViewEvent {

@@ -44,10 +44,12 @@ fun OfficialPage(
     AppBarViewContainer(
         title = stringResource(id = R.string.official_title),
         elevation = 0.dp,
-        navigationClick = { navController.popBackStack() }) {
+        navigationClick = { navController.popBackStack() }
+    ) {
         UiStatusPage(
             status = uiStatus,
-            retry = { viewModel.dispatch(OfficialViewAction.RequestTabData) }) {
+            retry = { viewModel.dispatch(OfficialViewAction.RequestTabData) }
+        ) {
             Column {
                 if (tabData.isNotEmpty()) {
                     IndicatorAdaptiveTabRow(
@@ -58,7 +60,7 @@ fun OfficialPage(
                         onTabClick = { tabIndex ->
                             viewModel.dispatch(OfficialViewAction.SelectedTabIndex(tabIndex))
                             coroutine.launch { pagerState.animateScrollToPage(tabIndex) }
-                        },
+                        }
                     )
                     HorizontalPager(count = tabData.size, state = pagerState) { page ->
                         OfficialListPage(navController = navController, tab = tabData[page])

@@ -24,11 +24,10 @@ class SystemContentTabViewModel : ViewModel() {
     private fun selectedTabIndex(index: Int) {
         viewStates = viewStates.copy(selectedIndex = index)
     }
-
 }
 
 data class SystemContentTabViewState(
-    val selectedIndex: Int = 0,
+    val selectedIndex: Int = 0
 )
 
 sealed class SystemContentTabViewAction {

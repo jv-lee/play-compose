@@ -51,7 +51,8 @@ sealed class RoutePage(val route: String, val paramsKey: Map<String, Any> = empt
      */
     object Todo : RoutePage("Todo") {
         object CreateTodo : RoutePage(
-            "CreateTodo", paramsKey = mapOf<String, Class<*>>(
+            "CreateTodo",
+            paramsKey = mapOf<String, Class<*>>(
                 Pair(RouteParamsKey.todoDataKey, Parcelable::class.java)
             )
         )

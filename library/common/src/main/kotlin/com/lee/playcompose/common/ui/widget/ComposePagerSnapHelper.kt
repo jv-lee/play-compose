@@ -86,7 +86,6 @@ class PagerSnapNestedScrollConnection(
 
     override suspend fun onPostFling(consumed: Velocity, available: Velocity): Velocity = when {
         state.isSwiping.value -> {
-
             state.updateScrollToItemPosition(listState.layoutInfo.visibleItemsInfo.firstOrNull())
 
             scrollTo()
@@ -99,7 +98,6 @@ class PagerSnapNestedScrollConnection(
     }.also {
         state.isSwiping.value = false
     }
-
 }
 
 /**
@@ -141,7 +139,6 @@ fun ComposePagerSnapHelper(
             scope.launch {
                 state.scrollItemToSnapPosition(listState, position)
             }
-
         }
     }
 

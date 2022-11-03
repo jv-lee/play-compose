@@ -32,7 +32,8 @@ import java.util.*
  * @author jv.lee
  * @date 2022/4/8
  */
-class CreateTodoViewModel(private val todoData: TodoData?) : ViewModel(),
+class CreateTodoViewModel(private val todoData: TodoData?) :
+    ViewModel(),
     DatePickerDialog.OnDateSetListener {
 
     private val api = createApi<ApiService>()
@@ -76,14 +77,15 @@ class CreateTodoViewModel(private val todoData: TodoData?) : ViewModel(),
     private fun initPageState() {
         val dateStr = todoData?.dateStr ?: dateToStrFormat()
         viewStates = viewStates.copy(
-            appTitleRes = if (todoData == null) R.string.title_create_todo else R.string.title_edit_todo,
+            appTitleRes = if (todoData == null) R.string.title_create_todo
+            else R.string.title_edit_todo,
             isCreate = todoData == null,
             title = todoData?.title ?: "",
             content = todoData?.content ?: "",
             priority = todoData?.priority ?: TodoData.PRIORITY_LOW,
             date = todoData?.dateStr ?: dateToStrFormat(),
             calendar = stringToCalendar(dateStr),
-            onDateSetListener = this,
+            onDateSetListener = this
         )
     }
 
@@ -181,7 +183,6 @@ class CreateTodoViewModel(private val todoData: TodoData?) : ViewModel(),
             return modelClass.getConstructor(TodoData::class.java).newInstance(todoData)
         }
     }
-
 }
 
 data class CreateTodoViewState(

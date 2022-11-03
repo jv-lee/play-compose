@@ -1,4 +1,5 @@
 @file:OptIn(ExperimentalFoundationApi::class, ExperimentalAnimationApi::class)
+
 /*
  * 全局 CompositionLocalProvider 扩展函数
  * @author jv.lee
@@ -80,9 +81,10 @@ fun ProviderOverScroll(content: @Composable () -> Unit) {
 fun ProviderDensity(width: Float = 360f, content: @Composable () -> Unit) {
     val fontScale = LocalDensity.current.fontScale
     val displayMetrics = LocalContext.current.resources.displayMetrics
+    val orientation = LocalContext.current.resources.configuration.orientation
     val sizePixels =
-        if (LocalContext.current.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
-            displayMetrics.widthPixels else displayMetrics.heightPixels
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) displayMetrics.widthPixels
+        else displayMetrics.heightPixels
 
     CompositionLocalProvider(
         LocalDensity provides Density(density = sizePixels / width, fontScale = fontScale)

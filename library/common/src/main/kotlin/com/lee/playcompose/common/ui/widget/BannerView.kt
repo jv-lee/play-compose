@@ -49,7 +49,7 @@ fun <T : Any> BannerView(
     timeMillis: Long = 3000,
     indicatorAlignment: Alignment = Alignment.BottomCenter,
     clipCardEnable: Boolean = true,
-    loopEnable: Boolean = true,
+    loopEnable: Boolean = true
 ) {
     val pagerState = rememberPagerState(initialPage = getStartSelectItem(data.size))
 
@@ -75,14 +75,18 @@ fun <T : Any> BannerView(
         HorizontalPager(
             count = getRealCount(),
             state = pagerState,
-            contentPadding = PaddingValues(horizontal = if (clipCardEnable) OffsetLargeMax else 0.dp),
+            contentPadding = PaddingValues(
+                horizontal = if (clipCardEnable) OffsetLargeMax else 0.dp
+            ),
             modifier = Modifier
                 .fillMaxSize()
                 .pointerInput(Unit) {
                     forEachGesture {
                         awaitPointerEventScope {
                             // 当pageCount大于1，事件进入等待，就手动触发动画
-                            if (currentPageIndex == pagerState.currentPage && pagerState.pageCount > 1) {
+                            if (currentPageIndex == pagerState.currentPage &&
+                                pagerState.pageCount > 1
+                            ) {
                                 executeChangePage = !executeChangePage
                             }
 
@@ -121,7 +125,9 @@ fun <T : Any> BannerView(
 
         // indicator
         BannerIndicator(
-            data = data, state = pagerState, modifier = Modifier
+            data = data,
+            state = pagerState,
+            modifier = Modifier
                 .align(indicatorAlignment)
                 .padding(OffsetMedium)
         )

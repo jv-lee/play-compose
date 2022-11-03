@@ -152,7 +152,6 @@ class SearchViewModel : ViewModel() {
             }
         }
     }
-
 }
 
 data class SearchViewState(

@@ -69,7 +69,8 @@ fun CreateSharePage(
         navigationClick = {
             focusManager.clearFocus()
             navController.popBackStack()
-        }) {
+        }
+    ) {
         CreateShareContent(
             viewState = viewState,
             clearFocus = { focusManager.clearFocus() },
@@ -81,7 +82,8 @@ fun CreateSharePage(
             },
             onActionShare = {
                 viewModel.dispatch(CreateShareViewAction.RequestShare)
-            })
+            }
+        )
     }
 }
 
@@ -122,7 +124,8 @@ private fun CreateShareContent(
                 .fillMaxWidth()
                 .constrainAs(editTitle) {
                     top.linkTo(tvTitle.bottom)
-                })
+                }
+        )
 
         Text(
             text = stringResource(id = R.string.share_content_text),
@@ -148,7 +151,8 @@ private fun CreateShareContent(
                 .fillMaxWidth()
                 .constrainAs(editContent) {
                     top.linkTo(tvContent.bottom)
-                })
+                }
+        )
 
         Text(
             text = stringResource(id = R.string.share_description),
@@ -162,6 +166,5 @@ private fun CreateShareContent(
                     bottom.linkTo(parent.bottom)
                 }
         )
-
     }
 }

@@ -83,25 +83,31 @@ fun RegisterPage(
             .wrapContentSize(Alignment.Center)
     ) {
         RegisterTitle()
-        RegisterInputContent(viewState = viewState, usernameChange = {
-            viewModel.dispatch(RegisterViewAction.ChangeUsername(it))
-        }, passwordChange = {
-            viewModel.dispatch(RegisterViewAction.ChangePassword(it))
-        }, rePasswordChange = {
-            viewModel.dispatch(RegisterViewAction.ChangeRePassword(it))
-        }, doneChange = {
-            focusManager.clearFocus()
-            viewModel.dispatch(RegisterViewAction.RequestRegister)
-        })
+        RegisterInputContent(
+            viewState = viewState,
+            usernameChange = {
+                viewModel.dispatch(RegisterViewAction.ChangeUsername(it))
+            },
+            passwordChange = {
+                viewModel.dispatch(RegisterViewAction.ChangePassword(it))
+            },
+            rePasswordChange = {
+                viewModel.dispatch(RegisterViewAction.ChangeRePassword(it))
+            },
+            doneChange = {
+                focusManager.clearFocus()
+                viewModel.dispatch(RegisterViewAction.RequestRegister)
+            }
+        )
 
         RegisterFooter(viewState = viewState, gotoLoginClick = {
             imeInsets.hasBottomExpend({ focusManager.clearFocus() }, {
                 navController.popBackStack()
             })
         }, registerClick = {
-            focusManager.clearFocus()
-            viewModel.dispatch(RegisterViewAction.RequestRegister)
-        })
+                focusManager.clearFocus()
+                viewModel.dispatch(RegisterViewAction.RequestRegister)
+            })
     }
 }
 
@@ -124,7 +130,7 @@ private fun RegisterInputContent(
     usernameChange: (String) -> Unit,
     passwordChange: (String) -> Unit,
     rePasswordChange: (String) -> Unit,
-    doneChange: KeyboardActionScope.() -> Unit,
+    doneChange: KeyboardActionScope.() -> Unit
 ) {
     Card(
         backgroundColor = AppTheme.colors.item,
@@ -165,7 +171,8 @@ private fun RegisterInputContent(
                         contentDescription = null,
                         tint = ButtonLockColor
                     )
-                })
+                }
+            )
             AccountSpacer()
             AppTextField(
                 value = viewState.rePassword,
@@ -183,7 +190,8 @@ private fun RegisterInputContent(
                         contentDescription = null,
                         tint = ButtonLockColor
                     )
-                })
+                }
+            )
         }
     }
 }
@@ -218,7 +226,7 @@ private fun RegisterFooter(
             colors = ButtonDefaults.buttonColors(
                 backgroundColor =
                 if (viewState.isRegisterEnable) AppTheme.colors.focus else ButtonLockColor
-            ),
+            )
         ) {
             Text(
                 text = stringResource(id = R.string.account_register_button),

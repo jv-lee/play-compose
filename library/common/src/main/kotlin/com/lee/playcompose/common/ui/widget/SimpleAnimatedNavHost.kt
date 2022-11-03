@@ -1,4 +1,5 @@
 @file:OptIn(ExperimentalAnimationApi::class)
+
 package com.lee.playcompose.common.ui.widget
 
 import androidx.compose.animation.*
@@ -28,8 +29,10 @@ fun SimpleAnimatedNavHost(
         { fadeIn(initialAlpha = 0F) },
     exitTransition: (AnimatedContentScope<NavBackStackEntry>.() -> ExitTransition) =
         { fadeOut(targetAlpha = 0F) },
-    popEnterTransition: (AnimatedContentScope<NavBackStackEntry>.() -> EnterTransition) = enterTransition,
-    popExitTransition: (AnimatedContentScope<NavBackStackEntry>.() -> ExitTransition) = exitTransition,
+    popEnterTransition: (AnimatedContentScope<NavBackStackEntry>.() -> EnterTransition) =
+        enterTransition,
+    popExitTransition: (AnimatedContentScope<NavBackStackEntry>.() -> ExitTransition) =
+        exitTransition,
     builder: NavGraphBuilder.() -> Unit
 ) {
     AnimatedNavHost(

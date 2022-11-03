@@ -34,7 +34,7 @@ fun OfficialListPage(
 
     RefreshList(
         lazyPagingItems = contentList,
-        listState = listState,
+        listState = listState
     ) {
         // build official content item
         itemsIndexed(contentList) { _, item ->

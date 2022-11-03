@@ -48,8 +48,9 @@ fun SystemPage() {
         // 监听channel全局事件NavigationSelectEvent:导航点击列表移动回顶部
         ChannelBus.getChannel<NavigationSelectEvent>()?.receiveAsFlow()?.collect { event ->
             if (event.route == RoutePage.System.route) {
-                val key = if (pagerState.currentPage == 0)
-                    systemCallbackKey else navigationCallbackKey
+                val key = if (pagerState.currentPage == 0) {
+                    systemCallbackKey
+                } else navigationCallbackKey
                 handler.notifyAt(key) { it.tabChange() }
             }
         }
@@ -107,4 +108,3 @@ private fun TabButton(text: String, isSelected: Boolean, onClick: () -> Unit) {
         Text(text = text, fontSize = FontSizeMedium, color = textColor)
     }
 }
-

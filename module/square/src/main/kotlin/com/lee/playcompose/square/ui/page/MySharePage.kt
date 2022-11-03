@@ -68,7 +68,10 @@ fun MySharePage(
         actionIcon = R.drawable.vector_add,
         actionMode = ActionMode.Button,
         navigationClick = { navController.popBackStack() },
-        actionClick = { navController.navigateArgs(RoutePage.Square.CreateShare.route) }) {
+        actionClick = {
+            navController.navigateArgs(RoutePage.Square.CreateShare.route)
+        }
+    ) {
         MyShareContent(
             viewState = viewState,
             slidingPaneState = slidingPaneState,
@@ -77,7 +80,8 @@ fun MySharePage(
             },
             onItemDelete = {
                 viewModel.dispatch(MyShareViewAction.RequestDeleteShare(it))
-            })
+            }
+        )
     }
 }
 
@@ -93,7 +97,7 @@ private fun MyShareContent(
 
     RefreshList(
         lazyPagingItems = contentList,
-        listState = listState,
+        listState = listState
     ) {
         // build myShare content item
         itemsIndexed(contentList) { _, item ->
@@ -102,9 +106,8 @@ private fun MyShareContent(
                 item = item,
                 state = slidingPaneState,
                 onItemClick = onItemClick,
-                onItemDelete = onItemDelete,
+                onItemDelete = onItemDelete
             )
         }
     }
 }
-

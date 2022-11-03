@@ -74,9 +74,11 @@ fun SearchPage(
         navigationClick = {
             focusManager.clearFocus()
             navController.popBackStack()
-        }, onSearchClick = { searchKey ->
+        },
+        onSearchClick = { searchKey ->
             viewModel.dispatch(SearchViewAction.NavigationSearchKey(searchKey))
-        }, onValueChange = { searchKey ->
+        },
+        onValueChange = { searchKey ->
             viewModel.dispatch(SearchViewAction.ChangeSearchKey(searchKey))
         }
     ) {
@@ -84,13 +86,17 @@ fun SearchPage(
             viewState = viewState,
             contentClick = {
                 focusManager.clearFocus()
-            }, onSearchClick = { searchKey ->
+            },
+            onSearchClick = { searchKey ->
                 viewModel.dispatch(SearchViewAction.NavigationSearchKey(searchKey))
-            }, onDeleteHistoryClick = { searchKey ->
+            },
+            onDeleteHistoryClick = { searchKey ->
                 viewModel.dispatch(SearchViewAction.DeleteSearchHistory(searchKey))
-            }, onClearClick = {
+            },
+            onClearClick = {
                 viewModel.dispatch(SearchViewAction.ClearSearchHistory)
-            })
+            }
+        )
     }
 }
 
@@ -100,14 +106,17 @@ private fun SearchAppBarContainer(
     navigationClick: () -> Unit,
     onSearchClick: (String) -> Unit,
     onValueChange: (String) -> Unit,
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ) {
     AppBarViewContainer(
-        navigationClick = navigationClick, appBarContent = {
+        navigationClick = navigationClick,
+        appBarContent = {
             AppTextField(
                 value = viewState.searchKey,
                 onValueChange = onValueChange,
-                keyboardActions = KeyboardActions(onSearch = { onSearchClick(viewState.searchKey) }),
+                keyboardActions = KeyboardActions(
+                    onSearch = { onSearchClick(viewState.searchKey) }
+                ),
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Text,
                     imeAction = ImeAction.Search
@@ -116,9 +125,10 @@ private fun SearchAppBarContainer(
                 modifier = Modifier
                     .align(Alignment.Center)
                     .fillMaxWidth()
-                    .padding(start = 56.dp, end = 56.dp),
+                    .padding(start = 56.dp, end = 56.dp)
             )
-        }, content = content
+        },
+        content = content
     )
 }
 
@@ -130,9 +140,11 @@ private fun SearchContent(
     onDeleteHistoryClick: (String) -> Unit,
     onClearClick: () -> Unit
 ) {
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .onTap { contentClick() }) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .onTap { contentClick() }
+    ) {
         SearchHotContent(viewState = viewState, onSearchClick)
         SearchHistoryContent(
             viewState = viewState,

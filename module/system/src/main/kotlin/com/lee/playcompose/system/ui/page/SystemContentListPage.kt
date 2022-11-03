@@ -34,7 +34,7 @@ fun SystemContentListPage(
 
     RefreshList(
         lazyPagingItems = contentList,
-        listState = listState,
+        listState = listState
     ) {
         // build system content list item
         itemsIndexed(contentList) { _, item ->

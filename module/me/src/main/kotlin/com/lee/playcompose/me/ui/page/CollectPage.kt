@@ -54,7 +54,8 @@ fun CollectPage(
 
     AppBarViewContainer(
         title = stringResource(id = R.string.me_item_collect),
-        navigationClick = { navController.popBackStack() }) {
+        navigationClick = { navController.popBackStack() }
+    ) {
         CollectContent(
             viewState = viewState,
             slidingPaneState = slidingPaneState,
@@ -63,7 +64,8 @@ fun CollectPage(
             },
             onItemDelete = {
                 viewModel.dispatch(CollectViewAction.RequestUnCollect(it))
-            })
+            }
+        )
     }
 }
 
@@ -79,7 +81,7 @@ private fun CollectContent(
 
     RefreshList(
         lazyPagingItems = contentList,
-        listState = listState,
+        listState = listState
     ) {
         // build collect content item
         itemsIndexed(contentList) { _, item ->
@@ -88,7 +90,7 @@ private fun CollectContent(
                 item = item,
                 state = slidingPaneState,
                 onItemClick = onItemClick,
-                onItemDelete = onItemDelete,
+                onItemDelete = onItemDelete
             )
         }
     }

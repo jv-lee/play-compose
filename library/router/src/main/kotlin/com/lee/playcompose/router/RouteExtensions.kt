@@ -1,4 +1,5 @@
 @file:OptIn(ExperimentalAnimationApi::class)
+
 /*
  * app全局路由扩展函数
  * @author jv.lee
@@ -26,7 +27,10 @@ fun NavGraphBuilder.tabComposable(
     content: @Composable AnimatedVisibilityScope.(NavBackStackEntry) -> Unit
 ) {
     composable(
-        route = route, arguments, deepLinks, content = content,
+        route = route,
+        arguments,
+        deepLinks,
+        content = content,
         // 打开页面退出动画
         exitTransition = {
             if (tabDefaultRoutes.contains(this.targetState.destination.route())) {
@@ -62,7 +66,10 @@ fun NavGraphBuilder.themeComposable(
     content: @Composable AnimatedVisibilityScope.(NavBackStackEntry) -> Unit
 ) {
     composable(
-        route = route, arguments, deepLinks, content = content,
+        route = route,
+        arguments,
+        deepLinks,
+        content = content,
         // 打开页面进入动画
         enterTransition = { enterTransition },
         // 关闭页面退出动画
@@ -119,9 +126,11 @@ fun RoutePage.parseRoute(): String {
 fun RoutePage.parseArguments(): List<NamedNavArgument> {
     val list = arrayListOf<NamedNavArgument>()
     paramsKey.forEach {
-        list.add(navArgument(it.key) {
-            type = checkType(it.value)
-        })
+        list.add(
+            navArgument(it.key) {
+                type = checkType(it.value)
+            }
+        )
     }
     return list
 }
@@ -171,5 +180,4 @@ private fun NavDestination.route(): String? {
     } else {
         route?.substring(0, index)
     }
-
 }

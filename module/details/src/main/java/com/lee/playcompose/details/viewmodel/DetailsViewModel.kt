@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.lee.playcompose.base.core.ApplicationExtensions.app
-import com.lee.playcompose.base.extensions.delay
 import com.lee.playcompose.base.extensions.lowestTime
 import com.lee.playcompose.common.constants.ApiConstants
 import com.lee.playcompose.common.entity.DetailsData
@@ -60,9 +59,11 @@ class DetailsViewModel(private val details: DetailsData) : ViewModel() {
 
     private fun requestCollect() {
         viewModelScope.launch {
-            //已收藏直接返回结果
+            // 已收藏直接返回结果
             if (details.isCollect) {
-                _viewEvents.send(DetailsViewEvent.CollectEvent(app.getString(R.string.menu_collect_completed)))
+                _viewEvents.send(
+                    DetailsViewEvent.CollectEvent(app.getString(R.string.menu_collect_completed))
+                )
                 return@launch
             }
 
@@ -81,7 +82,9 @@ class DetailsViewModel(private val details: DetailsData) : ViewModel() {
                 _viewEvents.send(DetailsViewEvent.CollectEvent(error.message))
             }.lowestTime().collect {
                 viewStates = viewStates.copy(isLoading = false)
-                _viewEvents.send(DetailsViewEvent.CollectEvent(app.getString(R.string.menu_collect_complete)))
+                _viewEvents.send(
+                    DetailsViewEvent.CollectEvent(app.getString(R.string.menu_collect_complete))
+                )
             }
         }
     }
@@ -97,7 +100,6 @@ class DetailsViewModel(private val details: DetailsData) : ViewModel() {
             return modelClass.getConstructor(DetailsData::class.java).newInstance(details)
         }
     }
-
 }
 
 data class DetailsViewState(
@@ -114,4 +116,3 @@ sealed class DetailsViewAction {
     object RequestCollectDetails : DetailsViewAction()
     object ShareDetails : DetailsViewAction()
 }
-

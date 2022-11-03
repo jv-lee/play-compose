@@ -46,7 +46,8 @@ fun <T : Any> ViewModel.pager(
  * @param requestAction 分页数据网络请求suspend函数
  */
 fun <T : Any> ViewModel.singlePager(
-    config: PagingConfig = PagingConfig(100), initialKey: Int = 0,
+    config: PagingConfig = PagingConfig(100),
+    initialKey: Int = 0,
     requestAction: suspend () -> List<T>
 ): Flow<PagingData<T>> {
     return createPaging(config, initialKey) {
@@ -59,7 +60,8 @@ fun <T : Any> ViewModel.singlePager(
 }
 
 private fun <K : Any, V : Any> ViewModel.createPaging(
-    config: PagingConfig, initialKey: K? = null,
+    config: PagingConfig,
+    initialKey: K? = null,
     requestData: suspend (PagingSource.LoadParams<K>) -> PagingSource.LoadResult<K, V>
 ): Flow<PagingData<V>> {
     return Pager(config, initialKey) {

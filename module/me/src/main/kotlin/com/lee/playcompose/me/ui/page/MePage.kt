@@ -74,8 +74,9 @@ private fun MeHeader(accountViewState: AccountViewState, notLoginClick: () -> Un
             val (header, username, level) = createRefs()
             Image(
                 painter = painterResource(
-                    id = if (accountViewState.isLogin)
-                        CR.mipmap.ic_launcher_round else R.drawable.vector_account
+                    id = if (accountViewState.isLogin) {
+                        CR.mipmap.ic_launcher_round
+                    } else R.drawable.vector_account
                 ),
                 contentDescription = null,
                 modifier = Modifier
@@ -89,9 +90,11 @@ private fun MeHeader(accountViewState: AccountViewState, notLoginClick: () -> Un
                     }
             )
             Text(
-                text = if (accountViewState.isLogin)
-                    accountViewState.accountData?.userInfo?.nickname ?: "" else
-                    stringResource(id = R.string.me_account_default_text),
+                text = if (accountViewState.isLogin) {
+                    accountViewState.accountData?.userInfo?.nickname ?: ""
+                } else {
+                    stringResource(id = R.string.me_account_default_text)
+                },
                 color = AppTheme.colors.accent,
                 fontSize = FontSizeLarge,
                 modifier = Modifier
@@ -100,13 +103,15 @@ private fun MeHeader(accountViewState: AccountViewState, notLoginClick: () -> Un
                         start.linkTo(header.end, 26.dp)
                         top.linkTo(header.top)
                         bottom.linkTo(level.top)
-                    })
+                    }
+            )
             if (accountViewState.isLogin) {
-                Text(text = stringResource(
-                    id = R.string.me_account_info_text,
-                    accountViewState.accountData?.coinInfo?.level ?: "",
-                    accountViewState.accountData?.coinInfo?.rank ?: ""
-                ),
+                Text(
+                    text = stringResource(
+                        id = R.string.me_account_info_text,
+                        accountViewState.accountData?.coinInfo?.level ?: "",
+                        accountViewState.accountData?.coinInfo?.rank ?: ""
+                    ),
                     color = AppTheme.colors.focus,
                     fontSize = FontSizeSmall,
                     modifier = Modifier
@@ -115,7 +120,8 @@ private fun MeHeader(accountViewState: AccountViewState, notLoginClick: () -> Un
                             start.linkTo(header.end, 26.dp)
                             top.linkTo(username.bottom)
                             bottom.linkTo(header.bottom)
-                        })
+                        }
+                )
             }
             createVerticalChain(username, level, chainStyle = ChainStyle.Packed)
         }

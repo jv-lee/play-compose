@@ -59,7 +59,9 @@ class CreateShareViewModel : ViewModel() {
     private fun requestShare() {
         viewModelScope.launch {
             // 校验输入格式
-            if (TextUtils.isEmpty(viewStates.shareTitle) || TextUtils.isEmpty(viewStates.shareContent)) {
+            if (TextUtils.isEmpty(viewStates.shareTitle) ||
+                TextUtils.isEmpty(viewStates.shareContent)
+            ) {
                 _viewEvents.send(CreateShareViewEvent.CreateFailed("title || content is empty."))
                 return@launch
             }
@@ -77,7 +79,6 @@ class CreateShareViewModel : ViewModel() {
             }
         }
     }
-
 }
 
 data class CreateShareViewState(

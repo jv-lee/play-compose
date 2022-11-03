@@ -3,7 +3,6 @@ package com.lee.playcompose.todo.model.entity
 import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.todo.R
 
-
 /**
  * todo类型选择器本地实体
  * @author jv.lee

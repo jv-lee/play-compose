@@ -66,7 +66,6 @@ class HomeViewModel : ViewModel() {
     private fun requestLoopBanner() {
         viewStates = viewStates.copy(isLoop = true)
     }
-
 }
 
 data class HomeViewState(

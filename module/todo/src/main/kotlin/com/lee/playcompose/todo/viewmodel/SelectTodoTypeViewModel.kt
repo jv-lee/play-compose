@@ -46,7 +46,6 @@ class SelectTodoTypeViewModel : ViewModel() {
             }
         }
     }
-
 }
 
 data class SelectTodoTypeViewState(

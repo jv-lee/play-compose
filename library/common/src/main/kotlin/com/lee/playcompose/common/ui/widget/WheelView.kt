@@ -48,7 +48,7 @@ fun <T : Any> WheelView(
     selectedTextColor: Color = AppTheme.colors.accent,
     unSelectedTextColor: Color = AppTheme.colors.primary,
     selectedTextSize: TextUnit = FontSizeLarge,
-    unSelectedTextSize: TextUnit = FontSizeMedium,
+    unSelectedTextSize: TextUnit = FontSizeMedium
 ) {
     Box(modifier = modifier.height(itemHeight * 3)) {
         WheelViewItemBackground(
@@ -117,7 +117,6 @@ private fun BoxScope.WheelViewItemBackground(
         }
     }
 }
-
 
 annotation class SelectItemStyle {
     companion object {

@@ -81,11 +81,14 @@ fun TodoListPage(
     }
 
     // 监听多页面状态修改移除刷新联动回调
-    handler.addCallback(status.toString(), object : TodoListCallback {
-        override fun refresh() {
-            contentList.refresh()
+    handler.addCallback(
+        status.toString(),
+        object : TodoListCallback {
+            override fun refresh() {
+                contentList.refresh()
+            }
         }
-    })
+    )
 
     // 监听页面type变化重新加载数据
     LaunchedEffect(type) {
@@ -114,11 +117,14 @@ fun TodoListPage(
         slidingPaneState = slidingPaneState,
         onContentItemClick = {
             navController.navigateArgs(RoutePage.Todo.CreateTodo.route, it)
-        }, onDelete = {
+        },
+        onDelete = {
             viewModel.dispatch(TodoListViewAction.RequestDeleteTodo(it))
-        }, onUpdate = {
+        },
+        onUpdate = {
             viewModel.dispatch(TodoListViewAction.RequestUpdateTodoStatus(it))
-        })
+        }
+    )
 }
 
 @Composable
@@ -127,7 +133,7 @@ private fun TodoListContent(
     slidingPaneState: SlidingPaneState,
     onContentItemClick: (TodoData) -> Unit,
     onDelete: (TodoData) -> Unit,
-    onUpdate: (TodoData) -> Unit,
+    onUpdate: (TodoData) -> Unit
 ) {
     val contentList = viewState.savedPager.getLazyPagingItems()
     val listState = if (contentList.itemCount > 0) viewState.listState else LazyListState()
@@ -135,7 +141,7 @@ private fun TodoListContent(
     RefreshList(
         swipeEnable = false,
         lazyPagingItems = contentList,
-        listState = listState,
+        listState = listState
     ) {
         // build todos content item
         val items = contentList.itemSnapshotList.items
@@ -183,7 +189,7 @@ private fun TodoListItem(
     slidingPaneState: SlidingPaneState,
     onContentItemClick: (TodoData) -> Unit,
     onDelete: (TodoData) -> Unit,
-    onUpdate: (TodoData) -> Unit,
+    onUpdate: (TodoData) -> Unit
 ) {
     SlidingPaneBox(
         slidingWidth = SlidingWidth,
@@ -206,8 +212,9 @@ private fun TodoListItem(
                 )
                 Text(
                     text = stringResource(
-                        id = if (todoData.status == STATUS_UPCOMING)
-                            R.string.todo_item_complete else R.string.todo_item_upcoming
+                        id = if (todoData.status == STATUS_UPCOMING) {
+                            R.string.todo_item_complete
+                        } else R.string.todo_item_upcoming
                     ),
                     fontSize = FontSizeSmall,
                     color = Color.White,
@@ -219,7 +226,8 @@ private fun TodoListItem(
                         .wrapContentSize(Alignment.Center)
                 )
             }
-        }) {
+        }
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()

@@ -58,7 +58,6 @@ class OfficialViewModel : ViewModel() {
     private fun selectedTabIndex(index: Int) {
         viewStates = viewStates.copy(selectedIndex = index)
     }
-
 }
 
 data class OfficialViewState(

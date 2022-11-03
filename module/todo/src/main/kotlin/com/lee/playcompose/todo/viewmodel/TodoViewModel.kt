@@ -72,14 +72,13 @@ class TodoViewModel : ViewModel() {
             viewStates = viewStates.copy(navigationElevation = BottomNavigationDefaults.Elevation)
         }
     }
-
 }
 
 data class TodoViewState(
     val isShowTypeDialog: Boolean = false,
     val type: Int = TodoType.DEFAULT,
     val todoTitleRes: Int = R.string.todo_title_default,
-    val navigationElevation: Dp = 0.dp,
+    val navigationElevation: Dp = 0.dp
 )
 
 sealed class TodoViewAction {

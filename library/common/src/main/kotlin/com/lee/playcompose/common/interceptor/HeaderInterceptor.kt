@@ -17,5 +17,4 @@ class HeaderInterceptor : Interceptor {
         builder.addHeader("Content-type", "application/json; charset=utf-8")
         return chain.proceed(builder.build())
     }
-
 }

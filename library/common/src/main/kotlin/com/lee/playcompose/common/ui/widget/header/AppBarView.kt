@@ -59,11 +59,10 @@ fun AppBarView(
     elevation: Dp = AppBarDefaults.TopAppBarElevation,
     navigationEnable: Boolean = true,
     menuVisibilityState: MutableState<Boolean> = remember { mutableStateOf(false) },
-    actionMode: ActionMode = ActionMode.Default,
+    actionMode: ActionMode = Default,
     menu: @Composable ColumnScope.() -> Unit = {},
-    content: @Composable BoxScope.() -> Unit = {},
+    content: @Composable BoxScope.() -> Unit = {}
 ) {
-
     Column(modifier = modifier.shadow(elevation)) {
         Spacer(
             modifier = Modifier
@@ -97,7 +96,7 @@ fun AppBarView(
                 },
                 actions = {
                     when (actionMode) {
-                        is ActionMode.Button -> {
+                        is Button -> {
                             IconButton(onClick = actionClick) {
                                 Icon(
                                     painter = painterResource(id = actionIcon),
@@ -106,7 +105,7 @@ fun AppBarView(
                                 )
                             }
                         }
-                        is ActionMode.Menu -> {
+                        is Menu -> {
                             IconButton(onClick = {
                                 menuVisibilityState.value = !menuVisibilityState.value
                             }) {
@@ -174,9 +173,9 @@ fun AppBarViewContainer(
     containerBackground: Color = AppTheme.colors.background,
     appBarContent: @Composable BoxScope.() -> Unit = {},
     menuVisibilityState: MutableState<Boolean> = remember { mutableStateOf(false) },
-    actionMode: ActionMode = ActionMode.Default,
+    actionMode: ActionMode = Default,
     menu: @Composable ColumnScope.() -> Unit = {},
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ) {
     Box(
         Modifier
@@ -201,7 +200,7 @@ fun AppBarViewContainer(
             menuVisibilityState,
             actionMode,
             menu,
-            appBarContent,
+            appBarContent
         )
     }
 }

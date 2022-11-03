@@ -92,9 +92,10 @@ private fun SplashPage(viewModel: SplashViewModel) {
 private fun SplashAdView(viewState: SplashViewState, onNextClick: () -> Unit) {
     // 添加横屏时NavigationPadding值获取
     val navigationInsets: PaddingValues = WindowInsets.navigationBars.asPaddingValues()
+    val orientation = LocalContext.current.resources.configuration.orientation
     val paddingEnd =
-        if (LocalContext.current.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
-            0.dp else navigationInsets.calculateRightPadding(LayoutDirection.Ltr)
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) 0.dp
+        else navigationInsets.calculateRightPadding(LayoutDirection.Ltr)
     FadeAnimatedVisibility(visible = viewState.splashAdVisible) {
         Box {
             Image(

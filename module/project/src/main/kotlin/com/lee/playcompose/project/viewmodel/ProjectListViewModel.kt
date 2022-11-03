@@ -39,7 +39,6 @@ class ProjectListViewModel(private val id: Long) : ViewModel() {
             return modelClass.getConstructor(Long::class.java).newInstance(id)
         }
     }
-
 }
 
 data class ProjectListViewState(

@@ -78,25 +78,32 @@ fun SettingsPage(
     ConfirmDialog(
         isShow = viewState.isCacheConfirm,
         titleText = stringResource(id = R.string.settings_clear_title),
-        onCancel = { viewModel.dispatch(SettingsViewAction.VisibleCacheDialog(visibility = false)) },
-        onConfirm = { viewModel.dispatch(SettingsViewAction.RequestClearCache) })
+        onCancel = {
+            viewModel.dispatch(SettingsViewAction.VisibleCacheDialog(visibility = false))
+        },
+        onConfirm = { viewModel.dispatch(SettingsViewAction.RequestClearCache) }
+    )
 
     ConfirmDialog(
         isShow = viewState.isLogoutConfirm,
         titleText = stringResource(id = R.string.settings_logout_title),
-        onCancel = { viewModel.dispatch(SettingsViewAction.VisibleLogoutDialog(visibility = false)) },
+        onCancel = {
+            viewModel.dispatch(SettingsViewAction.VisibleLogoutDialog(visibility = false))
+        },
         onConfirm = {
             coroutine.launch {
                 viewModel.dispatch(SettingsViewAction.VisibleLogoutDialog(visibility = false))
                 viewModel.accountService.requestLogout(activity = activity)
             }
-        })
+        }
+    )
 
     AppBarViewContainer(
         title = stringResource(id = R.string.me_item_settings),
         navigationClick = {
             navController.popBackStack()
-        }) {
+        }
+    ) {
         Column(modifier = Modifier.fillMaxSize()) {
             ProfileItem(
                 leftText = stringResource(id = R.string.dark_mode_system),
@@ -136,7 +143,6 @@ fun SettingsPage(
                     viewModel.dispatch(SettingsViewAction.VisibleLogoutDialog(visibility = true))
                 }
             }
-
         }
     }
 }

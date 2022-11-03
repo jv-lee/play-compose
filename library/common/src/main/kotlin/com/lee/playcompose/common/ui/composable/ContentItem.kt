@@ -70,7 +70,8 @@ fun ContentItem(
                         end.linkTo(time.start, OffsetMedium)
                         top.linkTo(title.bottom)
                         width = Dimension.fillToConstraints
-                    })
+                    }
+            )
 
             Text(
                 text = item.getDateFormat(),
@@ -81,8 +82,8 @@ fun ContentItem(
                         end.linkTo(parent.end)
                         top.linkTo(category.top)
                         bottom.linkTo(category.bottom)
-                    })
+                    }
+            )
         }
-
     }
 }

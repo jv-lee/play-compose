@@ -85,7 +85,7 @@ fun ConfirmDialog(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
                         .padding(top = OffsetLarge, bottom = OffsetLarge)
-                        .wrapContentSize(Alignment.Center),
+                        .wrapContentSize(Alignment.Center)
                 ) {
                     Text(
                         text = titleText,

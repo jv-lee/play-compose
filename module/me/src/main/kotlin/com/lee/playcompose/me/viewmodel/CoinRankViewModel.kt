@@ -50,7 +50,7 @@ class CoinRankViewModel : ViewModel() {
             this.data = mutableData
 
             if (list.size >= 2) {
-                //排行榜UI显示 0 —><- 1 位置数据对掉
+                // 排行榜UI显示 0 —><- 1 位置数据对掉
                 Collections.swap(list, 0, 1)
             }
 

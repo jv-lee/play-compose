@@ -1,4 +1,5 @@
 @file:OptIn(ExperimentalComposeUiApi::class)
+
 package com.lee.playcompose.common.ui.widget
 
 import android.view.MotionEvent
@@ -63,52 +64,55 @@ fun SlidingPaneBox(
         }
 
         // content layout
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .offset(x = offsetXAnimate)
-            .pointerInteropFilter { event ->
-                if (event.action == MotionEvent.ACTION_DOWN) {
-                    if (state.expand) {
-                        state.expand = false
-                        state.closeAction()
-                        return@pointerInteropFilter true
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .offset(x = offsetXAnimate)
+                .pointerInteropFilter { event ->
+                    if (event.action == MotionEvent.ACTION_DOWN) {
+                        if (state.expand) {
+                            state.expand = false
+                            state.closeAction()
+                            return@pointerInteropFilter true
+                        }
                     }
+                    false
                 }
-                false
-            }
-            .pointerInput(Unit) {
-                detectHorizontalDragGestures(
-                    onDragEnd = dragOut,
-                    onDragCancel = dragOut,
-                    onHorizontalDrag = { _, dragAmount ->
-                        val endOffsetX = offsetX + dragAmount.dp
-                        if (slidingAlign == Alignment.CenterStart) {
-                            when {
-                                endOffsetX >= slidingWidth -> {
-                                    offsetX = slidingWidth
+                .pointerInput(Unit) {
+                    detectHorizontalDragGestures(
+                        onDragEnd = dragOut,
+                        onDragCancel = dragOut,
+                        onHorizontalDrag = { _, dragAmount ->
+                            val endOffsetX = offsetX + dragAmount.dp
+                            if (slidingAlign == Alignment.CenterStart) {
+                                when {
+                                    endOffsetX >= slidingWidth -> {
+                                        offsetX = slidingWidth
+                                    }
+                                    endOffsetX <= 0.dp -> {
+                                        offsetX = 0.dp
+                                    }
+                                    else -> {
+                                        offsetX += dragAmount.toDp()
+                                    }
                                 }
-                                endOffsetX <= 0.dp -> {
-                                    offsetX = 0.dp
-                                }
-                                else -> {
-                                    offsetX += dragAmount.toDp()
-                                }
-                            }
-                        } else {
-                            when {
-                                endOffsetX <= -slidingWidth -> {
-                                    offsetX = -slidingWidth
-                                }
-                                endOffsetX >= 0.dp -> {
-                                    offsetX = 0.dp
-                                }
-                                else -> {
-                                    offsetX += dragAmount.toDp()
+                            } else {
+                                when {
+                                    endOffsetX <= -slidingWidth -> {
+                                        offsetX = -slidingWidth
+                                    }
+                                    endOffsetX >= 0.dp -> {
+                                        offsetX = 0.dp
+                                    }
+                                    else -> {
+                                        offsetX += dragAmount.toDp()
+                                    }
                                 }
                             }
                         }
-                    })
-            }) {
+                    )
+                }
+        ) {
             content()
         }
     }
@@ -123,13 +127,15 @@ fun rememberSlidingPaneState(): MutableState<SlidingPaneState> = remember {
 
 @Stable
 fun Modifier.slidingPaneState(state: SlidingPaneState) =
-    this.then(pointerInteropFilter { event ->
-        if (event.action == MotionEvent.ACTION_DOWN) {
-            if (state.expand) {
-                state.expand = false
-                state.closeAction()
-                return@pointerInteropFilter true
+    this.then(
+        pointerInteropFilter { event ->
+            if (event.action == MotionEvent.ACTION_DOWN) {
+                if (state.expand) {
+                    state.expand = false
+                    state.closeAction()
+                    return@pointerInteropFilter true
+                }
             }
+            false
         }
-        false
-    })
+    )

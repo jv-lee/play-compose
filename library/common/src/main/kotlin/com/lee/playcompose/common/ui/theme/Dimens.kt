@@ -31,9 +31,8 @@ val FontSizeSmallX = 10.sp
 // 通用圆角线宽度
 val BorderWidth = 2.dp
 
-
 val ToolBarTitleSize = 18.sp
 
-val cardCorner = 5.dp   //卡片的圆角
-val buttonCorner = 3.dp //按钮的圆角
-val buttonHeight = 36.dp //按钮的高度
+val cardCorner = 5.dp // 卡片的圆角
+val buttonCorner = 3.dp // 按钮的圆角
+val buttonHeight = 36.dp // 按钮的高度

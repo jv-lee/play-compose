@@ -24,5 +24,4 @@ interface SearchHistoryDao : BaseDao<SearchHistory> {
      */
     @Query("DELETE FROM SearchHistory WHERE 1=1")
     fun clearSearchHistory()
-
 }

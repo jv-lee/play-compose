@@ -63,7 +63,6 @@ fun UiStatusListPage(
     content()
 }
 
-
 @Composable
 private fun PageError(retry: () -> Unit = { }) {
     Box(

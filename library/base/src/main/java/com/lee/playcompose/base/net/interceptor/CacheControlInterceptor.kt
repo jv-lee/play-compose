@@ -12,7 +12,7 @@ import java.io.IOException
  * @author jv.lee
  * @date 2020/3/20
  */
-class CacheControlInterceptor :Interceptor {
+class CacheControlInterceptor : Interceptor {
 
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {

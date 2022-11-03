@@ -40,7 +40,8 @@ fun CoinRankPage(
 ) {
     val viewState = viewModel.viewStates
 
-    AppBarViewContainer(title = stringResource(id = R.string.coin_rank_title),
+    AppBarViewContainer(
+        title = stringResource(id = R.string.coin_rank_title),
         actionIcon = R.drawable.vector_help,
         actionMode = ActionMode.Button,
         navigationClick = { navController.popBackStack() },
@@ -114,7 +115,7 @@ private fun RowScope.CoinRankTopItem(index: Int, coinRank: CoinRank) {
                 fontWeight = FontWeight.Bold,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                textAlign = TextAlign.Center,
+                textAlign = TextAlign.Center
             )
         }
     }
@@ -160,7 +161,7 @@ private fun CoinRankItem(coinRank: CoinRank) {
                 fontWeight = FontWeight.Bold,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                textAlign = TextAlign.Center,
+                textAlign = TextAlign.Center
             )
         }
     }

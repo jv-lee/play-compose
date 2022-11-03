@@ -75,7 +75,11 @@ class MyShareViewModel : ViewModel() {
                     viewStates = viewStates.copy(isLoading = false)
                 }.lowestTime().collect {
                     itemsDelete(content)
-                    _viewEvents.send(MyShareViewEvent.DeleteShareEvent(app.getString(R.string.share_delete_success)))
+                    _viewEvents.send(
+                        MyShareViewEvent.DeleteShareEvent(
+                            app.getString(R.string.share_delete_success)
+                        )
+                    )
                 }
             }
         }
@@ -90,11 +94,10 @@ class MyShareViewModel : ViewModel() {
         list.addAll(removes)
         _removedItemsFlow.value = list
     }
-
 }
 
 data class MyShareViewState(
-    val isLoading:Boolean = false,
+    val isLoading: Boolean = false,
     val savedPager: SavedPager<Content>,
     val listState: LazyListState = LazyListState()
 )

@@ -51,7 +51,7 @@ fun SelectTodoTypeDialog(
                     state = viewState.state,
                     data = viewState.todoTypes,
                     findText = { it.name },
-                    style = SelectItemStyle.LINE,
+                    style = SelectItemStyle.LINE
                 )
             }
         }

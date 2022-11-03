@@ -46,7 +46,9 @@ fun TodoPage(
     navController: NavController = LocalNavController.current,
     viewModel: TodoViewModel = viewModel()
 ) {
-    val handler by rememberPageCallbackHandler<TodoListCallback>(lifecycle = LocalLifecycleOwner.current)
+    val handler by rememberPageCallbackHandler<TodoListCallback>(
+        lifecycle = LocalLifecycleOwner.current
+    )
     val coroutine = rememberCoroutineScope()
     val pagerState = rememberPagerState()
     val viewState = viewModel.viewStates
@@ -63,10 +65,13 @@ fun TodoPage(
         title = stringResource(id = viewState.todoTitleRes),
         actionIcon = R.drawable.vector_replace,
         actionMode = ActionMode.Button,
-        actionClick = { viewModel.dispatch(TodoViewAction.ChangeTypeDialogVisible(visible = true)) },
+        actionClick = {
+            viewModel.dispatch(TodoViewAction.ChangeTypeDialogVisible(visible = true))
+        },
         navigationClick = {
             navController.popBackStack()
-        }) {
+        }
+    ) {
         Column(modifier = Modifier.fillMaxSize()) {
             TodoContent(
                 type = viewState.type,
@@ -86,8 +91,8 @@ fun TodoPage(
                     BottomNavigationItem(selected = isSelect, icon = {
                         NavigationIcon(isSelected = isSelect, item = item)
                     }, onClick = {
-                        coroutine.launch { pagerState.scrollToPage(index) }
-                    })
+                            coroutine.launch { pagerState.scrollToPage(index) }
+                        })
                 }
             }
         }
@@ -99,7 +104,7 @@ private fun ColumnScope.TodoContent(
     @TodoType type: Int,
     pagerState: PagerState,
     handler: PageCallbackHandler<TodoListCallback>,
-    onCreateClick: () -> Unit,
+    onCreateClick: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -149,5 +154,4 @@ private sealed class TodoTab(val route: String, val icon: Int, val selectIcon: I
 
     object Complete :
         TodoTab("Complete", R.drawable.vector_complete, R.drawable.vector_complete_fill)
-
 }

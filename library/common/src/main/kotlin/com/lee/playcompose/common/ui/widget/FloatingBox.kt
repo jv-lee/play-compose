@@ -48,20 +48,22 @@ fun FloatingBox(
     val offsetXAnimate by animateDpAsState(targetValue = scope.offsetX)
     val offsetYAnimate by animateDpAsState(targetValue = scope.offsetY)
 
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .onGloballyPositioned {
-            // 记录父容器 offset x y 位于屏幕坐标
-            scope = scope.copy(parentOffset = it.localToWindow(Offset.Zero))
-            // 记录父容器 rect l t r b 位于屏幕坐标
-            scope = scope.copy(parentRect = scope.parentRect())
-        }
-        .onSizeChanged {
-            // 记录父容器 size width height
-            scope = scope.copy(parentSize = it.toSize())
-            // 记录父容器 rect l t r b 位于屏幕坐标
-            scope = scope.copy(parentRect = scope.parentRect())
-        }) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .onGloballyPositioned {
+                // 记录父容器 offset x y 位于屏幕坐标
+                scope = scope.copy(parentOffset = it.localToWindow(Offset.Zero))
+                // 记录父容器 rect l t r b 位于屏幕坐标
+                scope = scope.copy(parentRect = scope.parentRect())
+            }
+            .onSizeChanged {
+                // 记录父容器 size width height
+                scope = scope.copy(parentSize = it.toSize())
+                // 记录父容器 rect l t r b 位于屏幕坐标
+                scope = scope.copy(parentRect = scope.parentRect())
+            }
+    ) {
         Card(
             shape = shape,
             backgroundColor = Color.Transparent,
@@ -83,8 +85,10 @@ fun FloatingBox(
                         onDragCancel = { scope = scope.reindexScope() },
                         onDrag = { _, dragAmount ->
                             scope = scope.updateOffsetXY(dragAmount.x, dragAmount.y)
-                        })
-                }) {
+                        }
+                    )
+                }
+        ) {
             content()
         }
     }
@@ -109,7 +113,7 @@ private data class FloatingBoxScope(
     val localOffset: Offset = Offset.Zero,
     val parentRect: Rect = Rect.Zero,
     val offsetX: Dp = 0.dp,
-    val offsetY: Dp = 0.dp,
+    val offsetY: Dp = 0.dp
 ) {
 
     // 更新当前view位置
@@ -237,6 +241,4 @@ private data class FloatingBoxScope(
     private fun reindexXY(): FloatingBoxScope {
         return copy(offsetX = 0f.dp, offsetY = 0.dp)
     }
-
 }
-

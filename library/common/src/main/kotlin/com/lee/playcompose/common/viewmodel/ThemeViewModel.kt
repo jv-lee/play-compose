@@ -55,13 +55,12 @@ class ThemeViewModel : ViewModel() {
             statusBarDarkContentEnabled = !isDark
         )
     }
-
 }
 
 data class ThemeViewState(
     val isDark: Boolean = false,
     val isSystem: Boolean = false,
-    val statusBarDarkContentEnabled: Boolean = false,
+    val statusBarDarkContentEnabled: Boolean = false
 )
 
 sealed class ThemeViewAction {

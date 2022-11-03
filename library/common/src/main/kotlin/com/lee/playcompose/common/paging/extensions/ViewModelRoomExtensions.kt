@@ -46,7 +46,7 @@ inline fun <reified T : Any> ViewModel.roomPager(
             savedKey,
             initialKey,
             database,
-            requestAction,
+            requestAction
         )
     ) {
         database.remoteContentDao().getList(remoteKey = savedKey)
@@ -82,7 +82,7 @@ inline fun <reified T : Any> ViewModel.singleRoomPager(
         remoteMediator = RemoteRoomMediator(
             savedKey,
             initialKey,
-            database,
+            database
         ) { page ->
             PageData(data = requestAction(page))
         }
@@ -100,7 +100,7 @@ class RemoteRoomMediator<T>(
     private val savedKey: String,
     private val initialKey: Int,
     private val database: RemoteCacheDatabase,
-    private val requestAction: suspend (page: Int) -> PageData<T>,
+    private val requestAction: suspend (page: Int) -> PageData<T>
 ) : RemoteMediator<Int, RemoteContent>() {
 
     override suspend fun load(
@@ -151,7 +151,7 @@ class RemoteRoomMediator<T>(
 
     private suspend fun loadDataTransaction(
         loadType: LoadType,
-        page: Int,
+        page: Int
     ): MediatorResult {
         try {
             val result = requestAction(page)
@@ -201,5 +201,4 @@ class RemoteRoomMediator<T>(
             }
         }
     }
-
 }

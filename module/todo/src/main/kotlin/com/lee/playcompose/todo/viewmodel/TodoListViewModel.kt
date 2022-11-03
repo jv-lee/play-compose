@@ -104,7 +104,10 @@ class TodoListViewModel(private val type: Int, private val status: Int) : ViewMo
             viewModelScope.launch {
                 flow {
                     val newItem =
-                        todoData.copy(status = if (status == STATUS_UPCOMING) STATUS_COMPLETE else STATUS_UPCOMING)
+                        todoData.copy(
+                            status = if (status == STATUS_UPCOMING) STATUS_COMPLETE
+                            else STATUS_UPCOMING
+                        )
                     emit(api.postUpdateTodoStatusAsync(newItem.id, newItem.status).checkData())
                 }.onStart {
                     _viewEvents.send(TodoListViewEvent.ResetSlidingState)

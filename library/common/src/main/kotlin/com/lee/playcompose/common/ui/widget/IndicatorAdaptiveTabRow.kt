@@ -51,10 +51,12 @@ fun <T> IndicatorAdaptiveTabRow(
         backgroundColor = background,
         edgePadding = 0.dp,
         indicator = { tabPositions ->
-            val tabPosition = if (tabPositions.size > selectedTabIndex)
-                tabPositions[selectedTabIndex] else tabPositions[0]
-            val tabWidth = if (tabWidths.size > selectedTabIndex)
-                tabWidths[selectedTabIndex] else tabWidths[0]
+            val tabPosition = if (tabPositions.size > selectedTabIndex) {
+                tabPositions[selectedTabIndex]
+            } else tabPositions[0]
+            val tabWidth = if (tabWidths.size > selectedTabIndex) {
+                tabWidths[selectedTabIndex]
+            } else tabWidths[0]
 
             TabRowDefaults.Indicator(
                 color = AppTheme.colors.accent,
@@ -75,7 +77,7 @@ fun <T> IndicatorAdaptiveTabRow(
                             tabWidths[index] = with(density) { textLayoutResult.size.width.toDp() }
                         }
                     })
-                },
+                }
             )
         }
     }
