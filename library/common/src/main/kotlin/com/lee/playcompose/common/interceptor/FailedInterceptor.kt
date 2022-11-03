@@ -33,23 +33,22 @@ class FailedInterceptor : Interceptor {
                 val source = source()
                 source.request(Long.MAX_VALUE)
 
-                val buffer = source.buffer()
+                val buffer = source.buffer
                 val charset = Charset.forName("UTF-8")
 
                 if (contentLength != 0L) {
                     val body = buffer.clone().readString(charset)
                     val json = JsonParser.parseString(body)
                     val code = json.asJsonObject.get(RESPONSE_CODE).asInt
-                    //登陆失效,打开登陆页面
+                    // 登陆失效,打开登陆页面
                     if (code == ApiConstants.REQUEST_TOKEN_ERROR) {
-                        //单独处理登陆状态 ， 已登陆状态发起重新登陆事件
+                        // 单独处理登陆状态 ， 已登陆状态发起重新登陆事件
                         if (PreferencesTools.get(SP_KEY_IS_LOGIN)) {
                             ChannelBus.getChannel<LoginEvent>()?.post(LoginEvent())
                         }
                     }
                 }
             }
-
         } catch (e: Exception) {
             e.printStackTrace()
         }

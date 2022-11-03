@@ -110,36 +110,31 @@ class RemoteRoomMediator<T>(
         return when (loadType) {
             // 首次访问 || PagingDataAdapter.refresh()
             LoadType.REFRESH -> {
-                loadRefresh(loadType, state)
+                loadRefresh(loadType)
             }
             // 刷新数据到位后设置当前数据成功状态显示
             LoadType.PREPEND -> {
-                loadPrepend(loadType, state)
+                loadPrepend()
             }
             // 加载更多分页
             LoadType.APPEND -> {
-                loadAppend(loadType, state)
+                loadAppend(loadType)
             }
         }
     }
 
     private suspend fun loadRefresh(
-        loadType: LoadType,
-        state: PagingState<Int, RemoteContent>
+        loadType: LoadType
     ): MediatorResult {
         return loadDataTransaction(loadType, initialKey)
     }
 
-    private fun loadPrepend(
-        loadType: LoadType,
-        state: PagingState<Int, RemoteContent>
-    ): MediatorResult {
+    private fun loadPrepend(): MediatorResult {
         return MediatorResult.Success(endOfPaginationReached = true)
     }
 
     private suspend fun loadAppend(
-        loadType: LoadType,
-        state: PagingState<Int, RemoteContent>
+        loadType: LoadType
     ): MediatorResult {
         val page = database.withTransaction {
             database.remoteKeyDao().getRemoteKey(remoteKey = savedKey)

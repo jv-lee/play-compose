@@ -189,10 +189,8 @@ private data class FloatingBoxScope(
         val parentCenter = parentOffset.x + parentSize.width / 2
         val isRight = viewCenter > parentCenter
 
-        var x = offsetX
         var y = offsetY
-
-        x = if (isRight) {
+        val x = if (isRight) {
             if (viewCenter + offsetX.px() > parentCenter) 0.dp
             else -(localOffset.x - parentRect.left).dp()
         } else {
@@ -217,9 +215,7 @@ private data class FloatingBoxScope(
         val isBottom = viewCenter > parentCenter
 
         var x = offsetX
-        var y = offsetY
-
-        y = if (isBottom) {
+        val y = if (isBottom) {
             if (viewCenter + offsetY.px() > parentCenter) 0.dp
             else -(localOffset.y - parentRect.top).dp()
         } else {

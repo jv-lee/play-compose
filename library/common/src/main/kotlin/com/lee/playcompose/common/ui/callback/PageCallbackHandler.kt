@@ -19,7 +19,7 @@ class PageCallbackHandler<T>(lifecycle: Lifecycle) {
         callbacks[key] = callback
     }
 
-    fun removeCallback(key: String, callback: T) {
+    fun removeCallback(key: String) {
         callbacks.remove(key)
     }
 
