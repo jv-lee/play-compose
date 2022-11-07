@@ -10,6 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.just.agentweb.AgentWeb
@@ -100,14 +101,16 @@ private fun WebView(details: DetailsData) {
             post {
                 AgentWeb.with(activity)
                     .setAgentWebParent(this, FrameLayout.LayoutParams(-1, -1))
-                    .useDefaultIndicator(CR.color.colorThemeAccent)
+                    .useDefaultIndicator(
+                        ContextCompat.getColor(activity, CR.color.colorThemeAccent)
+                    )
                     .createAgentWeb()
                     .ready()
                     .go(details.link)
                     .bindLifecycle(lifecycle)
                     .apply {
                         webCreator.webView.setWebBackEvent()
-                        DarkModeTools.get().setWebDarkCompat()
+                        DarkModeTools.get().changeDarkModeState()
                         supportDarkMode()
                     }
             }
