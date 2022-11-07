@@ -122,34 +122,24 @@ java.lang.Object readResolve();
 }
 -dontwarn com.just.agentweb.**
 
-
 #排除注解类
 -keep class * extends java.lang.annotation.Annotation { *; }
 -keep interface * extends java.lang.annotation.Annotation { *; }
-
-# 不混淆使用了注解的类及类成员
--keep @com.lee.library.ioc.annotation.** class* {*;}
-# 如果类中有使用了注解的方法，则不混淆类和类成员
--keepclasseswithmembers class * {
-@com.lee.library.ioc.annotation.** <methods>;
-}
-# 如果类中有使用了注解的字段，则不混淆类和类成员
--keepclasseswithmembers class * {
-@com.lee.library.ioc.annotation.** <fields>;
-}
-# 如果类中有使用了注解的构造函数，则不混淆类和类成员
--keepclasseswithmembers class * {
-@com.lee.library.ioc.annotation.** <init>(...);
-}
 
 # The "Signature" attribute is required to be able to access generic types whencompiling in JDK 5.0 and higher.
 -keepattributes Signature
 # processing Annotations
 -keepattributes *Annotation*
 
-
 #实体类不参与混淆 使用注释@Keep 标记实体类
 #-keep class com.lee.playcompose.library.common.entity.** {*;}
 
 #模块服务不参与混淆 (模块服务实现类使用@Keep注解标注)
 -keep public class * extends com.lee.playcompose.service.core.IModuleService
+
+# 忽略R8混淆警告信息
+-dontwarn androidx.window.**
+-dontwarn com.squareup.javapoet.**
+-dontwarn java.lang.reflect.**
+-dontwarn javax.tools.**
+-dontwarn javax.lang.**
