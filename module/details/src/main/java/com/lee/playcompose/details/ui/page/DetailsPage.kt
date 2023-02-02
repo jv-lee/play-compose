@@ -92,6 +92,10 @@ fun DetailsPage(
 private fun WebView(details: DetailsData) {
     val activity = LocalActivity.current
     val lifecycle = LocalLifecycleOwner.current.lifecycle
+    val progressColor = ContextCompat.getColor(
+        activity,
+        if (DarkModeTools.get().isDark) CR.color.colorThemePrimary else CR.color.colorThemeAccent
+    )
     AndroidView(factory = { context: Context ->
         FrameLayout(context).apply {
             layoutParams = ViewGroup.LayoutParams(
@@ -101,9 +105,7 @@ private fun WebView(details: DetailsData) {
             post {
                 AgentWeb.with(activity)
                     .setAgentWebParent(this, FrameLayout.LayoutParams(-1, -1))
-                    .useDefaultIndicator(
-                        ContextCompat.getColor(activity, CR.color.colorThemeAccent)
-                    )
+                    .useDefaultIndicator(progressColor)
                     .createAgentWeb()
                     .ready()
                     .go(details.link)
