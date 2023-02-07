@@ -1,8 +1,7 @@
 package com.lee.playcompose.service.helper
 
-import android.app.Application
+import android.content.Context
 import com.lee.playcompose.service.core.ApplicationService
-
 import java.util.*
 
 /**
@@ -11,10 +10,10 @@ import java.util.*
  * @date 2021/9/9
  */
 object ApplicationModuleService {
-    fun init(application: Application) {
+    fun init(context: Context) {
         val iterator = ServiceLoader.load(ApplicationService::class.java).iterator()
         while (iterator.hasNext()) {
-            iterator.next().init(application)
+            iterator.next().init(context)
         }
     }
 }

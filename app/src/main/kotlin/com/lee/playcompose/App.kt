@@ -30,7 +30,7 @@ class App : BaseApplication() {
             // 初始化远程缓存数据库
             RemoteCacheDatabase.getInstance(applicationContext)
             // 子模块统一初始化
-            ApplicationModuleService.init(this@App)
+            ApplicationModuleService.init(applicationContext)
         }
     }
 

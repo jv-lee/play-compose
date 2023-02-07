@@ -1,6 +1,6 @@
 package com.lee.playcompose.search
 
-import android.app.Application
+import android.content.Context
 import com.google.auto.service.AutoService
 import com.lee.playcompose.search.model.db.SearchDatabase
 import com.lee.playcompose.service.core.ApplicationService
@@ -12,7 +12,7 @@ import com.lee.playcompose.service.core.ApplicationService
  */
 @AutoService(ApplicationService::class)
 class SearchApplication : ApplicationService {
-    override fun init(application: Application) {
-        SearchDatabase.getInstance(application)
+    override fun init(context: Context) {
+        SearchDatabase.getInstance(context)
     }
 }

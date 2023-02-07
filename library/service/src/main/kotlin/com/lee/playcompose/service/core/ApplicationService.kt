@@ -1,7 +1,6 @@
 package com.lee.playcompose.service.core
 
-import android.app.Application
-import com.lee.playcompose.service.core.IModuleService
+import android.content.Context
 
 /**
  * 各模块application初始化接口
@@ -9,5 +8,5 @@ import com.lee.playcompose.service.core.IModuleService
  * @date 2021/9/9
  */
 interface ApplicationService : IModuleService {
-    fun init(application: Application)
+    fun init(context: Context)
 }
