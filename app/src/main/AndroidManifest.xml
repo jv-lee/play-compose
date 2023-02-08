@@ -28,6 +28,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <!-- 自动初始化标签 -->
+            <meta-data
+                android:name="com.lee.playcompose.startup.AutoInitializer"
+                android:value="androidx.startup" />
+        </provider>
+
     </application>
 
 </manifest>

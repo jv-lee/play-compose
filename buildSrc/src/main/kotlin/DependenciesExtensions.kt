@@ -65,6 +65,7 @@ fun DependencyHandlerScope.commonDependencies() {
     api(Dependencies.fragment)
 
     api(Dependencies.multidex)
+    api(Dependencies.startup)
 
     api(Dependencies.appcompat)
     api(Dependencies.webkit)

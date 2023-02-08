@@ -6,6 +6,7 @@ object Version {
     const val ktxCore = "1.7.0"
     const val coroutines = "1.5.2"
     const val multidex = "2.0.1"
+    const val startup = "1.1.1"
     const val appcompat = "1.4.0"
     const val material = "1.3.0"
     const val recyclerview = "1.2.1"
