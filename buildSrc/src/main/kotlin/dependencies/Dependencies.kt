@@ -111,5 +111,5 @@ object Dependencies {
     const val imageTools = "com.github.jv-lee.imagetools:library:1.4.4"
 
     // AgentWebView
-    const val agentWeb = "com.github.Justson.AgentWeb:agentweb-core:v4.1.9-androidx"
+    const val agentWeb = "com.github.Justson.AgentWeb:agentweb-core:v5.0.6-androidx"
 }

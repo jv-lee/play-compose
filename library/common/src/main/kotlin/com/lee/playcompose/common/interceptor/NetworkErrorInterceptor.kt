@@ -18,7 +18,7 @@ class NetworkErrorInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
 
-        if (!NetworkUtil.isConnected(app)) {
+        if (!NetworkUtil.isNetworkConnected(app)) {
             ChannelBus.getChannel<NetworkErrorEvent>()?.post(NetworkErrorEvent())
         }
 
