@@ -46,7 +46,7 @@ fun MySharePage(
     val slidingPaneState by rememberSlidingPaneState()
 
     // 监听创建分享成功事件刷新列表
-    navController.forResult<Int>(key = REQUEST_KEY_SHARE_REFRESH, delay = 500) {
+    navController.forResult<Int>(key = REQUEST_KEY_SHARE_REFRESH, delayTimeMillis = 500) {
         contentList.refresh()
     }
 

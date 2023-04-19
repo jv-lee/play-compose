@@ -18,7 +18,7 @@ const val NAVIGATION_FOR_RESULT_DATA = "data"
 @Composable
 inline fun <reified T> NavController.forResult(
     key: String,
-    delay: Long = 0,
+    delayTimeMillis: Long = 0,
     crossinline callback: (T?) -> Unit
 ) {
     val coroutine = rememberCoroutineScope()
@@ -31,7 +31,7 @@ inline fun <reified T> NavController.forResult(
             if (forResultVersion != version) {
                 forResultVersion = version
                 coroutine.launch {
-                    delay(delay)
+                    delay(delayTimeMillis)
                     callback(data)
                 }
             }
@@ -48,7 +48,7 @@ fun <T> NavController.setResult(key: String, data: T) {
 @Composable
 inline fun NavController.forResultBundle(
     key: String,
-    delay: Long = 0,
+    delayTimeMillis: Long = 0,
     crossinline callback: (Bundle?) -> Unit
 ) {
     val coroutine = rememberCoroutineScope()
@@ -61,7 +61,7 @@ inline fun NavController.forResultBundle(
             if (forResultVersion != version) {
                 forResultVersion = version
                 coroutine.launch {
-                    delay(delay)
+                    delay(delayTimeMillis)
                     callback(data)
                 }
             }

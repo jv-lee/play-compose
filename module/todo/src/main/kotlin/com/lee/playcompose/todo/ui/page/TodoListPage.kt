@@ -76,7 +76,7 @@ fun TodoListPage(
     val slidingPaneState by rememberSlidingPaneState()
 
     // 监听创建修改成功回调
-    navController.forResult<Int>(key = REQUEST_KEY_REFRESH, 200) {
+    navController.forResult<Int>(key = REQUEST_KEY_REFRESH, delayTimeMillis = 200) {
         it?.takeIf { it == status }?.run { contentList.refresh() }
     }
 
