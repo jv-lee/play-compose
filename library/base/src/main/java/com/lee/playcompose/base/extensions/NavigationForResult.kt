@@ -15,6 +15,12 @@ import kotlinx.coroutines.launch
 const val NAVIGATION_FOR_RESULT_VERSION = "version"
 const val NAVIGATION_FOR_RESULT_DATA = "data"
 
+/**
+ * 接收页面返回的数据-适用于单数据返回
+ * @param key 回传数据key
+ * @param delayTimeMillis 回传数据接收延时毫秒
+ * @param callback 回传数据回调接口，参数为回传数据
+ */
 @Composable
 inline fun <reified T> NavController.forResult(
     key: String,
@@ -38,6 +44,11 @@ inline fun <reified T> NavController.forResult(
         }
 }
 
+/**
+ * 设置页面回退返回的数据-适用于单数据返回
+ * @param key 回传数据key
+ * @param data 回传的数据
+ */
 fun <T> NavController.setResult(key: String, data: T) {
     val bundle = Bundle()
     bundle.putLong(NAVIGATION_FOR_RESULT_VERSION, System.currentTimeMillis())
@@ -45,6 +56,12 @@ fun <T> NavController.setResult(key: String, data: T) {
     previousBackStackEntry?.savedStateHandle?.set(key, bundle)
 }
 
+/**
+ * 接收页面返回的数据-适用于多数据返回
+ * @param key 回传数据key
+ * @param delayTimeMillis 回传数据接收延时毫秒
+ * @param callback 回传数据回调接口，参数为回传Bundle数据
+ */
 @Composable
 inline fun NavController.forResultBundle(
     key: String,
@@ -68,6 +85,11 @@ inline fun NavController.forResultBundle(
         }
 }
 
+/**
+ * 设置页面回退返回的数据-适用于多数据返回
+ * @param key 回传数据key
+ * @param bundle 回传的数据bundle
+ */
 fun NavController.setBundleResult(key: String, bundle: Bundle) {
     val savedBundle = Bundle()
     savedBundle.putLong(NAVIGATION_FOR_RESULT_VERSION, System.currentTimeMillis())
@@ -75,6 +97,11 @@ fun NavController.setBundleResult(key: String, bundle: Bundle) {
     previousBackStackEntry?.savedStateHandle?.set(key, savedBundle)
 }
 
+/**
+ * 设置空数据返回只做回调处理
+ * 数据接收页面只监听返回响应处理，不接收数据
+ * @param key 监听返回key
+ */
 fun NavController.setResult(key: String) {
     setResult(key, 0)
 }
