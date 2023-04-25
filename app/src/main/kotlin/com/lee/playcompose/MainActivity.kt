@@ -20,10 +20,10 @@ class MainActivity : FragmentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
         setContent {
-            PlayComposeTheme {
-                SplashLauncher {
-                    ProviderDensity {
-                        RouteNavigator()
+            PlayComposeTheme { // 设置应用主题
+                SplashLauncher { // 设置应用首屏闪屏启动器
+                    ProviderDensity { // 设置屏幕适配
+                        RouteNavigator() // 设置主路由组件控制页面显示跳转
                     }
                 }
             }
