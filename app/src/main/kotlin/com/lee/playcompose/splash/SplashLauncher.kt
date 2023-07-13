@@ -104,7 +104,7 @@ private fun SplashAdView(viewState: SplashViewState, onNextClick: () -> Unit) {
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .fillMaxHeight(0.7f),
+                    .fillMaxHeight(0.7f)
             )
             Button(
                 onClick = { onNextClick() },
