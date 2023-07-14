@@ -73,11 +73,9 @@ fun SquarePage(
                 actionPainter = painterResource(id = R.drawable.vector_add),
                 onActionClick = {
                     // 根据登陆状态跳转
-                    if (accountViewState.isLogin) {
-                        navController.navigateArgs(RoutePage.Square.CreateShare.route)
-                    } else {
-                        navController.navigateArgs(RoutePage.Account.Login.route)
-                    }
+                    val path = if (accountViewState.isLogin) RoutePage.Square.CreateShare.route
+                    else RoutePage.Account.Login.route
+                    navController.navigateArgs(path)
                 }
             )
         }
