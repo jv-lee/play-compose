@@ -39,7 +39,7 @@ import com.lee.playcompose.common.ui.widget.header.AppHeaderContainer
 import com.lee.playcompose.common.ui.widget.header.AppTextActionBar
 import com.lee.playcompose.home.R
 import com.lee.playcompose.home.model.entity.HomeCategory
-import com.lee.playcompose.home.viewmodel.HomeViewAction
+import com.lee.playcompose.home.viewmodel.HomeViewIntent
 import com.lee.playcompose.home.viewmodel.HomeViewModel
 import com.lee.playcompose.home.viewmodel.HomeViewState
 import com.lee.playcompose.router.RoutePage
@@ -71,7 +71,7 @@ fun HomePage(
     LaunchedEffect(Unit) {
         // 监听内容显示事件
         ChannelBus.getChannel<ContentVisibleEvent>()?.receiveAsFlow()?.collect {
-            viewModel.dispatch(HomeViewAction.RequestLoopBanner)
+            viewModel.dispatch(HomeViewIntent.RequestLoopBanner)
         }
     }
 

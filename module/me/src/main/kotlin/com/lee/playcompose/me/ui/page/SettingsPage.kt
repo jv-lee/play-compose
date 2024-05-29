@@ -24,7 +24,7 @@ import com.lee.playcompose.common.ui.widget.header.AppBarViewContainer
 import com.lee.playcompose.common.viewmodel.ThemeViewAction
 import com.lee.playcompose.common.viewmodel.ThemeViewModel
 import com.lee.playcompose.me.R
-import com.lee.playcompose.me.viewmodel.SettingsViewAction
+import com.lee.playcompose.me.viewmodel.SettingsViewIntent
 import com.lee.playcompose.me.viewmodel.SettingsViewEvent
 import com.lee.playcompose.me.viewmodel.SettingsViewModel
 import kotlinx.coroutines.launch
@@ -79,20 +79,20 @@ fun SettingsPage(
         isShow = viewState.isCacheConfirm,
         titleText = stringResource(id = R.string.settings_clear_title),
         onCancel = {
-            viewModel.dispatch(SettingsViewAction.VisibleCacheDialog(visibility = false))
+            viewModel.dispatch(SettingsViewIntent.VisibleCacheDialog(visibility = false))
         },
-        onConfirm = { viewModel.dispatch(SettingsViewAction.RequestClearCache) }
+        onConfirm = { viewModel.dispatch(SettingsViewIntent.RequestClearCache) }
     )
 
     ConfirmDialog(
         isShow = viewState.isLogoutConfirm,
         titleText = stringResource(id = R.string.settings_logout_title),
         onCancel = {
-            viewModel.dispatch(SettingsViewAction.VisibleLogoutDialog(visibility = false))
+            viewModel.dispatch(SettingsViewIntent.VisibleLogoutDialog(visibility = false))
         },
         onConfirm = {
             coroutine.launch {
-                viewModel.dispatch(SettingsViewAction.VisibleLogoutDialog(visibility = false))
+                viewModel.dispatch(SettingsViewIntent.VisibleLogoutDialog(visibility = false))
                 viewModel.accountService.requestLogout(activity = activity)
             }
         }
@@ -131,7 +131,7 @@ fun SettingsPage(
                 rightDrawable = CR.drawable.vector_arrow,
                 modifier = Modifier.padding(top = OffsetMedium)
             ) {
-                viewModel.dispatch(SettingsViewAction.VisibleCacheDialog(visibility = true))
+                viewModel.dispatch(SettingsViewIntent.VisibleCacheDialog(visibility = true))
             }
             if (accountState.isLogin) {
                 ProfileItem(
@@ -140,7 +140,7 @@ fun SettingsPage(
                     rightDrawable = CR.drawable.vector_arrow,
                     modifier = Modifier.padding(top = OffsetMedium)
                 ) {
-                    viewModel.dispatch(SettingsViewAction.VisibleLogoutDialog(visibility = true))
+                    viewModel.dispatch(SettingsViewIntent.VisibleLogoutDialog(visibility = true))
                 }
             }
         }

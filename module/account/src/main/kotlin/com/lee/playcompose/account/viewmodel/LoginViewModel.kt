@@ -40,15 +40,15 @@ class LoginViewModel : ViewModel() {
         restoreInputUsername()
     }
 
-    fun dispatch(action: LoginViewAction) {
-        when (action) {
-            is LoginViewAction.ChangeUsername -> {
-                changeUsername(action.username)
+    fun dispatch(intent: LoginViewIntent) {
+        when (intent) {
+            is LoginViewIntent.ChangeUsername -> {
+                changeUsername(intent.username)
             }
-            is LoginViewAction.ChangePassword -> {
-                changePassword(action.password)
+            is LoginViewIntent.ChangePassword -> {
+                changePassword(intent.password)
             }
-            is LoginViewAction.RequestLogin -> {
+            is LoginViewIntent.RequestLogin -> {
                 requestLogin()
             }
         }
@@ -124,8 +124,8 @@ sealed class LoginViewEvent {
     data class LoginFailed(val message: String? = "") : LoginViewEvent()
 }
 
-sealed class LoginViewAction {
-    data class ChangeUsername(val username: String) : LoginViewAction()
-    data class ChangePassword(val password: String) : LoginViewAction()
-    object RequestLogin : LoginViewAction()
+sealed class LoginViewIntent {
+    data class ChangeUsername(val username: String) : LoginViewIntent()
+    data class ChangePassword(val password: String) : LoginViewIntent()
+    object RequestLogin : LoginViewIntent()
 }

@@ -14,7 +14,7 @@ import com.lee.playcompose.common.entity.ParentTab
 import com.lee.playcompose.common.ui.theme.AppTheme
 import com.lee.playcompose.common.ui.widget.IndicatorAdaptiveTabRow
 import com.lee.playcompose.common.ui.widget.header.AppBarViewContainer
-import com.lee.playcompose.system.viewmodel.SystemContentTabViewAction
+import com.lee.playcompose.system.viewmodel.SystemContentTabViewIntent
 import com.lee.playcompose.system.viewmodel.SystemContentTabViewModel
 import kotlinx.coroutines.launch
 
@@ -35,7 +35,7 @@ fun SystemContentTabPage(
     val selectIndex = viewModel.viewStates.selectedIndex
 
     LaunchedEffect(pagerState.currentPage) {
-        viewModel.dispatch(SystemContentTabViewAction.SelectedTabIndex(pagerState.currentPage))
+        viewModel.dispatch(SystemContentTabViewIntent.SelectedTabIndex(pagerState.currentPage))
     }
 
     AppBarViewContainer(
@@ -53,7 +53,7 @@ fun SystemContentTabPage(
                     selectedTabIndex = selectIndex,
                     findTabText = { it.name },
                     onTabClick = { tabIndex ->
-                        viewModel.dispatch(SystemContentTabViewAction.SelectedTabIndex(tabIndex))
+                        viewModel.dispatch(SystemContentTabViewIntent.SelectedTabIndex(tabIndex))
                         coroutine.launch { pagerState.animateScrollToPage(tabIndex) }
                     }
                 )

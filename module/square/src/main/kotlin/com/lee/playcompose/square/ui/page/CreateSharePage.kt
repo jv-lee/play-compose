@@ -27,7 +27,7 @@ import com.lee.playcompose.common.ui.composable.LoadingDialog
 import com.lee.playcompose.common.ui.theme.*
 import com.lee.playcompose.common.ui.widget.header.AppBarViewContainer
 import com.lee.playcompose.square.R
-import com.lee.playcompose.square.viewmodel.CreateShareViewAction
+import com.lee.playcompose.square.viewmodel.CreateShareViewIntent
 import com.lee.playcompose.square.viewmodel.CreateShareViewEvent
 import com.lee.playcompose.square.viewmodel.CreateShareViewModel
 import com.lee.playcompose.square.viewmodel.CreateShareViewState
@@ -75,13 +75,13 @@ fun CreateSharePage(
             viewState = viewState,
             clearFocus = { focusManager.clearFocus() },
             onChangeTitle = {
-                viewModel.dispatch(CreateShareViewAction.ChangeShareTitle(it))
+                viewModel.dispatch(CreateShareViewIntent.ChangeShareTitle(it))
             },
             onChangeContent = {
-                viewModel.dispatch(CreateShareViewAction.ChangeShareContent(it))
+                viewModel.dispatch(CreateShareViewIntent.ChangeShareContent(it))
             },
             onActionShare = {
-                viewModel.dispatch(CreateShareViewAction.RequestShare)
+                viewModel.dispatch(CreateShareViewIntent.RequestShare)
             }
         )
     }

@@ -40,12 +40,12 @@ class DetailsViewModel(private val details: DetailsData) : ViewModel() {
         moreButtonVisible()
     }
 
-    fun dispatch(action: DetailsViewAction) {
-        when (action) {
-            is DetailsViewAction.RequestCollectDetails -> {
+    fun dispatch(intent: DetailsViewIntent) {
+        when (intent) {
+            is DetailsViewIntent.RequestCollectDetails -> {
                 requestCollect()
             }
-            is DetailsViewAction.ShareDetails -> {
+            is DetailsViewIntent.ShareDetails -> {
                 shareDetails()
             }
         }
@@ -112,7 +112,7 @@ sealed class DetailsViewEvent {
     data class ShareEvent(val shareText: String) : DetailsViewEvent()
 }
 
-sealed class DetailsViewAction {
-    object RequestCollectDetails : DetailsViewAction()
-    object ShareDetails : DetailsViewAction()
+sealed class DetailsViewIntent {
+    object RequestCollectDetails : DetailsViewIntent()
+    object ShareDetails : DetailsViewIntent()
 }

@@ -59,10 +59,10 @@ private fun SplashPage(viewModel: SplashViewModel) {
         ModuleService.find<AccountService>().requestAccountInfo(activity)
 
         // 配置获取成功后启动主页构建
-        viewModel.dispatch(SplashViewAction.ShowContent)
+        viewModel.dispatch(SplashViewIntent.ShowContent)
 
         // 加载splashAd逻辑
-        viewModel.dispatch(SplashViewAction.RequestSplashAd)
+        viewModel.dispatch(SplashViewIntent.RequestSplashAd)
     }
 
     Box(
@@ -83,7 +83,7 @@ private fun SplashPage(viewModel: SplashViewModel) {
                 .padding(bottom = 86.dp)
         )
         SplashAdView(viewState = viewState, onNextClick = {
-            viewModel.dispatch(SplashViewAction.HideSplash)
+            viewModel.dispatch(SplashViewIntent.HideSplash)
         })
     }
 }

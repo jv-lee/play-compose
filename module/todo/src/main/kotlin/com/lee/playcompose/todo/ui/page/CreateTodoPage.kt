@@ -40,7 +40,7 @@ import com.lee.playcompose.todo.R
 import com.lee.playcompose.todo.ui.theme.TodoEditContentHeight
 import com.lee.playcompose.todo.ui.theme.TodoEditHeight
 import com.lee.playcompose.todo.ui.theme.TodoSaveButton
-import com.lee.playcompose.todo.viewmodel.CreateTodoViewAction
+import com.lee.playcompose.todo.viewmodel.CreateTodoViewIntent
 import com.lee.playcompose.todo.viewmodel.CreateTodoViewEvent
 import com.lee.playcompose.todo.viewmodel.CreateTodoViewModel
 import com.lee.playcompose.todo.viewmodel.CreateTodoViewState
@@ -99,14 +99,14 @@ fun CreateTodoPage(
         ) {
             CreateTodoContent(
                 viewState = viewState,
-                changeTitle = { viewModel.dispatch(CreateTodoViewAction.ChangeTitle(it)) },
-                changeContent = { viewModel.dispatch(CreateTodoViewAction.ChangeContent(it)) },
-                changePriority = { viewModel.dispatch(CreateTodoViewAction.ChangePriority(it)) },
+                changeTitle = { viewModel.dispatch(CreateTodoViewIntent.ChangeTitle(it)) },
+                changeContent = { viewModel.dispatch(CreateTodoViewIntent.ChangeContent(it)) },
+                changePriority = { viewModel.dispatch(CreateTodoViewIntent.ChangePriority(it)) },
                 dateClick = { datePickerDialog.show() }
             )
             CreateTodoBottomButton(saveClick = {
                 focusManager.clearFocus()
-                viewModel.dispatch(CreateTodoViewAction.RequestPostTodo)
+                viewModel.dispatch(CreateTodoViewIntent.RequestPostTodo)
             })
         }
     }

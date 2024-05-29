@@ -23,7 +23,7 @@ import com.lee.playcompose.common.ui.widget.rememberSlidingPaneState
 import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
 import com.lee.playcompose.square.R
-import com.lee.playcompose.square.viewmodel.MyShareViewAction
+import com.lee.playcompose.square.viewmodel.MyShareViewIntent
 import com.lee.playcompose.square.viewmodel.MyShareViewEvent
 import com.lee.playcompose.square.viewmodel.MyShareViewModel
 import com.lee.playcompose.square.viewmodel.MyShareViewState
@@ -79,7 +79,7 @@ fun MySharePage(
                 navController.navigateArgs(RoutePage.Details.route, it.transformDetails())
             },
             onItemDelete = {
-                viewModel.dispatch(MyShareViewAction.RequestDeleteShare(it))
+                viewModel.dispatch(MyShareViewIntent.RequestDeleteShare(it))
             }
         )
     }

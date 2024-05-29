@@ -77,10 +77,10 @@ sealed class AccountViewEvent {
     data class LogoutFailed(val message: String? = "") : AccountViewEvent()
 }
 
-sealed class AccountViewAction {
-    object ClearLoginState : AccountViewAction()
-    object RequestAccountData : AccountViewAction()
-    object RequestLogout : AccountViewAction()
+sealed class AccountViewIntent {
+    object ClearLoginState : AccountViewIntent()
+    object RequestAccountData : AccountViewIntent()
+    object RequestLogout : AccountViewIntent()
     data class UpdateAccountStatus(val accountData: AccountData, val isLogin: Boolean) :
-        AccountViewAction()
+        AccountViewIntent()
 }

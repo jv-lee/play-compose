@@ -18,9 +18,9 @@ class RouteNavigatorViewModel : ViewModel() {
     var viewStates by mutableStateOf(RouteNavigationViewState())
         private set
 
-    fun dispatch(action: RouteNavigationViewAction) {
-        when (action) {
-            is RouteNavigationViewAction.NetworkErrorAction -> {
+    fun dispatch(intent: RouteNavigationViewIntent) {
+        when (intent) {
+            is RouteNavigationViewIntent.NetworkError -> {
                 networkErrorVisible()
             }
         }
@@ -41,6 +41,6 @@ data class RouteNavigationViewState(
     val tabItems: List<MainTab> = MainTab.getMainTabs()
 )
 
-sealed class RouteNavigationViewAction {
-    object NetworkErrorAction : RouteNavigationViewAction()
+sealed class RouteNavigationViewIntent {
+    object NetworkError : RouteNavigationViewIntent()
 }

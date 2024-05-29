@@ -34,7 +34,7 @@ import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
 import com.lee.playcompose.search.R
 import com.lee.playcompose.search.model.entity.SearchHotUI
-import com.lee.playcompose.search.viewmodel.SearchViewAction
+import com.lee.playcompose.search.viewmodel.SearchViewIntent
 import com.lee.playcompose.search.viewmodel.SearchViewEvent
 import com.lee.playcompose.search.viewmodel.SearchViewModel
 import com.lee.playcompose.search.viewmodel.SearchViewState
@@ -76,10 +76,10 @@ fun SearchPage(
             navController.popBackStack()
         },
         onSearchClick = { searchKey ->
-            viewModel.dispatch(SearchViewAction.NavigationSearchKey(searchKey))
+            viewModel.dispatch(SearchViewIntent.NavigationSearchKey(searchKey))
         },
         onValueChange = { searchKey ->
-            viewModel.dispatch(SearchViewAction.ChangeSearchKey(searchKey))
+            viewModel.dispatch(SearchViewIntent.ChangeSearchKey(searchKey))
         }
     ) {
         SearchContent(
@@ -88,13 +88,13 @@ fun SearchPage(
                 focusManager.clearFocus()
             },
             onSearchClick = { searchKey ->
-                viewModel.dispatch(SearchViewAction.NavigationSearchKey(searchKey))
+                viewModel.dispatch(SearchViewIntent.NavigationSearchKey(searchKey))
             },
             onDeleteHistoryClick = { searchKey ->
-                viewModel.dispatch(SearchViewAction.DeleteSearchHistory(searchKey))
+                viewModel.dispatch(SearchViewIntent.DeleteSearchHistory(searchKey))
             },
             onClearClick = {
-                viewModel.dispatch(SearchViewAction.ClearSearchHistory)
+                viewModel.dispatch(SearchViewIntent.ClearSearchHistory)
             }
         )
     }

@@ -16,7 +16,7 @@ import com.lee.playcompose.common.ui.widget.header.AppBarViewContainer
 import com.lee.playcompose.common.ui.widget.IndicatorAdaptiveTabRow
 import com.lee.playcompose.common.ui.widget.UiStatusPage
 import com.lee.playcompose.official.R
-import com.lee.playcompose.official.viewmodel.OfficialViewAction
+import com.lee.playcompose.official.viewmodel.OfficialViewIntent
 import com.lee.playcompose.official.viewmodel.OfficialViewModel
 import kotlinx.coroutines.launch
 
@@ -38,7 +38,7 @@ fun OfficialPage(
     val uiStatus = viewModel.viewStates.uiStatus
 
     LaunchedEffect(pagerState.currentPage) {
-        viewModel.dispatch(OfficialViewAction.SelectedTabIndex(pagerState.currentPage))
+        viewModel.dispatch(OfficialViewIntent.SelectedTabIndex(pagerState.currentPage))
     }
 
     AppBarViewContainer(
@@ -48,7 +48,7 @@ fun OfficialPage(
     ) {
         UiStatusPage(
             status = uiStatus,
-            retry = { viewModel.dispatch(OfficialViewAction.RequestTabData) }
+            retry = { viewModel.dispatch(OfficialViewIntent.RequestTabData) }
         ) {
             Column {
                 if (tabData.isNotEmpty()) {
@@ -58,7 +58,7 @@ fun OfficialPage(
                         selectedTabIndex = selectIndex,
                         findTabText = { it.name },
                         onTabClick = { tabIndex ->
-                            viewModel.dispatch(OfficialViewAction.SelectedTabIndex(tabIndex))
+                            viewModel.dispatch(OfficialViewIntent.SelectedTabIndex(tabIndex))
                             coroutine.launch { pagerState.animateScrollToPage(tabIndex) }
                         }
                     )

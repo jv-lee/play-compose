@@ -32,7 +32,7 @@ import com.lee.playcompose.todo.R
 import com.lee.playcompose.todo.model.entity.TodoType
 import com.lee.playcompose.todo.ui.callback.TodoListCallback
 import com.lee.playcompose.todo.ui.dialog.SelectTodoTypeDialog
-import com.lee.playcompose.todo.viewmodel.TodoViewAction
+import com.lee.playcompose.todo.viewmodel.TodoViewIntent
 import com.lee.playcompose.todo.viewmodel.TodoViewModel
 import kotlinx.coroutines.launch
 
@@ -56,8 +56,8 @@ fun TodoPage(
     SelectTodoTypeDialog(
         isShow = viewState.isShowTypeDialog,
         onDismissRequest = { type ->
-            viewModel.dispatch(TodoViewAction.ChangeTypeSelected(type = type))
-            viewModel.dispatch(TodoViewAction.ChangeTypeDialogVisible(visible = false))
+            viewModel.dispatch(TodoViewIntent.ChangeTypeSelected(type = type))
+            viewModel.dispatch(TodoViewIntent.ChangeTypeDialogVisible(visible = false))
         }
     )
 
@@ -66,7 +66,7 @@ fun TodoPage(
         actionIcon = R.drawable.vector_replace,
         actionMode = ActionMode.Button,
         actionClick = {
-            viewModel.dispatch(TodoViewAction.ChangeTypeDialogVisible(visible = true))
+            viewModel.dispatch(TodoViewIntent.ChangeTypeDialogVisible(visible = true))
         },
         navigationClick = {
             navController.popBackStack()

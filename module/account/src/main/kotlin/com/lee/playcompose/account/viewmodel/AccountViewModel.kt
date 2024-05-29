@@ -16,7 +16,7 @@ import com.lee.playcompose.base.extensions.putCache
 import com.lee.playcompose.base.tools.PreferencesTools
 import com.lee.playcompose.common.constants.ApiConstants
 import com.lee.playcompose.common.entity.AccountData
-import com.lee.playcompose.common.entity.AccountViewAction
+import com.lee.playcompose.common.entity.AccountViewIntent
 import com.lee.playcompose.common.entity.AccountViewEvent
 import com.lee.playcompose.common.entity.AccountViewState
 import com.lee.playcompose.common.extensions.checkData
@@ -45,18 +45,18 @@ class AccountViewModel : ViewModel() {
     private val _viewEvents = Channel<AccountViewEvent>(Channel.BUFFERED)
     val viewEvents = _viewEvents.receiveAsFlow()
 
-    suspend fun dispatch(action: AccountViewAction) {
-        when (action) {
-            is AccountViewAction.RequestAccountData -> {
+    suspend fun dispatch(intent: AccountViewIntent) {
+        when (intent) {
+            is AccountViewIntent.RequestAccountData -> {
                 requestAccountData()
             }
-            is AccountViewAction.RequestLogout -> {
+            is AccountViewIntent.RequestLogout -> {
                 requestLogout()
             }
-            is AccountViewAction.UpdateAccountStatus -> {
-                updateAccountStatus(action.accountData, action.isLogin)
+            is AccountViewIntent.UpdateAccountStatus -> {
+                updateAccountStatus(intent.accountData, intent.isLogin)
             }
-            is AccountViewAction.ClearLoginState -> {
+            is AccountViewIntent.ClearLoginState -> {
                 updateAccountStatus(null, false)
             }
         }

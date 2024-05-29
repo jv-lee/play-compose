@@ -9,7 +9,7 @@ import com.lee.playcompose.base.cache.CacheManager
 import com.lee.playcompose.base.extensions.getCache
 import com.lee.playcompose.base.tools.PreferencesTools
 import com.lee.playcompose.common.entity.AccountData
-import com.lee.playcompose.common.entity.AccountViewAction
+import com.lee.playcompose.common.entity.AccountViewIntent
 import com.lee.playcompose.common.entity.AccountViewEvent
 import com.lee.playcompose.common.entity.AccountViewState
 import com.lee.playcompose.service.AccountService
@@ -32,15 +32,15 @@ class AccountServiceImpl : AccountService {
     }
 
     override suspend fun requestAccountInfo(activity: FragmentActivity) {
-        activity.viewModels<AccountViewModel>().value.dispatch(AccountViewAction.RequestAccountData)
+        activity.viewModels<AccountViewModel>().value.dispatch(AccountViewIntent.RequestAccountData)
     }
 
     override suspend fun requestLogout(activity: FragmentActivity) {
-        activity.viewModels<AccountViewModel>().value.dispatch(AccountViewAction.RequestLogout)
+        activity.viewModels<AccountViewModel>().value.dispatch(AccountViewIntent.RequestLogout)
     }
 
     override suspend fun clearLoginState(activity: FragmentActivity) {
-        activity.viewModels<AccountViewModel>().value.dispatch(AccountViewAction.ClearLoginState)
+        activity.viewModels<AccountViewModel>().value.dispatch(AccountViewIntent.ClearLoginState)
     }
 
     override fun getAccountInfo(): AccountData? {

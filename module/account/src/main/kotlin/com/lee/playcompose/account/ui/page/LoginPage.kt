@@ -28,7 +28,7 @@ import com.lee.playcompose.account.ui.theme.ButtonLockColor
 import com.lee.playcompose.account.ui.theme.ButtonTextColor
 import com.lee.playcompose.account.viewmodel.*
 import com.lee.playcompose.base.extensions.*
-import com.lee.playcompose.common.entity.AccountViewAction
+import com.lee.playcompose.common.entity.AccountViewIntent
 import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.ui.composable.AppTextField
 import com.lee.playcompose.common.ui.composable.LoadingDialog
@@ -68,7 +68,7 @@ fun LoginPage(
             when (event) {
                 is LoginViewEvent.LoginSuccess -> {
                     accountViewModel.dispatch(
-                        AccountViewAction.UpdateAccountStatus(event.accountData, true)
+                        AccountViewIntent.UpdateAccountStatus(event.accountData, true)
                     )
                     focusManager.clearFocus()
                     navController.popBackStack()
@@ -94,14 +94,14 @@ fun LoginPage(
         LoginInputContent(
             viewState = viewState,
             usernameChange = {
-                viewModel.dispatch(LoginViewAction.ChangeUsername(it))
+                viewModel.dispatch(LoginViewIntent.ChangeUsername(it))
             },
             passwordChange = {
-                viewModel.dispatch(LoginViewAction.ChangePassword(it))
+                viewModel.dispatch(LoginViewIntent.ChangePassword(it))
             },
             doneChange = {
                 focusManager.clearFocus()
-                viewModel.dispatch(LoginViewAction.RequestLogin)
+                viewModel.dispatch(LoginViewIntent.RequestLogin)
             }
         )
         LoginFooter(viewState = viewState, gotoRegisterClick = {
@@ -110,7 +110,7 @@ fun LoginPage(
             })
         }, loginClick = {
                 focusManager.clearFocus()
-                viewModel.dispatch(LoginViewAction.RequestLogin)
+                viewModel.dispatch(LoginViewIntent.RequestLogin)
             })
     }
 }

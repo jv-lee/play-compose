@@ -38,7 +38,7 @@ import com.lee.playcompose.router.navigateArgs
 import com.lee.playcompose.todo.R
 import com.lee.playcompose.todo.ui.callback.TodoListCallback
 import com.lee.playcompose.todo.ui.theme.*
-import com.lee.playcompose.todo.viewmodel.TodoListViewAction
+import com.lee.playcompose.todo.viewmodel.TodoListViewIntent
 import com.lee.playcompose.todo.viewmodel.TodoListViewEvent
 import com.lee.playcompose.todo.viewmodel.TodoListViewModel
 import com.lee.playcompose.todo.viewmodel.TodoListViewState
@@ -119,10 +119,10 @@ fun TodoListPage(
             navController.navigateArgs(RoutePage.Todo.CreateTodo.route, it)
         },
         onDelete = {
-            viewModel.dispatch(TodoListViewAction.RequestDeleteTodo(it))
+            viewModel.dispatch(TodoListViewIntent.RequestDeleteTodo(it))
         },
         onUpdate = {
-            viewModel.dispatch(TodoListViewAction.RequestUpdateTodoStatus(it))
+            viewModel.dispatch(TodoListViewIntent.RequestUpdateTodoStatus(it))
         }
     )
 }

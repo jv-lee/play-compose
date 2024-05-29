@@ -30,13 +30,13 @@ class OfficialViewModel : ViewModel() {
         private set
 
     init {
-        dispatch(OfficialViewAction.RequestTabData)
+        dispatch(OfficialViewIntent.RequestTabData)
     }
 
-    fun dispatch(action: OfficialViewAction) {
-        when (action) {
-            is OfficialViewAction.RequestTabData -> requestTabData()
-            is OfficialViewAction.SelectedTabIndex -> selectedTabIndex(action.index)
+    fun dispatch(intent: OfficialViewIntent) {
+        when (intent) {
+            is OfficialViewIntent.RequestTabData -> requestTabData()
+            is OfficialViewIntent.SelectedTabIndex -> selectedTabIndex(intent.index)
         }
     }
 
@@ -66,7 +66,7 @@ data class OfficialViewState(
     val uiStatus: UiStatus = UiStatus.Loading
 )
 
-sealed class OfficialViewAction {
-    object RequestTabData : OfficialViewAction()
-    data class SelectedTabIndex(val index: Int) : OfficialViewAction()
+sealed class OfficialViewIntent {
+    object RequestTabData : OfficialViewIntent()
+    data class SelectedTabIndex(val index: Int) : OfficialViewIntent()
 }

@@ -32,15 +32,15 @@ class SplashViewModel : ViewModel() {
         initSplashInfo()
     }
 
-    fun dispatch(action: SplashViewAction) {
-        when (action) {
-            is SplashViewAction.RequestSplashAd -> {
+    fun dispatch(intent: SplashViewIntent) {
+        when (intent) {
+            is SplashViewIntent.RequestSplashAd -> {
                 playTime()
             }
-            is SplashViewAction.HideSplash -> {
+            is SplashViewIntent.HideSplash -> {
                 hideSplash()
             }
-            is SplashViewAction.ShowContent -> {
+            is SplashViewIntent.ShowContent -> {
                 showContent()
             }
         }
@@ -87,8 +87,8 @@ data class SplashViewState(
     val splashInfoRes: Int = CR.mipmap.ic_splash_info
 )
 
-sealed class SplashViewAction {
-    object RequestSplashAd : SplashViewAction()
-    object ShowContent : SplashViewAction()
-    object HideSplash : SplashViewAction()
+sealed class SplashViewIntent {
+    object RequestSplashAd : SplashViewIntent()
+    object ShowContent : SplashViewIntent()
+    object HideSplash : SplashViewIntent()
 }

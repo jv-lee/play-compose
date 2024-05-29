@@ -28,7 +28,7 @@ import com.lee.playcompose.common.ui.widget.header.AppBarViewContainer
 import com.lee.playcompose.common.ui.widget.header.MenuSpacer
 import com.lee.playcompose.common.ui.widget.header.TextMenuItem
 import com.lee.playcompose.details.R
-import com.lee.playcompose.details.viewmodel.DetailsViewAction
+import com.lee.playcompose.details.viewmodel.DetailsViewIntent
 import com.lee.playcompose.details.viewmodel.DetailsViewEvent
 import com.lee.playcompose.details.viewmodel.DetailsViewModel
 import com.lee.playcompose.base.R as BR
@@ -75,12 +75,12 @@ fun DetailsPage(
         menu = {
             TextMenuItem(stringResource(id = R.string.menu_collect)) {
                 menuVisibilityState.value = false
-                viewModel.dispatch(DetailsViewAction.RequestCollectDetails)
+                viewModel.dispatch(DetailsViewIntent.RequestCollectDetails)
             }
             MenuSpacer()
             TextMenuItem(stringResource(id = R.string.menu_shared)) {
                 menuVisibilityState.value = false
-                viewModel.dispatch(DetailsViewAction.ShareDetails)
+                viewModel.dispatch(DetailsViewIntent.ShareDetails)
             }
         }
     ) {

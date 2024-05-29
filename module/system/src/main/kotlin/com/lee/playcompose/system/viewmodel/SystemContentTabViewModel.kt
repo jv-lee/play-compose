@@ -15,9 +15,9 @@ class SystemContentTabViewModel : ViewModel() {
     var viewStates by mutableStateOf(SystemContentTabViewState())
         private set
 
-    fun dispatch(action: SystemContentTabViewAction) {
-        when (action) {
-            is SystemContentTabViewAction.SelectedTabIndex -> selectedTabIndex(action.index)
+    fun dispatch(intent: SystemContentTabViewIntent) {
+        when (intent) {
+            is SystemContentTabViewIntent.SelectedTabIndex -> selectedTabIndex(intent.index)
         }
     }
 
@@ -30,6 +30,6 @@ data class SystemContentTabViewState(
     val selectedIndex: Int = 0
 )
 
-sealed class SystemContentTabViewAction {
-    data class SelectedTabIndex(val index: Int) : SystemContentTabViewAction()
+sealed class SystemContentTabViewIntent {
+    data class SelectedTabIndex(val index: Int) : SystemContentTabViewIntent()
 }

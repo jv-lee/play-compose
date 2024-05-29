@@ -28,7 +28,7 @@ import com.lee.playcompose.account.ui.theme.ButtonLockColor
 import com.lee.playcompose.account.ui.theme.ButtonTextColor
 import com.lee.playcompose.account.viewmodel.*
 import com.lee.playcompose.base.extensions.*
-import com.lee.playcompose.common.entity.AccountViewAction
+import com.lee.playcompose.common.entity.AccountViewIntent
 import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.ui.composable.AppTextField
 import com.lee.playcompose.common.ui.composable.LoadingDialog
@@ -58,7 +58,7 @@ fun RegisterPage(
             when (event) {
                 is RegisterViewEvent.RegisterSuccess -> {
                     accountViewModel.dispatch(
-                        AccountViewAction.UpdateAccountStatus(event.accountData, true)
+                        AccountViewIntent.UpdateAccountStatus(event.accountData, true)
                     )
                     focusManager.clearFocus()
                     // 通知login页面注册成功销毁页面
@@ -86,17 +86,17 @@ fun RegisterPage(
         RegisterInputContent(
             viewState = viewState,
             usernameChange = {
-                viewModel.dispatch(RegisterViewAction.ChangeUsername(it))
+                viewModel.dispatch(RegisterViewIntent.ChangeUsername(it))
             },
             passwordChange = {
-                viewModel.dispatch(RegisterViewAction.ChangePassword(it))
+                viewModel.dispatch(RegisterViewIntent.ChangePassword(it))
             },
             rePasswordChange = {
-                viewModel.dispatch(RegisterViewAction.ChangeRePassword(it))
+                viewModel.dispatch(RegisterViewIntent.ChangeRePassword(it))
             },
             doneChange = {
                 focusManager.clearFocus()
-                viewModel.dispatch(RegisterViewAction.RequestRegister)
+                viewModel.dispatch(RegisterViewIntent.RequestRegister)
             }
         )
 
@@ -106,7 +106,7 @@ fun RegisterPage(
             })
         }, registerClick = {
                 focusManager.clearFocus()
-                viewModel.dispatch(RegisterViewAction.RequestRegister)
+                viewModel.dispatch(RegisterViewIntent.RequestRegister)
             })
     }
 }

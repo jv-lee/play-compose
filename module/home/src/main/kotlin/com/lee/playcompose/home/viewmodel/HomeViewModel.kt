@@ -41,9 +41,9 @@ class HomeViewModel : ViewModel() {
     var viewStates by mutableStateOf(HomeViewState(savedPager = pager))
         private set
 
-    fun dispatch(action: HomeViewAction) {
-        when (action) {
-            is HomeViewAction.RequestLoopBanner -> requestLoopBanner()
+    fun dispatch(intent: HomeViewIntent) {
+        when (intent) {
+            is HomeViewIntent.RequestLoopBanner -> requestLoopBanner()
         }
     }
 
@@ -77,6 +77,6 @@ data class HomeViewState(
     val listState: LazyListState = LazyListState()
 )
 
-sealed class HomeViewAction {
-    object RequestLoopBanner : HomeViewAction()
+sealed class HomeViewIntent {
+    object RequestLoopBanner : HomeViewIntent()
 }

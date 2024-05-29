@@ -30,13 +30,13 @@ class ProjectViewModel : ViewModel() {
         private set
 
     init {
-        dispatch(ProjectViewAction.RequestTabData)
+        dispatch(ProjectViewIntent.RequestTabData)
     }
 
-    fun dispatch(action: ProjectViewAction) {
-        when (action) {
-            is ProjectViewAction.RequestTabData -> requestTabData()
-            is ProjectViewAction.SelectedTabIndex -> selectedTabIndex(action.index)
+    fun dispatch(intent: ProjectViewIntent) {
+        when (intent) {
+            is ProjectViewIntent.RequestTabData -> requestTabData()
+            is ProjectViewIntent.SelectedTabIndex -> selectedTabIndex(intent.index)
         }
     }
 
@@ -66,7 +66,7 @@ data class ProjectViewState(
     val uiStatus: UiStatus = UiStatus.Loading
 )
 
-sealed class ProjectViewAction {
-    object RequestTabData : ProjectViewAction()
-    data class SelectedTabIndex(val index: Int) : ProjectViewAction()
+sealed class ProjectViewIntent {
+    object RequestTabData : ProjectViewIntent()
+    data class SelectedTabIndex(val index: Int) : ProjectViewIntent()
 }

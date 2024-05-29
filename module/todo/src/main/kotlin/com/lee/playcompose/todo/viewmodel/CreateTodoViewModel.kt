@@ -54,21 +54,21 @@ class CreateTodoViewModel(private val todoData: TodoData?) :
         initPageState()
     }
 
-    fun dispatch(action: CreateTodoViewAction) {
-        when (action) {
-            is CreateTodoViewAction.ChangeTitle -> {
-                changeTitle(action.title)
+    fun dispatch(intent: CreateTodoViewIntent) {
+        when (intent) {
+            is CreateTodoViewIntent.ChangeTitle -> {
+                changeTitle(intent.title)
             }
-            is CreateTodoViewAction.ChangeContent -> {
-                changeContent(action.content)
+            is CreateTodoViewIntent.ChangeContent -> {
+                changeContent(intent.content)
             }
-            is CreateTodoViewAction.ChangePriority -> {
-                changePriority(action.priority)
+            is CreateTodoViewIntent.ChangePriority -> {
+                changePriority(intent.priority)
             }
-            is CreateTodoViewAction.ChangeDate -> {
-                changeDate(action.date)
+            is CreateTodoViewIntent.ChangeDate -> {
+                changeDate(intent.date)
             }
-            is CreateTodoViewAction.RequestPostTodo -> {
+            is CreateTodoViewIntent.RequestPostTodo -> {
                 requestPostTodo()
             }
         }
@@ -175,7 +175,7 @@ class CreateTodoViewModel(private val todoData: TodoData?) :
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         val date = "$year-${month + 1}-$dayOfMonth"
-        dispatch(CreateTodoViewAction.ChangeDate(date))
+        dispatch(CreateTodoViewIntent.ChangeDate(date))
     }
 
     class CreateFactory(private val todoData: TodoData?) : ViewModelProvider.Factory {
@@ -203,10 +203,10 @@ sealed class CreateTodoViewEvent {
     data class RequestFailed(val message: String?) : CreateTodoViewEvent()
 }
 
-sealed class CreateTodoViewAction {
-    data class ChangeTitle(val title: String) : CreateTodoViewAction()
-    data class ChangeContent(val content: String) : CreateTodoViewAction()
-    data class ChangePriority(val priority: Int) : CreateTodoViewAction()
-    data class ChangeDate(val date: String) : CreateTodoViewAction()
-    object RequestPostTodo : CreateTodoViewAction()
+sealed class CreateTodoViewIntent {
+    data class ChangeTitle(val title: String) : CreateTodoViewIntent()
+    data class ChangeContent(val content: String) : CreateTodoViewIntent()
+    data class ChangePriority(val priority: Int) : CreateTodoViewIntent()
+    data class ChangeDate(val date: String) : CreateTodoViewIntent()
+    object RequestPostTodo : CreateTodoViewIntent()
 }

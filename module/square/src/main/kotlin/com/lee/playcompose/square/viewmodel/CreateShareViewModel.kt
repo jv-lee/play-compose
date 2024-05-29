@@ -32,15 +32,15 @@ class CreateShareViewModel : ViewModel() {
     private val _viewEvents = Channel<CreateShareViewEvent>(Channel.BUFFERED)
     val viewEvents = _viewEvents.receiveAsFlow()
 
-    fun dispatch(action: CreateShareViewAction) {
-        when (action) {
-            is CreateShareViewAction.ChangeShareTitle -> {
-                changeShareTitle(action.title)
+    fun dispatch(intent: CreateShareViewIntent) {
+        when (intent) {
+            is CreateShareViewIntent.ChangeShareTitle -> {
+                changeShareTitle(intent.title)
             }
-            is CreateShareViewAction.ChangeShareContent -> {
-                changeShareContent(action.content)
+            is CreateShareViewIntent.ChangeShareContent -> {
+                changeShareContent(intent.content)
             }
-            is CreateShareViewAction.RequestShare -> {
+            is CreateShareViewIntent.RequestShare -> {
                 requestShare()
             }
         }
@@ -92,8 +92,8 @@ sealed class CreateShareViewEvent {
     data class CreateFailed(val message: String) : CreateShareViewEvent()
 }
 
-sealed class CreateShareViewAction {
-    object RequestShare : CreateShareViewAction()
-    data class ChangeShareTitle(val title: String) : CreateShareViewAction()
-    data class ChangeShareContent(val content: String) : CreateShareViewAction()
+sealed class CreateShareViewIntent {
+    object RequestShare : CreateShareViewIntent()
+    data class ChangeShareTitle(val title: String) : CreateShareViewIntent()
+    data class ChangeShareContent(val content: String) : CreateShareViewIntent()
 }

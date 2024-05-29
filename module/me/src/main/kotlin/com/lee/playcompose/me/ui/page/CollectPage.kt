@@ -19,7 +19,7 @@ import com.lee.playcompose.common.ui.widget.SlidingPaneState
 import com.lee.playcompose.common.ui.widget.header.AppBarViewContainer
 import com.lee.playcompose.common.ui.widget.rememberSlidingPaneState
 import com.lee.playcompose.me.R
-import com.lee.playcompose.me.viewmodel.CollectViewAction
+import com.lee.playcompose.me.viewmodel.CollectViewIntent
 import com.lee.playcompose.me.viewmodel.CollectViewEvent
 import com.lee.playcompose.me.viewmodel.CollectViewModel
 import com.lee.playcompose.me.viewmodel.CollectViewState
@@ -63,7 +63,7 @@ fun CollectPage(
                 navController.navigateArgs(RoutePage.Details.route, it.transformDetails())
             },
             onItemDelete = {
-                viewModel.dispatch(CollectViewAction.RequestUnCollect(it))
+                viewModel.dispatch(CollectViewIntent.RequestUnCollect(it))
             }
         )
     }

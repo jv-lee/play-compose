@@ -87,7 +87,7 @@ fun Activity.RouteNavigator(
     // 绑定网络错误事件:显示网络错误提示
     LaunchedEffect(Unit) {
         ChannelBus.bindChannel<NetworkErrorEvent>(lifecycle)?.receiveAsFlow()?.collect {
-            viewModel.dispatch(RouteNavigationViewAction.NetworkErrorAction)
+            viewModel.dispatch(RouteNavigationViewIntent.NetworkError)
         }
     }
 

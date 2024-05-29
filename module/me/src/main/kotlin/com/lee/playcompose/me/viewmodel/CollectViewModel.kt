@@ -51,9 +51,9 @@ class CollectViewModel : ViewModel() {
     private val _viewEvents = Channel<CollectViewEvent>(Channel.BUFFERED)
     val viewEvents = _viewEvents.receiveAsFlow()
 
-    fun dispatch(action: CollectViewAction) {
+    fun dispatch(action: CollectViewIntent) {
         when (action) {
-            is CollectViewAction.RequestUnCollect -> {
+            is CollectViewIntent.RequestUnCollect -> {
                 deleteCollect(action.content)
             }
         }
@@ -101,6 +101,6 @@ sealed class CollectViewEvent {
     data class UnCollectEvent(val message: String?) : CollectViewEvent()
 }
 
-sealed class CollectViewAction {
-    data class RequestUnCollect(val content: Content) : CollectViewAction()
+sealed class CollectViewIntent {
+    data class RequestUnCollect(val content: Content) : CollectViewIntent()
 }

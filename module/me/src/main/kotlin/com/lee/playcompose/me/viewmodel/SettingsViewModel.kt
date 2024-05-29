@@ -33,15 +33,15 @@ class SettingsViewModel : ViewModel() {
         initCacheSize()
     }
 
-    fun dispatch(action: SettingsViewAction) {
-        when (action) {
-            is SettingsViewAction.VisibleCacheDialog -> {
-                visibleCacheDialog(action.visibility)
+    fun dispatch(intent: SettingsViewIntent) {
+        when (intent) {
+            is SettingsViewIntent.VisibleCacheDialog -> {
+                visibleCacheDialog(intent.visibility)
             }
-            is SettingsViewAction.VisibleLogoutDialog -> {
-                visibleLogoutDialog(action.visibility)
+            is SettingsViewIntent.VisibleLogoutDialog -> {
+                visibleLogoutDialog(intent.visibility)
             }
-            is SettingsViewAction.RequestClearCache -> {
+            is SettingsViewIntent.RequestClearCache -> {
                 requestClearCache()
             }
         }
@@ -96,8 +96,8 @@ sealed class SettingsViewEvent {
     data class ClearCacheResult(val message: String) : SettingsViewEvent()
 }
 
-sealed class SettingsViewAction {
-    data class VisibleCacheDialog(val visibility: Boolean) : SettingsViewAction()
-    data class VisibleLogoutDialog(val visibility: Boolean) : SettingsViewAction()
-    object RequestClearCache : SettingsViewAction()
+sealed class SettingsViewIntent {
+    data class VisibleCacheDialog(val visibility: Boolean) : SettingsViewIntent()
+    data class VisibleLogoutDialog(val visibility: Boolean) : SettingsViewIntent()
+    object RequestClearCache : SettingsViewIntent()
 }

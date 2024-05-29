@@ -33,18 +33,18 @@ class RegisterViewModel : ViewModel() {
     private val _viewEvents = Channel<RegisterViewEvent>(Channel.BUFFERED)
     val viewEvents = _viewEvents.receiveAsFlow()
 
-    fun dispatch(action: RegisterViewAction) {
-        when (action) {
-            is RegisterViewAction.ChangeUsername -> {
-                changeUsername(action.username)
+    fun dispatch(intent: RegisterViewIntent) {
+        when (intent) {
+            is RegisterViewIntent.ChangeUsername -> {
+                changeUsername(intent.username)
             }
-            is RegisterViewAction.ChangePassword -> {
-                changePassword(action.password)
+            is RegisterViewIntent.ChangePassword -> {
+                changePassword(intent.password)
             }
-            is RegisterViewAction.ChangeRePassword -> {
-                changeRePassword(action.rePassword)
+            is RegisterViewIntent.ChangeRePassword -> {
+                changeRePassword(intent.rePassword)
             }
-            is RegisterViewAction.RequestRegister -> {
+            is RegisterViewIntent.RequestRegister -> {
                 requestRegister()
             }
         }
@@ -119,9 +119,9 @@ sealed class RegisterViewEvent {
     data class RegisterFailed(val message: String?) : RegisterViewEvent()
 }
 
-sealed class RegisterViewAction {
-    data class ChangeUsername(val username: String) : RegisterViewAction()
-    data class ChangePassword(val password: String) : RegisterViewAction()
-    data class ChangeRePassword(val rePassword: String) : RegisterViewAction()
-    object RequestRegister : RegisterViewAction()
+sealed class RegisterViewIntent {
+    data class ChangeUsername(val username: String) : RegisterViewIntent()
+    data class ChangePassword(val password: String) : RegisterViewIntent()
+    data class ChangeRePassword(val rePassword: String) : RegisterViewIntent()
+    object RequestRegister : RegisterViewIntent()
 }

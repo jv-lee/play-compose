@@ -49,14 +49,15 @@ class MyShareViewModel : ViewModel() {
     }
 
     var viewStates by mutableStateOf(MyShareViewState(savedPager = pager))
+        private set
 
     private val _viewEvents = Channel<MyShareViewEvent>(Channel.BUFFERED)
     val viewEvents = _viewEvents.receiveAsFlow()
 
-    fun dispatch(action: MyShareViewAction) {
-        when (action) {
-            is MyShareViewAction.RequestDeleteShare -> {
-                deleteShare(action.content)
+    fun dispatch(intent: MyShareViewIntent) {
+        when (intent) {
+            is MyShareViewIntent.RequestDeleteShare -> {
+                deleteShare(intent.content)
             }
         }
     }
@@ -106,6 +107,6 @@ sealed class MyShareViewEvent {
     data class DeleteShareEvent(val message: String?) : MyShareViewEvent()
 }
 
-sealed class MyShareViewAction {
-    data class RequestDeleteShare(val content: Content) : MyShareViewAction()
+sealed class MyShareViewIntent {
+    data class RequestDeleteShare(val content: Content) : MyShareViewIntent()
 }

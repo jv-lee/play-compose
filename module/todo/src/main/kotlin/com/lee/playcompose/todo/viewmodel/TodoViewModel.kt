@@ -36,13 +36,13 @@ class TodoViewModel : ViewModel() {
         navigationVisible()
     }
 
-    fun dispatch(action: TodoViewAction) {
-        when (action) {
-            is TodoViewAction.ChangeTypeDialogVisible -> {
-                changeTypeDialogVisible(action.visible)
+    fun dispatch(intent: TodoViewIntent) {
+        when (intent) {
+            is TodoViewIntent.ChangeTypeDialogVisible -> {
+                changeTypeDialogVisible(intent.visible)
             }
-            is TodoViewAction.ChangeTypeSelected -> {
-                changeTypeSelected(action.type)
+            is TodoViewIntent.ChangeTypeSelected -> {
+                changeTypeSelected(intent.type)
             }
         }
     }
@@ -81,7 +81,7 @@ data class TodoViewState(
     val navigationElevation: Dp = 0.dp
 )
 
-sealed class TodoViewAction {
-    data class ChangeTypeSelected(@TodoType val type: Int) : TodoViewAction()
-    data class ChangeTypeDialogVisible(val visible: Boolean) : TodoViewAction()
+sealed class TodoViewIntent {
+    data class ChangeTypeSelected(@TodoType val type: Int) : TodoViewIntent()
+    data class ChangeTypeDialogVisible(val visible: Boolean) : TodoViewIntent()
 }

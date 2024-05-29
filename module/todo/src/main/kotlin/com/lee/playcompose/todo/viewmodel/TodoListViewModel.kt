@@ -65,13 +65,13 @@ class TodoListViewModel(private val type: Int, private val status: Int) : ViewMo
     private val _viewEvents = Channel<TodoListViewEvent>(Channel.BUFFERED)
     val viewEvents = _viewEvents.receiveAsFlow()
 
-    fun dispatch(action: TodoListViewAction) {
-        when (action) {
-            is TodoListViewAction.RequestDeleteTodo -> {
-                requestDeleteTodo(action.todoData)
+    fun dispatch(intent: TodoListViewIntent) {
+        when (intent) {
+            is TodoListViewIntent.RequestDeleteTodo -> {
+                requestDeleteTodo(intent.todoData)
             }
-            is TodoListViewAction.RequestUpdateTodoStatus -> {
-                requestUpdateTodoStatus(action.todoData)
+            is TodoListViewIntent.RequestUpdateTodoStatus -> {
+                requestUpdateTodoStatus(intent.todoData)
             }
         }
     }
@@ -190,7 +190,7 @@ sealed class TodoListViewEvent {
     data class RequestFailed(val message: String?) : TodoListViewEvent()
 }
 
-sealed class TodoListViewAction {
-    data class RequestDeleteTodo(val todoData: TodoData) : TodoListViewAction()
-    data class RequestUpdateTodoStatus(val todoData: TodoData) : TodoListViewAction()
+sealed class TodoListViewIntent {
+    data class RequestDeleteTodo(val todoData: TodoData) : TodoListViewIntent()
+    data class RequestUpdateTodoStatus(val todoData: TodoData) : TodoListViewIntent()
 }
