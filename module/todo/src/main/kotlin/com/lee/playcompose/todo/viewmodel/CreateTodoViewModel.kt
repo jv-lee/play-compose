@@ -11,6 +11,10 @@ import androidx.lifecycle.viewModelScope
 import com.lee.playcompose.base.extensions.lowestTime
 import com.lee.playcompose.base.tools.PreferencesTools
 import com.lee.playcompose.base.utils.TimeUtil
+import com.lee.playcompose.base.viewmodel.BaseMVIViewModel
+import com.lee.playcompose.base.viewmodel.IViewEvent
+import com.lee.playcompose.base.viewmodel.IViewIntent
+import com.lee.playcompose.base.viewmodel.IViewState
 import com.lee.playcompose.common.entity.TodoData
 import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
@@ -33,7 +37,7 @@ import java.util.*
  * @date 2022/4/8
  */
 class CreateTodoViewModel(private val todoData: TodoData?) :
-    ViewModel(),
+    BaseMVIViewModel<CreateTodoViewEvent, CreateTodoViewIntent>(),
     DatePickerDialog.OnDateSetListener {
 
     private val api = createApi<ApiService>()
@@ -47,27 +51,28 @@ class CreateTodoViewModel(private val todoData: TodoData?) :
     )
         private set
 
-    private val _viewEvents = Channel<CreateTodoViewEvent>(Channel.BUFFERED)
-    val viewEvents = _viewEvents.receiveAsFlow()
-
     init {
         initPageState()
     }
 
-    fun dispatch(intent: CreateTodoViewIntent) {
+    override fun dispatch(intent: CreateTodoViewIntent) {
         when (intent) {
             is CreateTodoViewIntent.ChangeTitle -> {
                 changeTitle(intent.title)
             }
+
             is CreateTodoViewIntent.ChangeContent -> {
                 changeContent(intent.content)
             }
+
             is CreateTodoViewIntent.ChangePriority -> {
                 changePriority(intent.priority)
             }
+
             is CreateTodoViewIntent.ChangeDate -> {
                 changeDate(intent.date)
             }
+
             is CreateTodoViewIntent.RequestPostTodo -> {
                 requestPostTodo()
             }
@@ -196,14 +201,14 @@ data class CreateTodoViewState(
     val calendar: Calendar = Calendar.getInstance(),
     val priority: Int = TodoData.PRIORITY_LOW,
     val onDateSetListener: DatePickerDialog.OnDateSetListener? = null
-)
+) : IViewState
 
-sealed class CreateTodoViewEvent {
+sealed class CreateTodoViewEvent : IViewEvent {
     data class RequestSuccess(val status: Int) : CreateTodoViewEvent()
     data class RequestFailed(val message: String?) : CreateTodoViewEvent()
 }
 
-sealed class CreateTodoViewIntent {
+sealed class CreateTodoViewIntent : IViewIntent {
     data class ChangeTitle(val title: String) : CreateTodoViewIntent()
     data class ChangeContent(val content: String) : CreateTodoViewIntent()
     data class ChangePriority(val priority: Int) : CreateTodoViewIntent()

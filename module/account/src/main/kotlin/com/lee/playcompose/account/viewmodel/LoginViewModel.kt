@@ -10,6 +10,10 @@ import com.lee.playcompose.account.constants.Constants
 import com.lee.playcompose.account.model.api.ApiService
 import com.lee.playcompose.base.extensions.lowestTime
 import com.lee.playcompose.base.tools.PreferencesTools
+import com.lee.playcompose.base.viewmodel.BaseMVIViewModel
+import com.lee.playcompose.base.viewmodel.IViewEvent
+import com.lee.playcompose.base.viewmodel.IViewIntent
+import com.lee.playcompose.base.viewmodel.IViewState
 import com.lee.playcompose.common.entity.AccountData
 import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
@@ -26,28 +30,27 @@ import kotlinx.coroutines.launch
  * @author jv.lee
  * @date 2022/3/23
  */
-class LoginViewModel : ViewModel() {
+class LoginViewModel : BaseMVIViewModel<LoginViewEvent, LoginViewIntent>() {
 
     private val api = createApi<ApiService>()
 
     var viewStates by mutableStateOf(LoginViewState())
         private set
 
-    private val _viewEvents = Channel<LoginViewEvent>(Channel.BUFFERED)
-    val viewEvents = _viewEvents.receiveAsFlow()
-
     init {
         restoreInputUsername()
     }
 
-    fun dispatch(intent: LoginViewIntent) {
+    override fun dispatch(intent: LoginViewIntent) {
         when (intent) {
             is LoginViewIntent.ChangeUsername -> {
                 changeUsername(intent.username)
             }
+
             is LoginViewIntent.ChangePassword -> {
                 changePassword(intent.password)
             }
+
             is LoginViewIntent.RequestLogin -> {
                 requestLogin()
             }
@@ -117,14 +120,14 @@ data class LoginViewState(
     val password: String = "",
     val isLoading: Boolean = false,
     val isLoginEnable: Boolean = false
-)
+) : IViewState
 
-sealed class LoginViewEvent {
+sealed class LoginViewEvent : IViewEvent {
     data class LoginSuccess(val accountData: AccountData) : LoginViewEvent()
     data class LoginFailed(val message: String? = "") : LoginViewEvent()
 }
 
-sealed class LoginViewIntent {
+sealed class LoginViewIntent : IViewIntent {
     data class ChangeUsername(val username: String) : LoginViewIntent()
     data class ChangePassword(val password: String) : LoginViewIntent()
     object RequestLogin : LoginViewIntent()

@@ -4,17 +4,18 @@ import android.text.TextUtils
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.playcompose.base.extensions.lowestTime
+import com.lee.playcompose.base.viewmodel.BaseMVIViewModel
+import com.lee.playcompose.base.viewmodel.IViewEvent
+import com.lee.playcompose.base.viewmodel.IViewIntent
+import com.lee.playcompose.base.viewmodel.IViewState
 import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
 import com.lee.playcompose.square.model.api.ApiService
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 /**
@@ -22,17 +23,14 @@ import kotlinx.coroutines.launch
  * @author jv.lee
  * @date 2022/3/21
  */
-class CreateShareViewModel : ViewModel() {
+class CreateShareViewModel : BaseMVIViewModel<CreateShareViewEvent, CreateShareViewIntent>() {
 
     private val api = createApi<ApiService>()
 
     var viewStates by mutableStateOf(CreateShareViewState())
         private set
 
-    private val _viewEvents = Channel<CreateShareViewEvent>(Channel.BUFFERED)
-    val viewEvents = _viewEvents.receiveAsFlow()
-
-    fun dispatch(intent: CreateShareViewIntent) {
+    override fun dispatch(intent: CreateShareViewIntent) {
         when (intent) {
             is CreateShareViewIntent.ChangeShareTitle -> {
                 changeShareTitle(intent.title)
@@ -85,14 +83,14 @@ data class CreateShareViewState(
     val shareTitle: String = "",
     val shareContent: String = "",
     val isLoading: Boolean = false
-)
+) : IViewState
 
-sealed class CreateShareViewEvent {
+sealed class CreateShareViewEvent : IViewEvent {
     object CreateSuccess : CreateShareViewEvent()
     data class CreateFailed(val message: String) : CreateShareViewEvent()
 }
 
-sealed class CreateShareViewIntent {
+sealed class CreateShareViewIntent : IViewIntent {
     object RequestShare : CreateShareViewIntent()
     data class ChangeShareTitle(val title: String) : CreateShareViewIntent()
     data class ChangeShareContent(val content: String) : CreateShareViewIntent()

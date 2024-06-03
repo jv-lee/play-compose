@@ -8,17 +8,19 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.base.extensions.lowestTime
+import com.lee.playcompose.base.viewmodel.BaseMVIViewModel
+import com.lee.playcompose.base.viewmodel.IViewEvent
+import com.lee.playcompose.base.viewmodel.IViewIntent
+import com.lee.playcompose.base.viewmodel.IViewState
 import com.lee.playcompose.common.constants.ApiConstants
 import com.lee.playcompose.common.entity.DetailsData
 import com.lee.playcompose.common.ui.widget.header.ActionMode
 import com.lee.playcompose.details.R
 import com.lee.playcompose.service.MeService
 import com.lee.playcompose.service.helper.ModuleService
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 /**
@@ -26,25 +28,24 @@ import kotlinx.coroutines.launch
  * @author jv.lee
  * @date 2022/3/30
  */
-class DetailsViewModel(private val details: DetailsData) : ViewModel() {
+class DetailsViewModel(private val details: DetailsData) :
+    BaseMVIViewModel<DetailsViewEvent, DetailsViewIntent>() {
 
     private val meService = ModuleService.find<MeService>()
 
     var viewStates by mutableStateOf(DetailsViewState())
         private set
 
-    private val _viewEvents = Channel<DetailsViewEvent>(Channel.BUFFERED)
-    val viewEvents = _viewEvents.receiveAsFlow()
-
     init {
         moreButtonVisible()
     }
 
-    fun dispatch(intent: DetailsViewIntent) {
+    override fun dispatch(intent: DetailsViewIntent) {
         when (intent) {
             is DetailsViewIntent.RequestCollectDetails -> {
                 requestCollect()
             }
+
             is DetailsViewIntent.ShareDetails -> {
                 shareDetails()
             }
@@ -105,14 +106,14 @@ class DetailsViewModel(private val details: DetailsData) : ViewModel() {
 data class DetailsViewState(
     val actionModel: ActionMode = ActionMode.Default,
     val isLoading: Boolean = false
-)
+) : IViewState
 
-sealed class DetailsViewEvent {
+sealed class DetailsViewEvent : IViewEvent {
     data class CollectEvent(val message: String?) : DetailsViewEvent()
     data class ShareEvent(val shareText: String) : DetailsViewEvent()
 }
 
-sealed class DetailsViewIntent {
+sealed class DetailsViewIntent : IViewIntent {
     object RequestCollectDetails : DetailsViewIntent()
     object ShareDetails : DetailsViewIntent()
 }

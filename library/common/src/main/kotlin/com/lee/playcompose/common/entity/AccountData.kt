@@ -6,6 +6,9 @@
 package com.lee.playcompose.common.entity
 
 import androidx.annotation.Keep
+import com.lee.playcompose.base.viewmodel.IViewEvent
+import com.lee.playcompose.base.viewmodel.IViewIntent
+import com.lee.playcompose.base.viewmodel.IViewState
 
 /**
  * 账户信息
@@ -70,14 +73,14 @@ data class AccountViewState(
     val accountData: AccountData? = null,
     val isLogin: Boolean = false,
     val isLoading: Boolean = false
-)
+) : IViewState
 
-sealed class AccountViewEvent {
+sealed class AccountViewEvent : IViewEvent {
     data class LogoutSuccess(val message: String? = "") : AccountViewEvent()
     data class LogoutFailed(val message: String? = "") : AccountViewEvent()
 }
 
-sealed class AccountViewIntent {
+sealed class AccountViewIntent : IViewIntent {
     object ClearLoginState : AccountViewIntent()
     object RequestAccountData : AccountViewIntent()
     object RequestLogout : AccountViewIntent()

@@ -29,19 +29,19 @@ interface AccountService : IModuleService {
      * 请求全局AccountViewModel 请求账户信息
      * @param activity
      */
-    suspend fun requestAccountInfo(activity: FragmentActivity)
+    fun requestAccountInfo(activity: FragmentActivity)
 
     /**
      * 请求全局AccountViewModel 请求登出
      * @param activity
      */
-    suspend fun requestLogout(activity: FragmentActivity)
+    fun requestLogout(activity: FragmentActivity)
 
     /**
      * 清除本地登陆状态
      * @param activity
      */
-    suspend fun clearLoginState(activity: FragmentActivity)
+    fun clearLoginState(activity: FragmentActivity)
 
     /**
      * 获取当前登陆的账户信息

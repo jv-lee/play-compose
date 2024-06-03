@@ -31,15 +31,15 @@ class AccountServiceImpl : AccountService {
         return activity.viewModels<AccountViewModel>().value.viewEvents
     }
 
-    override suspend fun requestAccountInfo(activity: FragmentActivity) {
+    override fun requestAccountInfo(activity: FragmentActivity) {
         activity.viewModels<AccountViewModel>().value.dispatch(AccountViewIntent.RequestAccountData)
     }
 
-    override suspend fun requestLogout(activity: FragmentActivity) {
+    override fun requestLogout(activity: FragmentActivity) {
         activity.viewModels<AccountViewModel>().value.dispatch(AccountViewIntent.RequestLogout)
     }
 
-    override suspend fun clearLoginState(activity: FragmentActivity) {
+    override fun clearLoginState(activity: FragmentActivity) {
         activity.viewModels<AccountViewModel>().value.dispatch(AccountViewIntent.ClearLoginState)
     }
 

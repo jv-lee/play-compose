@@ -10,6 +10,10 @@ import androidx.lifecycle.viewModelScope
 import com.lee.playcompose.base.cache.CacheManager
 import com.lee.playcompose.base.extensions.getCache
 import com.lee.playcompose.base.extensions.putCache
+import com.lee.playcompose.base.viewmodel.BaseMVIViewModel
+import com.lee.playcompose.base.viewmodel.IViewEvent
+import com.lee.playcompose.base.viewmodel.IViewIntent
+import com.lee.playcompose.base.viewmodel.IViewState
 import com.lee.playcompose.common.entity.PageData
 import com.lee.playcompose.common.entity.TodoData
 import com.lee.playcompose.common.extensions.checkData
@@ -32,7 +36,8 @@ import java.util.concurrent.atomic.AtomicBoolean
  * @author jv.lee
  * @date 2022/4/6
  */
-class TodoListViewModel(private val type: Int, private val status: Int) : ViewModel() {
+class TodoListViewModel(private val type: Int, private val status: Int) :
+    BaseMVIViewModel<TodoListViewEvent, TodoListViewIntent>() {
 
     private val api = createApi<ApiService>()
     private val accountService: AccountService = ModuleService.find()
@@ -62,14 +67,12 @@ class TodoListViewModel(private val type: Int, private val status: Int) : ViewMo
     var viewStates by mutableStateOf(TodoListViewState(savedPager = pager))
         private set
 
-    private val _viewEvents = Channel<TodoListViewEvent>(Channel.BUFFERED)
-    val viewEvents = _viewEvents.receiveAsFlow()
-
-    fun dispatch(intent: TodoListViewIntent) {
+    override fun dispatch(intent: TodoListViewIntent) {
         when (intent) {
             is TodoListViewIntent.RequestDeleteTodo -> {
                 requestDeleteTodo(intent.todoData)
             }
+
             is TodoListViewIntent.RequestUpdateTodoStatus -> {
                 requestUpdateTodoStatus(intent.todoData)
             }
@@ -182,15 +185,15 @@ class TodoListViewModel(private val type: Int, private val status: Int) : ViewMo
 data class TodoListViewState(
     val savedPager: SavedPager<TodoData>,
     val listState: LazyListState = LazyListState()
-)
+) : IViewState
 
-sealed class TodoListViewEvent {
+sealed class TodoListViewEvent : IViewEvent {
     object ResetSlidingState : TodoListViewEvent()
     data class RefreshTodoData(val statusKey: String) : TodoListViewEvent()
     data class RequestFailed(val message: String?) : TodoListViewEvent()
 }
 
-sealed class TodoListViewIntent {
+sealed class TodoListViewIntent : IViewIntent {
     data class RequestDeleteTodo(val todoData: TodoData) : TodoListViewIntent()
     data class RequestUpdateTodoStatus(val todoData: TodoData) : TodoListViewIntent()
 }

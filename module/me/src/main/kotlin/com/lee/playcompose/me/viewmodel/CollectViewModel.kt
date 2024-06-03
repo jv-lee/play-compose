@@ -8,6 +8,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.base.extensions.lowestTime
+import com.lee.playcompose.base.viewmodel.BaseMVIViewModel
+import com.lee.playcompose.base.viewmodel.IViewEvent
+import com.lee.playcompose.base.viewmodel.IViewIntent
+import com.lee.playcompose.base.viewmodel.IViewState
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
@@ -27,7 +31,7 @@ import java.util.concurrent.atomic.AtomicBoolean
  * @author jv.lee
  * @date 2022/3/30
  */
-class CollectViewModel : ViewModel() {
+class CollectViewModel : BaseMVIViewModel<CollectViewEvent, CollectViewIntent>() {
 
     private val api = createApi<ApiService>()
     private val accountService: AccountService = ModuleService.find()
@@ -48,13 +52,10 @@ class CollectViewModel : ViewModel() {
     var viewStates by mutableStateOf(CollectViewState(savedPager = pager))
         private set
 
-    private val _viewEvents = Channel<CollectViewEvent>(Channel.BUFFERED)
-    val viewEvents = _viewEvents.receiveAsFlow()
-
-    fun dispatch(action: CollectViewIntent) {
-        when (action) {
+    override fun dispatch(intent: CollectViewIntent) {
+        when (intent) {
             is CollectViewIntent.RequestUnCollect -> {
-                deleteCollect(action.content)
+                deleteCollect(intent.content)
             }
         }
     }
@@ -95,12 +96,12 @@ data class CollectViewState(
     val isLoading: Boolean = false,
     val savedPager: SavedPager<Content>,
     val listState: LazyListState = LazyListState()
-)
+) : IViewState
 
-sealed class CollectViewEvent {
+sealed class CollectViewEvent : IViewEvent {
     data class UnCollectEvent(val message: String?) : CollectViewEvent()
 }
 
-sealed class CollectViewIntent {
+sealed class CollectViewIntent : IViewIntent {
     data class RequestUnCollect(val content: Content) : CollectViewIntent()
 }

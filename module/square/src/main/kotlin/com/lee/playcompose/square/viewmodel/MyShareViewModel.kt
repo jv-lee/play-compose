@@ -4,10 +4,13 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.base.extensions.lowestTime
+import com.lee.playcompose.base.viewmodel.BaseMVIViewModel
+import com.lee.playcompose.base.viewmodel.IViewEvent
+import com.lee.playcompose.base.viewmodel.IViewIntent
+import com.lee.playcompose.base.viewmodel.IViewState
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
@@ -17,8 +20,12 @@ import com.lee.playcompose.service.AccountService
 import com.lee.playcompose.service.helper.ModuleService
 import com.lee.playcompose.square.R
 import com.lee.playcompose.square.model.api.ApiService
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -27,7 +34,7 @@ import java.util.concurrent.atomic.AtomicBoolean
  * @author jv.lee
  * @date 2022/3/29
  */
-class MyShareViewModel : ViewModel() {
+class MyShareViewModel : BaseMVIViewModel<MyShareViewEvent, MyShareViewIntent>() {
 
     private val api = createApi<ApiService>()
     private val accountService: AccountService = ModuleService.find()
@@ -51,10 +58,7 @@ class MyShareViewModel : ViewModel() {
     var viewStates by mutableStateOf(MyShareViewState(savedPager = pager))
         private set
 
-    private val _viewEvents = Channel<MyShareViewEvent>(Channel.BUFFERED)
-    val viewEvents = _viewEvents.receiveAsFlow()
-
-    fun dispatch(intent: MyShareViewIntent) {
+    override fun dispatch(intent: MyShareViewIntent) {
         when (intent) {
             is MyShareViewIntent.RequestDeleteShare -> {
                 deleteShare(intent.content)
@@ -101,12 +105,12 @@ data class MyShareViewState(
     val isLoading: Boolean = false,
     val savedPager: SavedPager<Content>,
     val listState: LazyListState = LazyListState()
-)
+) : IViewState
 
-sealed class MyShareViewEvent {
+sealed class MyShareViewEvent : IViewEvent {
     data class DeleteShareEvent(val message: String?) : MyShareViewEvent()
 }
 
-sealed class MyShareViewIntent {
+sealed class MyShareViewIntent : IViewIntent {
     data class RequestDeleteShare(val content: Content) : MyShareViewIntent()
 }

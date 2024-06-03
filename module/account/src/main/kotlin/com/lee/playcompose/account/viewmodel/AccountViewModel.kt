@@ -14,6 +14,7 @@ import com.lee.playcompose.base.extensions.clearCache
 import com.lee.playcompose.base.extensions.getCache
 import com.lee.playcompose.base.extensions.putCache
 import com.lee.playcompose.base.tools.PreferencesTools
+import com.lee.playcompose.base.viewmodel.BaseMVIViewModel
 import com.lee.playcompose.common.constants.ApiConstants
 import com.lee.playcompose.common.entity.AccountData
 import com.lee.playcompose.common.entity.AccountViewIntent
@@ -33,7 +34,7 @@ import kotlinx.coroutines.launch
  * @author jv.lee
  * @date 2022/3/23
  */
-class AccountViewModel : ViewModel() {
+class AccountViewModel : BaseMVIViewModel<AccountViewEvent, AccountViewIntent>() {
 
     private val api = createApi<ApiService>()
 
@@ -42,10 +43,7 @@ class AccountViewModel : ViewModel() {
     var viewStates by mutableStateOf(AccountViewState())
         private set
 
-    private val _viewEvents = Channel<AccountViewEvent>(Channel.BUFFERED)
-    val viewEvents = _viewEvents.receiveAsFlow()
-
-    suspend fun dispatch(intent: AccountViewIntent) {
+    override fun dispatch(intent: AccountViewIntent) {
         when (intent) {
             is AccountViewIntent.RequestAccountData -> {
                 requestAccountData()
@@ -62,20 +60,22 @@ class AccountViewModel : ViewModel() {
         }
     }
 
-    private suspend fun requestAccountData() {
-        flow {
-            emit(api.getAccountInfoAsync().checkData())
-        }.onStart {
-            cacheManager.getCache<AccountData>(Constants.CACHE_KEY_ACCOUNT_DATA)?.let {
-                emit(it)
+    private fun requestAccountData() {
+        viewModelScope.launch {
+            flow {
+                emit(api.getAccountInfoAsync().checkData())
+            }.onStart {
+                cacheManager.getCache<AccountData>(Constants.CACHE_KEY_ACCOUNT_DATA)?.let {
+                    emit(it)
+                }
+            }.catch { error ->
+                // 登陆token失效
+                if (error.message == ApiConstants.REQUEST_TOKEN_ERROR_MESSAGE) {
+                    updateAccountStatus(null, false)
+                }
+            }.collect {
+                updateAccountStatus(it, true)
             }
-        }.catch { error ->
-            // 登陆token失效
-            if (error.message == ApiConstants.REQUEST_TOKEN_ERROR_MESSAGE) {
-                updateAccountStatus(null, false)
-            }
-        }.collect {
-            updateAccountStatus(it, true)
         }
     }
 

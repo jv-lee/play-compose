@@ -3,13 +3,16 @@ package com.lee.playcompose.splash
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.playcompose.R
 import com.lee.playcompose.base.bus.ChannelBus
 import com.lee.playcompose.base.bus.ChannelBus.Companion.post
 import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.base.tools.DarkModeTools
+import com.lee.playcompose.base.viewmodel.BaseMVIViewModel
+import com.lee.playcompose.base.viewmodel.IViewEvent
+import com.lee.playcompose.base.viewmodel.IViewIntent
+import com.lee.playcompose.base.viewmodel.IViewState
 import com.lee.playcompose.common.entity.ContentVisibleEvent
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flowOf
@@ -23,7 +26,7 @@ import com.lee.playcompose.common.R as CR
  * @author jv.lee
  * @date 2022/3/28
  */
-class SplashViewModel : ViewModel() {
+class SplashViewModel : BaseMVIViewModel<IViewEvent, SplashViewIntent>() {
 
     var viewStates by mutableStateOf(SplashViewState())
         private set
@@ -32,14 +35,16 @@ class SplashViewModel : ViewModel() {
         initSplashInfo()
     }
 
-    fun dispatch(intent: SplashViewIntent) {
+    override fun dispatch(intent: SplashViewIntent) {
         when (intent) {
             is SplashViewIntent.RequestSplashAd -> {
                 playTime()
             }
+
             is SplashViewIntent.HideSplash -> {
                 hideSplash()
             }
+
             is SplashViewIntent.ShowContent -> {
                 showContent()
             }
@@ -85,9 +90,9 @@ data class SplashViewState(
     val timeText: String = "",
     val splashLogoRes: Int = CR.mipmap.ic_splash_logo,
     val splashInfoRes: Int = CR.mipmap.ic_splash_info
-)
+) : IViewState
 
-sealed class SplashViewIntent {
+sealed class SplashViewIntent : IViewIntent {
     object RequestSplashAd : SplashViewIntent()
     object ShowContent : SplashViewIntent()
     object HideSplash : SplashViewIntent()

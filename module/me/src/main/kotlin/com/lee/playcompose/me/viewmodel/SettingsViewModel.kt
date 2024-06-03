@@ -3,15 +3,19 @@ package com.lee.playcompose.me.viewmodel
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.base.utils.CacheUtil
+import com.lee.playcompose.base.viewmodel.BaseMVIViewModel
+import com.lee.playcompose.base.viewmodel.IViewEvent
+import com.lee.playcompose.base.viewmodel.IViewIntent
+import com.lee.playcompose.base.viewmodel.IViewState
 import com.lee.playcompose.me.R
 import com.lee.playcompose.service.AccountService
 import com.lee.playcompose.service.helper.ModuleService
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 /**
@@ -19,28 +23,27 @@ import kotlinx.coroutines.launch
  * @author jv.lee
  * @date 2022/4/2
  */
-class SettingsViewModel : ViewModel() {
+class SettingsViewModel : BaseMVIViewModel<SettingsViewEvent, SettingsViewIntent>() {
 
     var accountService = ModuleService.find<AccountService>()
 
     var viewStates by mutableStateOf(SettingsViewState())
         private set
 
-    private val _viewEvents = Channel<SettingsViewEvent>(Channel.BUFFERED)
-    val viewEvents = _viewEvents.receiveAsFlow()
-
     init {
         initCacheSize()
     }
 
-    fun dispatch(intent: SettingsViewIntent) {
+    override fun dispatch(intent: SettingsViewIntent) {
         when (intent) {
             is SettingsViewIntent.VisibleCacheDialog -> {
                 visibleCacheDialog(intent.visibility)
             }
+
             is SettingsViewIntent.VisibleLogoutDialog -> {
                 visibleLogoutDialog(intent.visibility)
             }
+
             is SettingsViewIntent.RequestClearCache -> {
                 requestClearCache()
             }
@@ -90,13 +93,13 @@ data class SettingsViewState(
     val isCacheConfirm: Boolean = false,
     val isLogoutConfirm: Boolean = false,
     val totalCacheSize: String = ""
-)
+) : IViewState
 
-sealed class SettingsViewEvent {
+sealed class SettingsViewEvent : IViewEvent {
     data class ClearCacheResult(val message: String) : SettingsViewEvent()
 }
 
-sealed class SettingsViewIntent {
+sealed class SettingsViewIntent : IViewIntent {
     data class VisibleCacheDialog(val visibility: Boolean) : SettingsViewIntent()
     data class VisibleLogoutDialog(val visibility: Boolean) : SettingsViewIntent()
     object RequestClearCache : SettingsViewIntent()

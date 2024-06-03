@@ -3,19 +3,20 @@ package com.lee.playcompose.account.viewmodel
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.playcompose.account.model.api.ApiService
 import com.lee.playcompose.base.extensions.lowestTime
+import com.lee.playcompose.base.viewmodel.BaseMVIViewModel
+import com.lee.playcompose.base.viewmodel.IViewEvent
+import com.lee.playcompose.base.viewmodel.IViewIntent
+import com.lee.playcompose.base.viewmodel.IViewState
 import com.lee.playcompose.common.entity.AccountData
 import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 /**
@@ -23,27 +24,27 @@ import kotlinx.coroutines.launch
  * @author jv.lee
  * @date 2022/3/23
  */
-class RegisterViewModel : ViewModel() {
+class RegisterViewModel : BaseMVIViewModel<RegisterViewEvent, RegisterViewIntent>() {
 
     private val api = createApi<ApiService>()
 
     var viewStates by mutableStateOf(RegisterViewState())
         private set
 
-    private val _viewEvents = Channel<RegisterViewEvent>(Channel.BUFFERED)
-    val viewEvents = _viewEvents.receiveAsFlow()
-
-    fun dispatch(intent: RegisterViewIntent) {
+    override fun dispatch(intent: RegisterViewIntent) {
         when (intent) {
             is RegisterViewIntent.ChangeUsername -> {
                 changeUsername(intent.username)
             }
+
             is RegisterViewIntent.ChangePassword -> {
                 changePassword(intent.password)
             }
+
             is RegisterViewIntent.ChangeRePassword -> {
                 changeRePassword(intent.rePassword)
             }
+
             is RegisterViewIntent.RequestRegister -> {
                 requestRegister()
             }
@@ -68,8 +69,8 @@ class RegisterViewModel : ViewModel() {
     private fun changeRegisterEnable() {
         viewStates = viewStates.copy(
             isRegisterEnable = viewStates.username.isNotEmpty() &&
-                viewStates.password.isNotEmpty() &&
-                viewStates.rePassword.isNotEmpty()
+                    viewStates.password.isNotEmpty() &&
+                    viewStates.rePassword.isNotEmpty()
         )
     }
 
@@ -112,14 +113,14 @@ data class RegisterViewState(
     val rePassword: String = "",
     val isLoading: Boolean = false,
     val isRegisterEnable: Boolean = false
-)
+) : IViewState
 
-sealed class RegisterViewEvent {
+sealed class RegisterViewEvent : IViewEvent {
     data class RegisterSuccess(val accountData: AccountData) : RegisterViewEvent()
     data class RegisterFailed(val message: String?) : RegisterViewEvent()
 }
 
-sealed class RegisterViewIntent {
+sealed class RegisterViewIntent : IViewIntent {
     data class ChangeUsername(val username: String) : RegisterViewIntent()
     data class ChangePassword(val password: String) : RegisterViewIntent()
     data class ChangeRePassword(val rePassword: String) : RegisterViewIntent()
