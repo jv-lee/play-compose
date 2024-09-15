@@ -13,9 +13,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.lee.playcompose.common.ui.theme.AppTheme
-import com.lee.playcompose.common.ui.theme.FontSizeMedium
-import com.lee.playcompose.common.ui.theme.FontSizeSmall
+import com.lee.playcompose.common.ui.theme.ColorsTheme
+import com.lee.playcompose.common.ui.theme.FontSizeTheme
 
 /**
  * 项目通用设置项itemView
@@ -50,7 +49,7 @@ fun ProfileItem(
             .fillMaxWidth()
             .height(50.dp)
             .clickable { onClick() }
-            .background(AppTheme.colors.item)
+            .background(ColorsTheme.colors.item)
             .padding(16.dp, 12.dp, 16.dp, 12.dp)
     ) {
         Row(modifier = Modifier.align(alignment = Alignment.CenterStart)) {
@@ -65,8 +64,8 @@ fun ProfileItem(
             leftText?.let {
                 Text(
                     text = leftText,
-                    color = AppTheme.colors.accent,
-                    fontSize = FontSizeMedium,
+                    color = ColorsTheme.colors.accent,
+                    fontSize = FontSizeTheme.sizes.medium,
                     modifier = Modifier.align(alignment = Alignment.CenterVertically)
                 )
             }
@@ -76,8 +75,8 @@ fun ProfileItem(
             rightText?.let {
                 Text(
                     text = rightText,
-                    color = AppTheme.colors.primary,
-                    fontSize = FontSizeSmall,
+                    color = ColorsTheme.colors.primary,
+                    fontSize = FontSizeTheme.sizes.small,
                     modifier = Modifier.align(alignment = Alignment.CenterVertically)
                 )
             }
@@ -89,8 +88,8 @@ fun ProfileItem(
                         onCheckedChange(it)
                     },
                     colors = SwitchDefaults.colors(
-                        checkedThumbColor = AppTheme.colors.focus,
-                        checkedTrackColor = AppTheme.colors.onFocus
+                        checkedThumbColor = ColorsTheme.colors.focus,
+                        checkedTrackColor = ColorsTheme.colors.onFocus
                     )
                 )
             }

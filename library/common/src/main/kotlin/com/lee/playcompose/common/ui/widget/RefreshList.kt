@@ -23,7 +23,7 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.lee.playcompose.base.extensions.delayState
 import com.lee.playcompose.common.R
 import com.lee.playcompose.common.ui.composable.FooterSpacer
-import com.lee.playcompose.common.ui.theme.AppTheme
+import com.lee.playcompose.common.ui.theme.ColorsTheme
 import com.lee.playcompose.common.ui.theme.ListStateItemHeight
 
 /**
@@ -143,7 +143,7 @@ private fun PageError(retry: () -> Unit = { }) {
             )
             Text(
                 text = stringResource(id = R.string.page_load_error),
-                color = AppTheme.colors.accent,
+                color = ColorsTheme.colors.accent,
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
             )
@@ -168,7 +168,7 @@ private fun PageEmpty() {
             )
             Text(
                 text = stringResource(id = R.string.page_load_empty),
-                color = AppTheme.colors.accent,
+                color = ColorsTheme.colors.accent,
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
             )
@@ -186,7 +186,7 @@ private fun PageLoading() {
     ) {
         AnimatedVisibility(visible = visible.value) {
             CircularProgressIndicator(
-                color = AppTheme.colors.accent,
+                color = ColorsTheme.colors.accent,
                 modifier = Modifier.height(50.dp)
             )
         }
@@ -203,7 +203,7 @@ private fun ItemError(retry: () -> Unit) {
     ) {
         Text(
             text = stringResource(id = R.string.item_load_error),
-            color = AppTheme.colors.accent,
+            color = ColorsTheme.colors.accent,
             modifier = Modifier.clickable {
                 retry()
             }
@@ -219,7 +219,7 @@ private fun ItemNoMore() {
             .height(ListStateItemHeight)
             .wrapContentSize(Alignment.Center)
     ) {
-        Text(text = stringResource(id = R.string.item_load_end), color = AppTheme.colors.accent)
+        Text(text = stringResource(id = R.string.item_load_end), color = ColorsTheme.colors.accent)
     }
 }
 
@@ -233,11 +233,11 @@ private fun ItemLoading() {
     ) {
         CircularProgressIndicator(
             modifier = Modifier.size(16.dp),
-            color = AppTheme.colors.accent,
+            color = ColorsTheme.colors.accent,
             strokeWidth = 2.dp
         )
         Spacer(modifier = Modifier.size(4.dp))
-        Text(text = stringResource(id = R.string.item_load_more), color = AppTheme.colors.accent)
+        Text(text = stringResource(id = R.string.item_load_more), color = ColorsTheme.colors.accent)
     }
 }
 

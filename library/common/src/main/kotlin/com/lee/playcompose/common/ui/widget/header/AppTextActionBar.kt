@@ -3,7 +3,11 @@ package com.lee.playcompose.common.ui.widget.header
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -12,8 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.lee.playcompose.common.ui.theme.AppTheme
-import com.lee.playcompose.common.ui.theme.FontSizeLargeXX
+import com.lee.playcompose.common.ui.theme.ColorsTheme
+import com.lee.playcompose.common.ui.theme.FontSizeTheme
 import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.theme.ToolBarHeight
 
@@ -40,8 +44,8 @@ fun AppTextActionBar(
         Text(
             text = title,
             fontWeight = FontWeight.Bold,
-            fontSize = FontSizeLargeXX,
-            color = AppTheme.colors.accent,
+            fontSize = FontSizeTheme.sizes.largeXX,
+            color = ColorsTheme.colors.accent,
             modifier = Modifier
                 .align(Alignment.CenterStart)
         )
@@ -49,7 +53,7 @@ fun AppTextActionBar(
             modifier = Modifier
                 .size(36.dp)
                 .align(Alignment.CenterEnd)
-                .background(shape = CircleShape, color = AppTheme.colors.focus)
+                .background(shape = CircleShape, color = ColorsTheme.colors.focus)
         ) {
             Image(
                 painter = actionPainter,

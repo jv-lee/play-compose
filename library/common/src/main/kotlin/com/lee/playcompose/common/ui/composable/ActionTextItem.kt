@@ -44,7 +44,7 @@ fun ActionTextItem(
         sliding = {
             Text(
                 text = stringResource(id = R.string.item_delete),
-                fontSize = FontSizeSmall,
+                fontSize = FontSizeTheme.sizes.small,
                 color = Color.White,
                 modifier = Modifier
                     .fillMaxSize()
@@ -61,22 +61,22 @@ fun ActionTextItem(
             modifier = Modifier
                 .fillMaxSize()
                 .clickable { onItemClick(item) }
-                .background(AppTheme.colors.item) // center
+                .background(ColorsTheme.colors.item) // center
                 .padding(OffsetLarge) // padding
         ) {
             Text(
                 text = item.title,
-                fontSize = FontSizeSmall,
+                fontSize = FontSizeTheme.sizes.small,
                 fontWeight = FontWeight.Bold,
-                color = AppTheme.colors.accent,
+                color = ColorsTheme.colors.accent,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier.align(Alignment.TopStart)
             )
             Text(
                 text = item.getDateFormat(),
-                fontSize = FontSizeSmallX,
-                color = AppTheme.colors.primary,
+                fontSize = FontSizeTheme.sizes.smallX,
+                color = ColorsTheme.colors.primary,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier.align(Alignment.BottomStart)

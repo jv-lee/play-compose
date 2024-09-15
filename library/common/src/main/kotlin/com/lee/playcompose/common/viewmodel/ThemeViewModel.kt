@@ -1,9 +1,14 @@
 package com.lee.playcompose.common.viewmodel
 
+import android.annotation.SuppressLint
+import android.content.ComponentCallbacks
+import android.content.Context
+import android.content.res.Configuration
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.lee.playcompose.base.tools.DarkModeTools
 
 /**
@@ -11,7 +16,8 @@ import com.lee.playcompose.base.tools.DarkModeTools
  * @author jv.lee
  * @date 2022/4/20
  */
-class ThemeViewModel : ViewModel() {
+@SuppressLint("StaticFieldLeak")
+class ThemeViewModel(private val context: Context) : ViewModel(), ComponentCallbacks {
 
     private val darkModeTools: DarkModeTools = DarkModeTools.get()
 
@@ -19,29 +25,43 @@ class ThemeViewModel : ViewModel() {
         private set
 
     init {
+        context.registerComponentCallbacks(this)
         initDarkTheme()
+        changeFontScale(context.resources.configuration.fontScale)
     }
 
-    fun dispatch(action: ThemeViewAction) {
-        when (action) {
-            is ThemeViewAction.UpdateDarkAction -> {
-                updateDark(action.enable)
+    override fun onCleared() {
+        context.unregisterComponentCallbacks(this)
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        changeFontScale(newConfig.fontScale)
+    }
+
+    override fun onLowMemory() {}
+
+    fun dispatch(intent: ThemeViewIntent) {
+        when (intent) {
+            is ThemeViewIntent.UpdateDarkTheme -> {
+                onUpdateDarkTheme(intent.enable)
             }
-            is ThemeViewAction.UpdateSystemAction -> {
-                updateSystem(action.enable)
+
+            is ThemeViewIntent.UpdateSystemTheme -> {
+                onUpdateSystemTheme(intent.enable)
             }
-            is ThemeViewAction.ResetThemeStatus -> {
+
+            is ThemeViewIntent.ResetThemeStatus -> {
                 initDarkTheme()
             }
         }
     }
 
-    private fun updateDark(enable: Boolean) {
+    private fun onUpdateDarkTheme(enable: Boolean) {
         darkModeTools.updateDarkTheme(enable = enable)
         initDarkTheme()
     }
 
-    private fun updateSystem(enable: Boolean) {
+    private fun onUpdateSystemTheme(enable: Boolean) {
         darkModeTools.updateSystemTheme(enable = enable)
         initDarkTheme()
     }
@@ -55,16 +75,34 @@ class ThemeViewModel : ViewModel() {
             statusBarDarkContentEnabled = !isDark
         )
     }
+
+    /**
+     * 获取当前字体缩放值更新
+     *
+     * @param fontScale 缩放指数
+     */
+    private fun changeFontScale(fontScale: Float) {
+        if (viewStates.fontScale != fontScale) {
+            viewStates = viewStates.copy(fontScale = fontScale)
+        }
+    }
+
+    class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            return ThemeViewModel(context) as T
+        }
+    }
 }
 
 data class ThemeViewState(
+    val fontScale: Float = 1.0f,
     val isDark: Boolean = false,
     val isSystem: Boolean = false,
     val statusBarDarkContentEnabled: Boolean = false
 )
 
-sealed class ThemeViewAction {
-    data class UpdateDarkAction(val enable: Boolean) : ThemeViewAction()
-    data class UpdateSystemAction(val enable: Boolean) : ThemeViewAction()
-    object ResetThemeStatus : ThemeViewAction()
+sealed class ThemeViewIntent {
+    data class UpdateDarkTheme(val enable: Boolean) : ThemeViewIntent()
+    data class UpdateSystemTheme(val enable: Boolean) : ThemeViewIntent()
+    object ResetThemeStatus : ThemeViewIntent()
 }

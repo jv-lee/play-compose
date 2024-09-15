@@ -34,8 +34,8 @@ fun ContentItem(
 
             Text(
                 text = item.getAuthor(),
-                color = AppTheme.colors.accent,
-                fontSize = FontSizeMedium,
+                color = ColorsTheme.colors.accent,
+                fontSize = FontSizeTheme.sizes.medium,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier
                     .constrainAs(author) {
@@ -46,8 +46,8 @@ fun ContentItem(
 
             Text(
                 text = item.getTitle(),
-                color = AppTheme.colors.primary,
-                fontSize = FontSizeSmall,
+                color = ColorsTheme.colors.primary,
+                fontSize = FontSizeTheme.sizes.small,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 2,
                 modifier = Modifier
@@ -60,8 +60,8 @@ fun ContentItem(
 
             Text(
                 text = item.getCategory(),
-                color = AppTheme.colors.focus,
-                fontSize = FontSizeSmallX,
+                color = ColorsTheme.colors.focus,
+                fontSize = FontSizeTheme.sizes.smallX,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1,
                 modifier = Modifier
@@ -75,8 +75,8 @@ fun ContentItem(
 
             Text(
                 text = item.getDateFormat(),
-                color = AppTheme.colors.primaryDark,
-                fontSize = FontSizeSmallX,
+                color = ColorsTheme.colors.primaryDark,
+                fontSize = FontSizeTheme.sizes.smallX,
                 modifier = Modifier
                     .constrainAs(time) {
                         end.linkTo(parent.end)

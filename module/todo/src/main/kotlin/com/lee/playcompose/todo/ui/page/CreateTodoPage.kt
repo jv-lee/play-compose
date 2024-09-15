@@ -30,8 +30,8 @@ import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.ui.composable.AppTextField
 import com.lee.playcompose.common.ui.composable.HorizontallySpacer
 import com.lee.playcompose.common.ui.composable.LoadingDialog
-import com.lee.playcompose.common.ui.theme.AppTheme
-import com.lee.playcompose.common.ui.theme.FontSizeMedium
+import com.lee.playcompose.common.ui.theme.ColorsTheme
+import com.lee.playcompose.common.ui.theme.FontSizeTheme
 import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.theme.OffsetRadiusMedium
 import com.lee.playcompose.common.ui.widget.header.AppBarViewContainer
@@ -134,8 +134,8 @@ private fun ColumnScope.CreateTodoContent(
         ) {
             Text(
                 text = stringResource(id = R.string.todo_create_title_label),
-                fontSize = FontSizeMedium,
-                color = AppTheme.colors.accent,
+                fontSize = FontSizeTheme.sizes.medium,
+                color = ColorsTheme.colors.accent,
                 modifier = Modifier
                     .height(TodoEditHeight)
                     .wrapContentHeight(align = Alignment.CenterVertically)
@@ -149,7 +149,7 @@ private fun ColumnScope.CreateTodoContent(
                 modifier = Modifier.weight(1f)
             )
         }
-        HorizontallySpacer(AppTheme.colors.onFocus)
+        HorizontallySpacer(ColorsTheme.colors.onFocus)
         Row(
             modifier = Modifier
                 .height(TodoEditContentHeight)
@@ -158,8 +158,8 @@ private fun ColumnScope.CreateTodoContent(
         ) {
             Text(
                 text = stringResource(id = R.string.todo_create_content_label),
-                fontSize = FontSizeMedium,
-                color = AppTheme.colors.accent,
+                fontSize = FontSizeTheme.sizes.medium,
+                color = ColorsTheme.colors.accent,
                 modifier = Modifier
                     .height(TodoEditHeight)
                     .wrapContentHeight(align = Alignment.CenterVertically)
@@ -176,7 +176,7 @@ private fun ColumnScope.CreateTodoContent(
                     .padding(top = 3.dp)
             )
         }
-        HorizontallySpacer(AppTheme.colors.onFocus)
+        HorizontallySpacer(ColorsTheme.colors.onFocus)
         Row(
             modifier = Modifier
                 .height(TodoEditHeight)
@@ -185,40 +185,40 @@ private fun ColumnScope.CreateTodoContent(
         ) {
             Text(
                 text = stringResource(id = R.string.todo_create_level_label),
-                fontSize = FontSizeMedium,
-                color = AppTheme.colors.accent,
+                fontSize = FontSizeTheme.sizes.medium,
+                color = ColorsTheme.colors.accent,
                 modifier = Modifier.align(alignment = Alignment.CenterVertically)
             )
             RadioButton(
                 selected = viewState.priority == TodoData.PRIORITY_LOW,
                 onClick = { changePriority(TodoData.PRIORITY_LOW) },
                 colors = RadioButtonDefaults.colors(
-                    selectedColor = AppTheme.colors.accent,
-                    unselectedColor = AppTheme.colors.primary
+                    selectedColor = ColorsTheme.colors.accent,
+                    unselectedColor = ColorsTheme.colors.primary
                 )
             )
             Text(
                 text = stringResource(id = R.string.todo_create_level_low),
-                fontSize = FontSizeMedium,
-                color = AppTheme.colors.primary,
+                fontSize = FontSizeTheme.sizes.medium,
+                color = ColorsTheme.colors.primary,
                 modifier = Modifier.align(alignment = Alignment.CenterVertically)
             )
             RadioButton(
                 selected = viewState.priority == TodoData.PRIORITY_HIGH,
                 onClick = { changePriority(TodoData.PRIORITY_HIGH) },
                 colors = RadioButtonDefaults.colors(
-                    selectedColor = AppTheme.colors.accent,
-                    unselectedColor = AppTheme.colors.primary
+                    selectedColor = ColorsTheme.colors.accent,
+                    unselectedColor = ColorsTheme.colors.primary
                 )
             )
             Text(
                 text = stringResource(id = R.string.todo_create_level_high),
-                fontSize = FontSizeMedium,
-                color = AppTheme.colors.primary,
+                fontSize = FontSizeTheme.sizes.medium,
+                color = ColorsTheme.colors.primary,
                 modifier = Modifier.align(alignment = Alignment.CenterVertically)
             )
         }
-        HorizontallySpacer(AppTheme.colors.onFocus)
+        HorizontallySpacer(ColorsTheme.colors.onFocus)
         Row(
             modifier = Modifier
                 .height(TodoEditHeight)
@@ -228,13 +228,13 @@ private fun ColumnScope.CreateTodoContent(
         ) {
             Text(
                 text = stringResource(id = R.string.todo_create_date_label),
-                fontSize = FontSizeMedium,
-                color = AppTheme.colors.accent
+                fontSize = FontSizeTheme.sizes.medium,
+                color = ColorsTheme.colors.accent
             )
             Text(
                 text = viewState.date,
-                fontSize = FontSizeMedium,
-                color = AppTheme.colors.accent,
+                fontSize = FontSizeTheme.sizes.medium,
+                color = ColorsTheme.colors.accent,
                 modifier = Modifier.weight(1f)
             )
             Icon(
@@ -242,7 +242,7 @@ private fun ColumnScope.CreateTodoContent(
                 contentDescription = null
             )
         }
-        HorizontallySpacer(AppTheme.colors.onFocus)
+        HorizontallySpacer(ColorsTheme.colors.onFocus)
     }
 }
 
@@ -251,7 +251,7 @@ private fun CreateTodoBottomButton(saveClick: () -> Unit) {
     Button(
         onClick = { saveClick() },
         shape = RoundedCornerShape(OffsetRadiusMedium),
-        colors = ButtonDefaults.buttonColors(backgroundColor = AppTheme.colors.focus),
+        colors = ButtonDefaults.buttonColors(backgroundColor = ColorsTheme.colors.focus),
         modifier = Modifier
             .padding(OffsetLarge)
             .fillMaxWidth()
@@ -259,7 +259,7 @@ private fun CreateTodoBottomButton(saveClick: () -> Unit) {
     ) {
         Text(
             text = stringResource(id = R.string.todo_create_save),
-            fontSize = FontSizeMedium,
+            fontSize = FontSizeTheme.sizes.medium,
             color = Color.White
         )
     }

@@ -58,8 +58,8 @@ fun ContentPictureItem(
 
             Text(
                 text = item.getTitle(),
-                color = AppTheme.colors.accent,
-                fontSize = FontSizeMedium,
+                color = ColorsTheme.colors.accent,
+                fontSize = FontSizeTheme.sizes.medium,
                 fontWeight = FontWeight.Bold,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1,
@@ -74,8 +74,8 @@ fun ContentPictureItem(
 
             Text(
                 text = item.getDescription(),
-                color = AppTheme.colors.primary,
-                fontSize = FontSizeSmall,
+                color = ColorsTheme.colors.primary,
+                fontSize = FontSizeTheme.sizes.small,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 5,
                 modifier = Modifier
@@ -89,8 +89,8 @@ fun ContentPictureItem(
 
             Text(
                 text = item.getCategory(),
-                color = AppTheme.colors.focus,
-                fontSize = FontSizeSmallX,
+                color = ColorsTheme.colors.focus,
+                fontSize = FontSizeTheme.sizes.smallX,
                 modifier = Modifier
                     .padding(top = OffsetMedium)
                     .constrainAs(category) {
@@ -101,8 +101,8 @@ fun ContentPictureItem(
 
             Text(
                 text = item.getDateFormat(),
-                color = AppTheme.colors.primaryDark,
-                fontSize = FontSizeSmallX,
+                color = ColorsTheme.colors.primaryDark,
+                fontSize = FontSizeTheme.sizes.smallX,
                 modifier = Modifier
                     .constrainAs(time) {
                         end.linkTo(parent.end, OffsetMedium)

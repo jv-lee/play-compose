@@ -22,7 +22,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.lee.playcompose.R
 import com.lee.playcompose.base.extensions.FadeAnimatedVisibility
 import com.lee.playcompose.base.extensions.LocalActivity
-import com.lee.playcompose.common.ui.theme.AppTheme
+import com.lee.playcompose.common.ui.theme.ColorsTheme
 import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.theme.OffsetRadiusMedium
 import com.lee.playcompose.common.ui.theme.OffsetSmall
@@ -68,7 +68,7 @@ private fun SplashPage(viewModel: SplashViewModel) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = AppTheme.colors.window)
+            .background(color = ColorsTheme.colors.window)
     ) {
         Image(
             painter = painterResource(id = viewState.splashLogoRes),

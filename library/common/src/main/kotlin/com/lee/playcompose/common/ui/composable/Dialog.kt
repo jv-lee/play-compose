@@ -35,12 +35,12 @@ fun LoadingDialog(isShow: Boolean) {
                     .wrapContentSize(Alignment.Center)
                     .size(width = 100.dp, height = 78.dp)
                     .background(
-                        color = AppTheme.colors.item,
+                        color = ColorsTheme.colors.item,
                         shape = RoundedCornerShape(OffsetRadiusMedium)
                     )
                     .wrapContentSize(Alignment.Center)
             ) {
-                CircularProgressIndicator(color = AppTheme.colors.accent)
+                CircularProgressIndicator(color = ColorsTheme.colors.accent)
             }
         }
     }
@@ -77,7 +77,7 @@ fun ConfirmDialog(
                     .wrapContentSize(Alignment.Center)
                     .width(width = 240.dp)
                     .background(
-                        color = AppTheme.colors.item,
+                        color = ColorsTheme.colors.item,
                         shape = RoundedCornerShape(OffsetRadiusMedium)
                     )
             ) {
@@ -89,15 +89,15 @@ fun ConfirmDialog(
                 ) {
                     Text(
                         text = titleText,
-                        fontSize = FontSizeMedium,
-                        color = AppTheme.colors.accent,
+                        fontSize = FontSizeTheme.sizes.medium,
+                        color = ColorsTheme.colors.accent,
                         modifier = Modifier.padding(top = OffsetMedium, bottom = OffsetMedium)
                     )
                     contentText?.let {
                         Text(
                             text = it,
-                            fontSize = FontSizeSmall,
-                            color = AppTheme.colors.primary,
+                            fontSize = FontSizeTheme.sizes.small,
+                            color = ColorsTheme.colors.primary,
                             modifier = Modifier.padding(top = OffsetMedium, bottom = OffsetMedium)
                         )
                     }
@@ -111,8 +111,8 @@ fun ConfirmDialog(
                     if (!singleConfirm) {
                         Text(
                             text = cancelText,
-                            fontSize = FontSizeMedium,
-                            color = AppTheme.colors.accent,
+                            fontSize = FontSizeTheme.sizes.medium,
+                            color = ColorsTheme.colors.accent,
                             modifier = Modifier
                                 .weight(1f)
                                 .fillMaxHeight()
@@ -124,8 +124,8 @@ fun ConfirmDialog(
                     }
                     Text(
                         text = confirmText,
-                        fontSize = FontSizeMedium,
-                        color = AppTheme.colors.accent,
+                        fontSize = FontSizeTheme.sizes.medium,
+                        color = ColorsTheme.colors.accent,
                         modifier = Modifier
                             .weight(1f)
                             .fillMaxHeight()

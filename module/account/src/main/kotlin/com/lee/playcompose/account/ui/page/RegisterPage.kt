@@ -32,8 +32,8 @@ import com.lee.playcompose.common.entity.AccountViewIntent
 import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.ui.composable.AppTextField
 import com.lee.playcompose.common.ui.composable.LoadingDialog
-import com.lee.playcompose.common.ui.theme.AppTheme
-import com.lee.playcompose.common.ui.theme.FontSizeMedium
+import com.lee.playcompose.common.ui.theme.ColorsTheme
+import com.lee.playcompose.common.ui.theme.FontSizeTheme
 import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.theme.OffsetRadiusMedium
 
@@ -76,7 +76,7 @@ fun RegisterPage(
 
     Column(
         modifier = Modifier
-            .background(AppTheme.colors.background)
+            .background(ColorsTheme.colors.background)
             .onTap { focusManager.clearFocus() }
             .fillMaxSize()
             .imePadding()
@@ -117,7 +117,7 @@ private fun RegisterTitle() {
         text = stringResource(id = R.string.account_register_title),
         fontSize = 26.sp,
         fontWeight = FontWeight.Bold,
-        color = AppTheme.colors.accent,
+        color = ColorsTheme.colors.accent,
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentWidth(align = Alignment.CenterHorizontally)
@@ -133,7 +133,7 @@ private fun RegisterInputContent(
     doneChange: KeyboardActionScope.() -> Unit
 ) {
     Card(
-        backgroundColor = AppTheme.colors.item,
+        backgroundColor = ColorsTheme.colors.item,
         modifier = Modifier
             .fillMaxWidth()
             .padding(OffsetLarge)
@@ -210,8 +210,8 @@ private fun RegisterFooter(
     ) {
         Text(
             text = stringResource(id = R.string.account_go_to_login_text),
-            color = AppTheme.colors.focus,
-            fontSize = FontSizeMedium,
+            color = ColorsTheme.colors.focus,
+            fontSize = FontSizeTheme.sizes.medium,
             modifier = Modifier
                 .align(Alignment.CenterStart)
                 .clickable {
@@ -225,7 +225,7 @@ private fun RegisterFooter(
             modifier = Modifier.align(Alignment.CenterEnd),
             colors = ButtonDefaults.buttonColors(
                 backgroundColor =
-                if (viewState.isRegisterEnable) AppTheme.colors.focus else ButtonLockColor
+                if (viewState.isRegisterEnable) ColorsTheme.colors.focus else ButtonLockColor
             )
         ) {
             Text(

@@ -170,15 +170,15 @@ private fun TodoStickyHeader(text: String, slidingPaneState: SlidingPaneState) {
             .height(StickyHeaderHeight)
             .fillMaxWidth()
             .slidingPaneState(slidingPaneState)
-            .background(AppTheme.colors.onFocus)
+            .background(ColorsTheme.colors.onFocus)
             .padding(start = OffsetLarge)
             .wrapContentSize(align = Alignment.CenterStart)
     ) {
         Text(
             text = text,
-            fontSize = FontSizeSmall,
+            fontSize = FontSizeTheme.sizes.small,
             fontWeight = FontWeight.Bold,
-            color = AppTheme.colors.focus
+            color = ColorsTheme.colors.focus
         )
     }
 }
@@ -201,7 +201,7 @@ private fun TodoListItem(
             Row {
                 Text(
                     text = stringResource(id = CR.string.item_delete),
-                    fontSize = FontSizeSmall,
+                    fontSize = FontSizeTheme.sizes.small,
                     color = Color.White,
                     modifier = Modifier
                         .fillMaxHeight()
@@ -216,7 +216,7 @@ private fun TodoListItem(
                             R.string.todo_item_complete
                         } else R.string.todo_item_upcoming
                     ),
-                    fontSize = FontSizeSmall,
+                    fontSize = FontSizeTheme.sizes.small,
                     color = Color.White,
                     modifier = Modifier
                         .fillMaxHeight()
@@ -231,13 +231,13 @@ private fun TodoListItem(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(AppTheme.colors.item)
+                .background(ColorsTheme.colors.item)
                 .clickable { onContentItemClick(todoData) }
         ) {
             Text(
                 text = todoData.title,
-                fontSize = FontSizeMedium,
-                color = AppTheme.colors.accent,
+                fontSize = FontSizeTheme.sizes.medium,
+                color = ColorsTheme.colors.accent,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier
@@ -245,8 +245,8 @@ private fun TodoListItem(
             )
             Text(
                 text = todoData.content,
-                fontSize = FontSizeMedium,
-                color = AppTheme.colors.primary,
+                fontSize = FontSizeTheme.sizes.medium,
+                color = ColorsTheme.colors.primary,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier
@@ -259,7 +259,7 @@ private fun TodoListItem(
 
         // item line
         Box(modifier = Modifier.wrapContentHeight(align = Alignment.Bottom)) {
-            HorizontallySpacer(color = AppTheme.colors.background)
+            HorizontallySpacer(color = ColorsTheme.colors.background)
         }
     }
 }

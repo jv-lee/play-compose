@@ -11,7 +11,7 @@ import androidx.navigation.NavController
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.lee.playcompose.base.extensions.LocalNavController
-import com.lee.playcompose.common.ui.theme.AppTheme
+import com.lee.playcompose.common.ui.theme.ColorsTheme
 import com.lee.playcompose.common.ui.widget.header.AppBarViewContainer
 import com.lee.playcompose.common.ui.widget.IndicatorAdaptiveTabRow
 import com.lee.playcompose.common.ui.widget.UiStatusPage
@@ -50,7 +50,7 @@ fun ProjectPage(
             Column {
                 if (tabData.isNotEmpty()) {
                     IndicatorAdaptiveTabRow(
-                        background = AppTheme.colors.item,
+                        background = ColorsTheme.colors.item,
                         tabs = tabData,
                         selectedTabIndex = selectIndex,
                         findTabText = { it.name },

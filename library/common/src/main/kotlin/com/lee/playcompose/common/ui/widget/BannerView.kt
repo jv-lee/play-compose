@@ -145,7 +145,7 @@ private fun BannerItemContainer(
                 .padding(OffsetSmall)
                 .fillMaxSize(),
             shape = RoundedCornerShape(OffsetRadiusMedium),
-            color = AppTheme.colors.background,
+            color = ColorsTheme.colors.background,
             elevation = OffsetSmall,
             content = content
         )

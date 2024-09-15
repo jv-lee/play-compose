@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.lee.playcompose.base.extensions.onTap
-import com.lee.playcompose.common.ui.theme.AppTheme
+import com.lee.playcompose.common.ui.theme.ColorsTheme
 import com.lee.playcompose.common.ui.theme.OffsetRadiusMedium
 import com.lee.playcompose.common.ui.widget.SelectItemStyle
 import com.lee.playcompose.common.ui.widget.WheelView
@@ -41,7 +41,7 @@ fun SelectTodoTypeDialog(
                     .wrapContentSize(Alignment.Center)
                     .size(width = 220.dp, height = 120.dp)
                     .background(
-                        color = AppTheme.colors.item,
+                        color = ColorsTheme.colors.item,
                         shape = RoundedCornerShape(OffsetRadiusMedium)
                     )
                     .onTap { }

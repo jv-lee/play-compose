@@ -98,8 +98,8 @@ private fun RowScope.CoinRankTopItem(index: Int, coinRank: CoinRank) {
             text = coinRank.username,
             maxLines = 1,
             textAlign = TextAlign.Center,
-            fontSize = FontSizeMedium,
-            color = AppTheme.colors.accent,
+            fontSize = FontSizeTheme.sizes.medium,
+            color = ColorsTheme.colors.accent,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier.padding(top = OffsetMedium)
         )
@@ -110,8 +110,8 @@ private fun RowScope.CoinRankTopItem(index: Int, coinRank: CoinRank) {
             )
             Text(
                 text = coinRank.coinCount.toString(),
-                fontSize = FontSizeSmall,
-                color = AppTheme.colors.primary,
+                fontSize = FontSizeTheme.sizes.small,
+                color = ColorsTheme.colors.primary,
                 fontWeight = FontWeight.Bold,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
@@ -130,14 +130,14 @@ private fun CoinRankItem(coinRank: CoinRank) {
     ) {
         Text(
             text = coinRank.rank,
-            fontSize = FontSizeLarge,
-            color = AppTheme.colors.accent,
+            fontSize = FontSizeTheme.sizes.large,
+            color = ColorsTheme.colors.accent,
             fontWeight = FontWeight.Bold
         )
         Text(
             text = coinRank.username,
-            fontSize = FontSizeMedium,
-            color = AppTheme.colors.accent,
+            fontSize = FontSizeTheme.sizes.medium,
+            color = ColorsTheme.colors.accent,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             textAlign = TextAlign.Center,
@@ -156,8 +156,8 @@ private fun CoinRankItem(coinRank: CoinRank) {
             )
             Text(
                 text = coinRank.coinCount.toString(),
-                fontSize = FontSizeSmall,
-                color = AppTheme.colors.primary,
+                fontSize = FontSizeTheme.sizes.small,
+                color = ColorsTheme.colors.primary,
                 fontWeight = FontWeight.Bold,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,

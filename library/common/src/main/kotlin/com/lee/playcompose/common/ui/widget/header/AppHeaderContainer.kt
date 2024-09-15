@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.lee.playcompose.common.extensions.createAppHeaderGradient
-import com.lee.playcompose.common.ui.theme.AppTheme
+import com.lee.playcompose.common.ui.theme.ColorsTheme
 
 /**
  * 公共appbar容器组件
@@ -24,8 +24,8 @@ fun AppHeaderContainer(
     var mModifier = modifier
     if (headerBrush) {
         val appHeaderBrush = createAppHeaderGradient(
-            AppTheme.colors.background,
-            AppTheme.colors.backgroundTransparent
+            ColorsTheme.colors.background,
+            ColorsTheme.colors.backgroundTransparent
         )
         mModifier = modifier.background(brush = appHeaderBrush)
     }

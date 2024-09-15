@@ -51,7 +51,7 @@ fun MePage(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(AppTheme.colors.background)
+            .background(ColorsTheme.colors.background)
     ) {
         MeHeader(accountViewState = accountViewState, notLoginClick = {
             navController.navigateArgs(RoutePage.Account.Login.route)
@@ -67,7 +67,7 @@ private fun MeHeader(accountViewState: AccountViewState, notLoginClick: () -> Un
     AppHeaderContainer(
         headerBrush = false,
         modifier = Modifier
-            .background(AppTheme.colors.item)
+            .background(ColorsTheme.colors.item)
             .clickable { if (!accountViewState.isLogin) notLoginClick() }
     ) {
         ConstraintLayout(modifier = Modifier.height(160.dp)) {
@@ -82,7 +82,7 @@ private fun MeHeader(accountViewState: AccountViewState, notLoginClick: () -> Un
                 modifier = Modifier
                     .clip(CircleShape)
                     .size(56.dp)
-                    .border(BorderWidth, AppTheme.colors.focus, CircleShape)
+                    .border(BorderWidth, ColorsTheme.colors.focus, CircleShape)
                     .constrainAs(header) {
                         start.linkTo(parent.start, 36.dp)
                         top.linkTo(parent.top)
@@ -95,8 +95,8 @@ private fun MeHeader(accountViewState: AccountViewState, notLoginClick: () -> Un
                 } else {
                     stringResource(id = R.string.me_account_default_text)
                 },
-                color = AppTheme.colors.accent,
-                fontSize = FontSizeLarge,
+                color = ColorsTheme.colors.accent,
+                fontSize = FontSizeTheme.sizes.large,
                 modifier = Modifier
                     .padding(OffsetSmall)
                     .constrainAs(username) {
@@ -112,8 +112,8 @@ private fun MeHeader(accountViewState: AccountViewState, notLoginClick: () -> Un
                         accountViewState.accountData?.coinInfo?.level ?: "",
                         accountViewState.accountData?.coinInfo?.rank ?: ""
                     ),
-                    color = AppTheme.colors.focus,
-                    fontSize = FontSizeSmall,
+                    color = ColorsTheme.colors.focus,
+                    fontSize = FontSizeTheme.sizes.small,
                     modifier = Modifier
                         .padding(OffsetSmall)
                         .constrainAs(level) {

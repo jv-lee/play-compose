@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.base.extensions.BottomSlideAnimatedVisible
 import com.lee.playcompose.common.R
-import com.lee.playcompose.common.ui.theme.AppTheme
+import com.lee.playcompose.common.ui.theme.ColorsTheme
 
 /**
  * 网络错误全局Snackbar 底部提示
@@ -31,10 +31,10 @@ fun NetworkErrorAlert(visible: Boolean) {
                 .wrapContentSize(align = Alignment.BottomCenter)
                 .navigationBarsPadding()
         ) {
-            Snackbar(backgroundColor = AppTheme.colors.item, shape = RoundedCornerShape(0.dp)) {
+            Snackbar(backgroundColor = ColorsTheme.colors.item, shape = RoundedCornerShape(0.dp)) {
                 Text(
                     text = app.getString(R.string.network_not_access),
-                    style = TextStyle(color = AppTheme.colors.accent)
+                    style = TextStyle(color = ColorsTheme.colors.accent)
                 )
             }
         }

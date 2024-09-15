@@ -13,7 +13,7 @@ import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.extensions.transformDetails
 import com.lee.playcompose.common.ui.composable.ContentItem
 import com.lee.playcompose.common.ui.composable.ContentPictureItem
-import com.lee.playcompose.common.ui.theme.AppTheme
+import com.lee.playcompose.common.ui.theme.ColorsTheme
 import com.lee.playcompose.common.ui.widget.header.AppBarViewContainer
 import com.lee.playcompose.common.ui.widget.RefreshList
 import com.lee.playcompose.router.RoutePage
@@ -36,7 +36,7 @@ fun SearchResultPage(
 ) {
     AppBarViewContainer(
         title = searchKey,
-        modifier = Modifier.background(AppTheme.colors.background),
+        modifier = Modifier.background(ColorsTheme.colors.background),
         navigationClick = { navController.popBackStack() }
     ) {
         SearchResultContent(viewModel.viewStates, onContentItemClick = {

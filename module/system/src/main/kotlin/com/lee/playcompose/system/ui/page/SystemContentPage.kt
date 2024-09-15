@@ -95,8 +95,8 @@ private fun SystemContentItem(item: ParentTab, onItemClick: (ParentTab) -> Unit)
         Column {
             Text(
                 text = item.name,
-                color = AppTheme.colors.accent,
-                fontSize = FontSizeMedium,
+                color = ColorsTheme.colors.accent,
+                fontSize = FontSizeTheme.sizes.medium,
                 fontWeight = FontWeight.Bold
             )
             Spacer(
@@ -104,24 +104,24 @@ private fun SystemContentItem(item: ParentTab, onItemClick: (ParentTab) -> Unit)
                     .fillMaxWidth()
                     .height(OffsetMedium + OffsetMedium + 1.dp)
                     .padding(top = OffsetMedium, bottom = OffsetMedium)
-                    .background(AppTheme.colors.background)
+                    .background(ColorsTheme.colors.background)
             )
             Text(
                 text = item.formHtmlLabels(),
-                color = AppTheme.colors.primary,
-                fontSize = FontSizeSmall
+                color = ColorsTheme.colors.primary,
+                fontSize = FontSizeTheme.sizes.small
             )
             Spacer(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(OffsetMedium + OffsetMedium + 1.dp)
                     .padding(top = OffsetMedium, bottom = OffsetMedium)
-                    .background(AppTheme.colors.background)
+                    .background(ColorsTheme.colors.background)
             )
             Text(
                 text = stringResource(id = R.string.item_more),
-                color = AppTheme.colors.focus,
-                fontSize = FontSizeSmallX,
+                color = ColorsTheme.colors.focus,
+                fontSize = FontSizeTheme.sizes.smallX,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier
                     .fillMaxWidth()

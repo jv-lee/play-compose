@@ -163,8 +163,8 @@ private fun SearchHotContent(
 ) {
     Text(
         text = stringResource(id = R.string.search_hot_label),
-        fontSize = FontSizeMedium,
-        color = AppTheme.colors.accent,
+        fontSize = FontSizeTheme.sizes.medium,
+        color = ColorsTheme.colors.accent,
         modifier = Modifier.padding(OffsetLarge)
     )
     FlowRow(modifier = Modifier.padding(start = OffsetLarge, end = OffsetLarge)) {
@@ -193,15 +193,15 @@ private fun SearchHistoryContent(
     ) {
         Text(
             text = stringResource(id = R.string.search_history_label),
-            fontSize = FontSizeMedium,
-            color = AppTheme.colors.accent,
+            fontSize = FontSizeTheme.sizes.medium,
+            color = ColorsTheme.colors.accent,
             modifier = Modifier
                 .align(Alignment.CenterStart)
         )
         Text(
             text = stringResource(id = R.string.search_clear),
-            fontSize = FontSizeMedium,
-            color = AppTheme.colors.primary,
+            fontSize = FontSizeTheme.sizes.medium,
+            color = ColorsTheme.colors.primary,
             modifier = Modifier
                 .align(Alignment.CenterEnd)
                 .clickable { onClearClick() }
@@ -223,8 +223,8 @@ private fun ColumnScope.SearchHistoryEmptyLayout(viewState: SearchViewState) {
     if (viewState.searchHistory.isEmpty()) {
         Text(
             text = stringResource(id = R.string.search_history_empty_text),
-            fontSize = FontSizeMedium,
-            color = AppTheme.colors.primary,
+            fontSize = FontSizeTheme.sizes.medium,
+            color = ColorsTheme.colors.primary,
             modifier = Modifier
                 .padding(top = 26.dp)
                 .align(Alignment.CenterHorizontally)
@@ -236,14 +236,14 @@ private fun ColumnScope.SearchHistoryEmptyLayout(viewState: SearchViewState) {
 private fun SearchHotItem(item: SearchHotUI, onSearchClick: (String) -> Unit) {
     Card(
         elevation = 0.dp,
-        backgroundColor = AppTheme.colors.label,
+        backgroundColor = ColorsTheme.colors.label,
         shape = RoundedCornerShape(OffsetRadiusMedium),
         modifier = Modifier.padding(end = OffsetSmall, bottom = OffsetSmall)
     ) {
         Text(
             text = item.key,
             color = item.color,
-            fontSize = FontSizeSmall,
+            fontSize = FontSizeTheme.sizes.small,
             modifier = Modifier
                 .clickable { onSearchClick(item.key) }
                 .padding(OffsetMedium)
@@ -265,15 +265,15 @@ private fun SearchHistoryItem(
     ) {
         Text(
             text = item.key,
-            fontSize = FontSizeSmall,
-            color = AppTheme.colors.primary,
+            fontSize = FontSizeTheme.sizes.small,
+            color = ColorsTheme.colors.primary,
             modifier = Modifier
                 .align(alignment = Alignment.CenterStart)
         )
         Icon(
             painter = painterResource(id = R.drawable.vector_close),
             contentDescription = null,
-            tint = AppTheme.colors.accent,
+            tint = ColorsTheme.colors.accent,
             modifier = Modifier
                 .size(16.dp)
                 .align(alignment = Alignment.CenterEnd)

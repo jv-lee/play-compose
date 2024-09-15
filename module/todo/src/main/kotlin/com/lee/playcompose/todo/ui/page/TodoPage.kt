@@ -22,7 +22,7 @@ import com.google.accompanist.pager.rememberPagerState
 import com.lee.playcompose.base.extensions.LocalNavController
 import com.lee.playcompose.common.ui.callback.PageCallbackHandler
 import com.lee.playcompose.common.ui.callback.rememberPageCallbackHandler
-import com.lee.playcompose.common.ui.theme.AppTheme
+import com.lee.playcompose.common.ui.theme.ColorsTheme
 import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.widget.header.ActionMode
 import com.lee.playcompose.common.ui.widget.header.AppBarViewContainer
@@ -84,7 +84,7 @@ fun TodoPage(
 
             BottomNavigation(
                 elevation = viewState.navigationElevation,
-                backgroundColor = AppTheme.colors.item
+                backgroundColor = ColorsTheme.colors.item
             ) {
                 tabItems.forEachIndexed { index, item ->
                     val isSelect = pagerState.currentPage == index
@@ -125,7 +125,7 @@ private fun ColumnScope.TodoContent(
 
         FloatingActionButton(
             onClick = { onCreateClick() },
-            backgroundColor = AppTheme.colors.focus,
+            backgroundColor = ColorsTheme.colors.focus,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(OffsetLarge)
@@ -142,7 +142,7 @@ private fun ColumnScope.TodoContent(
 @Composable
 private fun NavigationIcon(isSelected: Boolean, item: TodoTab) {
     val icon = if (isSelected) item.selectIcon else item.icon
-    val color = if (isSelected) AppTheme.colors.focus else AppTheme.colors.primary
+    val color = if (isSelected) ColorsTheme.colors.focus else ColorsTheme.colors.primary
     Icon(painterResource(id = icon), null, tint = color)
 }
 

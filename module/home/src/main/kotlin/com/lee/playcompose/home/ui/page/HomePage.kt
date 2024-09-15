@@ -29,7 +29,7 @@ import com.lee.playcompose.common.extensions.transformDetails
 import com.lee.playcompose.common.ui.composable.CardItemContainer
 import com.lee.playcompose.common.ui.composable.ContentItem
 import com.lee.playcompose.common.ui.composable.HeaderSpacer
-import com.lee.playcompose.common.ui.theme.AppTheme
+import com.lee.playcompose.common.ui.theme.ColorsTheme
 import com.lee.playcompose.common.ui.theme.OffsetMedium
 import com.lee.playcompose.common.ui.theme.ToolBarHeight
 import com.lee.playcompose.common.ui.widget.BannerView
@@ -78,7 +78,7 @@ fun HomePage(
     // double click close app.
     RouteBackHandler()
 
-    Box(Modifier.background(AppTheme.colors.background)) {
+    Box(Modifier.background(ColorsTheme.colors.background)) {
         // content
         HomeContentList(
             viewState = viewState,
@@ -199,7 +199,7 @@ private fun HomeCategoryChildItem(
             Spacer(modifier = Modifier.height(OffsetMedium))
             Text(
                 text = stringResource(id = category.nameResId),
-                color = AppTheme.colors.accent
+                color = ColorsTheme.colors.accent
             )
         }
     }

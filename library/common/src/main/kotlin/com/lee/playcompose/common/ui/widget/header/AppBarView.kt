@@ -54,8 +54,8 @@ fun AppBarView(
     navigationClick: () -> Unit = {},
     @DrawableRes actionIcon: Int = -1,
     actionClick: () -> Unit = {},
-    backgroundColor: Color = AppTheme.colors.item,
-    contentColor: Color = AppTheme.colors.accent,
+    backgroundColor: Color = ColorsTheme.colors.item,
+    contentColor: Color = ColorsTheme.colors.accent,
     elevation: Dp = AppBarDefaults.TopAppBarElevation,
     navigationEnable: Boolean = true,
     menuVisibilityState: MutableState<Boolean> = remember { mutableStateOf(false) },
@@ -78,7 +78,7 @@ fun AppBarView(
                         modifier = Modifier
                             .fillMaxWidth(0.9f)
                             .wrapContentSize(Alignment.Center),
-                        fontSize = FontSizeLarge,
+                        fontSize = FontSizeTheme.sizes.large,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Center,
                         maxLines = 1,
@@ -121,7 +121,7 @@ fun AppBarView(
                                 content = menu,
                                 modifier = Modifier
                                     .background(
-                                        color = AppTheme.colors.item,
+                                        color = ColorsTheme.colors.item,
                                         shape = RoundedCornerShape(OffsetRadiusMedium)
                                     )
                                     .widthIn(min = 70.dp)
@@ -166,11 +166,11 @@ fun AppBarViewContainer(
     navigationClick: () -> Unit = {},
     @DrawableRes actionIcon: Int = -1,
     actionClick: () -> Unit = {},
-    backgroundColor: Color = AppTheme.colors.item,
-    contentColor: Color = AppTheme.colors.accent,
+    backgroundColor: Color = ColorsTheme.colors.item,
+    contentColor: Color = ColorsTheme.colors.accent,
     elevation: Dp = AppBarDefaults.TopAppBarElevation,
     navigationEnable: Boolean = true,
-    containerBackground: Color = AppTheme.colors.background,
+    containerBackground: Color = ColorsTheme.colors.background,
     appBarContent: @Composable BoxScope.() -> Unit = {},
     menuVisibilityState: MutableState<Boolean> = remember { mutableStateOf(false) },
     actionMode: ActionMode = Default,
@@ -209,8 +209,8 @@ fun AppBarViewContainer(
 fun TextMenuItem(text: String, onClick: () -> Unit) {
     Text(
         text = text,
-        fontSize = FontSizeMedium,
-        color = AppTheme.colors.accent,
+        fontSize = FontSizeTheme.sizes.medium,
+        color = ColorsTheme.colors.accent,
         textAlign = TextAlign.Center,
         modifier = Modifier
             .fillMaxWidth()
@@ -226,7 +226,7 @@ fun MenuSpacer() {
             .padding(top = OffsetSmall, bottom = OffsetSmall)
             .height(1.dp)
             .fillMaxWidth()
-            .background(color = AppTheme.colors.accent)
+            .background(color = ColorsTheme.colors.accent)
     )
 }
 

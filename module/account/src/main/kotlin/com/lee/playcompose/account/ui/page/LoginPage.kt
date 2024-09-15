@@ -32,8 +32,8 @@ import com.lee.playcompose.common.entity.AccountViewIntent
 import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.ui.composable.AppTextField
 import com.lee.playcompose.common.ui.composable.LoadingDialog
-import com.lee.playcompose.common.ui.theme.AppTheme
-import com.lee.playcompose.common.ui.theme.FontSizeMedium
+import com.lee.playcompose.common.ui.theme.ColorsTheme
+import com.lee.playcompose.common.ui.theme.FontSizeTheme
 import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.theme.OffsetRadiusMedium
 import com.lee.playcompose.router.RoutePage
@@ -84,7 +84,7 @@ fun LoginPage(
 
     Column(
         modifier = Modifier
-            .background(AppTheme.colors.background)
+            .background(ColorsTheme.colors.background)
             .onTap { focusManager.clearFocus() }
             .fillMaxSize()
             .imePadding()
@@ -121,7 +121,7 @@ private fun LoginTitle() {
         text = stringResource(id = R.string.account_login_title),
         fontSize = 26.sp,
         fontWeight = FontWeight.Bold,
-        color = AppTheme.colors.accent,
+        color = ColorsTheme.colors.accent,
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentWidth(align = Alignment.CenterHorizontally)
@@ -136,7 +136,7 @@ private fun LoginInputContent(
     doneChange: KeyboardActionScope.() -> Unit
 ) {
     Card(
-        backgroundColor = AppTheme.colors.item,
+        backgroundColor = ColorsTheme.colors.item,
         shape = RoundedCornerShape(OffsetRadiusMedium),
         modifier = Modifier
             .fillMaxWidth()
@@ -196,8 +196,8 @@ private fun LoginFooter(
     ) {
         Text(
             text = stringResource(id = R.string.account_go_to_register_text),
-            color = AppTheme.colors.focus,
-            fontSize = FontSizeMedium,
+            color = ColorsTheme.colors.focus,
+            fontSize = FontSizeTheme.sizes.medium,
             modifier = Modifier
                 .align(Alignment.CenterStart)
                 .clickable {
@@ -211,7 +211,7 @@ private fun LoginFooter(
             modifier = Modifier.align(Alignment.CenterEnd),
             colors = ButtonDefaults.buttonColors(
                 backgroundColor =
-                if (viewState.isLoginEnable) AppTheme.colors.focus else ButtonLockColor
+                if (viewState.isLoginEnable) ColorsTheme.colors.focus else ButtonLockColor
             )
         ) {
             Text(

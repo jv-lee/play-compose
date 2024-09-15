@@ -13,9 +13,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import com.lee.playcompose.common.ui.theme.AppTheme
-import com.lee.playcompose.common.ui.theme.FontSizeLarge
-import com.lee.playcompose.common.ui.theme.FontSizeMedium
+import com.lee.playcompose.common.ui.theme.ColorsTheme
+import com.lee.playcompose.common.ui.theme.FontSizeTheme
 
 /**
  * 多类型滑动选择器
@@ -44,11 +43,11 @@ fun <T : Any> WheelView(
     findText: ((T) -> String),
     @SelectItemStyle style: Int = SelectItemStyle.GONE,
     itemHeight: Dp = 40.dp,
-    itemSelectedBackground: Color = AppTheme.colors.onFocus,
-    selectedTextColor: Color = AppTheme.colors.accent,
-    unSelectedTextColor: Color = AppTheme.colors.primary,
-    selectedTextSize: TextUnit = FontSizeLarge,
-    unSelectedTextSize: TextUnit = FontSizeMedium
+    itemSelectedBackground: Color = ColorsTheme.colors.onFocus,
+    selectedTextColor: Color = ColorsTheme.colors.accent,
+    unSelectedTextColor: Color = ColorsTheme.colors.primary,
+    selectedTextSize: TextUnit = FontSizeTheme.sizes.large,
+    unSelectedTextSize: TextUnit = FontSizeTheme.sizes.medium
 ) {
     Box(modifier = modifier.height(itemHeight * 3)) {
         WheelViewItemBackground(

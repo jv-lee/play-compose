@@ -17,7 +17,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.debugInspectorInfo
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.lee.playcompose.common.ui.theme.AppTheme
+import com.lee.playcompose.common.ui.theme.ColorsTheme
 import com.lee.playcompose.common.ui.theme.TabBarHeight
 
 /**
@@ -59,7 +59,7 @@ fun <T> IndicatorAdaptiveTabRow(
             } else tabWidths[0]
 
             TabRowDefaults.Indicator(
-                color = AppTheme.colors.accent,
+                color = ColorsTheme.colors.accent,
                 modifier = Modifier.adaptiveTabIndicatorOffset(
                     currentTabPosition = tabPosition,
                     tabWidth = tabWidth

@@ -21,7 +21,7 @@ import com.lee.playcompose.common.ui.composable.LoadingDialog
 import com.lee.playcompose.common.ui.composable.ProfileItem
 import com.lee.playcompose.common.ui.theme.OffsetMedium
 import com.lee.playcompose.common.ui.widget.header.AppBarViewContainer
-import com.lee.playcompose.common.viewmodel.ThemeViewAction
+import com.lee.playcompose.common.viewmodel.ThemeViewIntent
 import com.lee.playcompose.common.viewmodel.ThemeViewModel
 import com.lee.playcompose.me.R
 import com.lee.playcompose.me.viewmodel.SettingsViewIntent
@@ -112,7 +112,7 @@ fun SettingsPage(
                 modifier = Modifier.padding(top = OffsetMedium),
                 switchChecked = themeViewState.isSystem,
                 onCheckedChange = {
-                    themeViewModel.dispatch(ThemeViewAction.UpdateSystemAction(it))
+                    themeViewModel.dispatch(ThemeViewIntent.UpdateSystemTheme(it))
                 }
             )
             ProfileItem(
@@ -122,7 +122,7 @@ fun SettingsPage(
                 modifier = Modifier.padding(top = 1.dp),
                 switchChecked = themeViewState.isDark,
                 onCheckedChange = {
-                    themeViewModel.dispatch(ThemeViewAction.UpdateDarkAction(it))
+                    themeViewModel.dispatch(ThemeViewIntent.UpdateDarkTheme(it))
                 }
             )
             ProfileItem(

@@ -125,8 +125,8 @@ private fun NavigationTabItem(
     item: NavigationItem,
     tabClick: (NavigationItem) -> Unit
 ) {
-    val textColor = if (isSelected) AppTheme.colors.onFocus else AppTheme.colors.primary
-    val tabColor = if (isSelected) AppTheme.colors.focus else Color.Transparent
+    val textColor = if (isSelected) ColorsTheme.colors.onFocus else ColorsTheme.colors.primary
+    val tabColor = if (isSelected) ColorsTheme.colors.focus else Color.Transparent
     Card(
         elevation = 0.dp,
         backgroundColor = tabColor,
@@ -138,7 +138,7 @@ private fun NavigationTabItem(
     ) {
         Text(
             text = item.name,
-            fontSize = FontSizeMedium,
+            fontSize = FontSizeTheme.sizes.medium,
             color = textColor,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
@@ -158,8 +158,8 @@ private fun NavigationContentItem(item: NavigationItem, itemClick: (Content) -> 
     ) {
         Text(
             text = item.name,
-            color = AppTheme.colors.accent,
-            fontSize = FontSizeMedium,
+            color = ColorsTheme.colors.accent,
+            fontSize = FontSizeTheme.sizes.medium,
             fontWeight = FontWeight.Bold,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
@@ -175,14 +175,14 @@ private fun NavigationContentFlowList(item: NavigationItem, itemClick: (Content)
         item.articles.forEach {
             Card(
                 elevation = 0.dp,
-                backgroundColor = AppTheme.colors.item,
+                backgroundColor = ColorsTheme.colors.item,
                 shape = RoundedCornerShape(OffsetRadiusSmall),
                 modifier = Modifier.padding(OffsetSmall)
             ) {
                 Text(
                     text = it.title,
-                    color = AppTheme.colors.primary,
-                    fontSize = FontSizeSmall,
+                    color = ColorsTheme.colors.primary,
+                    fontSize = FontSizeTheme.sizes.small,
                     modifier = Modifier
                         .clickable { itemClick(it) }
                         .padding(OffsetMedium)

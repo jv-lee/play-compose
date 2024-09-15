@@ -103,8 +103,8 @@ private fun CreateShareContent(
         val (tvTitle, editTitle, tvContent, editContent, tvDescription) = createRefs()
         Text(
             text = stringResource(id = R.string.share_title_text),
-            fontSize = FontSizeLarge,
-            color = AppTheme.colors.accent,
+            fontSize = FontSizeTheme.sizes.large,
+            color = ColorsTheme.colors.accent,
             modifier = Modifier.constrainAs(tvTitle) {
                 top.linkTo(parent.top, OffsetMedium)
                 start.linkTo(parent.start, OffsetLarge)
@@ -129,8 +129,8 @@ private fun CreateShareContent(
 
         Text(
             text = stringResource(id = R.string.share_content_text),
-            fontSize = FontSizeLarge,
-            color = AppTheme.colors.accent,
+            fontSize = FontSizeTheme.sizes.large,
+            color = ColorsTheme.colors.accent,
             modifier = Modifier.constrainAs(tvContent) {
                 top.linkTo(editTitle.bottom)
                 start.linkTo(parent.start, OffsetLarge)
@@ -156,8 +156,8 @@ private fun CreateShareContent(
 
         Text(
             text = stringResource(id = R.string.share_description),
-            fontSize = FontSizeSmall,
-            color = AppTheme.colors.primary,
+            fontSize = FontSizeTheme.sizes.small,
+            color = ColorsTheme.colors.primary,
             letterSpacing = 4.sp,
             modifier = Modifier
                 .fillMaxWidth()

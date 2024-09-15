@@ -16,7 +16,7 @@ import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import com.lee.playcompose.base.extensions.delayState
 import com.lee.playcompose.common.R
-import com.lee.playcompose.common.ui.theme.AppTheme
+import com.lee.playcompose.common.ui.theme.ColorsTheme
 
 /**
  * 状态控制容器
@@ -80,7 +80,7 @@ private fun PageError(retry: () -> Unit = { }) {
             )
             Text(
                 text = stringResource(id = R.string.page_load_error),
-                color = AppTheme.colors.accent,
+                color = ColorsTheme.colors.accent,
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
             )
@@ -98,7 +98,7 @@ private fun PageLoading() {
     ) {
         AnimatedVisibility(visible = visible.value) {
             CircularProgressIndicator(
-                color = AppTheme.colors.accent,
+                color = ColorsTheme.colors.accent,
                 modifier = Modifier.height(50.dp)
             )
         }

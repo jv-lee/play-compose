@@ -45,7 +45,7 @@ import com.lee.playcompose.common.entity.NavigationSelectEvent
 import com.lee.playcompose.common.entity.NetworkErrorEvent
 import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.ui.composable.NetworkErrorAlert
-import com.lee.playcompose.common.ui.theme.AppTheme
+import com.lee.playcompose.common.ui.theme.ColorsTheme
 import com.lee.playcompose.common.ui.widget.FloatingBox
 import com.lee.playcompose.common.ui.widget.ReindexType
 import com.lee.playcompose.common.ui.widget.SimpleAnimatedNavHost
@@ -93,7 +93,7 @@ fun Activity.RouteNavigator(
 
     Box(
         modifier = Modifier
-            .background(AppTheme.colors.background)
+            .background(ColorsTheme.colors.background)
             .navigationBarsPadding()
     ) {
         // 内容路由
@@ -105,7 +105,7 @@ fun Activity.RouteNavigator(
 
         // 首页导航navigationBar
         CheckNavigation(currentDestination?.route) { hasClick ->
-            BottomNavigation(backgroundColor = AppTheme.colors.item, elevation = 3.dp) {
+            BottomNavigation(backgroundColor = ColorsTheme.colors.item, elevation = 3.dp) {
                 viewModel.viewStates.tabItems.forEachIndexed { _, item ->
                     val isSelect =
                         currentDestination?.hierarchy?.any { it.route == item.route } == true
@@ -135,7 +135,7 @@ fun Activity.RouteNavigator(
 @Composable
 private fun NavigationIcon(isSelected: Boolean, item: MainTab) {
     val icon = if (isSelected) item.selectIcon else item.icon
-    val color = if (isSelected) AppTheme.colors.focus else AppTheme.colors.primary
+    val color = if (isSelected) ColorsTheme.colors.focus else ColorsTheme.colors.primary
     Icon(painterResource(id = icon), null, tint = color)
 }
 

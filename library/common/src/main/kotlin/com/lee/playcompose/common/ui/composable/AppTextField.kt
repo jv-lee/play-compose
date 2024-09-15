@@ -10,9 +10,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.VisualTransformation
-import com.lee.playcompose.common.ui.theme.AppTheme
-import com.lee.playcompose.common.ui.theme.FontSizeLarge
-import com.lee.playcompose.common.ui.theme.FontSizeMedium
+import com.lee.playcompose.common.ui.theme.ColorsTheme
+import com.lee.playcompose.common.ui.theme.FontSizeTheme
 
 /**
  * appTextField封装
@@ -45,7 +44,7 @@ fun AppTextField(
     TextField(
         value = value,
         onValueChange = onValueChange,
-        textStyle = TextStyle.Default.copy(fontSize = FontSizeMedium),
+        textStyle = TextStyle.Default.copy(fontSize = FontSizeTheme.sizes.medium),
         singleLine = singleLine,
         maxLines = maxLine,
         visualTransformation = visualTransformation,
@@ -56,14 +55,14 @@ fun AppTextField(
             backgroundColor = Color.Transparent,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
-            cursorColor = AppTheme.colors.accent,
-            textColor = AppTheme.colors.accent
+            cursorColor = ColorsTheme.colors.accent,
+            textColor = ColorsTheme.colors.accent
         ),
         placeholder = {
             Text(
                 text = hintText,
-                color = AppTheme.colors.primary,
-                fontSize = FontSizeLarge
+                color = ColorsTheme.colors.primary,
+                fontSize = FontSizeTheme.sizes.large
             )
         },
         modifier = modifier

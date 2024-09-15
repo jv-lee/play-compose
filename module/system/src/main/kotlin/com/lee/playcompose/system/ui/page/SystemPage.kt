@@ -19,8 +19,8 @@ import com.google.accompanist.pager.rememberPagerState
 import com.lee.playcompose.base.bus.ChannelBus
 import com.lee.playcompose.common.entity.NavigationSelectEvent
 import com.lee.playcompose.common.ui.callback.rememberPageCallbackHandler
-import com.lee.playcompose.common.ui.theme.AppTheme
-import com.lee.playcompose.common.ui.theme.FontSizeMedium
+import com.lee.playcompose.common.ui.theme.ColorsTheme
+import com.lee.playcompose.common.ui.theme.FontSizeTheme
 import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.theme.ToolBarHeight
 import com.lee.playcompose.common.ui.widget.header.AppHeaderContainer
@@ -59,7 +59,7 @@ fun SystemPage() {
     // double click close app.
     RouteBackHandler()
 
-    Box(Modifier.background(AppTheme.colors.background)) {
+    Box(Modifier.background(ColorsTheme.colors.background)) {
         // pageContent
         HorizontalPager(count = 2, state = pagerState) { page ->
             when (page) {
@@ -96,8 +96,8 @@ private fun TabContainer(pagerState: PagerState) {
 
 @Composable
 private fun TabButton(text: String, isSelected: Boolean, onClick: () -> Unit) {
-    val color = if (isSelected) AppTheme.colors.focus else AppTheme.colors.onFocus
-    val textColor = if (isSelected) AppTheme.colors.onFocus else AppTheme.colors.focus
+    val color = if (isSelected) ColorsTheme.colors.focus else ColorsTheme.colors.onFocus
+    val textColor = if (isSelected) ColorsTheme.colors.onFocus else ColorsTheme.colors.focus
     Box(
         modifier = Modifier
             .size(width = SystemTabWidth, height = SystemTabHeight)
@@ -105,6 +105,6 @@ private fun TabButton(text: String, isSelected: Boolean, onClick: () -> Unit) {
             .wrapContentSize(Alignment.Center)
             .clickable { onClick() }
     ) {
-        Text(text = text, fontSize = FontSizeMedium, color = textColor)
+        Text(text = text, fontSize = FontSizeTheme.sizes.medium, color = textColor)
     }
 }

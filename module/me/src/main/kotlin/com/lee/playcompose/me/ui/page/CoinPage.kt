@@ -73,7 +73,7 @@ fun CoinPage(
         elevation = 0.dp,
         actionIcon = R.drawable.vector_help,
         actionMode = ActionMode.Button,
-        backgroundColor = AppTheme.colors.focus,
+        backgroundColor = ColorsTheme.colors.focus,
         contentColor = Color.White,
         navigationClick = { navController.popBackStack() },
         actionClick = { navController.navigateArgs(RoutePage.Details.route, viewState.detailsData) }
@@ -111,15 +111,15 @@ private fun CoinRecordContent(viewState: CoinViewState) {
 private fun CoinRecordItem(item: CoinRecord) {
     Text(
         text = item.desc,
-        fontSize = FontSizeSmall,
-        color = AppTheme.colors.accent,
+        fontSize = FontSizeTheme.sizes.small,
+        color = ColorsTheme.colors.accent,
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
         textAlign = TextAlign.Center,
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = OffsetMedium)
-            .background(AppTheme.colors.item)
+            .background(ColorsTheme.colors.item)
             .padding(OffsetLarge)
     )
 }
@@ -132,7 +132,7 @@ private fun CoinRecordHeader(accountViewState: AccountViewState, coinRankClick: 
                 .height(120.dp)
                 .fillMaxWidth()
                 .background(
-                    color = AppTheme.colors.focus,
+                    color = ColorsTheme.colors.focus,
                     shape = RoundedCornerShape(
                         bottomStart = 56.dp,
                         bottomEnd = 56.dp
@@ -141,7 +141,7 @@ private fun CoinRecordHeader(accountViewState: AccountViewState, coinRankClick: 
         )
 
         Card(
-            backgroundColor = AppTheme.colors.item,
+            backgroundColor = ColorsTheme.colors.item,
             shape = RoundedCornerShape(OffsetRadiusMedium),
             modifier = Modifier
                 .fillMaxWidth()
@@ -154,14 +154,14 @@ private fun CoinRecordHeader(accountViewState: AccountViewState, coinRankClick: 
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
                     text = stringResource(id = R.string.coin_title_label_text),
-                    fontSize = FontSizeSmall,
-                    color = AppTheme.colors.focus,
+                    fontSize = FontSizeTheme.sizes.small,
+                    color = ColorsTheme.colors.focus,
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                         .height(26.dp)
                         .fillMaxWidth()
                         .background(
-                            color = AppTheme.colors.onFocus,
+                            color = ColorsTheme.colors.onFocus,
                             shape = RoundedCornerShape(
                                 topStart = OffsetRadiusMedium,
                                 topEnd = OffsetRadiusMedium
@@ -171,8 +171,8 @@ private fun CoinRecordHeader(accountViewState: AccountViewState, coinRankClick: 
                 )
                 Text(
                     text = stringResource(id = R.string.coin_total_description),
-                    fontSize = FontSizeSmallX,
-                    color = AppTheme.colors.primary,
+                    fontSize = FontSizeTheme.sizes.smallX,
+                    color = ColorsTheme.colors.primary,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.padding(top = OffsetLarge)
                 )
@@ -180,7 +180,7 @@ private fun CoinRecordHeader(accountViewState: AccountViewState, coinRankClick: 
                     text = accountViewState.accountData?.coinInfo?.coinCount.toString(),
                     fontSize = 26.sp,
                     fontWeight = FontWeight.Bold,
-                    color = AppTheme.colors.accent,
+                    color = ColorsTheme.colors.accent,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.padding(top = OffsetLarge)
                 )
@@ -193,7 +193,7 @@ private fun CoinRecordHeader(accountViewState: AccountViewState, coinRankClick: 
                             top = OffsetLarge,
                             end = OffsetLarge
                         )
-                        .background(AppTheme.colors.onFocus)
+                        .background(ColorsTheme.colors.onFocus)
                 )
                 Box(
                     modifier = Modifier
@@ -203,15 +203,15 @@ private fun CoinRecordHeader(accountViewState: AccountViewState, coinRankClick: 
                 ) {
                     Text(
                         text = stringResource(id = R.string.coin_to_rank_text),
-                        fontSize = FontSizeMedium,
-                        color = AppTheme.colors.accent,
+                        fontSize = FontSizeTheme.sizes.medium,
+                        color = ColorsTheme.colors.accent,
                         modifier = Modifier
                             .align(Alignment.CenterStart)
                             .padding(start = OffsetLarge)
                     )
                     Icon(
                         painter = painterResource(id = CR.drawable.vector_arrow),
-                        tint = AppTheme.colors.accent,
+                        tint = ColorsTheme.colors.accent,
                         contentDescription = null,
                         modifier = Modifier
                             .align(Alignment.CenterEnd)

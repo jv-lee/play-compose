@@ -9,7 +9,7 @@ import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
-import com.lee.playcompose.common.ui.theme.AppTheme
+import com.lee.playcompose.common.ui.theme.ColorsTheme
 import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.theme.OffsetMedium
 import com.lee.playcompose.common.ui.theme.OffsetSmall
@@ -30,7 +30,7 @@ fun CardItemContainer(
     content: @Composable BoxScope.() -> Unit
 ) {
     Card(
-        backgroundColor = AppTheme.colors.item,
+        backgroundColor = ColorsTheme.colors.item,
         modifier = modifier.padding(
             start = OffsetMedium,
             end = OffsetMedium,
