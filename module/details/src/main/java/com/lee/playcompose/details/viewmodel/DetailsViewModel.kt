@@ -1,8 +1,5 @@
 package com.lee.playcompose.details.viewmodel
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -29,16 +26,15 @@ import kotlinx.coroutines.launch
  * @date 2022/3/30
  */
 class DetailsViewModel(private val details: DetailsData) :
-    BaseMVIViewModel<DetailsViewEvent, DetailsViewIntent>() {
+    BaseMVIViewModel<DetailsViewState, DetailsViewEvent, DetailsViewIntent>() {
 
     private val meService = ModuleService.find<MeService>()
-
-    var viewStates by mutableStateOf(DetailsViewState())
-        private set
 
     init {
         moreButtonVisible()
     }
+
+    override fun initViewState() = DetailsViewState()
 
     override fun dispatch(intent: DetailsViewIntent) {
         when (intent) {
@@ -55,7 +51,7 @@ class DetailsViewModel(private val details: DetailsData) :
     private fun moreButtonVisible() {
         val actionMode =
             if (details.id != DetailsData.EMPTY_ID) ActionMode.Menu else ActionMode.Default
-        viewStates = viewStates.copy(actionModel = actionMode)
+        _viewStates = _viewStates.copy(actionModel = actionMode)
     }
 
     private fun requestCollect() {
@@ -77,12 +73,12 @@ class DetailsViewModel(private val details: DetailsData) :
                     throw RuntimeException(response.errorMsg)
                 }
             }.onStart {
-                viewStates = viewStates.copy(isLoading = true)
+                _viewStates = _viewStates.copy(isLoading = true)
             }.catch { error ->
-                viewStates = viewStates.copy(isLoading = false)
+                _viewStates = _viewStates.copy(isLoading = false)
                 _viewEvents.send(DetailsViewEvent.CollectEvent(error.message))
             }.lowestTime().collect {
-                viewStates = viewStates.copy(isLoading = false)
+                _viewStates = _viewStates.copy(isLoading = false)
                 _viewEvents.send(
                     DetailsViewEvent.CollectEvent(app.getString(R.string.menu_collect_complete))
                 )

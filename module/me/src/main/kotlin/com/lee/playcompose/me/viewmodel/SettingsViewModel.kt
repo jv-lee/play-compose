@@ -1,8 +1,5 @@
 package com.lee.playcompose.me.viewmodel
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.base.utils.CacheUtil
@@ -23,16 +20,16 @@ import kotlinx.coroutines.launch
  * @author jv.lee
  * @date 2022/4/2
  */
-class SettingsViewModel : BaseMVIViewModel<SettingsViewEvent, SettingsViewIntent>() {
+class SettingsViewModel :
+    BaseMVIViewModel<SettingsViewState, SettingsViewEvent, SettingsViewIntent>() {
 
     var accountService = ModuleService.find<AccountService>()
-
-    var viewStates by mutableStateOf(SettingsViewState())
-        private set
 
     init {
         initCacheSize()
     }
+
+    override fun initViewState() = SettingsViewState()
 
     override fun dispatch(intent: SettingsViewIntent) {
         when (intent) {
@@ -52,18 +49,18 @@ class SettingsViewModel : BaseMVIViewModel<SettingsViewEvent, SettingsViewIntent
 
     private fun initCacheSize() {
         val totalCacheSize = CacheUtil.getTotalCacheSize(app)
-        viewStates = viewStates.copy(totalCacheSize = totalCacheSize)
+        _viewStates = _viewStates.copy(totalCacheSize = totalCacheSize)
     }
 
     private fun visibleCacheDialog(visibility: Boolean) {
         viewModelScope.launch {
-            viewStates = viewStates.copy(isCacheConfirm = visibility)
+            _viewStates = _viewStates.copy(isCacheConfirm = visibility)
         }
     }
 
     private fun visibleLogoutDialog(visibility: Boolean) {
         viewModelScope.launch {
-            viewStates = viewStates.copy(isLogoutConfirm = visibility)
+            _viewStates = _viewStates.copy(isLogoutConfirm = visibility)
         }
     }
 
@@ -72,16 +69,16 @@ class SettingsViewModel : BaseMVIViewModel<SettingsViewEvent, SettingsViewIntent
             flow {
                 emit(CacheUtil.clearAllCache(app))
             }.onStart {
-                viewStates = viewStates.copy(isLoading = true)
+                _viewStates = _viewStates.copy(isLoading = true)
             }.catch {
-                viewStates = viewStates.copy(isLoading = false)
+                _viewStates = _viewStates.copy(isLoading = false)
             }.collect {
                 val message =
                     app.getString(
                         if (it) R.string.settings_clear_success else R.string.settings_clear_failed
                     )
                 _viewEvents.send(SettingsViewEvent.ClearCacheResult(message = message))
-                viewStates = viewStates.copy(isLoading = false, isCacheConfirm = false)
+                _viewStates = _viewStates.copy(isLoading = false, isCacheConfirm = false)
                 initCacheSize()
             }
         }

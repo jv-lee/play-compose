@@ -1,10 +1,6 @@
 package com.lee.playcompose.me.viewmodel
 
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.base.extensions.lowestTime
@@ -21,7 +17,6 @@ import com.lee.playcompose.me.R
 import com.lee.playcompose.me.model.api.ApiService
 import com.lee.playcompose.service.AccountService
 import com.lee.playcompose.service.helper.ModuleService
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicBoolean
@@ -31,7 +26,7 @@ import java.util.concurrent.atomic.AtomicBoolean
  * @author jv.lee
  * @date 2022/3/30
  */
-class CollectViewModel : BaseMVIViewModel<CollectViewEvent, CollectViewIntent>() {
+class CollectViewModel : BaseMVIViewModel<CollectViewState, CollectViewEvent, CollectViewIntent>() {
 
     private val api = createApi<ApiService>()
     private val accountService: AccountService = ModuleService.find()
@@ -49,8 +44,11 @@ class CollectViewModel : BaseMVIViewModel<CollectViewEvent, CollectViewIntent>()
         ) { api.getCollectListAsync(it).checkData() }
     }
 
-    var viewStates by mutableStateOf(CollectViewState(savedPager = pager))
-        private set
+    init {
+        _viewStates = _viewStates.copy(savedPager = pager)
+    }
+
+    override fun initViewState() = CollectViewState()
 
     override fun dispatch(intent: CollectViewIntent) {
         when (intent) {
@@ -66,12 +64,12 @@ class CollectViewModel : BaseMVIViewModel<CollectViewEvent, CollectViewIntent>()
                 flow {
                     emit(api.postUnCollectAsync(content.id, content.originId).checkData())
                 }.onStart {
-                    viewStates = viewStates.copy(isLoading = true)
+                    _viewStates = _viewStates.copy(isLoading = true)
                 }.catch { error ->
                     _viewEvents.send(CollectViewEvent.UnCollectEvent(error.message))
                 }.onCompletion {
                     deleteLock.set(false)
-                    viewStates = viewStates.copy(isLoading = false)
+                    _viewStates = _viewStates.copy(isLoading = false)
                 }.lowestTime().collect {
                     itemsDelete(content)
                     _viewEvents.send(CollectViewEvent.UnCollectEvent(app.getString(R.string.collect_remove_item_success)))
@@ -94,7 +92,7 @@ class CollectViewModel : BaseMVIViewModel<CollectViewEvent, CollectViewIntent>()
 
 data class CollectViewState(
     val isLoading: Boolean = false,
-    val savedPager: SavedPager<Content>,
+    val savedPager: SavedPager<Content>? = null,
     val listState: LazyListState = LazyListState()
 ) : IViewState
 

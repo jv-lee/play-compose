@@ -1,8 +1,5 @@
 package com.lee.playcompose.account.viewmodel
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.lee.playcompose.account.model.api.ApiService
 import com.lee.playcompose.base.extensions.lowestTime
@@ -24,12 +21,11 @@ import kotlinx.coroutines.launch
  * @author jv.lee
  * @date 2022/3/23
  */
-class RegisterViewModel : BaseMVIViewModel<RegisterViewEvent, RegisterViewIntent>() {
+class RegisterViewModel : BaseMVIViewModel<RegisterViewState, RegisterViewEvent, RegisterViewIntent>() {
 
     private val api = createApi<ApiService>()
 
-    var viewStates by mutableStateOf(RegisterViewState())
-        private set
+    override fun initViewState() = RegisterViewState()
 
     override fun dispatch(intent: RegisterViewIntent) {
         when (intent) {
@@ -52,25 +48,25 @@ class RegisterViewModel : BaseMVIViewModel<RegisterViewEvent, RegisterViewIntent
     }
 
     private fun changeUsername(username: String) {
-        viewStates = viewStates.copy(username = username)
+        _viewStates = _viewStates.copy(username = username)
         changeRegisterEnable()
     }
 
     private fun changePassword(password: String) {
-        viewStates = viewStates.copy(password = password)
+        _viewStates = _viewStates.copy(password = password)
         changeRegisterEnable()
     }
 
     private fun changeRePassword(rePassword: String) {
-        viewStates = viewStates.copy(rePassword = rePassword)
+        _viewStates = _viewStates.copy(rePassword = rePassword)
         changeRegisterEnable()
     }
 
     private fun changeRegisterEnable() {
-        viewStates = viewStates.copy(
-            isRegisterEnable = viewStates.username.isNotEmpty() &&
-                    viewStates.password.isNotEmpty() &&
-                    viewStates.rePassword.isNotEmpty()
+        _viewStates = _viewStates.copy(
+            isRegisterEnable = _viewStates.username.isNotEmpty() &&
+                    _viewStates.password.isNotEmpty() &&
+                    _viewStates.rePassword.isNotEmpty()
         )
     }
 
@@ -79,28 +75,28 @@ class RegisterViewModel : BaseMVIViewModel<RegisterViewEvent, RegisterViewIntent
             delay(300) // 延迟隐藏软键盘
             flow {
                 // 校验输入格式
-                if (viewStates.username.isEmpty() ||
-                    viewStates.password.isEmpty() ||
-                    viewStates.rePassword.isEmpty()
+                if (_viewStates.username.isEmpty() ||
+                    _viewStates.password.isEmpty() ||
+                    _viewStates.rePassword.isEmpty()
                 ) {
                     throw IllegalArgumentException("username || password || repassword is empty.")
                 }
 
                 api.postRegisterAsync(
-                    viewStates.username,
-                    viewStates.password,
-                    viewStates.rePassword
+                    _viewStates.username,
+                    _viewStates.password,
+                    _viewStates.rePassword
                 ).checkData()
 
                 val accountResponse = api.getAccountInfoAsync().checkData()
                 emit(accountResponse)
             }.onStart {
-                viewStates = viewStates.copy(isLoading = true)
+                _viewStates = _viewStates.copy(isLoading = true)
             }.catch { error ->
-                viewStates = viewStates.copy(isLoading = false)
+                _viewStates = _viewStates.copy(isLoading = false)
                 _viewEvents.send(RegisterViewEvent.RegisterFailed(error.message))
             }.lowestTime().collect {
-                viewStates = viewStates.copy(isLoading = false)
+                _viewStates = _viewStates.copy(isLoading = false)
                 _viewEvents.send(RegisterViewEvent.RegisterSuccess(it))
             }
         }

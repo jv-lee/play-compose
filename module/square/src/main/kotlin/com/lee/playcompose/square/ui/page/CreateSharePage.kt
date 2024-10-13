@@ -43,7 +43,7 @@ fun CreateSharePage(
     viewModel: CreateShareViewModel = viewModel()
 ) {
     val focusManager = LocalFocusManager.current
-    val viewState = viewModel.viewStates
+    val viewState = viewModel.viewStates()
     val shareSuccess = stringResource(id = R.string.share_success)
 
     // 监听单发事件

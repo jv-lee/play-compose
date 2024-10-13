@@ -1,9 +1,5 @@
 package com.lee.playcompose.account.viewmodel
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.playcompose.account.R
 import com.lee.playcompose.account.constants.Constants
@@ -17,16 +13,14 @@ import com.lee.playcompose.base.tools.PreferencesTools
 import com.lee.playcompose.base.viewmodel.BaseMVIViewModel
 import com.lee.playcompose.common.constants.ApiConstants
 import com.lee.playcompose.common.entity.AccountData
-import com.lee.playcompose.common.entity.AccountViewIntent
 import com.lee.playcompose.common.entity.AccountViewEvent
+import com.lee.playcompose.common.entity.AccountViewIntent
 import com.lee.playcompose.common.entity.AccountViewState
 import com.lee.playcompose.common.extensions.checkData
 import com.lee.playcompose.common.extensions.createApi
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 /**
@@ -34,26 +28,28 @@ import kotlinx.coroutines.launch
  * @author jv.lee
  * @date 2022/3/23
  */
-class AccountViewModel : BaseMVIViewModel<AccountViewEvent, AccountViewIntent>() {
+class AccountViewModel : BaseMVIViewModel<AccountViewState, AccountViewEvent, AccountViewIntent>() {
 
     private val api = createApi<ApiService>()
 
     private val cacheManager = CacheManager.getDefault()
 
-    var viewStates by mutableStateOf(AccountViewState())
-        private set
+    override fun initViewState() = AccountViewState()
 
     override fun dispatch(intent: AccountViewIntent) {
         when (intent) {
             is AccountViewIntent.RequestAccountData -> {
                 requestAccountData()
             }
+
             is AccountViewIntent.RequestLogout -> {
                 requestLogout()
             }
+
             is AccountViewIntent.UpdateAccountStatus -> {
                 updateAccountStatus(intent.accountData, intent.isLogin)
             }
+
             is AccountViewIntent.ClearLoginState -> {
                 updateAccountStatus(null, false)
             }
@@ -88,12 +84,12 @@ class AccountViewModel : BaseMVIViewModel<AccountViewEvent, AccountViewIntent>()
                 kotlinx.coroutines.delay(500)
                 emit(api.getLogoutAsync().checkData())
             }.onStart {
-                viewStates = viewStates.copy(isLoading = true)
+                _viewStates = _viewStates.copy(isLoading = true)
             }.catch { error ->
-                viewStates = viewStates.copy(isLoading = false)
+                _viewStates = _viewStates.copy(isLoading = false)
                 _viewEvents.send(AccountViewEvent.LogoutFailed(error.message))
             }.collect {
-                viewStates = viewStates.copy(isLoading = false)
+                _viewStates = _viewStates.copy(isLoading = false)
                 updateAccountStatus(null, false)
                 _viewEvents.send(
                     AccountViewEvent.LogoutSuccess(app.getString(R.string.account_logout_success))
@@ -107,14 +103,15 @@ class AccountViewModel : BaseMVIViewModel<AccountViewEvent, AccountViewIntent>()
      * @param isLogin 登陆结果
      */
     private fun updateAccountStatus(accountData: AccountData?, isLogin: Boolean) {
-        viewStates = if (isLogin) {
+        _viewStates = if (isLogin) {
             cacheManager.putCache(Constants.CACHE_KEY_ACCOUNT_DATA, accountData)
             PreferencesTools.put(Constants.SP_KEY_IS_LOGIN, true)
-            viewStates.copy(accountData = accountData, isLogin = isLogin)
+            _viewStates.copy(accountData = accountData, isLogin = isLogin)
         } else {
             cacheManager.clearCache(Constants.CACHE_KEY_ACCOUNT_DATA)
             PreferencesTools.put(Constants.SP_KEY_IS_LOGIN, false)
-            viewStates.copy(accountData = accountData, isLogin = isLogin)
+            _viewStates.copy(accountData = accountData, isLogin = isLogin)
         }
     }
+
 }

@@ -1,8 +1,5 @@
 package com.lee.playcompose.splash
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.lee.playcompose.R
 import com.lee.playcompose.base.bus.ChannelBus
@@ -26,14 +23,13 @@ import com.lee.playcompose.common.R as CR
  * @author jv.lee
  * @date 2022/3/28
  */
-class SplashViewModel : BaseMVIViewModel<IViewEvent, SplashViewIntent>() {
-
-    var viewStates by mutableStateOf(SplashViewState())
-        private set
+class SplashViewModel : BaseMVIViewModel<SplashViewState, IViewEvent, SplashViewIntent>() {
 
     init {
         initSplashInfo()
     }
+
+    override fun initViewState() = SplashViewState()
 
     override fun dispatch(intent: SplashViewIntent) {
         when (intent) {
@@ -54,22 +50,22 @@ class SplashViewModel : BaseMVIViewModel<IViewEvent, SplashViewIntent>() {
     private fun playTime() {
         viewModelScope.launch {
             flowOf(5, 4, 3, 2, 1)
-                .onStart { viewStates = viewStates.copy(splashAdVisible = true) }
+                .onStart { _viewStates = _viewStates.copy(splashAdVisible = true) }
                 .onCompletion { hideSplash() }
                 .collect {
                     val timeText = app.getString(R.string.splash_time_text, it)
-                    viewStates = viewStates.copy(timeText = timeText)
+                    _viewStates = _viewStates.copy(timeText = timeText)
                     delay(1000)
                 }
         }
     }
 
     private fun showContent() {
-        viewStates = viewStates.copy(contentVisible = true)
+        _viewStates = _viewStates.copy(contentVisible = true)
     }
 
     private fun hideSplash() {
-        viewStates = viewStates.copy(splashVisible = false)
+        _viewStates = _viewStates.copy(splashVisible = false)
 
         // splash隐藏后发送全局事件 主页内容显示通知提供给ui显示后一些处理
         ChannelBus.getChannel<ContentVisibleEvent>()?.post(ContentVisibleEvent())
@@ -79,7 +75,7 @@ class SplashViewModel : BaseMVIViewModel<IViewEvent, SplashViewIntent>() {
         val splashInfoRes = if (DarkModeTools.get().isDarkTheme()) {
             CR.mipmap.ic_splash_info_night
         } else CR.mipmap.ic_splash_info
-        viewStates = viewStates.copy(splashInfoRes = splashInfoRes)
+        _viewStates = _viewStates.copy(splashInfoRes = splashInfoRes)
     }
 }
 

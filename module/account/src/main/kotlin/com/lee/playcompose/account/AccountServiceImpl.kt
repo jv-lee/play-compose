@@ -24,7 +24,7 @@ import kotlinx.coroutines.flow.Flow
 class AccountServiceImpl : AccountService {
 
     override fun getAccountViewStates(activity: FragmentActivity): AccountViewState {
-        return activity.viewModels<AccountViewModel>().value.viewStates
+        return activity.viewModels<AccountViewModel>().value.viewStates()
     }
 
     override fun getAccountViewEvents(activity: FragmentActivity): Flow<AccountViewEvent> {

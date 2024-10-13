@@ -36,7 +36,7 @@ fun CollectPage(
     navController: NavController = LocalNavController.current,
     viewModel: CollectViewModel = viewModel()
 ) {
-    val viewState = viewModel.viewStates
+    val viewState = viewModel.viewStates()
     val slidingPaneState by rememberSlidingPaneState()
 
     // 监听取消收藏事件
@@ -76,7 +76,7 @@ private fun CollectContent(
     onItemClick: (Content) -> Unit,
     onItemDelete: (Content) -> Unit
 ) {
-    val contentList = viewState.savedPager.getLazyPagingItems()
+    val contentList = viewState.savedPager?.getLazyPagingItems() ?: return
     val listState = if (contentList.itemCount > 0) viewState.listState else LazyListState()
 
     RefreshList(

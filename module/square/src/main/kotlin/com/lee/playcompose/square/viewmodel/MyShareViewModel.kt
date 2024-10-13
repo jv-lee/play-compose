@@ -1,9 +1,6 @@
 package com.lee.playcompose.square.viewmodel
 
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.base.extensions.lowestTime
@@ -34,7 +31,7 @@ import java.util.concurrent.atomic.AtomicBoolean
  * @author jv.lee
  * @date 2022/3/29
  */
-class MyShareViewModel : BaseMVIViewModel<MyShareViewEvent, MyShareViewIntent>() {
+class MyShareViewModel : BaseMVIViewModel<MyShareViewState, MyShareViewEvent, MyShareViewIntent>() {
 
     private val api = createApi<ApiService>()
     private val accountService: AccountService = ModuleService.find()
@@ -54,9 +51,12 @@ class MyShareViewModel : BaseMVIViewModel<MyShareViewEvent, MyShareViewIntent>()
             api.getMyShareDataSync(it).checkData().shareArticles
         }
     }
+    
+    init {
+        _viewStates = _viewStates.copy(savedPager = pager)
+    }
 
-    var viewStates by mutableStateOf(MyShareViewState(savedPager = pager))
-        private set
+    override fun initViewState() = MyShareViewState()
 
     override fun dispatch(intent: MyShareViewIntent) {
         when (intent) {
@@ -72,12 +72,12 @@ class MyShareViewModel : BaseMVIViewModel<MyShareViewEvent, MyShareViewIntent>()
                 flow {
                     emit(api.postDeleteShareAsync(content.id).checkData())
                 }.onStart {
-                    viewStates = viewStates.copy(isLoading = true)
+                    _viewStates = _viewStates.copy(isLoading = true)
                 }.catch { error ->
                     _viewEvents.send(MyShareViewEvent.DeleteShareEvent(error.message))
                 }.onCompletion {
                     deleteLock.set(false)
-                    viewStates = viewStates.copy(isLoading = false)
+                    _viewStates = _viewStates.copy(isLoading = false)
                 }.lowestTime().collect {
                     itemsDelete(content)
                     _viewEvents.send(
@@ -103,7 +103,7 @@ class MyShareViewModel : BaseMVIViewModel<MyShareViewEvent, MyShareViewIntent>()
 
 data class MyShareViewState(
     val isLoading: Boolean = false,
-    val savedPager: SavedPager<Content>,
+    val savedPager: SavedPager<Content>? = null,
     val listState: LazyListState = LazyListState()
 ) : IViewState
 

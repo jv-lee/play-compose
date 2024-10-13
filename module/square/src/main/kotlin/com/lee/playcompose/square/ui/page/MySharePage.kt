@@ -41,13 +41,13 @@ fun MySharePage(
     navController: NavController = LocalNavController.current,
     viewModel: MyShareViewModel = viewModel()
 ) {
-    val viewState = viewModel.viewStates
-    val contentList = viewState.savedPager.getLazyPagingItems()
+    val viewState = viewModel.viewStates()
+    val contentList = viewState.savedPager?.getLazyPagingItems()
     val slidingPaneState by rememberSlidingPaneState()
 
     // 监听创建分享成功事件刷新列表
     navController.forResult<Int>(key = REQUEST_KEY_SHARE_REFRESH, delayTimeMillis = 500) {
-        contentList.refresh()
+        contentList?.refresh()
     }
 
     // 监听移除分享内容事件
@@ -92,7 +92,7 @@ private fun MyShareContent(
     onItemClick: (Content) -> Unit,
     onItemDelete: (Content) -> Unit
 ) {
-    val contentList = viewState.savedPager.getLazyPagingItems()
+    val contentList = viewState.savedPager?.getLazyPagingItems() ?: return
     val listState = if (contentList.itemCount > 0) viewState.listState else LazyListState()
 
     RefreshList(

@@ -1,8 +1,5 @@
 package com.lee.playcompose.search.viewmodel
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.lee.playcompose.base.cache.CacheManager
 import com.lee.playcompose.base.extensions.cacheFlow
@@ -28,19 +25,18 @@ import kotlinx.coroutines.launch
  * @author jv.lee
  * @date 2022/3/18
  */
-class SearchViewModel : BaseMVIViewModel<SearchViewEvent, SearchViewIntent>() {
+class SearchViewModel : BaseMVIViewModel<SearchViewState, SearchViewEvent, SearchViewIntent>() {
 
     private val api = createApi<ApiService>()
     private val searchHistoryDao = SearchDatabase.get().searchHistoryDao()
     private val cacheManager = CacheManager.getDefault()
 
-    var viewStates by mutableStateOf(SearchViewState())
-        private set
-
     init {
         requestSearchHotData()
         requestSearchHistoryData()
     }
+
+    override fun initViewState() = SearchViewState()
 
     override fun dispatch(intent: SearchViewIntent) {
         when (intent) {
@@ -71,7 +67,7 @@ class SearchViewModel : BaseMVIViewModel<SearchViewEvent, SearchViewIntent>() {
             }.catch { error ->
                 _viewEvents.send(SearchViewEvent.FailedEvent(error = error))
             }.collect {
-                viewStates = viewStates.copy(searchHot = it)
+                _viewStates = _viewStates.copy(searchHot = it)
             }
         }
     }
@@ -84,7 +80,7 @@ class SearchViewModel : BaseMVIViewModel<SearchViewEvent, SearchViewIntent>() {
             flow {
                 emit(searchHistoryDao.querySearchHistory())
             }.collect {
-                viewStates = viewStates.copy(searchHistory = it)
+                _viewStates = _viewStates.copy(searchHistory = it)
             }
         }
     }
@@ -93,7 +89,7 @@ class SearchViewModel : BaseMVIViewModel<SearchViewEvent, SearchViewIntent>() {
      * 搜索文本监听处理
      */
     private fun changeSearchKey(key: String) {
-        viewStates = viewStates.copy(searchKey = key)
+        _viewStates = _viewStates.copy(searchKey = key)
     }
 
     /**

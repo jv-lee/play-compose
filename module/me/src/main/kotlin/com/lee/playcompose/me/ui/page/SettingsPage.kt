@@ -43,7 +43,7 @@ fun SettingsPage(
 ) {
     val activity = LocalActivity.current
     val coroutine = rememberCoroutineScope()
-    val viewState = viewModel.viewStates
+    val viewState = viewModel.viewStates()
     val accountState = viewModel.accountService.getAccountViewStates(activity = activity)
     val accountEvent = viewModel.accountService.getAccountViewEvents(activity = activity)
     val themeViewState = themeViewModel.viewStates

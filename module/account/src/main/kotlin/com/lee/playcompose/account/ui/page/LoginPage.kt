@@ -55,7 +55,7 @@ fun LoginPage(
 ) {
     val imeInsets = WindowInsets.ime.asPaddingValues()
     val focusManager = LocalFocusManager.current
-    val viewState = viewModel.viewStates
+    val viewState = viewModel.viewStates()
 
     // 监听注册成功状态
     navController.forResult<Int>(key = REQUEST_KEY_LOGIN) {

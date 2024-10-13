@@ -61,7 +61,7 @@ fun CreateTodoPage(
     )
 ) {
     val focusManager = LocalFocusManager.current
-    val viewState = viewModel.viewStates
+    val viewState = viewModel.viewStates()
     val datePickerDialog = rememberDatePickerDialog(
         activity = LocalActivity.current,
         calendar = viewState.calendar,

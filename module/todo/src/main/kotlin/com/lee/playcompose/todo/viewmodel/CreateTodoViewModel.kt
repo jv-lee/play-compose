@@ -2,9 +2,6 @@ package com.lee.playcompose.todo.viewmodel
 
 import android.app.DatePickerDialog
 import android.widget.DatePicker
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -25,11 +22,15 @@ import com.lee.playcompose.todo.constants.Constants.SP_KEY_TODO_TYPE
 import com.lee.playcompose.todo.model.api.ApiService
 import com.lee.playcompose.todo.model.entity.TodoType
 import com.lee.playcompose.todo.ui.page.STATUS_UPCOMING
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 /**
  * 创建todo内容页面viewModel
@@ -37,7 +38,7 @@ import java.util.*
  * @date 2022/4/8
  */
 class CreateTodoViewModel(private val todoData: TodoData?) :
-    BaseMVIViewModel<CreateTodoViewEvent, CreateTodoViewIntent>(),
+    BaseMVIViewModel<CreateTodoViewState, CreateTodoViewEvent, CreateTodoViewIntent>(),
     DatePickerDialog.OnDateSetListener {
 
     private val api = createApi<ApiService>()
@@ -46,14 +47,11 @@ class CreateTodoViewModel(private val todoData: TodoData?) :
 
     private val typeSavedKey = SP_KEY_TODO_TYPE.plus(accountService.getUserId())
 
-    var viewStates by mutableStateOf(
-        CreateTodoViewState(type = PreferencesTools.get(typeSavedKey, TodoType.DEFAULT))
-    )
-        private set
-
     init {
         initPageState()
     }
+
+    override fun initViewState() = CreateTodoViewState()
 
     override fun dispatch(intent: CreateTodoViewIntent) {
         when (intent) {
@@ -81,7 +79,8 @@ class CreateTodoViewModel(private val todoData: TodoData?) :
 
     private fun initPageState() {
         val dateStr = todoData?.dateStr ?: dateToStrFormat()
-        viewStates = viewStates.copy(
+        _viewStates = _viewStates.copy(
+            type = PreferencesTools.get(typeSavedKey, TodoType.DEFAULT),
             appTitleRes = if (todoData == null) R.string.title_create_todo
             else R.string.title_edit_todo,
             isCreate = todoData == null,
@@ -95,42 +94,42 @@ class CreateTodoViewModel(private val todoData: TodoData?) :
     }
 
     private fun changeTitle(title: String) {
-        viewStates = viewStates.copy(title = title)
+        _viewStates = _viewStates.copy(title = title)
     }
 
     private fun changeContent(content: String) {
-        viewStates = viewStates.copy(content = content)
+        _viewStates = _viewStates.copy(content = content)
     }
 
     private fun changePriority(priority: Int) {
-        viewStates = viewStates.copy(priority = priority)
+        _viewStates = _viewStates.copy(priority = priority)
     }
 
     private fun changeDate(date: String) {
-        viewStates = viewStates.copy(date = date, calendar = stringToCalendar(date))
+        _viewStates = _viewStates.copy(date = date, calendar = stringToCalendar(date))
     }
 
     private fun requestPostTodo() {
-        if (viewStates.isCreate) requestAddTodo() else requestUpdateTodo()
+        if (_viewStates.isCreate) requestAddTodo() else requestUpdateTodo()
     }
 
     private fun requestAddTodo() {
         viewModelScope.launch {
             flow {
                 val response = api.postAddTodoAsync(
-                    viewStates.title,
-                    viewStates.content,
-                    viewStates.date,
-                    viewStates.type,
-                    viewStates.priority
+                    _viewStates.title,
+                    _viewStates.content,
+                    _viewStates.date,
+                    _viewStates.type,
+                    _viewStates.priority
                 ).checkData()
                 emit(response)
             }.onStart {
-                viewStates = viewStates.copy(isLoading = true)
+                _viewStates = _viewStates.copy(isLoading = true)
             }.catch { error ->
                 _viewEvents.send(CreateTodoViewEvent.RequestFailed(error.message))
             }.onCompletion {
-                viewStates = viewStates.copy(isLoading = false)
+                _viewStates = _viewStates.copy(isLoading = false)
             }.lowestTime().collect {
                 _viewEvents.send(CreateTodoViewEvent.RequestSuccess(STATUS_UPCOMING))
             }
@@ -142,20 +141,20 @@ class CreateTodoViewModel(private val todoData: TodoData?) :
             flow {
                 val response = api.postUpdateTodoAsync(
                     todoData?.id ?: 0,
-                    viewStates.title,
-                    viewStates.content,
-                    viewStates.date,
-                    viewStates.type,
-                    viewStates.priority,
+                    _viewStates.title,
+                    _viewStates.content,
+                    _viewStates.date,
+                    _viewStates.type,
+                    _viewStates.priority,
                     todoData?.status ?: STATUS_UPCOMING
                 ).checkData()
                 emit(response)
             }.onStart {
-                viewStates = viewStates.copy(isLoading = true)
+                _viewStates = _viewStates.copy(isLoading = true)
             }.catch { error ->
                 _viewEvents.send(CreateTodoViewEvent.RequestFailed(error.message))
             }.onCompletion {
-                viewStates = viewStates.copy(isLoading = false)
+                _viewStates = _viewStates.copy(isLoading = false)
             }.lowestTime().collect {
                 _viewEvents.send(
                     CreateTodoViewEvent.RequestSuccess(

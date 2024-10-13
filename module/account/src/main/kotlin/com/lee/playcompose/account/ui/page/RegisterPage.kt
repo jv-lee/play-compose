@@ -50,7 +50,7 @@ fun RegisterPage(
 ) {
     val imeInsets = WindowInsets.ime.asPaddingValues()
     val focusManager = LocalFocusManager.current
-    val viewState = viewModel.viewStates
+    val viewState = viewModel.viewStates()
 
     // 页面单向事件监听
     LaunchedEffect(Unit) {

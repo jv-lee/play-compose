@@ -50,7 +50,7 @@ fun SearchPage(
     viewModel: SearchViewModel = viewModel()
 ) {
     val focusManager = LocalFocusManager.current
-    val viewState = viewModel.viewStates
+    val viewState = viewModel.viewStates()
 
     // 监听单发事件
     LaunchedEffect(Unit) {

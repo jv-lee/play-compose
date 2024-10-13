@@ -1,9 +1,6 @@
 package com.lee.playcompose.todo.viewmodel
 
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -25,9 +22,13 @@ import com.lee.playcompose.service.helper.ModuleService
 import com.lee.playcompose.todo.model.api.ApiService
 import com.lee.playcompose.todo.ui.page.STATUS_COMPLETE
 import com.lee.playcompose.todo.ui.page.STATUS_UPCOMING
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -37,7 +38,7 @@ import java.util.concurrent.atomic.AtomicBoolean
  * @date 2022/4/6
  */
 class TodoListViewModel(private val type: Int, private val status: Int) :
-    BaseMVIViewModel<TodoListViewEvent, TodoListViewIntent>() {
+    BaseMVIViewModel<TodoListViewState, TodoListViewEvent, TodoListViewIntent>() {
 
     private val api = createApi<ApiService>()
     private val accountService: AccountService = ModuleService.find()
@@ -63,9 +64,12 @@ class TodoListViewModel(private val type: Int, private val status: Int) :
             api.postTodoDataAsync(page, type, status).checkData()
         }
     }
+    
+    init {
+        _viewStates = _viewStates.copy(savedPager = pager)
+    }
 
-    var viewStates by mutableStateOf(TodoListViewState(savedPager = pager))
-        private set
+    override fun initViewState() = TodoListViewState()
 
     override fun dispatch(intent: TodoListViewIntent) {
         when (intent) {
@@ -183,7 +187,7 @@ class TodoListViewModel(private val type: Int, private val status: Int) :
 }
 
 data class TodoListViewState(
-    val savedPager: SavedPager<TodoData>,
+    val savedPager: SavedPager<TodoData>? = null,
     val listState: LazyListState = LazyListState()
 ) : IViewState
 

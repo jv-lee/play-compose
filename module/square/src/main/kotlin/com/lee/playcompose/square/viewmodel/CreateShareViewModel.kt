@@ -1,9 +1,6 @@
 package com.lee.playcompose.square.viewmodel
 
 import android.text.TextUtils
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.lee.playcompose.base.extensions.lowestTime
 import com.lee.playcompose.base.viewmodel.BaseMVIViewModel
@@ -23,12 +20,11 @@ import kotlinx.coroutines.launch
  * @author jv.lee
  * @date 2022/3/21
  */
-class CreateShareViewModel : BaseMVIViewModel<CreateShareViewEvent, CreateShareViewIntent>() {
+class CreateShareViewModel : BaseMVIViewModel<CreateShareViewState, CreateShareViewEvent, CreateShareViewIntent>() {
 
     private val api = createApi<ApiService>()
 
-    var viewStates by mutableStateOf(CreateShareViewState())
-        private set
+    override fun initViewState() = CreateShareViewState()
 
     override fun dispatch(intent: CreateShareViewIntent) {
         when (intent) {
@@ -46,33 +42,33 @@ class CreateShareViewModel : BaseMVIViewModel<CreateShareViewEvent, CreateShareV
 
     private fun changeShareTitle(title: String) {
         if (title.length > 100) return
-        viewStates = viewStates.copy(shareTitle = title)
+        _viewStates = _viewStates.copy(shareTitle = title)
     }
 
     private fun changeShareContent(content: String) {
         if (content.length > 100) return
-        viewStates = viewStates.copy(shareContent = content)
+        _viewStates = _viewStates.copy(shareContent = content)
     }
 
     private fun requestShare() {
         viewModelScope.launch {
             // 校验输入格式
-            if (TextUtils.isEmpty(viewStates.shareTitle) ||
-                TextUtils.isEmpty(viewStates.shareContent)
+            if (TextUtils.isEmpty(_viewStates.shareTitle) ||
+                TextUtils.isEmpty(_viewStates.shareContent)
             ) {
                 _viewEvents.send(CreateShareViewEvent.CreateFailed("title || content is empty."))
                 return@launch
             }
             flow {
-                val response = api.postShareDataSync(viewStates.shareTitle, viewStates.shareContent)
+                val response = api.postShareDataSync(_viewStates.shareTitle, _viewStates.shareContent)
                 emit(response.checkData())
             }.onStart {
-                viewStates = viewStates.copy(isLoading = true)
+                _viewStates = _viewStates.copy(isLoading = true)
             }.catch { error ->
-                viewStates = viewStates.copy(isLoading = false)
+                _viewStates = _viewStates.copy(isLoading = false)
                 _viewEvents.send(CreateShareViewEvent.CreateFailed(error.message ?: ""))
             }.lowestTime().collect {
-                viewStates = viewStates.copy(isLoading = false)
+                _viewStates = _viewStates.copy(isLoading = false)
                 _viewEvents.send(CreateShareViewEvent.CreateSuccess)
             }
         }

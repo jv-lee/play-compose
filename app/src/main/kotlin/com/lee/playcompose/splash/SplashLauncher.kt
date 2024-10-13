@@ -36,7 +36,7 @@ import com.lee.playcompose.service.helper.ModuleService
  */
 @Composable
 fun SplashLauncher(viewModel: SplashViewModel = viewModel(), content: @Composable () -> Unit) {
-    val viewState = viewModel.viewStates
+    val viewState = viewModel.viewStates()
 
     // 主页内容
     FadeAnimatedVisibility(visible = viewState.contentVisible) {
@@ -52,7 +52,7 @@ fun SplashLauncher(viewModel: SplashViewModel = viewModel(), content: @Composabl
 @Composable
 private fun SplashPage(viewModel: SplashViewModel) {
     val activity = LocalActivity.current
-    val viewState = viewModel.viewStates
+    val viewState = viewModel.viewStates()
 
     LaunchedEffect(Unit) {
         // 同步获取账户配置
