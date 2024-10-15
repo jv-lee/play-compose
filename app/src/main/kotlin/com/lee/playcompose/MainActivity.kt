@@ -5,6 +5,7 @@ import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.FragmentActivity
 import com.lee.playcompose.base.extensions.ProviderDensity
+import com.lee.playcompose.common.extensions.agentWebPreload
 import com.lee.playcompose.common.ui.theme.PlayComposeTheme
 import com.lee.playcompose.route.RouteNavigator
 import com.lee.playcompose.splash.SplashLauncher
@@ -19,6 +20,7 @@ class MainActivity : FragmentActivity() {
         // 沉浸式状态栏
         WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
+        agentWebPreload()
         setContent {
             PlayComposeTheme { // 设置应用主题
                 SplashLauncher { // 设置应用首屏闪屏启动器

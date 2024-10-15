@@ -1,6 +1,6 @@
 import configures.libraryConfigure
 
-libraryConfigure(projectConfigure = {
+libraryConfigure("base", projectConfigure = {
 
     dependencies {
         commonProcessors()

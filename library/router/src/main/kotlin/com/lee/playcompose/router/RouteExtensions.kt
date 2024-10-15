@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalAnimationApi::class)
-
 /*
  * app全局路由扩展函数
  * @author jv.lee
@@ -12,10 +10,17 @@ import android.os.Parcelable
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
-import androidx.navigation.*
-import com.google.accompanist.navigation.animation.composable
+import androidx.navigation.NamedNavArgument
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavController
+import androidx.navigation.NavDeepLink
+import androidx.navigation.NavDestination
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavOptionsBuilder
+import androidx.navigation.NavType
+import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.lee.playcompose.base.net.HttpManager
 
 fun NavGraphBuilder.tabComposable(
@@ -28,13 +33,13 @@ fun NavGraphBuilder.tabComposable(
 ) {
     composable(
         route = route,
-        arguments,
-        deepLinks,
+        arguments = arguments,
+        deepLinks = deepLinks,
         content = content,
         // 打开页面退出动画
         exitTransition = {
             if (tabDefaultRoutes.contains(this.targetState.destination.route())) {
-                null
+                exitDefault()
             } else if (tabZoomRoutes.contains(this.targetState.destination.route())) {
                 exitZoom()
             } else {
@@ -44,7 +49,7 @@ fun NavGraphBuilder.tabComposable(
         // 关闭页面进入动画
         popEnterTransition = {
             if (tabDefaultRoutes.contains(this.initialState.destination.route())) {
-                null
+                enterDefault()
             } else if (tabZoomRoutes.contains(this.initialState.destination.route())) {
                 popEnterZoom()
             } else {
@@ -67,14 +72,13 @@ fun NavGraphBuilder.themeComposable(
 ) {
     composable(
         route = route,
-        arguments,
-        deepLinks,
+        arguments = arguments,
+        deepLinks = deepLinks,
         content = content,
         // 打开页面进入动画
         enterTransition = { enterTransition },
         // 关闭页面退出动画
         popExitTransition = { popExitTransition },
-
         // 打开页面退出动画
         exitTransition = {
             if (tabZoomRoutes.contains(this.targetState.destination.route())) {
@@ -140,24 +144,31 @@ private fun checkType(type: Any): NavType<*> {
         is List<*> -> {
             NavType.StringType
         }
+
         is Parcelable -> {
             NavType.StringType
         }
+
         is String -> {
             NavType.StringType
         }
+
         is Int -> {
             NavType.IntType
         }
+
         is Float -> {
             NavType.FloatType
         }
+
         is Boolean -> {
             NavType.BoolType
         }
+
         is Long -> {
             NavType.LongType
         }
+
         else -> NavType.StringType
     }
 }
@@ -169,6 +180,7 @@ private fun checkTypeFormat(arg: Any): String {
             val encodeJson = Uri.encode(json)
             String.format("/%s", encodeJson)
         }
+
         else -> String.format("/%s", arg)
     }
 }

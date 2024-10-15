@@ -7,7 +7,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.paging.compose.itemsIndexed
 import com.lee.playcompose.base.extensions.LocalNavController
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.extensions.toast
@@ -84,8 +83,8 @@ private fun CollectContent(
         listState = listState
     ) {
         // build collect content item
-        itemsIndexed(contentList) { _, item ->
-            item ?: return@itemsIndexed
+        items(contentList.itemCount) { index ->
+            val item = contentList[index] ?: return@items
             ActionTextItem(
                 item = item,
                 state = slidingPaneState,

@@ -212,5 +212,5 @@ sealed class CreateTodoViewIntent : IViewIntent {
     data class ChangeContent(val content: String) : CreateTodoViewIntent()
     data class ChangePriority(val priority: Int) : CreateTodoViewIntent()
     data class ChangeDate(val date: String) : CreateTodoViewIntent()
-    object RequestPostTodo : CreateTodoViewIntent()
+    data object RequestPostTodo : CreateTodoViewIntent()
 }

@@ -13,7 +13,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.paging.compose.itemsIndexed
 import com.lee.playcompose.base.extensions.LocalNavController
 import com.lee.playcompose.base.tools.WeakDataHolder
 import com.lee.playcompose.common.entity.ParentTab
@@ -82,8 +81,8 @@ private fun SystemContentList(
         item { HeaderSpacer() }
 
         // build system content item
-        itemsIndexed(contentList) { _, item ->
-            item ?: return@itemsIndexed
+        items(contentList.itemCount) { index ->
+            val item = contentList[index] ?: return@items
             SystemContentItem(item = item, onItemClick = onItemClick)
         }
     }

@@ -120,5 +120,5 @@ sealed class RegisterViewIntent : IViewIntent {
     data class ChangeUsername(val username: String) : RegisterViewIntent()
     data class ChangePassword(val password: String) : RegisterViewIntent()
     data class ChangeRePassword(val rePassword: String) : RegisterViewIntent()
-    object RequestRegister : RegisterViewIntent()
+    data object RequestRegister : RegisterViewIntent()
 }

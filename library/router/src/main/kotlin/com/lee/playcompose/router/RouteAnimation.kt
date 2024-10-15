@@ -1,4 +1,3 @@
-@file:OptIn(ExperimentalAnimationApi::class)
 /*
  * compose navigation animation code.
  * @author jv.lee
@@ -47,4 +46,7 @@ fun exitZoom() = scaleOut(targetScale = 1.05f, animationSpec = tween(animationDu
 
 fun popEnterZoom() = scaleIn(initialScale = 1.05f, animationSpec = tween(animationDuration))
 
-fun popExitAlphaHide() = fadeOut(targetAlpha = 1f, animationSpec = tween(animationDuration))
+fun popExitAlphaHide() = fadeOut(targetAlpha = 0f, animationSpec = tween(animationDuration))
+
+fun exitDefault() = fadeOut(targetAlpha = 1f, animationSpec = tween(animationDuration))
+fun enterDefault() = fadeIn(initialAlpha = 1f, animationSpec = tween(animationDuration))

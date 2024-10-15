@@ -1,3 +1,3 @@
 import configures.moduleConfigure
 
-moduleConfigure()
+moduleConfigure("system")

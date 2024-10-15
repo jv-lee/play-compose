@@ -24,8 +24,6 @@ fun DependencyHandlerScope.commonProcessors() {
     kapt(ProcessorsDependencies.annotation)
     kapt(ProcessorsDependencies.room)
     kapt(ProcessorsDependencies.autoService)
-    kapt(ProcessorsDependencies.hilt)
-    kapt(ProcessorsDependencies.hiltComposeCompiler)
 }
 
 //各业务组建基础依赖
@@ -77,28 +75,17 @@ fun DependencyHandlerScope.commonDependencies() {
     api(Dependencies.composeActivity)
     api(Dependencies.composeConstraint)
     api(Dependencies.composeUi)
+    api(Dependencies.composeIcon)
     api(Dependencies.composeMaterial)
     api(Dependencies.composePreview)
     api(Dependencies.composeUtil)
     api(Dependencies.composeLivedata)
 
     api(Dependencies.composeCoin)
-    api(Dependencies.composeNavigationAnimation)
-    api(Dependencies.composeInsets)
-    api(Dependencies.composeInsetsUi)
     api(Dependencies.composeSystemUiController)
-    api(Dependencies.composeSwiperRefresh)
-    api(Dependencies.composePager)
-    api(Dependencies.composePagerIndicators)
-    api(Dependencies.composeFlowlayout)
-    api(Dependencies.composeWebView)
 
     api(Dependencies.pagingRuntime)
     api(Dependencies.pagingCompose)
-
-    api(Dependencies.hiltAndroid)
-    api(Dependencies.hiltNavigationCompose)
-    api(Dependencies.hiltLifecycleViewModel)
 
     api(Dependencies.room)
     api(Dependencies.roomRuntime)

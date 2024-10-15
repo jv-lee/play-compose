@@ -123,5 +123,5 @@ sealed class LoginViewEvent : IViewEvent {
 sealed class LoginViewIntent : IViewIntent {
     data class ChangeUsername(val username: String) : LoginViewIntent()
     data class ChangePassword(val password: String) : LoginViewIntent()
-    object RequestLogin : LoginViewIntent()
+    data object RequestLogin : LoginViewIntent()
 }

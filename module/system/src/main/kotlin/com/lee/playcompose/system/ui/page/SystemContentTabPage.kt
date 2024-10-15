@@ -1,14 +1,14 @@
 package com.lee.playcompose.system.ui.page
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.rememberPagerState
 import com.lee.playcompose.base.extensions.LocalNavController
 import com.lee.playcompose.common.entity.ParentTab
 import com.lee.playcompose.common.ui.theme.ColorsTheme
@@ -31,7 +31,7 @@ fun SystemContentTabPage(
 ) {
     parentTab ?: return
     val coroutine = rememberCoroutineScope()
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState(pageCount = { parentTab.children.size })
     val selectIndex = viewModel.viewStates.selectedIndex
 
     LaunchedEffect(pagerState.currentPage) {
@@ -57,7 +57,7 @@ fun SystemContentTabPage(
                         coroutine.launch { pagerState.animateScrollToPage(tabIndex) }
                     }
                 )
-                HorizontalPager(count = parentTab.children.size, state = pagerState) { page ->
+                HorizontalPager(state = pagerState) { page ->
                     val item = parentTab.children[page]
                     SystemContentListPage(navController = navController, tab = item)
                 }

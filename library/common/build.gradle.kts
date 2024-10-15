@@ -3,7 +3,7 @@ import configures.libraryConfigure
 import configures.plugins.paramsConfigure
 
 
-libraryConfigure(projectConfigure = {
+libraryConfigure("common", projectConfigure = {
     paramsConfigure()
 
     dependencies {

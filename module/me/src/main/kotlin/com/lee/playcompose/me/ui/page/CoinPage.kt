@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.paging.compose.itemsIndexed
 import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.lee.playcompose.base.extensions.LocalActivity
@@ -100,8 +99,8 @@ private fun CoinRecordContent(viewState: CoinViewState) {
         listState = listState
     ) {
         // build coinRecord content item
-        itemsIndexed(contentList) { _, item ->
-            item ?: return@itemsIndexed
+        items(contentList.itemCount) { index ->
+            val item = contentList[index] ?: return@items
             CoinRecordItem(item = item)
         }
     }

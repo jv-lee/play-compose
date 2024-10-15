@@ -81,9 +81,9 @@ sealed class AccountViewEvent : IViewEvent {
 }
 
 sealed class AccountViewIntent : IViewIntent {
-    object ClearLoginState : AccountViewIntent()
-    object RequestAccountData : AccountViewIntent()
-    object RequestLogout : AccountViewIntent()
+    data object ClearLoginState : AccountViewIntent()
+    data object RequestAccountData : AccountViewIntent()
+    data object RequestLogout : AccountViewIntent()
     data class UpdateAccountStatus(val accountData: AccountData, val isLogin: Boolean) :
         AccountViewIntent()
 }

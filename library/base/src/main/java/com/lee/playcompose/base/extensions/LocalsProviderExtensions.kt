@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalFoundationApi::class, ExperimentalAnimationApi::class)
+@file:OptIn(ExperimentalFoundationApi::class)
 
 /*
  * 全局 CompositionLocalProvider 扩展函数
@@ -8,7 +8,6 @@
 package com.lee.playcompose.base.extensions
 
 import android.content.res.Configuration
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.runtime.Composable
@@ -19,7 +18,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavHostController
-import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import androidx.navigation.compose.rememberNavController
 
 private fun noLocalProvidedFor(name: String): Nothing {
     error("CompositionLocal $name not present")
@@ -56,7 +55,7 @@ fun FragmentActivity.ProviderActivity(content: @Composable () -> Unit) {
  */
 @Composable
 fun ProviderNavController(content: @Composable () -> Unit) {
-    CompositionLocalProvider(LocalNavController provides rememberAnimatedNavController()) {
+    CompositionLocalProvider(LocalNavController provides rememberNavController()) {
         content()
     }
 }

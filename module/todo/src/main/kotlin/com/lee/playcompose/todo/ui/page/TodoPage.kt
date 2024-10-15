@@ -1,6 +1,9 @@
 package com.lee.playcompose.todo.ui.page
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerState
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.FloatingActionButton
@@ -11,14 +14,11 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.PagerState
-import com.google.accompanist.pager.rememberPagerState
 import com.lee.playcompose.base.extensions.LocalNavController
 import com.lee.playcompose.common.ui.callback.PageCallbackHandler
 import com.lee.playcompose.common.ui.callback.rememberPageCallbackHandler
@@ -50,7 +50,7 @@ fun TodoPage(
         lifecycle = LocalLifecycleOwner.current
     )
     val coroutine = rememberCoroutineScope()
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState(pageCount = { tabItems.size })
     val viewState = viewModel.viewStates
 
     SelectTodoTypeDialog(
@@ -112,7 +112,6 @@ private fun ColumnScope.TodoContent(
             .weight(1f)
     ) {
         HorizontalPager(
-            count = tabItems.size,
             state = pagerState,
             userScrollEnabled = false
         ) { page ->

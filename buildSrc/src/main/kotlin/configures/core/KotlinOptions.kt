@@ -9,6 +9,5 @@ val freeCompilerArgs = mutableListOf(
     "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
     "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
     "-opt-in=androidx.paging.ExperimentalPagingApi",
-    "-opt-in=com.google.accompanist.pager.ExperimentalPagerApi",
     "-opt-in=coil.annotation.ExperimentalCoilApi",
 )

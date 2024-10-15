@@ -1,7 +1,7 @@
 import configures.libraryConfigure
 import build.BuildModules
 
-libraryConfigure(projectConfigure = {
+libraryConfigure("service", projectConfigure = {
     dependencies {
         commonProcessors()
         api(project(BuildModules.Library.base))

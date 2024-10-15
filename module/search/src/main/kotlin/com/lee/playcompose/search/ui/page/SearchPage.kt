@@ -1,7 +1,15 @@
 package com.lee.playcompose.search.ui.page
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,20 +30,24 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.google.accompanist.flowlayout.FlowRow
 import com.lee.playcompose.base.extensions.LocalNavController
 import com.lee.playcompose.base.extensions.onTap
 import com.lee.playcompose.common.entity.SearchHistory
 import com.lee.playcompose.common.extensions.toast
 import com.lee.playcompose.common.ui.composable.AppTextField
-import com.lee.playcompose.common.ui.theme.*
+import com.lee.playcompose.common.ui.theme.ColorsTheme
+import com.lee.playcompose.common.ui.theme.FontSizeTheme
+import com.lee.playcompose.common.ui.theme.OffsetLarge
+import com.lee.playcompose.common.ui.theme.OffsetMedium
+import com.lee.playcompose.common.ui.theme.OffsetRadiusMedium
+import com.lee.playcompose.common.ui.theme.OffsetSmall
 import com.lee.playcompose.common.ui.widget.header.AppBarViewContainer
 import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
 import com.lee.playcompose.search.R
 import com.lee.playcompose.search.model.entity.SearchHotUI
-import com.lee.playcompose.search.viewmodel.SearchViewIntent
 import com.lee.playcompose.search.viewmodel.SearchViewEvent
+import com.lee.playcompose.search.viewmodel.SearchViewIntent
 import com.lee.playcompose.search.viewmodel.SearchViewModel
 import com.lee.playcompose.search.viewmodel.SearchViewState
 
@@ -156,6 +168,7 @@ private fun SearchContent(
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun SearchHotContent(
     viewState: SearchViewState,

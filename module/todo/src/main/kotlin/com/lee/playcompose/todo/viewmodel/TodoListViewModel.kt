@@ -192,7 +192,7 @@ data class TodoListViewState(
 ) : IViewState
 
 sealed class TodoListViewEvent : IViewEvent {
-    object ResetSlidingState : TodoListViewEvent()
+    data object ResetSlidingState : TodoListViewEvent()
     data class RefreshTodoData(val statusKey: String) : TodoListViewEvent()
     data class RequestFailed(val message: String?) : TodoListViewEvent()
 }

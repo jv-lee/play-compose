@@ -17,7 +17,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.*
@@ -97,7 +97,7 @@ fun rememberImePaddingValue(
     imeInsets: PaddingValues = WindowInsets.ime.asPaddingValues(),
     navigationInserts: PaddingValues = WindowInsets.navigationBars.asPaddingValues()
 ): Float {
-    var paddingValue by remember { mutableStateOf(0f) }
+    var paddingValue by remember { mutableFloatStateOf(0f) }
     val imeBottom = imeInsets.calculateBottomPadding()
     val navigationBottom = navigationInserts.calculateBottomPadding()
     paddingValue = when {

@@ -3,11 +3,30 @@ package com.lee.playcompose.common.ui.widget.header
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.windowInsetsTopHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.AppBarDefaults
+import androidx.compose.material.DropdownMenu
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -24,8 +43,15 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.lee.playcompose.common.ui.composable.HeaderSpacer
-import com.lee.playcompose.common.ui.theme.*
-import com.lee.playcompose.common.ui.widget.header.ActionMode.*
+import com.lee.playcompose.common.ui.theme.ColorsTheme
+import com.lee.playcompose.common.ui.theme.FontSizeTheme
+import com.lee.playcompose.common.ui.theme.OffsetMedium
+import com.lee.playcompose.common.ui.theme.OffsetRadiusMedium
+import com.lee.playcompose.common.ui.theme.OffsetSmall
+import com.lee.playcompose.common.ui.theme.ToolBarHeight
+import com.lee.playcompose.common.ui.widget.header.ActionMode.Button
+import com.lee.playcompose.common.ui.widget.header.ActionMode.Default
+import com.lee.playcompose.common.ui.widget.header.ActionMode.Menu
 
 /**
  * 公共appbarView 单独使用该view在顶部，content为appbar内部更多显示样式
@@ -50,7 +76,7 @@ import com.lee.playcompose.common.ui.widget.header.ActionMode.*
 fun AppBarView(
     modifier: Modifier = Modifier,
     title: String = "",
-    navigationIcon: ImageVector = Icons.Filled.ArrowBack,
+    navigationIcon: ImageVector = Icons.AutoMirrored.Filled.ArrowBack,
     navigationClick: () -> Unit = {},
     @DrawableRes actionIcon: Int = -1,
     actionClick: () -> Unit = {},
@@ -162,7 +188,7 @@ fun AppBarView(
 fun AppBarViewContainer(
     modifier: Modifier = Modifier,
     title: String = "",
-    navigationIcon: ImageVector = Icons.Filled.ArrowBack,
+    navigationIcon: ImageVector = Icons.AutoMirrored.Filled.ArrowBack,
     navigationClick: () -> Unit = {},
     @DrawableRes actionIcon: Int = -1,
     actionClick: () -> Unit = {},
@@ -236,7 +262,7 @@ fun MenuSpacer() {
  * [Default] 默认什么都不显示
  */
 sealed class ActionMode {
-    object Button : ActionMode()
-    object Menu : ActionMode()
-    object Default : ActionMode()
+    data object Button : ActionMode()
+    data object Menu : ActionMode()
+    data object Default : ActionMode()
 }

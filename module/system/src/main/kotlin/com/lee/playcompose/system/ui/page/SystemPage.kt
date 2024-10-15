@@ -3,6 +3,9 @@ package com.lee.playcompose.system.ui.page
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerState
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -11,11 +14,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.PagerState
-import com.google.accompanist.pager.rememberPagerState
 import com.lee.playcompose.base.bus.ChannelBus
 import com.lee.playcompose.common.entity.NavigationSelectEvent
 import com.lee.playcompose.common.ui.callback.rememberPageCallbackHandler
@@ -41,7 +41,7 @@ import kotlinx.coroutines.launch
  */
 @Composable
 fun SystemPage() {
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState(pageCount = { 2 })
     val handler by rememberPageCallbackHandler<SystemCallback>(LocalLifecycleOwner.current)
 
     LaunchedEffect(Unit) {
@@ -61,7 +61,7 @@ fun SystemPage() {
 
     Box(Modifier.background(ColorsTheme.colors.background)) {
         // pageContent
-        HorizontalPager(count = 2, state = pagerState) { page ->
+        HorizontalPager(state = pagerState) { page ->
             when (page) {
                 0 -> SystemContentPage(handler)
                 1 -> NavigationContentPage(handler)

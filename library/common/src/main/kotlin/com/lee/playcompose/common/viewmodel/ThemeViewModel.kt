@@ -16,6 +16,7 @@ import com.lee.playcompose.base.tools.DarkModeTools
  * @author jv.lee
  * @date 2022/4/20
  */
+@Suppress("UNCHECKED_CAST")
 @SuppressLint("StaticFieldLeak")
 class ThemeViewModel(private val context: Context) : ViewModel(), ComponentCallbacks {
 
@@ -104,5 +105,5 @@ data class ThemeViewState(
 sealed class ThemeViewIntent {
     data class UpdateDarkTheme(val enable: Boolean) : ThemeViewIntent()
     data class UpdateSystemTheme(val enable: Boolean) : ThemeViewIntent()
-    object ResetThemeStatus : ThemeViewIntent()
+    data object ResetThemeStatus : ThemeViewIntent()
 }

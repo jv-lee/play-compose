@@ -1,6 +1,8 @@
 package com.lee.playcompose.project.ui.page
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
@@ -8,8 +10,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.rememberPagerState
 import com.lee.playcompose.base.extensions.LocalNavController
 import com.lee.playcompose.common.ui.theme.ColorsTheme
 import com.lee.playcompose.common.ui.widget.header.AppBarViewContainer
@@ -30,11 +30,11 @@ fun ProjectPage(
     navController: NavController = LocalNavController.current,
     viewModel: ProjectViewModel = viewModel()
 ) {
-    val coroutine = rememberCoroutineScope()
-    val pagerState = rememberPagerState()
     val selectIndex = viewModel.viewStates.selectedIndex
     val tabData = viewModel.viewStates.tab
     val uiStatus = viewModel.viewStates.uiStatus
+    val coroutine = rememberCoroutineScope()
+    val pagerState = rememberPagerState(pageCount = { tabData.size })
 
     LaunchedEffect(pagerState.currentPage) {
         viewModel.dispatch(ProjectViewIntent.SelectedTabIndex(pagerState.currentPage))
@@ -59,7 +59,7 @@ fun ProjectPage(
                             coroutine.launch { pagerState.animateScrollToPage(tabIndex) }
                         },
                     )
-                    HorizontalPager(count = tabData.size, state = pagerState) { page ->
+                    HorizontalPager(state = pagerState) { page ->
                         ProjectListPage(navController = navController, tab = tabData[page])
                     }
                 }

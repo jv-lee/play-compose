@@ -21,6 +21,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
  * @date 2021/10/1
  */
 fun Project.moduleConfigure(
+    name: String,
     projectConfigure: Project.() -> Unit = {},
     androidConfigure: LibraryExtension.() -> Unit = {}
 ) {
@@ -31,6 +32,7 @@ fun Project.moduleConfigure(
     projectConfigure()
 
     extensions.configure<LibraryExtension> {
+        namespace = "${BuildConfig.applicationId}.$name"
         compileSdk = BuildConfig.compileSdk
 
         defaultConfig {

@@ -99,5 +99,5 @@ sealed class SettingsViewEvent : IViewEvent {
 sealed class SettingsViewIntent : IViewIntent {
     data class VisibleCacheDialog(val visibility: Boolean) : SettingsViewIntent()
     data class VisibleLogoutDialog(val visibility: Boolean) : SettingsViewIntent()
-    object RequestClearCache : SettingsViewIntent()
+    data object RequestClearCache : SettingsViewIntent()
 }

@@ -110,6 +110,6 @@ sealed class DetailsViewEvent : IViewEvent {
 }
 
 sealed class DetailsViewIntent : IViewIntent {
-    object RequestCollectDetails : DetailsViewIntent()
-    object ShareDetails : DetailsViewIntent()
+    data object RequestCollectDetails : DetailsViewIntent()
+    data object ShareDetails : DetailsViewIntent()
 }

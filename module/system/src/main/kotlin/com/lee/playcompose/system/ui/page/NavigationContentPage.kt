@@ -2,13 +2,30 @@ package com.lee.playcompose.system.ui.page
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -17,14 +34,19 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.paging.compose.itemsIndexed
-import com.google.accompanist.flowlayout.FlowRow
 import com.lee.playcompose.base.extensions.LocalNavController
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.entity.NavigationItem
 import com.lee.playcompose.common.extensions.transformDetails
 import com.lee.playcompose.common.ui.callback.PageCallbackHandler
-import com.lee.playcompose.common.ui.theme.*
+import com.lee.playcompose.common.ui.theme.ColorsTheme
+import com.lee.playcompose.common.ui.theme.FontSizeTheme
+import com.lee.playcompose.common.ui.theme.NavigationBarHeight
+import com.lee.playcompose.common.ui.theme.OffsetLarge
+import com.lee.playcompose.common.ui.theme.OffsetMedium
+import com.lee.playcompose.common.ui.theme.OffsetRadiusSmall
+import com.lee.playcompose.common.ui.theme.OffsetSmall
+import com.lee.playcompose.common.ui.theme.ToolBarHeight
 import com.lee.playcompose.common.ui.widget.UiStatusListPage
 import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
@@ -77,7 +99,7 @@ private fun NavigationContent(
     val contentList = viewState.savedPager.getLazyPagingItems()
     val listState = if (contentList.itemCount > 0) viewState.listState else LazyListState()
     val tabState = if (contentList.itemCount > 0) viewState.tabState else LazyListState()
-    val currentIndex = remember { mutableStateOf(0) }
+    val currentIndex = remember { mutableIntStateOf(0) }
     val upsetIndex = remember { mutableStateOf(true) }
     val coroutine = rememberCoroutineScope()
 
@@ -86,35 +108,43 @@ private fun NavigationContent(
         if (upsetIndex.value) {
             val index = listState.firstVisibleItemIndex
             tabState.scrollToItem(index)
-            currentIndex.value = index
+            currentIndex.intValue = index
         } else {
             upsetIndex.value = true
         }
     }
 
-    UiStatusListPage(loadState = contentList.loadState, retry = { contentList.retry() }) {
+    UiStatusListPage(
+        loadState = contentList.loadState,
+        retry = { contentList.retry() }) {
         Row(
             Modifier
                 .fillMaxSize()
                 .padding(top = toolbarOffset, bottom = NavigationBarHeight)
         ) {
-            LazyColumn(modifier = Modifier.weight(0.32f), tabState, content = {
-                itemsIndexed(contentList) { index, item ->
-                    item ?: return@itemsIndexed
-                    NavigationTabItem(currentIndex.value == index, item = item, tabClick = {
-                        currentIndex.value = index
-                        upsetIndex.value = false
-                        coroutine.launch { listState.scrollToItem(index) }
-                    })
-                }
-            })
+            LazyColumn(
+                modifier = Modifier.weight(0.32f),
+                state = tabState,
+                content = {
+                    items(contentList.itemCount) { index ->
+                        val item = contentList[index] ?: return@items
+                        NavigationTabItem(currentIndex.intValue == index, item = item, tabClick = {
+                            currentIndex.intValue = index
+                            upsetIndex.value = false
+                            coroutine.launch { listState.scrollToItem(index) }
+                        })
+                    }
+                })
 
-            LazyColumn(modifier = Modifier.weight(0.68f), listState, content = {
-                itemsIndexed(contentList) { _, item ->
-                    item ?: return@itemsIndexed
-                    NavigationContentItem(item = item, itemClick = itemClick)
-                }
-            })
+            LazyColumn(
+                modifier = Modifier.weight(0.68f),
+                state = listState,
+                content = {
+                    items(contentList.itemCount) { index ->
+                        val item = contentList[index] ?: return@items
+                        NavigationContentItem(item = item, itemClick = itemClick)
+                    }
+                })
         }
     }
 }
@@ -169,6 +199,7 @@ private fun NavigationContentItem(item: NavigationItem, itemClick: (Content) -> 
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun NavigationContentFlowList(item: NavigationItem, itemClick: (Content) -> Unit) {
     FlowRow {

@@ -3,14 +3,31 @@ package com.lee.playcompose.common.ui.widget
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -18,8 +35,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.lee.playcompose.base.extensions.delayState
 import com.lee.playcompose.common.R
 import com.lee.playcompose.common.ui.composable.FooterSpacer
@@ -49,13 +64,10 @@ fun <T : Any> RefreshList(
     listState: LazyListState = rememberLazyListState(),
     itemContent: LazyListScope.() -> Unit
 ) {
-    val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = false)
-
     // loadPage Load.
-    if ((
-        lazyPagingItems.loadState.refresh is LoadState.Loading ||
-            lazyPagingItems.loadState.refresh is LoadState.NotLoading
-        ) &&
+    if ((lazyPagingItems.loadState.refresh is LoadState.Loading ||
+                lazyPagingItems.loadState.refresh is LoadState.NotLoading
+                ) &&
         !lazyPagingItems.loadState.append.endOfPaginationReached &&
         lazyPagingItems.itemCount == 0
     ) {
@@ -79,18 +91,18 @@ fun <T : Any> RefreshList(
         return
     }
 
-    SwipeRefresh(
-        state = swipeRefreshState,
-        swipeEnabled = swipeEnable,
-        indicatorPadding = indicatorPadding,
+    var isRefreshingState by remember { mutableStateOf(isRefreshing) }
+    val pullRefreshState = rememberPullRefreshState(
+        refreshing = isRefreshingState,
         onRefresh = {
             onRefresh()
             lazyPagingItems.refresh()
-        }
-    ) {
-        swipeRefreshState.isRefreshing =
-            ((lazyPagingItems.loadState.refresh is LoadState.Loading) || isRefreshing) &&
-            swipeEnable
+        })
+
+    isRefreshingState =
+        ((lazyPagingItems.loadState.refresh is LoadState.Loading) || isRefreshing) && swipeEnable
+
+    Box(modifier = Modifier.pullRefresh(state = pullRefreshState)) {
 
         // build list
         LazyColumn(
@@ -102,7 +114,7 @@ fun <T : Any> RefreshList(
             itemContent()
 
             // item state
-            if (!swipeRefreshState.isRefreshing) {
+            if (!isRefreshingState) {
                 item {
                     lazyPagingItems.apply {
                         when (loadState.append) {
@@ -123,6 +135,16 @@ fun <T : Any> RefreshList(
                 }
             }
         }
+
+        // refresh indicator
+        PullRefreshIndicator(
+            refreshing = isRefreshingState,
+            state = pullRefreshState,
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .padding(indicatorPadding)
+
+        )
     }
 }
 

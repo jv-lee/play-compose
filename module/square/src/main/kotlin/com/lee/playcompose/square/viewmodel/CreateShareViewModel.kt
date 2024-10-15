@@ -82,12 +82,12 @@ data class CreateShareViewState(
 ) : IViewState
 
 sealed class CreateShareViewEvent : IViewEvent {
-    object CreateSuccess : CreateShareViewEvent()
+    data object CreateSuccess : CreateShareViewEvent()
     data class CreateFailed(val message: String) : CreateShareViewEvent()
 }
 
 sealed class CreateShareViewIntent : IViewIntent {
-    object RequestShare : CreateShareViewIntent()
+    data object RequestShare : CreateShareViewIntent()
     data class ChangeShareTitle(val title: String) : CreateShareViewIntent()
     data class ChangeShareContent(val content: String) : CreateShareViewIntent()
 }

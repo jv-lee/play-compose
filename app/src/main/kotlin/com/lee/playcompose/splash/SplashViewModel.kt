@@ -89,7 +89,7 @@ data class SplashViewState(
 ) : IViewState
 
 sealed class SplashViewIntent : IViewIntent {
-    object RequestSplashAd : SplashViewIntent()
-    object ShowContent : SplashViewIntent()
-    object HideSplash : SplashViewIntent()
+    data object RequestSplashAd : SplashViewIntent()
+    data object ShowContent : SplashViewIntent()
+    data object HideSplash : SplashViewIntent()
 }

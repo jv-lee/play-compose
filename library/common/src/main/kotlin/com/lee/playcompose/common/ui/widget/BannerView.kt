@@ -5,12 +5,26 @@ package com.lee.playcompose.common.ui.widget
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.forEachGesture
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.gestures.awaitEachGesture
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerState
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -22,11 +36,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.PagerState
-import com.google.accompanist.pager.rememberPagerState
-import com.lee.playcompose.common.ui.theme.*
+import com.lee.playcompose.common.ui.theme.ColorsTheme
+import com.lee.playcompose.common.ui.theme.OffsetLargeMax
+import com.lee.playcompose.common.ui.theme.OffsetMedium
+import com.lee.playcompose.common.ui.theme.OffsetRadiusMedium
+import com.lee.playcompose.common.ui.theme.OffsetSmall
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /**
  * banner组件
@@ -51,29 +67,35 @@ fun <T : Any> BannerView(
     clipCardEnable: Boolean = true,
     loopEnable: Boolean = true
 ) {
-    val pagerState = rememberPagerState(initialPage = getStartSelectItem(data.size))
-
+    val pagerState = rememberPagerState(
+        initialPage = getStartSelectItem(data.size),
+        pageCount = { getRealCount() }
+    )
     var executeChangePage by remember { mutableStateOf(false) }
     var currentPageIndex = 0
 
     // auto scroll
-    LaunchedEffect(pagerState.currentPage, executeChangePage, loopEnable) {
-        if (pagerState.pageCount > 0 && loopEnable) {
-            delay(timeMillis = timeMillis)
-            var itemIndex = pagerState.currentPage
-            if (itemIndex == getRealCount() - 1) {
-                val startIndex = getStartSelectItem(data.size)
-                pagerState.scrollToPage(startIndex)
-            } else {
-                ++itemIndex
-                pagerState.animateScrollToPage(itemIndex)
+    if (pagerState.pageCount > 0 && loopEnable) {
+        var indexKey by remember { mutableIntStateOf(0) }
+        LaunchedEffect(indexKey, executeChangePage) {
+            launch {
+                delay(timeMillis = timeMillis)
+                // 滚动到最后一个时直接切换到开始index
+                if (pagerState.currentPage == getRealCount() - 1) {
+                    val startIndex = getStartSelectItem(data.size)
+                    pagerState.scrollToPage(startIndex)
+                } else {
+                    // 计算出下一个自动轮播index
+                    val nextIndex = (pagerState.currentPage + 1).mod(pagerState.pageCount)
+                    pagerState.animateScrollToPage(nextIndex)
+                    indexKey = nextIndex
+                }
             }
         }
     }
 
     Box(modifier = modifier) {
         HorizontalPager(
-            count = getRealCount(),
             state = pagerState,
             contentPadding = PaddingValues(
                 horizontal = if (clipCardEnable) OffsetLargeMax else 0.dp
@@ -81,27 +103,26 @@ fun <T : Any> BannerView(
             modifier = Modifier
                 .fillMaxSize()
                 .pointerInput(Unit) {
-                    forEachGesture {
-                        awaitPointerEventScope {
-                            // 当pageCount大于1，事件进入等待，就手动触发动画
-                            if (currentPageIndex == pagerState.currentPage &&
-                                pagerState.pageCount > 1
-                            ) {
-                                executeChangePage = !executeChangePage
-                            }
+                    awaitEachGesture {
+                        // 当pageCount大于1，事件进入等待，就手动触发动画 (手动滚动到当前页面，或下一个页面都重新触发动画)
+                        if ((currentPageIndex == pagerState.currentPage
+                                    || currentPageIndex == pagerState.currentPage - 1)
+                            && pagerState.pageCount > 1
+                        ) {
+                            executeChangePage = !executeChangePage
+                        }
 
-                            // 当前控件优先处理事件再传递给子组件
-                            val event = awaitPointerEvent(PointerEventPass.Initial)
-                            // 获取第一个触摸点
-                            val dragEvent =
-                                event.changes.firstOrNull() ?: return@awaitPointerEventScope
-                            // change事件已被消费
-                            if (dragEvent.isConsumed) return@awaitPointerEventScope
-                            when {
-                                dragEvent.changedToDown() -> {
-                                    // 记录当前页面索引
-                                    currentPageIndex = pagerState.currentPage
-                                }
+                        // 当前控件优先处理事件再传递给子组件
+                        val event = awaitPointerEvent(PointerEventPass.Initial)
+                        // 获取第一个触摸点
+                        val dragEvent =
+                            event.changes.firstOrNull() ?: return@awaitEachGesture
+                        // change事件已被消费
+                        if (dragEvent.isConsumed) return@awaitEachGesture
+                        when {
+                            dragEvent.changedToDown() -> {
+                                // 记录当前页面索引
+                                currentPageIndex = pagerState.currentPage
                             }
                         }
                     }

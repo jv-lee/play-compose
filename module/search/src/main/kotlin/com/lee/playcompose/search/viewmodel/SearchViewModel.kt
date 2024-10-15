@@ -162,6 +162,6 @@ sealed class SearchViewEvent : IViewEvent {
 sealed class SearchViewIntent : IViewIntent {
     data class NavigationSearchKey(val key: String) : SearchViewIntent()
     data class DeleteSearchHistory(val key: String) : SearchViewIntent()
-    object ClearSearchHistory : SearchViewIntent()
+    data object ClearSearchHistory : SearchViewIntent()
     data class ChangeSearchKey(val key: String) : SearchViewIntent()
 }

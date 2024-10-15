@@ -28,6 +28,7 @@ fun Project.appConfigure(
     projectConfigure()
 
     extensions.configure<BaseAppModuleExtension> {
+        namespace = BuildConfig.applicationId
         compileSdk = BuildConfig.compileSdk
 
         defaultConfig {

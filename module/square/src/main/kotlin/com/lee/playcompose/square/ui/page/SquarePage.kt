@@ -13,7 +13,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.paging.compose.itemsIndexed
 import com.lee.playcompose.base.bus.ChannelBus
 import com.lee.playcompose.base.extensions.LocalActivity
 import com.lee.playcompose.base.extensions.LocalNavController
@@ -102,8 +101,8 @@ private fun SquareContentList(
         item { HeaderSpacer() }
 
         // build square content item
-        itemsIndexed(contentList) { _, item ->
-            item ?: return@itemsIndexed
+        items(contentList.itemCount) { index ->
+            val item = contentList[index] ?: return@items
             ContentItem(item, onContentItemClick)
         }
     }

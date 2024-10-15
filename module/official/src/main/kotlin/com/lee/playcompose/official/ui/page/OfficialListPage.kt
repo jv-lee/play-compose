@@ -5,7 +5,6 @@ import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.itemsIndexed
 import com.lee.playcompose.common.entity.Tab
 import com.lee.playcompose.common.extensions.transformDetails
 import com.lee.playcompose.common.ui.composable.ContentItem
@@ -37,8 +36,8 @@ fun OfficialListPage(
         listState = listState
     ) {
         // build official content item
-        itemsIndexed(contentList) { _, item ->
-            item ?: return@itemsIndexed
+        items(contentList.itemCount) { index ->
+            val item = contentList[index] ?: return@items
             ContentItem(item, onItemClick = {
                 navController.navigateArgs(RoutePage.Details.route, it.transformDetails())
             })

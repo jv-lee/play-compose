@@ -33,16 +33,16 @@ class PagerSnapState {
 
     val isSwiping = mutableStateOf(false)
 
-    val firstVisibleItemIndex = mutableStateOf(0)
+    val firstVisibleItemIndex = mutableIntStateOf(0)
 
-    val offsetInfo = mutableStateOf(0)
+    val offsetInfo = mutableIntStateOf(0)
 
-    var currentIndex by mutableStateOf(0)
+    var currentIndex by mutableIntStateOf(0)
 
     internal fun updateScrollToItemPosition(itemPos: LazyListItemInfo?) {
         if (itemPos != null) {
-            this.offsetInfo.value = itemPos.offset
-            this.firstVisibleItemIndex.value = itemPos.index
+            this.offsetInfo.intValue = itemPos.offset
+            this.firstVisibleItemIndex.intValue = itemPos.index
         }
     }
 
@@ -64,7 +64,7 @@ class PagerSnapNestedScrollConnection(
 
     override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset =
         when (source) {
-            NestedScrollSource.Drag -> onScroll()
+            NestedScrollSource.UserInput -> onScroll()
             else -> Offset.Zero
         }
 
@@ -73,7 +73,7 @@ class PagerSnapNestedScrollConnection(
         available: Offset,
         source: NestedScrollSource
     ): Offset = when (source) {
-        NestedScrollSource.Drag -> onScroll()
+        NestedScrollSource.UserInput -> onScroll()
         else -> Offset.Zero
     }
 
@@ -151,8 +151,8 @@ fun ComposePagerSnapHelper(
 }
 
 private fun findPosition(state: PagerSnapState, itemOffsetPx: Int): Int {
-    val firstItemIndex = state.firstVisibleItemIndex.value
-    val firstItemOffset = abs(state.offsetInfo.value)
+    val firstItemIndex = state.firstVisibleItemIndex.intValue
+    val firstItemOffset = abs(state.offsetInfo.intValue)
 
     return when {
         firstItemOffset <= itemOffsetPx.div(2) -> firstItemIndex

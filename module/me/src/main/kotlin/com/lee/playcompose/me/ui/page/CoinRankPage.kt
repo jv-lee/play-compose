@@ -15,7 +15,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.itemsIndexed
 import com.lee.playcompose.base.extensions.LocalNavController
 import com.lee.playcompose.common.entity.CoinRank
 import com.lee.playcompose.common.ui.theme.*
@@ -64,8 +63,8 @@ private fun CoinRankContent(viewState: CoinRankViewState) {
         item { CoinRankTopHeader(data = viewState.topList) }
 
         // build coinRank content item
-        itemsIndexed(contentList) { _, item ->
-            item ?: return@itemsIndexed
+        items(contentList.itemCount) { index ->
+            val item = contentList[index] ?: return@items
             CoinRankItem(coinRank = item)
         }
     }
