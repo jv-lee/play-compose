@@ -3,8 +3,6 @@
  * @author jv.lee
  * @date 2022/4/13
  */
-@file:OptIn(ExperimentalPagingApi::class)
-
 package com.lee.playcompose.common.paging.extensions
 
 import androidx.lifecycle.ViewModel

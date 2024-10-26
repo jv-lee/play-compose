@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalCoilApi::class)
-
 package com.lee.playcompose.common.ui.composable
 
 import androidx.compose.foundation.Image
@@ -13,7 +11,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.extensions.getCategory

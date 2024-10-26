@@ -1,14 +1,19 @@
 package configures
 
-import appDependencies
-import build.*
+import build.BuildConfig
+import build.BuildDebug
+import build.BuildModules
+import build.BuildPlugin
+import build.BuildRelease
+import build.BuildTypes
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
-import configures.core.freeCompilerArgs
-import dependencies.Version
+import freeCompilerArgs
+import implementation
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
+import org.gradle.kotlin.dsl.project
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -17,35 +22,28 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
  * @author jv.lee
  * @date 2021/10/1
  */
-fun Project.appConfigure(
-    projectConfigure: Project.() -> Unit = {},
-    androidConfigure: BaseAppModuleExtension.() -> Unit = {}
-) {
-    plugins.apply(BuildPlugin.application)
-    plugins.apply(BuildPlugin.kotlin)
-    plugins.apply(BuildPlugin.kapt)
-
-    projectConfigure()
+fun Project.appConfigure(projectConfigure: Project.() -> Unit = {}) {
+    plugins.apply(BuildPlugin.APPLICATION)
+    plugins.apply(BuildPlugin.KOTLIN_ANDROID)
+    plugins.apply(BuildPlugin.KOTLIN_KAPT)
 
     extensions.configure<BaseAppModuleExtension> {
-        namespace = BuildConfig.applicationId
-        compileSdk = BuildConfig.compileSdk
+        namespace = BuildConfig.APPLICATION_ID
+        compileSdk = BuildConfig.COMPILE_SDK
 
         defaultConfig {
-            applicationId = BuildConfig.applicationId
+            applicationId = BuildConfig.APPLICATION_ID
 
-            minSdk = BuildConfig.minSdk
-            targetSdk = BuildConfig.targetSdk
-            versionName = BuildConfig.versionName
-            versionCode = BuildConfig.versionCode
+            minSdk = BuildConfig.MIN_SDK
+            targetSdk = BuildConfig.TARGET_SDK
+            versionName = BuildConfig.VERSION_NAME
+            versionCode = BuildConfig.VERSION_CODE
 
-            multiDexEnabled = BuildConfig.multiDex
-
-            //指定只支持中文字符
+            // 混淆配置 指定只支持中文字符
+            multiDexEnabled = BuildConfig.MULTI_DEX_ENABLE
             resourceConfigurations.add("zh-rCN")
 
             testInstrumentationRunner = BuildConfig.TEST_INSTRUMENTATION_RUNNER
-
             vectorDrawables {
                 useSupportLibrary = true
             }
@@ -62,10 +60,10 @@ fun Project.appConfigure(
         }
 
         composeOptions {
-            kotlinCompilerExtensionVersion = Version.composeCompiler
+            kotlinCompilerExtensionVersion = BuildConfig.COMPOSE_KOTLIN_COMPILER
         }
 
-        packagingOptions {
+        packaging {
             resources {
                 excludes += "/META-INF/{AL2.0,LGPL2.1}"
             }
@@ -78,10 +76,10 @@ fun Project.appConfigure(
         }
 
         val signingConfigs = signingConfigs.create(BuildTypes.RELEASE).apply {
-            storeFile(rootProject.file(BuildRelease.SigningConfig.storeFile))
-            storePassword(BuildRelease.SigningConfig.storePassword)
-            keyAlias(BuildRelease.SigningConfig.keyAlias)
-            keyPassword(BuildRelease.SigningConfig.keyPassword)
+            storeFile(rootProject.file(BuildRelease.SigningConfig.STORE_FILE))
+            storePassword(BuildRelease.SigningConfig.STORE_PASSWORD)
+            keyAlias(BuildRelease.SigningConfig.KEY_ALIAS)
+            keyPassword(BuildRelease.SigningConfig.KEY_PASSWORD)
         }
 
         buildTypes {
@@ -101,12 +99,24 @@ fun Project.appConfigure(
                 signingConfig = signingConfigs
             }
         }
-
-        androidConfigure()
     }
 
     dependencies {
-        appDependencies()
+        // 添加基础服务依赖
+        implementation(project(BuildModules.Library.SERVICE))
+
+        // 各业务组建基础依赖
+        implementation(project(BuildModules.Module.HOME))
+        implementation(project(BuildModules.Module.SQUARE))
+        implementation(project(BuildModules.Module.SYSTEM))
+        implementation(project(BuildModules.Module.ME))
+        implementation(project(BuildModules.Module.OFFICIAL))
+        implementation(project(BuildModules.Module.PROJECT))
+        implementation(project(BuildModules.Module.DETAILS))
+        implementation(project(BuildModules.Module.SEARCH))
+        implementation(project(BuildModules.Module.ACCOUNT))
+        implementation(project(BuildModules.Module.TODO))
     }
 
+    projectConfigure()
 }

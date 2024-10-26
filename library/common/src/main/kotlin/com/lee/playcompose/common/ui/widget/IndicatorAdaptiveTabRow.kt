@@ -68,15 +68,21 @@ fun <T> IndicatorAdaptiveTabRow(
         }
     ) {
         tabs.forEachIndexed { index, item ->
+            val tabTextColor =
+                if (index == selectedTabIndex) ColorsTheme.colors.accent else ColorsTheme.colors.primary
             Tab(
                 selected = index == selectedTabIndex,
                 onClick = { onTabClick(index) },
                 text = {
-                    Text(text = findTabText(item), onTextLayout = { textLayoutResult ->
-                        if (tabWidths.size > index) {
-                            tabWidths[index] = with(density) { textLayoutResult.size.width.toDp() }
-                        }
-                    })
+                    Text(
+                        text = findTabText(item),
+                        color = tabTextColor,
+                        onTextLayout = { textLayoutResult ->
+                            if (tabWidths.size > index) {
+                                tabWidths[index] =
+                                    with(density) { textLayoutResult.size.width.toDp() }
+                            }
+                        })
                 }
             )
         }

@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalFoundationApi::class)
-
 /*
  * 全局 CompositionLocalProvider 扩展函数
  * @author jv.lee
@@ -8,7 +6,6 @@
 package com.lee.playcompose.base.extensions
 
 import android.content.res.Configuration
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider

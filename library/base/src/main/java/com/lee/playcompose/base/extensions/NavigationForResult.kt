@@ -6,8 +6,13 @@
 package com.lee.playcompose.base.extensions
 
 import android.os.Bundle
-import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -28,10 +33,10 @@ inline fun <reified T> NavController.forResult(
     crossinline callback: (T?) -> Unit
 ) {
     val coroutine = rememberCoroutineScope()
-    var forResultVersion by remember { mutableStateOf(System.currentTimeMillis()) }
+    var forResultVersion by remember { mutableLongStateOf(System.currentTimeMillis()) }
 
-    currentBackStackEntry?.savedStateHandle?.getLiveData<Bundle>(key)
-        ?.observeAsState()?.value?.let {
+    currentBackStackEntry?.savedStateHandle?.getStateFlow<Bundle?>(key, null)
+        ?.collectAsState()?.value?.let {
             val version = it.getLong(NAVIGATION_FOR_RESULT_VERSION)
             val data = it.getValueOrNull<T>(NAVIGATION_FOR_RESULT_DATA)
             if (forResultVersion != version) {
@@ -63,16 +68,16 @@ fun <T> NavController.setResult(key: String, data: T) {
  * @param callback 回传数据回调接口，参数为回传Bundle数据
  */
 @Composable
-inline fun NavController.forResultBundle(
+inline fun NavController.ForResultBundle(
     key: String,
     delayTimeMillis: Long = 0,
     crossinline callback: (Bundle?) -> Unit
 ) {
     val coroutine = rememberCoroutineScope()
-    var forResultVersion by remember { mutableStateOf(System.currentTimeMillis()) }
+    var forResultVersion by remember { mutableLongStateOf(System.currentTimeMillis()) }
 
-    currentBackStackEntry?.savedStateHandle?.getLiveData<Bundle>(key)
-        ?.observeAsState()?.value?.let {
+    currentBackStackEntry?.savedStateHandle?.getStateFlow<Bundle?>(key, null)
+        ?.collectAsState()?.value?.let {
             val version = it.getLong(NAVIGATION_FOR_RESULT_VERSION)
             val data = it.getBundle(NAVIGATION_FOR_RESULT_DATA)
             if (forResultVersion != version) {

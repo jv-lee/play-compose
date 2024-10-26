@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalCoilApi::class)
-
 package com.lee.playcompose.common.ui.widget
 
 import androidx.compose.foundation.Image
@@ -34,7 +32,6 @@ import androidx.compose.ui.input.pointer.changedToDown
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.lee.playcompose.common.ui.theme.ColorsTheme
 import com.lee.playcompose.common.ui.theme.OffsetLargeMax

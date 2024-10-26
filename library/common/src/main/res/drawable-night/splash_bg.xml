@@ -13,6 +13,6 @@
         <bitmap
             android:antialias="true"
             android:gravity="bottom"
-            android:src="@mipmap/ic_splash_info" />
+            android:src="@mipmap/ic_splash_info_window" />
     </item>
 </layer-list>

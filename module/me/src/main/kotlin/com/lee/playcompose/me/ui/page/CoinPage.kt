@@ -2,7 +2,13 @@ package com.lee.playcompose.me.ui.page
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -19,21 +25,24 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.google.accompanist.systemuicontroller.SystemUiController
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.lee.playcompose.base.extensions.LocalActivity
 import com.lee.playcompose.base.extensions.LocalNavController
 import com.lee.playcompose.base.extensions.OnLifecycleEvent
 import com.lee.playcompose.base.extensions.activityViewModel
 import com.lee.playcompose.common.entity.AccountViewState
 import com.lee.playcompose.common.entity.CoinRecord
-import com.lee.playcompose.common.ui.theme.*
+import com.lee.playcompose.common.ui.theme.ColorsTheme
+import com.lee.playcompose.common.ui.theme.FontSizeTheme
+import com.lee.playcompose.common.ui.theme.OffsetLarge
+import com.lee.playcompose.common.ui.theme.OffsetMedium
+import com.lee.playcompose.common.ui.theme.OffsetRadiusMedium
+import com.lee.playcompose.common.ui.widget.RefreshList
 import com.lee.playcompose.common.ui.widget.header.ActionMode
 import com.lee.playcompose.common.ui.widget.header.AppBarViewContainer
-import com.lee.playcompose.common.ui.widget.RefreshList
 import com.lee.playcompose.common.viewmodel.ThemeViewModel
 import com.lee.playcompose.me.R
 import com.lee.playcompose.me.viewmodel.CoinViewModel
@@ -52,18 +61,20 @@ fun CoinPage(
     navController: NavController = LocalNavController.current,
     viewModel: CoinViewModel = viewModel(),
     themeViewModel: ThemeViewModel = activityViewModel(),
-    systemUiController: SystemUiController = rememberSystemUiController()
 ) {
+    val window = LocalActivity.current.window
+    val insetsController = WindowCompat.getInsetsController(window, window.decorView)
+
     val viewState = viewModel.viewStates
     val themeState = themeViewModel.viewStates
     val accountViewState = viewModel.accountService.getAccountViewStates(LocalActivity.current)
 
     OnLifecycleEvent(onEvent = { event ->
         if (event == Lifecycle.Event.ON_START) {
-            systemUiController.statusBarDarkContentEnabled = false
+            insetsController.isAppearanceLightStatusBars = false
         }
         if (event == Lifecycle.Event.ON_STOP) {
-            systemUiController.statusBarDarkContentEnabled = themeState.statusBarDarkContentEnabled
+            insetsController.isAppearanceLightStatusBars = themeState.statusBarDarkContentEnabled
         }
     })
 

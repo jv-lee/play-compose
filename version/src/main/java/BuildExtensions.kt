@@ -1,3 +1,7 @@
+import build.BuildConfig
+import build.BuildDebug
+import build.BuildRelease
+import build.BuildTypes
 import com.android.build.gradle.LibraryExtension
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import org.gradle.api.Action
@@ -8,6 +12,7 @@ import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.jetbrains.kotlin.gradle.plugin.KaptExtension
 import org.gradle.api.plugins.ExtensionAware
 import org.gradle.kotlin.dsl.accessors.runtime.addDependencyTo
+import org.gradle.kotlin.dsl.configure
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
 
 fun DependencyHandler.implementation(dependencyNotation: Any): Dependency? =
@@ -34,14 +39,26 @@ fun DependencyHandler.kapt(dependencyNotation: Any): Dependency? =
 fun DependencyHandler.releaseImplementation(dependencyNotation: Any): Dependency? =
     add("releaseImplementation", dependencyNotation)
 
+fun DependencyHandler.releaseApi(dependencyNotation: Any): Dependency? =
+    add("releaseApi", dependencyNotation)
+
 fun DependencyHandler.debugImplementation(dependencyNotation: Any): Dependency? =
     add("debugImplementation", dependencyNotation)
+
+fun DependencyHandler.debugApi(dependencyNotation: Any): Dependency? =
+    add("debugApi", dependencyNotation)
 
 fun DependencyHandler.testImplementation(dependencyNotation: Any): Dependency? =
     add("testImplementation", dependencyNotation)
 
+fun DependencyHandler.testApi(dependencyNotation: Any): Dependency? =
+    add("testApi", dependencyNotation)
+
 fun DependencyHandler.androidTestImplementation(dependencyNotation: Any): Dependency? =
     add("androidTestImplementation", dependencyNotation)
+
+fun DependencyHandler.androidTestApi(dependencyNotation: Any): Dependency? =
+    add("androidTestApi", dependencyNotation)
 
 fun Project.kapt(configure: Action<KaptExtension>): Unit =
     (this as ExtensionAware).extensions.configure("kapt", configure)
@@ -51,4 +68,44 @@ fun BaseAppModuleExtension.kotlinOptions(configure: Action<KotlinJvmOptions>): U
 
 fun Project.androidConfigure(configure: Action<LibraryExtension>) {
     extensions.configure("android", configure)
+}
+
+val freeCompilerArgs = mutableListOf(
+    "-Xskip-prerelease-check",
+    "-Xjvm-default=all",
+    "-opt-in=kotlin.RequiresOptIn",
+    "-opt-in=androidx.compose.material.ExperimentalMaterialApi",
+    "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
+    "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
+    "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
+    "-opt-in=androidx.paging.ExperimentalPagingApi",
+    "-opt-in=coil.annotation.ExperimentalCoilApi",
+)
+
+/**
+ * 项目公共参数配置依赖扩展
+ */
+fun Project.paramsConfigure() {
+
+    extensions.configure<LibraryExtension> {
+        buildFeatures {
+            buildConfig = true
+        }
+        buildTypes {
+            getByName(BuildTypes.DEBUG) {
+                buildConfigField("Integer", "VERSION_CODE", "${BuildConfig.VERSION_CODE}")
+
+                BuildDebug.paramsMap.onEach {
+                    buildConfigField("String", it.key, "\"" + it.value + "\"")
+                }
+            }
+            getByName(BuildTypes.RELEASE) {
+                buildConfigField("Integer", "VERSION_CODE", "${BuildConfig.VERSION_CODE}")
+
+                BuildRelease.paramsMap.onEach {
+                    buildConfigField("String", it.key, "\"" + it.value + "\"")
+                }
+            }
+        }
+    }
 }

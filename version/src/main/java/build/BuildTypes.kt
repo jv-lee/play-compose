@@ -24,10 +24,10 @@ object BuildDebug : BuildTypes {
     override val paramsMap = mapOf(Pair("BASE_URI", "https://www.wanandroid.com"))
 
     object SigningConfig {
-        const val storeFile = "pioneer.jks"
-        const val storePassword = "123456"
-        const val keyAlias = "pioneer"
-        const val keyPassword = "123456"
+        const val STORE_FILE = "pioneer.jks"
+        const val STORE_PASSWORD = "123456"
+        const val KEY_ALIAS = "pioneer"
+        const val KEY_PASSWORD = "123456"
     }
 }
 
@@ -37,9 +37,9 @@ object BuildRelease : BuildTypes {
     override val paramsMap = mapOf(Pair("BASE_URI", "https://www.wanandroid.com"))
 
     object SigningConfig {
-        const val storeFile = "pioneer.jks"
-        const val storePassword = "123456"
-        const val keyAlias = "pioneer"
-        const val keyPassword = "123456"
+        const val STORE_FILE = "pioneer.jks"
+        const val STORE_PASSWORD = "123456"
+        const val KEY_ALIAS = "pioneer"
+        const val KEY_PASSWORD = "123456"
     }
 }

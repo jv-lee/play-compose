@@ -85,7 +85,7 @@ data class SplashViewState(
     val splashAdVisible: Boolean = false,
     val timeText: String = "",
     val splashLogoRes: Int = CR.mipmap.ic_splash_logo,
-    val splashInfoRes: Int = CR.mipmap.ic_splash_info
+    val splashInfoRes: Int = CR.mipmap.ic_splash_info_window
 ) : IViewState
 
 sealed class SplashViewIntent : IViewIntent {
