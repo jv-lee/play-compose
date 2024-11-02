@@ -3,7 +3,7 @@
  * @author jv.lee
  * @date 2022/3/18
  */
-package com.lee.playcompose.base.extensions
+package com.lee.playcompose.base.ktx
 
 import android.content.res.Configuration
 import androidx.compose.foundation.LocalOverscrollConfiguration

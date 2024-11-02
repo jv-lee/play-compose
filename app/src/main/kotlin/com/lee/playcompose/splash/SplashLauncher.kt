@@ -5,9 +5,9 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -20,8 +20,8 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.lee.playcompose.R
-import com.lee.playcompose.base.extensions.FadeAnimatedVisibility
-import com.lee.playcompose.base.extensions.LocalActivity
+import com.lee.playcompose.base.ktx.FadeAnimatedVisibility
+import com.lee.playcompose.base.ktx.LocalActivity
 import com.lee.playcompose.common.ui.theme.ColorsTheme
 import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.theme.OffsetRadiusMedium
@@ -109,7 +109,7 @@ private fun SplashAdView(viewState: SplashViewState, onNextClick: () -> Unit) {
             Button(
                 onClick = { onNextClick() },
                 shape = RoundedCornerShape(OffsetRadiusMedium),
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color(0x1a000000)),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0x1a000000)),
                 modifier = Modifier
                     .align(Alignment.TopEnd)
                     .padding(top = OffsetSmall, end = OffsetLarge + paddingEnd)

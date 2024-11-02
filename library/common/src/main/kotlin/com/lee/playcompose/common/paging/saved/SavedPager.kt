@@ -7,8 +7,8 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.filter
 import com.lee.playcompose.base.cache.CacheManager
-import com.lee.playcompose.base.extensions.getCache
-import com.lee.playcompose.base.extensions.putCache
+import com.lee.playcompose.base.ktx.getCache
+import com.lee.playcompose.base.ktx.putCache
 import com.lee.playcompose.common.entity.PageData
 import com.lee.playcompose.common.paging.extensions.pager
 import kotlinx.coroutines.flow.Flow

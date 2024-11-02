@@ -5,7 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -22,10 +22,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.lee.playcompose.base.extensions.LocalNavController
-import com.lee.playcompose.base.extensions.forResult
+import com.lee.playcompose.base.ktx.LocalNavController
+import com.lee.playcompose.base.ktx.forResult
 import com.lee.playcompose.common.entity.TodoData
-import com.lee.playcompose.common.extensions.toast
+import com.lee.playcompose.common.ktx.toast
 import com.lee.playcompose.common.ui.callback.PageCallbackHandler
 import com.lee.playcompose.common.ui.composable.HorizontallySpacer
 import com.lee.playcompose.common.ui.theme.*

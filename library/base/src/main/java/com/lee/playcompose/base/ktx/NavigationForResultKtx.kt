@@ -3,7 +3,7 @@
  * @author jv.lee
  * @date 2022/4/11
  */
-package com.lee.playcompose.base.extensions
+package com.lee.playcompose.base.ktx
 
 import android.os.Bundle
 import androidx.compose.runtime.Composable

@@ -2,9 +2,9 @@ package com.lee.playcompose.common.ui.composable
 
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -51,12 +51,14 @@ fun AppTextField(
         keyboardActions = keyboardActions,
         keyboardOptions = keyboardOptions,
         leadingIcon = leadingIcon,
-        colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = Color.Transparent,
+        colors = TextFieldDefaults.colors().copy(
+            focusedContainerColor = Color.Transparent,
+            unfocusedContainerColor = Color.Transparent,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             cursorColor = ColorsTheme.colors.accent,
-            textColor = ColorsTheme.colors.accent
+            focusedTextColor = ColorsTheme.colors.accent,
+            unfocusedTextColor = ColorsTheme.colors.accent,
         ),
         placeholder = {
             Text(

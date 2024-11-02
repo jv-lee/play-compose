@@ -6,7 +6,7 @@ import com.google.auto.service.AutoService
 import com.lee.playcompose.account.constants.Constants
 import com.lee.playcompose.account.viewmodel.AccountViewModel
 import com.lee.playcompose.base.cache.CacheManager
-import com.lee.playcompose.base.extensions.getCache
+import com.lee.playcompose.base.ktx.getCache
 import com.lee.playcompose.base.tools.PreferencesTools
 import com.lee.playcompose.common.entity.AccountData
 import com.lee.playcompose.common.entity.AccountViewIntent

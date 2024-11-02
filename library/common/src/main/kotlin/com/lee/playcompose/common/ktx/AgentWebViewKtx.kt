@@ -3,7 +3,7 @@
  * @author jv.lee
  * @date 2021/11/18
  */
-package com.lee.playcompose.common.extensions
+package com.lee.playcompose.common.ktx
 
 import android.app.Activity
 import android.view.KeyEvent

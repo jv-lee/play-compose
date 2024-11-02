@@ -7,10 +7,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.lee.playcompose.base.extensions.LocalNavController
+import com.lee.playcompose.base.ktx.LocalNavController
 import com.lee.playcompose.common.entity.Content
-import com.lee.playcompose.common.extensions.toast
-import com.lee.playcompose.common.extensions.transformDetails
+import com.lee.playcompose.common.ktx.toast
+import com.lee.playcompose.common.ktx.transformDetails
 import com.lee.playcompose.common.ui.composable.ActionTextItem
 import com.lee.playcompose.common.ui.composable.LoadingDialog
 import com.lee.playcompose.common.ui.widget.RefreshList
@@ -18,8 +18,8 @@ import com.lee.playcompose.common.ui.widget.SlidingPaneState
 import com.lee.playcompose.common.ui.widget.header.AppBarViewContainer
 import com.lee.playcompose.common.ui.widget.rememberSlidingPaneState
 import com.lee.playcompose.me.R
-import com.lee.playcompose.me.viewmodel.CollectViewIntent
 import com.lee.playcompose.me.viewmodel.CollectViewEvent
+import com.lee.playcompose.me.viewmodel.CollectViewIntent
 import com.lee.playcompose.me.viewmodel.CollectViewModel
 import com.lee.playcompose.me.viewmodel.CollectViewState
 import com.lee.playcompose.router.RoutePage
@@ -53,19 +53,20 @@ fun CollectPage(
 
     AppBarViewContainer(
         title = stringResource(id = R.string.me_item_collect),
-        navigationClick = { navController.popBackStack() }
-    ) {
-        CollectContent(
-            viewState = viewState,
-            slidingPaneState = slidingPaneState,
-            onItemClick = {
-                navController.navigateArgs(RoutePage.Details.route, it.transformDetails())
-            },
-            onItemDelete = {
-                viewModel.dispatch(CollectViewIntent.RequestUnCollect(it))
-            }
-        )
-    }
+        navigationClick = { navController.popBackStack() },
+        content = {
+            CollectContent(
+                viewState = viewState,
+                slidingPaneState = slidingPaneState,
+                onItemClick = {
+                    navController.navigateArgs(RoutePage.Details.route, it.transformDetails())
+                },
+                onItemDelete = {
+                    viewModel.dispatch(CollectViewIntent.RequestUnCollect(it))
+                }
+            )
+        }
+    )
 }
 
 @Composable

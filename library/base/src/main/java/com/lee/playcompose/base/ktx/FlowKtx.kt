@@ -3,7 +3,7 @@
  * @author jv.lee
  * @date 2022/8/11
  */
-package com.lee.playcompose.base.extensions
+package com.lee.playcompose.base.ktx
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

@@ -7,18 +7,16 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.playcompose.base.cache.CacheManager
-import com.lee.playcompose.base.extensions.cacheFlow
+import com.lee.playcompose.base.ktx.cacheFlow
 import com.lee.playcompose.common.entity.Banner
 import com.lee.playcompose.common.entity.Content
-import com.lee.playcompose.common.extensions.checkData
-import com.lee.playcompose.common.extensions.createApi
+import com.lee.playcompose.common.ktx.checkData
+import com.lee.playcompose.common.ktx.createApi
 import com.lee.playcompose.common.paging.saved.SavedPager
 import com.lee.playcompose.common.paging.saved.savedPager
 import com.lee.playcompose.home.constants.Constants.CACHE_KEY_HOME_CONTENT
 import com.lee.playcompose.home.model.api.ApiService
 import com.lee.playcompose.home.model.entity.HomeCategory
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 /**
@@ -51,14 +49,10 @@ class HomeViewModel : ViewModel() {
         viewModelScope.launch {
             cacheManager.cacheFlow(CACHE_KEY_HOME_CONTENT) {
                 api.getBannerDataAsync().data
-            }.onStart {
-                viewStates = viewStates.copy(isRefreshing = true)
-            }.catch {
-                viewStates = viewStates.copy(isRefreshing = false)
             }.collect { data ->
                 val categoryList = HomeCategory.getHomeCategory()
                 viewStates =
-                    viewStates.copy(banners = data, category = categoryList, isRefreshing = false)
+                    viewStates.copy(banners = data, category = categoryList)
             }
         }
     }
@@ -69,7 +63,6 @@ class HomeViewModel : ViewModel() {
 }
 
 data class HomeViewState(
-    val isRefreshing: Boolean = false,
     val isLoop: Boolean = false,
     val savedPager: SavedPager<Content>,
     val banners: List<Banner> = emptyList(),

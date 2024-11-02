@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.lee.playcompose.base.extensions.onTap
+import com.lee.playcompose.base.ktx.onTap
 import com.lee.playcompose.common.ui.theme.ColorsTheme
 import com.lee.playcompose.common.ui.theme.OffsetRadiusMedium
 import com.lee.playcompose.common.ui.widget.SelectItemStyle

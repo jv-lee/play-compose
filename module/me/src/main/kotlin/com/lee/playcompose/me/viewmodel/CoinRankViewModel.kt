@@ -11,8 +11,8 @@ import com.lee.playcompose.common.constants.ApiConstants
 import com.lee.playcompose.common.entity.CoinRank
 import com.lee.playcompose.common.entity.DetailsData
 import com.lee.playcompose.common.entity.PageData
-import com.lee.playcompose.common.extensions.checkData
-import com.lee.playcompose.common.extensions.createApi
+import com.lee.playcompose.common.ktx.checkData
+import com.lee.playcompose.common.ktx.createApi
 import com.lee.playcompose.common.paging.extensions.pager
 import com.lee.playcompose.me.R
 import com.lee.playcompose.me.model.api.ApiService

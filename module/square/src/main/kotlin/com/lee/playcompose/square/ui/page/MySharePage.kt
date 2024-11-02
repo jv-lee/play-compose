@@ -7,11 +7,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.lee.playcompose.base.extensions.LocalNavController
-import com.lee.playcompose.base.extensions.forResult
+import com.lee.playcompose.base.ktx.LocalNavController
+import com.lee.playcompose.base.ktx.forResult
 import com.lee.playcompose.common.entity.Content
-import com.lee.playcompose.common.extensions.toast
-import com.lee.playcompose.common.extensions.transformDetails
+import com.lee.playcompose.common.ktx.toast
+import com.lee.playcompose.common.ktx.transformDetails
 import com.lee.playcompose.common.ui.composable.ActionTextItem
 import com.lee.playcompose.common.ui.composable.LoadingDialog
 import com.lee.playcompose.common.ui.widget.RefreshList
@@ -22,8 +22,8 @@ import com.lee.playcompose.common.ui.widget.rememberSlidingPaneState
 import com.lee.playcompose.router.RoutePage
 import com.lee.playcompose.router.navigateArgs
 import com.lee.playcompose.square.R
-import com.lee.playcompose.square.viewmodel.MyShareViewIntent
 import com.lee.playcompose.square.viewmodel.MyShareViewEvent
+import com.lee.playcompose.square.viewmodel.MyShareViewIntent
 import com.lee.playcompose.square.viewmodel.MyShareViewModel
 import com.lee.playcompose.square.viewmodel.MyShareViewState
 
@@ -69,19 +69,20 @@ fun MySharePage(
         navigationClick = { navController.popBackStack() },
         actionClick = {
             navController.navigateArgs(RoutePage.Square.CreateShare.route)
+        },
+        content = {
+            MyShareContent(
+                viewState = viewState,
+                slidingPaneState = slidingPaneState,
+                onItemClick = {
+                    navController.navigateArgs(RoutePage.Details.route, it.transformDetails())
+                },
+                onItemDelete = {
+                    viewModel.dispatch(MyShareViewIntent.RequestDeleteShare(it))
+                }
+            )
         }
-    ) {
-        MyShareContent(
-            viewState = viewState,
-            slidingPaneState = slidingPaneState,
-            onItemClick = {
-                navController.navigateArgs(RoutePage.Details.route, it.transformDetails())
-            },
-            onItemDelete = {
-                viewModel.dispatch(MyShareViewIntent.RequestDeleteShare(it))
-            }
-        )
-    }
+    )
 }
 
 @Composable

@@ -9,8 +9,8 @@ import com.lee.playcompose.base.core.ApplicationExtensions.app
 import com.lee.playcompose.common.constants.ApiConstants
 import com.lee.playcompose.common.entity.CoinRecord
 import com.lee.playcompose.common.entity.DetailsData
-import com.lee.playcompose.common.extensions.checkData
-import com.lee.playcompose.common.extensions.createApi
+import com.lee.playcompose.common.ktx.checkData
+import com.lee.playcompose.common.ktx.createApi
 import com.lee.playcompose.common.paging.saved.SavedPager
 import com.lee.playcompose.common.paging.saved.savedPager
 import com.lee.playcompose.me.R

@@ -6,8 +6,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.lee.playcompose.common.entity.NavigationItem
-import com.lee.playcompose.common.extensions.checkData
-import com.lee.playcompose.common.extensions.createApi
+import com.lee.playcompose.common.ktx.checkData
+import com.lee.playcompose.common.ktx.createApi
 import com.lee.playcompose.common.paging.saved.SavedSinglePager
 import com.lee.playcompose.common.paging.saved.singleSavedPager
 import com.lee.playcompose.system.model.api.ApiService

@@ -4,10 +4,13 @@ import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CardElevation
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -39,7 +42,7 @@ fun FloatingBox(
     @ReindexType type: Int = ReindexType.MOVE,
     limitBound: Boolean = false,
     shape: Shape = MaterialTheme.shapes.medium,
-    content: @Composable BoxScope.() -> Unit
+    content: @Composable ColumnScope.() -> Unit
 ) {
     val density = LocalDensity.current.density
     var scope by remember {
@@ -66,9 +69,8 @@ fun FloatingBox(
     ) {
         Card(
             shape = shape,
-            backgroundColor = Color.Transparent,
-            contentColor = Color.Transparent,
-            elevation = 0.dp,
+            colors = CardDefaults.cardColors().copy(containerColor = Color.Transparent),
+            elevation = CardDefaults.cardElevation(),
             modifier = modifier
                 .onGloballyPositioned {
                     // 记录当前view offset x y 位于屏幕坐标

@@ -1,6 +1,6 @@
 package com.lee.playcompose.todo.viewmodel
 
-import androidx.compose.material.BottomNavigationDefaults
+import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -41,6 +41,7 @@ class TodoViewModel : ViewModel() {
             is TodoViewIntent.ChangeTypeDialogVisible -> {
                 changeTypeDialogVisible(intent.visible)
             }
+
             is TodoViewIntent.ChangeTypeSelected -> {
                 changeTypeSelected(intent.type)
             }
@@ -69,7 +70,7 @@ class TodoViewModel : ViewModel() {
     private fun navigationVisible() {
         viewModelScope.launch {
             delay(300)
-            viewStates = viewStates.copy(navigationElevation = BottomNavigationDefaults.Elevation)
+            viewStates = viewStates.copy(navigationElevation = NavigationBarDefaults.Elevation)
         }
     }
 }

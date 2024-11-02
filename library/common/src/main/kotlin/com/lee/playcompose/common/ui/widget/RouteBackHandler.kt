@@ -4,9 +4,9 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
-import com.lee.playcompose.base.extensions.LocalActivity
+import com.lee.playcompose.base.ktx.LocalActivity
 import com.lee.playcompose.common.R
-import com.lee.playcompose.common.extensions.toast
+import com.lee.playcompose.common.ktx.toast
 
 /**
  * 拦截back事件 双击回退处理

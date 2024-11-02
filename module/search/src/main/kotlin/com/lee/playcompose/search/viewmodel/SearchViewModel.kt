@@ -2,14 +2,14 @@ package com.lee.playcompose.search.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import com.lee.playcompose.base.cache.CacheManager
-import com.lee.playcompose.base.extensions.cacheFlow
+import com.lee.playcompose.base.ktx.cacheFlow
 import com.lee.playcompose.base.viewmodel.BaseMVIViewModel
 import com.lee.playcompose.base.viewmodel.IViewEvent
 import com.lee.playcompose.base.viewmodel.IViewIntent
 import com.lee.playcompose.base.viewmodel.IViewState
 import com.lee.playcompose.common.entity.SearchHistory
-import com.lee.playcompose.common.extensions.checkData
-import com.lee.playcompose.common.extensions.createApi
+import com.lee.playcompose.common.ktx.checkData
+import com.lee.playcompose.common.ktx.createApi
 import com.lee.playcompose.search.constants.Constants
 import com.lee.playcompose.search.model.api.ApiService
 import com.lee.playcompose.search.model.db.SearchDatabase

@@ -18,9 +18,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -31,7 +31,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -39,13 +38,14 @@ import com.lee.playcompose.R
 import com.lee.playcompose.base.bus.ChannelBus
 import com.lee.playcompose.base.bus.ChannelBus.Companion.post
 import com.lee.playcompose.base.core.ApplicationExtensions.app
-import com.lee.playcompose.base.extensions.LocalActivity
-import com.lee.playcompose.base.extensions.LocalNavController
+import com.lee.playcompose.base.ktx.LocalActivity
+import com.lee.playcompose.base.ktx.LocalNavController
 import com.lee.playcompose.common.BuildConfig
 import com.lee.playcompose.common.entity.LoginEvent
 import com.lee.playcompose.common.entity.NavigationSelectEvent
 import com.lee.playcompose.common.entity.NetworkErrorEvent
-import com.lee.playcompose.common.extensions.toast
+import com.lee.playcompose.common.ktx.toast
+import com.lee.playcompose.common.ui.composable.AppNavigationBar
 import com.lee.playcompose.common.ui.composable.NetworkErrorAlert
 import com.lee.playcompose.common.ui.theme.ColorsTheme
 import com.lee.playcompose.common.ui.widget.FloatingBox
@@ -93,6 +93,31 @@ fun Activity.RouteNavigator(
         }
     }
 
+    // 事件处理
+    LaunchedEffect(Unit) {
+        viewModel.viewEvents.collect { event ->
+            when (event) {
+                // 导航到目标页面 - 主页tab切换
+                is RouteNavigationViewEvent.OnNavigationItem -> {
+                    navController.navigate(event.route) {
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                }
+
+                // 双击navigationItem 发送事件至目标页面处理相应逻辑
+                is RouteNavigationViewEvent.OnDoubleClickNavigationItem -> {
+                    ChannelBus.getChannel<NavigationSelectEvent>()?.post(
+                        NavigationSelectEvent(event.route)
+                    )
+                }
+            }
+        }
+    }
+
     Box(
         modifier = Modifier
             .background(ColorsTheme.colors.background)
@@ -107,20 +132,21 @@ fun Activity.RouteNavigator(
 
         // 首页导航navigationBar
         CheckNavigation(currentDestination?.route) { hasClick ->
-            BottomNavigation(backgroundColor = ColorsTheme.colors.item, elevation = 3.dp) {
-                viewModel.viewStates.tabItems.forEachIndexed { _, item ->
+            AppNavigationBar(containerColor = ColorsTheme.colors.item) {
+                viewModel.viewStates().tabItems.forEachIndexed { _, item ->
                     val isSelect =
                         currentDestination?.hierarchy?.any { it.route == item.route } == true
 
-                    BottomNavigationItem(
+                    NavigationBarItem(
+                        colors = NavigationBarItemDefaults.colors()
+                            .copy(selectedIndicatorColor = Color.Transparent),
                         selected = isSelect,
                         icon = {
                             NavigationIcon(isSelected = isSelect, item = item)
                         },
                         onClick = {
-                            bottomItemNavigation(hasClick, item.route, navController)
-                            ChannelBus.getChannel<NavigationSelectEvent>()?.post(
-                                NavigationSelectEvent(item.route)
+                            viewModel.dispatch(
+                                RouteNavigationViewIntent.NavigationItemClick(hasClick, item.route)
                             )
                         }
                     )
@@ -131,7 +157,7 @@ fun Activity.RouteNavigator(
 
     // 添加全局View
     FloatingView()
-    NetworkErrorAlert(viewModel.viewStates.networkVisible)
+    NetworkErrorAlert(viewModel.viewStates().networkVisible)
 }
 
 @Composable
@@ -169,21 +195,6 @@ private fun BoxScope.CheckNavigation(
         )
     ) {
         content(visible)
-    }
-}
-
-/**
- * bottomItem 导航
- */
-private fun bottomItemNavigation(hasClick: Boolean, route: String, navController: NavController) {
-    if (hasClick) {
-        navController.navigate(route) {
-            popUpTo(navController.graph.findStartDestination().id) {
-                saveState = true
-            }
-            launchSingleTop = true
-            restoreState = true
-        }
     }
 }
 

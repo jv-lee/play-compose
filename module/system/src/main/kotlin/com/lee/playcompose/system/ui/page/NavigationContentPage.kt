@@ -18,8 +18,9 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.Text
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableIntStateOf
@@ -31,13 +32,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.lee.playcompose.base.extensions.LocalNavController
+import com.lee.playcompose.base.ktx.LocalNavController
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.entity.NavigationItem
-import com.lee.playcompose.common.extensions.transformDetails
+import com.lee.playcompose.common.ktx.transformDetails
 import com.lee.playcompose.common.ui.callback.PageCallbackHandler
 import com.lee.playcompose.common.ui.theme.ColorsTheme
 import com.lee.playcompose.common.ui.theme.FontSizeTheme
@@ -158,8 +158,7 @@ private fun NavigationTabItem(
     val textColor = if (isSelected) ColorsTheme.colors.onFocus else ColorsTheme.colors.primary
     val tabColor = if (isSelected) ColorsTheme.colors.focus else Color.Transparent
     Card(
-        elevation = 0.dp,
-        backgroundColor = tabColor,
+        colors = CardDefaults.cardColors().copy(containerColor = tabColor),
         shape = RoundedCornerShape(SystemTabRadius),
         modifier = Modifier
             .fillMaxWidth()
@@ -205,8 +204,7 @@ private fun NavigationContentFlowList(item: NavigationItem, itemClick: (Content)
     FlowRow {
         item.articles.forEach {
             Card(
-                elevation = 0.dp,
-                backgroundColor = ColorsTheme.colors.item,
+                colors = CardDefaults.cardColors().copy(containerColor = ColorsTheme.colors.item),
                 shape = RoundedCornerShape(OffsetRadiusSmall),
                 modifier = Modifier.padding(OffsetSmall)
             ) {

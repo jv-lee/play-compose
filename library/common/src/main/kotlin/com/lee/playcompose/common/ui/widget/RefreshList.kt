@@ -18,16 +18,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Text
-import androidx.compose.material.pullrefresh.PullRefreshIndicator
-import androidx.compose.material.pullrefresh.pullRefresh
-import androidx.compose.material.pullrefresh.rememberPullRefreshState
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
+import androidx.compose.material3.pulltorefresh.pullToRefresh
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -35,7 +32,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
-import com.lee.playcompose.base.extensions.delayState
+import com.lee.playcompose.base.ktx.delayState
 import com.lee.playcompose.common.R
 import com.lee.playcompose.common.ui.composable.FooterSpacer
 import com.lee.playcompose.common.ui.theme.ColorsTheme
@@ -53,15 +50,15 @@ import com.lee.playcompose.common.ui.theme.ListStateItemHeight
  * @author jv.lee
  * @date 2022/2/28
  */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun <T : Any> RefreshList(
     lazyPagingItems: LazyPagingItems<T>,
-    isRefreshing: Boolean = false,
     swipeEnable: Boolean = true,
     navigationPadding: Boolean = false,
-    onRefresh: (() -> Unit) = {},
     indicatorPadding: PaddingValues = PaddingValues(0.dp),
     listState: LazyListState = rememberLazyListState(),
+    onRefresh: (() -> Unit) = {},
     itemContent: LazyListScope.() -> Unit
 ) {
     // loadPage Load.
@@ -91,18 +88,20 @@ fun <T : Any> RefreshList(
         return
     }
 
-    var isRefreshingState by remember { mutableStateOf(isRefreshing) }
-    val pullRefreshState = rememberPullRefreshState(
-        refreshing = isRefreshingState,
-        onRefresh = {
-            onRefresh()
-            lazyPagingItems.refresh()
-        })
+    val refreshState = rememberPullToRefreshState()
+    val isRefreshing = (lazyPagingItems.loadState.refresh is LoadState.Loading) && swipeEnable
 
-    isRefreshingState =
-        ((lazyPagingItems.loadState.refresh is LoadState.Loading) || isRefreshing) && swipeEnable
-
-    Box(modifier = Modifier.pullRefresh(state = pullRefreshState)) {
+    Box(
+        modifier = Modifier.pullToRefresh(
+            state = refreshState,
+            isRefreshing = isRefreshing,
+            onRefresh = {
+                onRefresh()
+                lazyPagingItems.refresh()
+            },
+            enabled = swipeEnable
+        )
+    ) {
 
         // build list
         LazyColumn(
@@ -114,7 +113,7 @@ fun <T : Any> RefreshList(
             itemContent()
 
             // item state
-            if (!isRefreshingState) {
+            if (!isRefreshing) {
                 item {
                     lazyPagingItems.apply {
                         when (loadState.append) {
@@ -137,13 +136,12 @@ fun <T : Any> RefreshList(
         }
 
         // refresh indicator
-        PullRefreshIndicator(
-            refreshing = isRefreshingState,
-            state = pullRefreshState,
+        PullToRefreshDefaults.Indicator(
             modifier = Modifier
                 .align(Alignment.TopCenter)
-                .padding(indicatorPadding)
-
+                .padding(indicatorPadding),
+            isRefreshing = isRefreshing,
+            state = refreshState,
         )
     }
 }

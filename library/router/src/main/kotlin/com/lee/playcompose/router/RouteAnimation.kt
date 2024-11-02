@@ -48,5 +48,5 @@ fun popEnterZoom() = scaleIn(initialScale = 1.05f, animationSpec = tween(animati
 
 fun popExitAlphaHide() = fadeOut(targetAlpha = 0f, animationSpec = tween(animationDuration))
 
-fun exitDefault() = fadeOut(targetAlpha = 1f, animationSpec = tween(animationDuration))
-fun enterDefault() = fadeIn(initialAlpha = 1f, animationSpec = tween(animationDuration))
+fun exitDefault() = fadeOut(targetAlpha = 1f, animationSpec = tween(0))
+fun enterDefault() = fadeIn(initialAlpha = 1f, animationSpec = tween(0))

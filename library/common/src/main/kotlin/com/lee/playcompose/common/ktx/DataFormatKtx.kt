@@ -3,7 +3,7 @@
  * @author jv.lee
  * @date 2022/3/2
  */
-package com.lee.playcompose.common.extensions
+package com.lee.playcompose.common.ktx
 
 import androidx.core.text.HtmlCompat
 import com.lee.playcompose.base.utils.TimeUtil

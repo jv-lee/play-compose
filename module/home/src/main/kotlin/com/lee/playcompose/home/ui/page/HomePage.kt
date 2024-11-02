@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -18,13 +18,13 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.lee.playcompose.base.bus.ChannelBus
-import com.lee.playcompose.base.extensions.LocalNavController
-import com.lee.playcompose.base.extensions.ScreenSizeChange
+import com.lee.playcompose.base.ktx.LocalNavController
+import com.lee.playcompose.base.ktx.ScreenSizeChange
 import com.lee.playcompose.common.entity.Banner
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.entity.ContentVisibleEvent
 import com.lee.playcompose.common.entity.NavigationSelectEvent
-import com.lee.playcompose.common.extensions.transformDetails
+import com.lee.playcompose.common.ktx.transformDetails
 import com.lee.playcompose.common.ui.composable.CardItemContainer
 import com.lee.playcompose.common.ui.composable.ContentItem
 import com.lee.playcompose.common.ui.composable.HeaderSpacer
@@ -115,12 +115,10 @@ private fun HomeContentList(
     val contentList = viewState.savedPager.getLazyPagingItems()
     val bannerList = viewState.banners
     val categoryList = viewState.category
-    val isRefreshing = viewState.isRefreshing
     val listState = if (contentList.itemCount > 0) viewState.listState else LazyListState()
 
     RefreshList(
         lazyPagingItems = contentList,
-        isRefreshing = isRefreshing,
         listState = listState,
         navigationPadding = true,
         indicatorPadding = WindowInsets(

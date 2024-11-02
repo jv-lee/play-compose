@@ -15,7 +15,7 @@ import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Surface
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -38,6 +38,7 @@ import com.lee.playcompose.common.ui.theme.OffsetLargeMax
 import com.lee.playcompose.common.ui.theme.OffsetMedium
 import com.lee.playcompose.common.ui.theme.OffsetRadiusMedium
 import com.lee.playcompose.common.ui.theme.OffsetSmall
+import com.lee.playcompose.common.ui.theme.ShadowSmall
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -164,7 +165,7 @@ private fun BannerItemContainer(
                 .fillMaxSize(),
             shape = RoundedCornerShape(OffsetRadiusMedium),
             color = ColorsTheme.colors.background,
-            elevation = OffsetSmall,
+            shadowElevation = ShadowSmall,
             content = content
         )
     } else {

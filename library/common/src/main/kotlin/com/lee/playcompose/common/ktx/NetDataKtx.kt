@@ -3,7 +3,7 @@
  * @author jv.lee
  * @date 2021/11/25
  */
-package com.lee.playcompose.common.extensions
+package com.lee.playcompose.common.ktx
 
 import com.lee.playcompose.common.constants.ApiConstants
 import com.lee.playcompose.common.constants.ApiConstants.REQUEST_TOKEN_ERROR_MESSAGE

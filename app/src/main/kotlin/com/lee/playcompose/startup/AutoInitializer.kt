@@ -6,7 +6,7 @@ import com.lee.playcompose.base.cache.CacheManager
 import com.lee.playcompose.base.net.HttpManager
 import com.lee.playcompose.base.tools.DarkModeTools
 import com.lee.playcompose.common.BuildConfig
-import com.lee.playcompose.common.extensions.setCommonInterceptor
+import com.lee.playcompose.common.ktx.setCommonInterceptor
 import com.lee.playcompose.common.paging.db.RemoteCacheDatabase
 import com.lee.playcompose.service.helper.ApplicationModuleService
 import kotlinx.coroutines.CoroutineScope

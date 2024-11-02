@@ -2,7 +2,7 @@ package com.lee.playcompose.common.ui.composable
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -13,10 +13,10 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import coil.compose.rememberImagePainter
 import com.lee.playcompose.common.entity.Content
-import com.lee.playcompose.common.extensions.getCategory
-import com.lee.playcompose.common.extensions.getDateFormat
-import com.lee.playcompose.common.extensions.getDescription
-import com.lee.playcompose.common.extensions.getTitle
+import com.lee.playcompose.common.ktx.getCategory
+import com.lee.playcompose.common.ktx.getDateFormat
+import com.lee.playcompose.common.ktx.getDescription
+import com.lee.playcompose.common.ktx.getTitle
 import com.lee.playcompose.common.ui.theme.*
 
 /**

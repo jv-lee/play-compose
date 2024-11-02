@@ -1,27 +1,33 @@
 package com.lee.playcompose.todo.ui.page
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.lee.playcompose.base.extensions.LocalNavController
+import com.lee.playcompose.base.ktx.LocalNavController
 import com.lee.playcompose.common.ui.callback.PageCallbackHandler
 import com.lee.playcompose.common.ui.callback.rememberPageCallbackHandler
+import com.lee.playcompose.common.ui.composable.AppNavigationBar
 import com.lee.playcompose.common.ui.theme.ColorsTheme
 import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.widget.header.ActionMode
@@ -70,33 +76,37 @@ fun TodoPage(
         },
         navigationClick = {
             navController.popBackStack()
-        }
-    ) {
-        Column(modifier = Modifier.fillMaxSize()) {
-            TodoContent(
-                type = viewState.type,
-                pagerState = pagerState,
-                handler = handler,
-                onCreateClick = {
-                    navController.navigateArgs(RoutePage.Todo.CreateTodo.route)
-                }
-            )
+        },
+        content = {
+            Column(modifier = Modifier.fillMaxSize()) {
+                TodoContent(
+                    type = viewState.type,
+                    pagerState = pagerState,
+                    handler = handler,
+                    onCreateClick = {
+                        navController.navigateArgs(RoutePage.Todo.CreateTodo.route)
+                    }
+                )
 
-            BottomNavigation(
-                elevation = viewState.navigationElevation,
-                backgroundColor = ColorsTheme.colors.item
-            ) {
-                tabItems.forEachIndexed { index, item ->
-                    val isSelect = pagerState.currentPage == index
-                    BottomNavigationItem(selected = isSelect, icon = {
-                        NavigationIcon(isSelected = isSelect, item = item)
-                    }, onClick = {
-                            coroutine.launch { pagerState.scrollToPage(index) }
-                        })
+                AppNavigationBar(
+                    containerColor = ColorsTheme.colors.item
+                ) {
+                    tabItems.forEachIndexed { index, item ->
+                        val isSelect = pagerState.currentPage == index
+                        NavigationBarItem(colors = NavigationBarItemDefaults.colors()
+                            .copy(selectedIndicatorColor = Color.Transparent),
+                            selected = isSelect,
+                            icon = {
+                                NavigationIcon(isSelected = isSelect, item = item)
+                            },
+                            onClick = {
+                                coroutine.launch { pagerState.scrollToPage(index) }
+                            })
+                    }
                 }
             }
         }
-    }
+    )
 }
 
 @Composable
@@ -124,7 +134,7 @@ private fun ColumnScope.TodoContent(
 
         FloatingActionButton(
             onClick = { onCreateClick() },
-            backgroundColor = ColorsTheme.colors.focus,
+            containerColor = ColorsTheme.colors.focus,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(OffsetLarge)

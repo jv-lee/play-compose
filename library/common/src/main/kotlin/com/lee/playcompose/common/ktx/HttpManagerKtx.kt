@@ -3,7 +3,7 @@
  * @author jv.lee
  * @date 2021/12/9
  */
-package com.lee.playcompose.common.extensions
+package com.lee.playcompose.common.ktx
 
 import com.lee.playcompose.base.net.HttpManager
 import com.lee.playcompose.base.net.request.IRequest

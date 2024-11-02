@@ -3,8 +3,18 @@ package com.lee.playcompose.common.ui.widget
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ScrollableTabRow
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabPosition
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -18,7 +28,6 @@ import androidx.compose.ui.platform.debugInspectorInfo
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.lee.playcompose.common.ui.theme.ColorsTheme
-import com.lee.playcompose.common.ui.theme.TabBarHeight
 
 /**
  * 自适应指示器宽度TabRow
@@ -36,8 +45,9 @@ fun <T> IndicatorAdaptiveTabRow(
     selectedTabIndex: Int,
     findTabText: (T) -> String,
     onTabClick: (Int) -> Unit,
-    background: Color = MaterialTheme.colors.primarySurface
+    background: Color = MaterialTheme.colorScheme.primary
 ) {
+    if (tabs.isEmpty()) return
     val density = LocalDensity.current
     val tabWidths = remember {
         mutableStateListOf<Dp>().apply { repeat(tabs.size) { add(0.dp) } }
@@ -45,11 +55,10 @@ fun <T> IndicatorAdaptiveTabRow(
 
     ScrollableTabRow(
         selectedTabIndex = selectedTabIndex,
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(TabBarHeight),
-        backgroundColor = background,
+        modifier = Modifier.fillMaxWidth(),
+        containerColor = background,
         edgePadding = 0.dp,
+        divider = {},
         indicator = { tabPositions ->
             val tabPosition = if (tabPositions.size > selectedTabIndex) {
                 tabPositions[selectedTabIndex]
@@ -57,13 +66,14 @@ fun <T> IndicatorAdaptiveTabRow(
             val tabWidth = if (tabWidths.size > selectedTabIndex) {
                 tabWidths[selectedTabIndex]
             } else tabWidths[0]
-
-            TabRowDefaults.Indicator(
-                color = ColorsTheme.colors.accent,
-                modifier = Modifier.adaptiveTabIndicatorOffset(
-                    currentTabPosition = tabPosition,
-                    tabWidth = tabWidth
-                )
+            Box(
+                modifier = Modifier
+                    .adaptiveTabIndicatorOffset(
+                        currentTabPosition = tabPosition,
+                        tabWidth = tabWidth
+                    )
+                    .height(3.dp)
+                    .background(color = ColorsTheme.colors.accent)
             )
         }
     ) {

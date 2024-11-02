@@ -77,11 +77,14 @@ val OffsetLarge = 16.dp
 val OffsetMedium = 8.dp
 val OffsetSmall = 4.dp
 
-// 通用圆角线宽度
+// 通用圆角线宽度/阴影
 val BorderWidth = 2.dp
+val ShadowSmall = 4.dp
+
 
 val ToolBarTitleSize = 18.sp
 
 val cardCorner = 5.dp // 卡片的圆角
 val buttonCorner = 3.dp // 按钮的圆角
 val buttonHeight = 36.dp // 按钮的高度
+val shadowElevation = 10.dp

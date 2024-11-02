@@ -14,11 +14,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.lee.playcompose.base.bus.ChannelBus
-import com.lee.playcompose.base.extensions.LocalActivity
-import com.lee.playcompose.base.extensions.LocalNavController
+import com.lee.playcompose.base.ktx.LocalActivity
+import com.lee.playcompose.base.ktx.LocalNavController
 import com.lee.playcompose.common.entity.Content
 import com.lee.playcompose.common.entity.NavigationSelectEvent
-import com.lee.playcompose.common.extensions.transformDetails
+import com.lee.playcompose.common.ktx.transformDetails
 import com.lee.playcompose.common.ui.composable.ContentItem
 import com.lee.playcompose.common.ui.composable.HeaderSpacer
 import com.lee.playcompose.common.ui.theme.ColorsTheme

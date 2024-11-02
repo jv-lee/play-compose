@@ -11,11 +11,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.lee.playcompose.base.extensions.LocalActivity
-import com.lee.playcompose.base.extensions.LocalNavController
-import com.lee.playcompose.base.extensions.activityViewModel
+import com.lee.playcompose.base.ktx.LocalActivity
+import com.lee.playcompose.base.ktx.LocalNavController
+import com.lee.playcompose.base.ktx.activityViewModel
 import com.lee.playcompose.common.entity.AccountViewEvent
-import com.lee.playcompose.common.extensions.toast
+import com.lee.playcompose.common.ktx.toast
 import com.lee.playcompose.common.ui.composable.ConfirmDialog
 import com.lee.playcompose.common.ui.composable.LoadingDialog
 import com.lee.playcompose.common.ui.composable.ProfileItem
@@ -24,8 +24,8 @@ import com.lee.playcompose.common.ui.widget.header.AppBarViewContainer
 import com.lee.playcompose.common.viewmodel.ThemeViewIntent
 import com.lee.playcompose.common.viewmodel.ThemeViewModel
 import com.lee.playcompose.me.R
-import com.lee.playcompose.me.viewmodel.SettingsViewIntent
 import com.lee.playcompose.me.viewmodel.SettingsViewEvent
+import com.lee.playcompose.me.viewmodel.SettingsViewIntent
 import com.lee.playcompose.me.viewmodel.SettingsViewModel
 import kotlinx.coroutines.launch
 import com.lee.playcompose.common.R as CR
@@ -66,6 +66,7 @@ fun SettingsPage(
                 is AccountViewEvent.LogoutSuccess -> {
                     toast(event.message)
                 }
+
                 is AccountViewEvent.LogoutFailed -> {
                     toast(event.message)
                 }
@@ -102,47 +103,48 @@ fun SettingsPage(
         title = stringResource(id = R.string.me_item_settings),
         navigationClick = {
             navController.popBackStack()
-        }
-    ) {
-        Column(modifier = Modifier.fillMaxSize()) {
-            ProfileItem(
-                leftText = stringResource(id = R.string.dark_mode_system),
-                rightSwitchEnable = true,
-                rightSwitchVisible = true,
-                modifier = Modifier.padding(top = OffsetMedium),
-                switchChecked = themeViewState.isSystem,
-                onCheckedChange = {
-                    themeViewModel.dispatch(ThemeViewIntent.UpdateSystemTheme(it))
-                }
-            )
-            ProfileItem(
-                leftText = stringResource(id = R.string.dark_mode_night),
-                rightSwitchEnable = !themeViewState.isSystem,
-                rightSwitchVisible = true,
-                modifier = Modifier.padding(top = 1.dp),
-                switchChecked = themeViewState.isDark,
-                onCheckedChange = {
-                    themeViewModel.dispatch(ThemeViewIntent.UpdateDarkTheme(it))
-                }
-            )
-            ProfileItem(
-                leftText = stringResource(id = R.string.settings_clear_text),
-                rightText = viewState.totalCacheSize,
-                rightDrawable = CR.drawable.vector_arrow,
-                modifier = Modifier.padding(top = OffsetMedium)
-            ) {
-                viewModel.dispatch(SettingsViewIntent.VisibleCacheDialog(visibility = true))
-            }
-            if (accountState.isLogin) {
+        },
+        content = {
+            Column(modifier = Modifier.fillMaxSize()) {
                 ProfileItem(
-                    leftText = stringResource(id = R.string.settings_logout),
-                    leftDrawable = R.drawable.vector_logout,
+                    leftText = stringResource(id = R.string.dark_mode_system),
+                    rightSwitchEnable = true,
+                    rightSwitchVisible = true,
+                    modifier = Modifier.padding(top = OffsetMedium),
+                    switchChecked = themeViewState.isSystem,
+                    onCheckedChange = {
+                        themeViewModel.dispatch(ThemeViewIntent.UpdateSystemTheme(it))
+                    }
+                )
+                ProfileItem(
+                    leftText = stringResource(id = R.string.dark_mode_night),
+                    rightSwitchEnable = !themeViewState.isSystem,
+                    rightSwitchVisible = true,
+                    modifier = Modifier.padding(top = 1.dp),
+                    switchChecked = themeViewState.isDark,
+                    onCheckedChange = {
+                        themeViewModel.dispatch(ThemeViewIntent.UpdateDarkTheme(it))
+                    }
+                )
+                ProfileItem(
+                    leftText = stringResource(id = R.string.settings_clear_text),
+                    rightText = viewState.totalCacheSize,
                     rightDrawable = CR.drawable.vector_arrow,
                     modifier = Modifier.padding(top = OffsetMedium)
                 ) {
-                    viewModel.dispatch(SettingsViewIntent.VisibleLogoutDialog(visibility = true))
+                    viewModel.dispatch(SettingsViewIntent.VisibleCacheDialog(visibility = true))
+                }
+                if (accountState.isLogin) {
+                    ProfileItem(
+                        leftText = stringResource(id = R.string.settings_logout),
+                        leftDrawable = R.drawable.vector_logout,
+                        rightDrawable = CR.drawable.vector_arrow,
+                        modifier = Modifier.padding(top = OffsetMedium)
+                    ) {
+                        viewModel.dispatch(SettingsViewIntent.VisibleLogoutDialog(visibility = true))
+                    }
                 }
             }
         }
-    }
+    )
 }

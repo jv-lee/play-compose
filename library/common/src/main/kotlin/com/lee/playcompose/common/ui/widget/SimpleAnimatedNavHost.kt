@@ -3,6 +3,8 @@ package com.lee.playcompose.common.ui.widget
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
@@ -28,9 +30,9 @@ fun SimpleAnimatedNavHost(
     contentAlignment: Alignment = Alignment.Center,
     route: String? = null,
     enterTransition: (AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition) =
-        { fadeIn(initialAlpha = 0F) },
+        { fadeIn(initialAlpha = 0F, animationSpec = spring(stiffness = 0F)) },
     exitTransition: (AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition) =
-        { fadeOut(targetAlpha = 0F) },
+        { fadeOut(targetAlpha = 0F, animationSpec = spring(stiffness = 0F)) },
     popEnterTransition: (AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition) =
         enterTransition,
     popExitTransition: (AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition) =

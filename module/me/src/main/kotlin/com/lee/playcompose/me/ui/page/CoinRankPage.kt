@@ -1,9 +1,14 @@
 package com.lee.playcompose.me.ui.page
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,12 +20,15 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.lee.playcompose.base.extensions.LocalNavController
+import com.lee.playcompose.base.ktx.LocalNavController
 import com.lee.playcompose.common.entity.CoinRank
-import com.lee.playcompose.common.ui.theme.*
+import com.lee.playcompose.common.ui.theme.ColorsTheme
+import com.lee.playcompose.common.ui.theme.FontSizeTheme
+import com.lee.playcompose.common.ui.theme.OffsetLarge
+import com.lee.playcompose.common.ui.theme.OffsetMedium
+import com.lee.playcompose.common.ui.widget.RefreshList
 import com.lee.playcompose.common.ui.widget.header.ActionMode
 import com.lee.playcompose.common.ui.widget.header.AppBarViewContainer
-import com.lee.playcompose.common.ui.widget.RefreshList
 import com.lee.playcompose.me.R
 import com.lee.playcompose.me.viewmodel.CoinRankViewModel
 import com.lee.playcompose.me.viewmodel.CoinRankViewState
@@ -44,10 +52,16 @@ fun CoinRankPage(
         actionIcon = R.drawable.vector_help,
         actionMode = ActionMode.Button,
         navigationClick = { navController.popBackStack() },
-        actionClick = { navController.navigateArgs(RoutePage.Details.route, viewState.detailsData) }
-    ) {
-        CoinRankContent(viewState = viewState)
-    }
+        actionClick = {
+            navController.navigateArgs(
+                RoutePage.Details.route,
+                viewState.detailsData
+            )
+        },
+        content = {
+            CoinRankContent(viewState = viewState)
+        }
+    )
 }
 
 @Composable

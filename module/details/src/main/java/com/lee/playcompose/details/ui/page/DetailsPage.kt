@@ -7,29 +7,29 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.just.agentweb.AgentWeb
-import com.lee.playcompose.base.extensions.LocalActivity
-import com.lee.playcompose.base.extensions.LocalNavController
+import com.lee.playcompose.base.ktx.LocalActivity
+import com.lee.playcompose.base.ktx.LocalNavController
 import com.lee.playcompose.base.tools.DarkModeTools
 import com.lee.playcompose.base.utils.ShareUtil
 import com.lee.playcompose.common.entity.DetailsData
-import com.lee.playcompose.common.extensions.bindLifecycle
-import com.lee.playcompose.common.extensions.setWebBackEvent
-import com.lee.playcompose.common.extensions.supportDarkMode
-import com.lee.playcompose.common.extensions.toast
+import com.lee.playcompose.common.ktx.bindLifecycle
+import com.lee.playcompose.common.ktx.setWebBackEvent
+import com.lee.playcompose.common.ktx.supportDarkMode
+import com.lee.playcompose.common.ktx.toast
 import com.lee.playcompose.common.ui.composable.LoadingDialog
 import com.lee.playcompose.common.ui.widget.header.AppBarViewContainer
 import com.lee.playcompose.common.ui.widget.header.MenuSpacer
 import com.lee.playcompose.common.ui.widget.header.TextMenuItem
 import com.lee.playcompose.details.R
-import com.lee.playcompose.details.viewmodel.DetailsViewIntent
 import com.lee.playcompose.details.viewmodel.DetailsViewEvent
+import com.lee.playcompose.details.viewmodel.DetailsViewIntent
 import com.lee.playcompose.details.viewmodel.DetailsViewModel
 import com.lee.playcompose.base.R as BR
 import com.lee.playcompose.common.R as CR
@@ -57,6 +57,7 @@ fun DetailsPage(
                 is DetailsViewEvent.CollectEvent -> {
                     toast(event.message)
                 }
+
                 is DetailsViewEvent.ShareEvent -> {
                     ShareUtil.shareText(activity, event.shareText)
                 }
@@ -82,20 +83,16 @@ fun DetailsPage(
                 menuVisibilityState.value = false
                 viewModel.dispatch(DetailsViewIntent.ShareDetails)
             }
-        }
-    ) {
-        WebView(details = details)
-    }
+        },
+        content = { WebView(details = details) }
+    )
 }
 
 @Composable
 private fun WebView(details: DetailsData) {
     val activity = LocalActivity.current
     val lifecycle = LocalLifecycleOwner.current.lifecycle
-    val progressColor = ContextCompat.getColor(
-        activity,
-        if (DarkModeTools.get().isDark) CR.color.colorThemePrimary else CR.color.colorThemeAccent
-    )
+    val progressColor = ContextCompat.getColor(activity, CR.color.colorThemePrimary)
     AndroidView(factory = { context: Context ->
         FrameLayout(context).apply {
             layoutParams = ViewGroup.LayoutParams(

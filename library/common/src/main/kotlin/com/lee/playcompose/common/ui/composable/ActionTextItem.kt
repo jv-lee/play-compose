@@ -3,7 +3,7 @@ package com.lee.playcompose.common.ui.composable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -14,7 +14,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.lee.playcompose.common.R
 import com.lee.playcompose.common.entity.Content
-import com.lee.playcompose.common.extensions.getDateFormat
+import com.lee.playcompose.common.ktx.getDateFormat
 import com.lee.playcompose.common.ui.theme.*
 import com.lee.playcompose.common.ui.widget.SlidingPaneBox
 import com.lee.playcompose.common.ui.widget.SlidingPaneState

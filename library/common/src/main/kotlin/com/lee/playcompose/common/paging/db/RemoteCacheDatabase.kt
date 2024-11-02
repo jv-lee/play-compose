@@ -19,14 +19,14 @@ abstract class RemoteCacheDatabase : RoomDatabase() {
     abstract fun remoteContentDao(): RemoteContentDao
 
     companion object {
-        private const val DBName = "PlayCompose-homePaging.db"
+        private const val DB_NAME = "PlayCompose-homePaging.db"
 
         @Volatile
         private var instance: RemoteCacheDatabase? = null
 
         @JvmStatic
         fun getInstance(context: Context) = instance ?: synchronized(this) {
-            instance ?: Room.databaseBuilder(context, RemoteCacheDatabase::class.java, DBName)
+            instance ?: Room.databaseBuilder(context, RemoteCacheDatabase::class.java, DB_NAME)
                 .allowMainThreadQueries()
                 .build().also { instance = it }
         }

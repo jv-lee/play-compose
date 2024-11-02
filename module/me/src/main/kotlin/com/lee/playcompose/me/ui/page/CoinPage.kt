@@ -11,9 +11,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,10 +30,10 @@ import androidx.core.view.WindowCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.lee.playcompose.base.extensions.LocalActivity
-import com.lee.playcompose.base.extensions.LocalNavController
-import com.lee.playcompose.base.extensions.OnLifecycleEvent
-import com.lee.playcompose.base.extensions.activityViewModel
+import com.lee.playcompose.base.ktx.LocalActivity
+import com.lee.playcompose.base.ktx.LocalNavController
+import com.lee.playcompose.base.ktx.OnLifecycleEvent
+import com.lee.playcompose.base.ktx.activityViewModel
 import com.lee.playcompose.common.entity.AccountViewState
 import com.lee.playcompose.common.entity.CoinRecord
 import com.lee.playcompose.common.ui.theme.ColorsTheme
@@ -80,23 +81,26 @@ fun CoinPage(
 
     AppBarViewContainer(
         title = stringResource(id = R.string.me_item_coin),
-        elevation = 0.dp,
         actionIcon = R.drawable.vector_help,
         actionMode = ActionMode.Button,
         backgroundColor = ColorsTheme.colors.focus,
         contentColor = Color.White,
         navigationClick = { navController.popBackStack() },
-        actionClick = { navController.navigateArgs(RoutePage.Details.route, viewState.detailsData) }
-    ) {
-        Box {
-            Box(modifier = Modifier.padding(top = 170.dp)) {
-                CoinRecordContent(viewState = viewState)
-            }
+        actionClick = {
+            navController.navigateArgs(
+                RoutePage.Details.route,
+                viewState.detailsData
+            )
+        },
+        appBarFooter = {
             CoinRecordHeader(accountViewState = accountViewState, coinRankClick = {
                 navController.navigateArgs(RoutePage.Me.CoinRank.route)
             })
+        },
+        content = {
+            CoinRecordContent(viewState = viewState)
         }
-    }
+    )
 }
 
 @Composable
@@ -151,7 +155,7 @@ private fun CoinRecordHeader(accountViewState: AccountViewState, coinRankClick: 
         )
 
         Card(
-            backgroundColor = ColorsTheme.colors.item,
+            colors = CardDefaults.cardColors().copy(containerColor = ColorsTheme.colors.item),
             shape = RoundedCornerShape(OffsetRadiusMedium),
             modifier = Modifier
                 .fillMaxWidth()

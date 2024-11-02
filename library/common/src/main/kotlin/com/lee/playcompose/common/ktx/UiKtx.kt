@@ -3,7 +3,7 @@
  * @author jv.lee
  * @date 2022/2/24
  */
-package com.lee.playcompose.common.extensions
+package com.lee.playcompose.common.ktx
 
 import android.widget.Toast
 import androidx.compose.ui.graphics.Brush

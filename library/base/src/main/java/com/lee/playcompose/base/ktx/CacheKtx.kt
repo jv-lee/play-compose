@@ -3,7 +3,7 @@
  * @author jv.lee
  * @date 2021/9/9
  */
-package com.lee.playcompose.base.extensions
+package com.lee.playcompose.base.ktx
 
 import com.google.gson.reflect.TypeToken
 import com.lee.playcompose.base.cache.CacheManager

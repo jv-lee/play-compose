@@ -15,9 +15,10 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -30,10 +31,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.lee.playcompose.base.extensions.LocalNavController
-import com.lee.playcompose.base.extensions.onTap
+import com.lee.playcompose.base.ktx.LocalNavController
+import com.lee.playcompose.base.ktx.onTap
 import com.lee.playcompose.common.entity.SearchHistory
-import com.lee.playcompose.common.extensions.toast
+import com.lee.playcompose.common.ktx.toast
 import com.lee.playcompose.common.ui.composable.AppTextField
 import com.lee.playcompose.common.ui.theme.ColorsTheme
 import com.lee.playcompose.common.ui.theme.FontSizeTheme
@@ -248,8 +249,8 @@ private fun ColumnScope.SearchHistoryEmptyLayout(viewState: SearchViewState) {
 @Composable
 private fun SearchHotItem(item: SearchHotUI, onSearchClick: (String) -> Unit) {
     Card(
-        elevation = 0.dp,
-        backgroundColor = ColorsTheme.colors.label,
+        elevation = CardDefaults.cardElevation(),
+        colors = CardDefaults.cardColors().copy(containerColor = ColorsTheme.colors.label),
         shape = RoundedCornerShape(OffsetRadiusMedium),
         modifier = Modifier.padding(end = OffsetSmall, bottom = OffsetSmall)
     ) {

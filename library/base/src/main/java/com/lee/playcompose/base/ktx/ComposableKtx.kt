@@ -3,7 +3,7 @@
  * @author jv.lee
  * @date 2022/3/22
  */
-package com.lee.playcompose.base.extensions
+package com.lee.playcompose.base.ktx
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.*
@@ -29,6 +29,13 @@ import kotlinx.coroutines.launch
  */
 fun Modifier.onTap(action: () -> Unit) = pointerInput(Unit) {
     detectTapGestures(onTap = { action() })
+}
+
+/**
+ * 无状态双击
+ */
+fun Modifier.onDoubleTap(action: () -> Unit) = pointerInput(Unit) {
+    detectTapGestures(onDoubleTap = { action() })
 }
 
 /**
@@ -104,9 +111,11 @@ fun rememberImePaddingValue(
         imeBottom > navigationBottom -> {
             imeBottom.value - navigationBottom.value
         }
+
         imeBottom.value == 0f -> {
             paddingValue
         }
+
         else -> {
             0f
         }

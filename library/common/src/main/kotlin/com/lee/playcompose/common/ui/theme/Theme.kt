@@ -1,17 +1,17 @@
 package com.lee.playcompose.common.ui.theme
 
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.FragmentActivity
-import com.lee.playcompose.base.extensions.LocalActivity
-import com.lee.playcompose.base.extensions.ProviderActivity
-import com.lee.playcompose.base.extensions.ProviderNavController
-import com.lee.playcompose.base.extensions.ProviderOverScroll
-import com.lee.playcompose.base.extensions.activityViewModel
-import com.lee.playcompose.common.extensions.agentWebPreload
+import com.lee.playcompose.base.ktx.LocalActivity
+import com.lee.playcompose.base.ktx.ProviderActivity
+import com.lee.playcompose.base.ktx.ProviderNavController
+import com.lee.playcompose.base.ktx.ProviderOverScroll
+import com.lee.playcompose.base.ktx.activityViewModel
+import com.lee.playcompose.common.ktx.agentWebPreload
 import com.lee.playcompose.common.viewmodel.ThemeViewModel
 
 @Composable

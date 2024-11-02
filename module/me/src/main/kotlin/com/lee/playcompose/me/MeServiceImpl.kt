@@ -2,7 +2,7 @@ package com.lee.playcompose.me
 
 import com.google.auto.service.AutoService
 import com.lee.playcompose.common.entity.Data
-import com.lee.playcompose.common.extensions.createApi
+import com.lee.playcompose.common.ktx.createApi
 import com.lee.playcompose.me.model.api.ApiService
 import com.lee.playcompose.service.MeService
 

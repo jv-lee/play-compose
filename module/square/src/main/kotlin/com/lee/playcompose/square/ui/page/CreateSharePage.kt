@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
@@ -18,17 +18,21 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.lee.playcompose.base.extensions.LocalNavController
-import com.lee.playcompose.base.extensions.onTap
-import com.lee.playcompose.base.extensions.setResult
-import com.lee.playcompose.common.extensions.toast
+import com.lee.playcompose.base.ktx.LocalNavController
+import com.lee.playcompose.base.ktx.onTap
+import com.lee.playcompose.base.ktx.setResult
+import com.lee.playcompose.common.ktx.toast
 import com.lee.playcompose.common.ui.composable.AppTextField
 import com.lee.playcompose.common.ui.composable.LoadingDialog
-import com.lee.playcompose.common.ui.theme.*
+import com.lee.playcompose.common.ui.theme.ColorsTheme
+import com.lee.playcompose.common.ui.theme.FontSizeTheme
+import com.lee.playcompose.common.ui.theme.OffsetLarge
+import com.lee.playcompose.common.ui.theme.OffsetMedium
+import com.lee.playcompose.common.ui.theme.ToolBarHeight
 import com.lee.playcompose.common.ui.widget.header.AppBarViewContainer
 import com.lee.playcompose.square.R
-import com.lee.playcompose.square.viewmodel.CreateShareViewIntent
 import com.lee.playcompose.square.viewmodel.CreateShareViewEvent
+import com.lee.playcompose.square.viewmodel.CreateShareViewIntent
 import com.lee.playcompose.square.viewmodel.CreateShareViewModel
 import com.lee.playcompose.square.viewmodel.CreateShareViewState
 
@@ -55,6 +59,7 @@ fun CreateSharePage(
                     navController.setResult(REQUEST_KEY_SHARE_REFRESH)
                     navController.popBackStack()
                 }
+
                 is CreateShareViewEvent.CreateFailed -> {
                     toast(event.message)
                 }
@@ -69,22 +74,23 @@ fun CreateSharePage(
         navigationClick = {
             focusManager.clearFocus()
             navController.popBackStack()
+        },
+        content = {
+            CreateShareContent(
+                viewState = viewState,
+                clearFocus = { focusManager.clearFocus() },
+                onChangeTitle = {
+                    viewModel.dispatch(CreateShareViewIntent.ChangeShareTitle(it))
+                },
+                onChangeContent = {
+                    viewModel.dispatch(CreateShareViewIntent.ChangeShareContent(it))
+                },
+                onActionShare = {
+                    viewModel.dispatch(CreateShareViewIntent.RequestShare)
+                }
+            )
         }
-    ) {
-        CreateShareContent(
-            viewState = viewState,
-            clearFocus = { focusManager.clearFocus() },
-            onChangeTitle = {
-                viewModel.dispatch(CreateShareViewIntent.ChangeShareTitle(it))
-            },
-            onChangeContent = {
-                viewModel.dispatch(CreateShareViewIntent.ChangeShareContent(it))
-            },
-            onActionShare = {
-                viewModel.dispatch(CreateShareViewIntent.RequestShare)
-            }
-        )
-    }
+    )
 }
 
 @Composable

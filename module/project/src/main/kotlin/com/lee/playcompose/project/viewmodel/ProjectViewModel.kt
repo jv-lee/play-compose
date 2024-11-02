@@ -6,9 +6,9 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.playcompose.base.cache.CacheManager
-import com.lee.playcompose.base.extensions.cacheFlow
+import com.lee.playcompose.base.ktx.cacheFlow
 import com.lee.playcompose.common.entity.Tab
-import com.lee.playcompose.common.extensions.createApi
+import com.lee.playcompose.common.ktx.createApi
 import com.lee.playcompose.common.ui.widget.UiStatus
 import com.lee.playcompose.project.constants.Constants.CACHE_KEY_PROJECT_TAB
 import com.lee.playcompose.project.model.api.ApiService

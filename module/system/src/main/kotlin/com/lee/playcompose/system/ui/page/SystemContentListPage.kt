@@ -6,7 +6,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.lee.playcompose.common.entity.Tab
-import com.lee.playcompose.common.extensions.transformDetails
+import com.lee.playcompose.common.ktx.transformDetails
 import com.lee.playcompose.common.ui.composable.ContentItem
 import com.lee.playcompose.common.ui.widget.RefreshList
 import com.lee.playcompose.router.RoutePage

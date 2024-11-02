@@ -1,15 +1,13 @@
 package com.lee.playcompose.system.ui.page
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.lee.playcompose.base.extensions.LocalNavController
+import com.lee.playcompose.base.ktx.LocalNavController
 import com.lee.playcompose.common.entity.ParentTab
 import com.lee.playcompose.common.ui.theme.ColorsTheme
 import com.lee.playcompose.common.ui.widget.IndicatorAdaptiveTabRow
@@ -40,28 +38,26 @@ fun SystemContentTabPage(
 
     AppBarViewContainer(
         title = parentTab.name,
-        elevation = 0.dp,
         navigationClick = {
             navController.popBackStack()
-        }
-    ) {
-        Column {
-            if (parentTab.children.isNotEmpty()) {
-                IndicatorAdaptiveTabRow(
-                    background = ColorsTheme.colors.item,
-                    tabs = parentTab.children,
-                    selectedTabIndex = selectIndex,
-                    findTabText = { it.name },
-                    onTabClick = { tabIndex ->
-                        viewModel.dispatch(SystemContentTabViewIntent.SelectedTabIndex(tabIndex))
-                        coroutine.launch { pagerState.animateScrollToPage(tabIndex) }
-                    }
-                )
-                HorizontalPager(state = pagerState) { page ->
-                    val item = parentTab.children[page]
-                    SystemContentListPage(navController = navController, tab = item)
+        },
+        appBarFooter = {
+            IndicatorAdaptiveTabRow(
+                background = ColorsTheme.colors.item,
+                tabs = parentTab.children,
+                selectedTabIndex = selectIndex,
+                findTabText = { it.name },
+                onTabClick = { tabIndex ->
+                    viewModel.dispatch(SystemContentTabViewIntent.SelectedTabIndex(tabIndex))
+                    coroutine.launch { pagerState.animateScrollToPage(tabIndex) }
                 }
+            )
+        },
+        content = {
+            HorizontalPager(state = pagerState) { page ->
+                val item = parentTab.children[page]
+                SystemContentListPage(navController = navController, tab = item)
             }
         }
-    }
+    )
 }

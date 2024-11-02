@@ -2,7 +2,7 @@ package com.lee.playcompose.common.ui.composable
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -10,10 +10,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.lee.playcompose.common.entity.Content
-import com.lee.playcompose.common.extensions.getAuthor
-import com.lee.playcompose.common.extensions.getCategory
-import com.lee.playcompose.common.extensions.getDateFormat
-import com.lee.playcompose.common.extensions.getTitle
+import com.lee.playcompose.common.ktx.getAuthor
+import com.lee.playcompose.common.ktx.getCategory
+import com.lee.playcompose.common.ktx.getDateFormat
+import com.lee.playcompose.common.ktx.getTitle
 import com.lee.playcompose.common.ui.theme.*
 
 /**

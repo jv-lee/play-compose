@@ -5,7 +5,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Card
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
@@ -13,6 +14,7 @@ import com.lee.playcompose.common.ui.theme.ColorsTheme
 import com.lee.playcompose.common.ui.theme.OffsetLarge
 import com.lee.playcompose.common.ui.theme.OffsetMedium
 import com.lee.playcompose.common.ui.theme.OffsetSmall
+import com.lee.playcompose.common.ui.theme.ShadowSmall
 
 /**
  * 卡片item容器组件
@@ -30,7 +32,8 @@ fun CardItemContainer(
     content: @Composable BoxScope.() -> Unit
 ) {
     Card(
-        backgroundColor = ColorsTheme.colors.item,
+        colors = CardDefaults.cardColors().copy(containerColor = ColorsTheme.colors.item),
+        elevation = CardDefaults.cardElevation(defaultElevation = ShadowSmall),
         modifier = modifier.padding(
             start = OffsetMedium,
             end = OffsetMedium,

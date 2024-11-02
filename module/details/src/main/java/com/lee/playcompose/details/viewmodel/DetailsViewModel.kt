@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.lee.playcompose.base.core.ApplicationExtensions.app
-import com.lee.playcompose.base.extensions.lowestTime
+import com.lee.playcompose.base.ktx.lowestTime
 import com.lee.playcompose.base.viewmodel.BaseMVIViewModel
 import com.lee.playcompose.base.viewmodel.IViewEvent
 import com.lee.playcompose.base.viewmodel.IViewIntent

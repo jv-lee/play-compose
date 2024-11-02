@@ -3,7 +3,7 @@ package com.lee.playcompose.system.ui.page
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -13,10 +13,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.lee.playcompose.base.extensions.LocalNavController
+import com.lee.playcompose.base.ktx.LocalNavController
 import com.lee.playcompose.base.tools.WeakDataHolder
 import com.lee.playcompose.common.entity.ParentTab
-import com.lee.playcompose.common.extensions.formHtmlLabels
+import com.lee.playcompose.common.ktx.formHtmlLabels
 import com.lee.playcompose.common.ui.callback.PageCallbackHandler
 import com.lee.playcompose.common.ui.composable.CardItemContainer
 import com.lee.playcompose.common.ui.composable.HeaderSpacer

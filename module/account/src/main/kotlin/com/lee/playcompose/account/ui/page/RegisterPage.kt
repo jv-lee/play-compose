@@ -7,7 +7,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActionScope
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -27,9 +27,9 @@ import com.lee.playcompose.account.ui.composable.AccountSpacer
 import com.lee.playcompose.account.ui.theme.ButtonLockColor
 import com.lee.playcompose.account.ui.theme.ButtonTextColor
 import com.lee.playcompose.account.viewmodel.*
-import com.lee.playcompose.base.extensions.*
+import com.lee.playcompose.base.ktx.*
 import com.lee.playcompose.common.entity.AccountViewIntent
-import com.lee.playcompose.common.extensions.toast
+import com.lee.playcompose.common.ktx.toast
 import com.lee.playcompose.common.ui.composable.AppTextField
 import com.lee.playcompose.common.ui.composable.LoadingDialog
 import com.lee.playcompose.common.ui.theme.ColorsTheme
@@ -133,7 +133,7 @@ private fun RegisterInputContent(
     doneChange: KeyboardActionScope.() -> Unit
 ) {
     Card(
-        backgroundColor = ColorsTheme.colors.item,
+        colors = CardDefaults.cardColors().copy(containerColor = ColorsTheme.colors.item),
         modifier = Modifier
             .fillMaxWidth()
             .padding(OffsetLarge)
@@ -224,7 +224,7 @@ private fun RegisterFooter(
             shape = RoundedCornerShape(OffsetRadiusMedium),
             modifier = Modifier.align(Alignment.CenterEnd),
             colors = ButtonDefaults.buttonColors(
-                backgroundColor =
+                containerColor =
                 if (viewState.isRegisterEnable) ColorsTheme.colors.focus else ButtonLockColor
             )
         ) {

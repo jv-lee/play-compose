@@ -4,7 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.lee.playcompose.common.extensions.createAppHeaderGradient
+import com.lee.playcompose.common.ktx.createAppHeaderGradient
 import com.lee.playcompose.common.ui.theme.ColorsTheme
 
 /**
