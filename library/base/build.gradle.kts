@@ -13,10 +13,6 @@ libraryConfigure(BuildModules.Library.BASE.name()) {
         api(platform(libs.androidx.compose.bom))
         api(libs.bundles.androidx)
         api(libs.bundles.thirdPart)
-
-        testImplementation(libs.bundles.test)
-        androidTestImplementation(libs.bundles.androidTest)
-        debugImplementation(libs.bundles.debug)
     }
 }
 

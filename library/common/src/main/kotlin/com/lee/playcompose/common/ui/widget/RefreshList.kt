@@ -93,13 +93,13 @@ fun <T : Any> RefreshList(
 
     Box(
         modifier = Modifier.pullToRefresh(
-            state = refreshState,
             isRefreshing = isRefreshing,
+            state = refreshState,
+            enabled = swipeEnable,
             onRefresh = {
                 onRefresh()
                 lazyPagingItems.refresh()
             },
-            enabled = swipeEnable
         )
     ) {
 

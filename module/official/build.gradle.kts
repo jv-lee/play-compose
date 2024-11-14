@@ -9,10 +9,6 @@ plugins {
 moduleConfigure(BuildModules.Module.OFFICIAL.name()) {
     dependencies {
         kapt(libs.bundles.compiler)
-
-        testImplementation(libs.bundles.test)
-        androidTestImplementation(libs.bundles.androidTest)
-        debugImplementation(libs.bundles.debug)
     }
 }
 

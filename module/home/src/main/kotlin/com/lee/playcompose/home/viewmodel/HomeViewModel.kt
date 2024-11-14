@@ -17,6 +17,7 @@ import com.lee.playcompose.common.paging.saved.savedPager
 import com.lee.playcompose.home.constants.Constants.CACHE_KEY_HOME_CONTENT
 import com.lee.playcompose.home.model.api.ApiService
 import com.lee.playcompose.home.model.entity.HomeCategory
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 /**
@@ -49,6 +50,8 @@ class HomeViewModel : ViewModel() {
         viewModelScope.launch {
             cacheManager.cacheFlow(CACHE_KEY_HOME_CONTENT) {
                 api.getBannerDataAsync().data
+            }.catch {
+                // catch request api
             }.collect { data ->
                 val categoryList = HomeCategory.getHomeCategory()
                 viewStates =
@@ -71,5 +74,5 @@ data class HomeViewState(
 )
 
 sealed class HomeViewIntent {
-    object RequestLoopBanner : HomeViewIntent()
+    data object RequestLoopBanner : HomeViewIntent()
 }
